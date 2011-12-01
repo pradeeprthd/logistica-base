@@ -1,0 +1,54 @@
+#contentFont {
+	font-size: 1em;
+	font-weight: bold;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.colStyle1 {
+	vertical-align: top;
+	width: 20%;
+}
+
+.colStyle2 {
+	vertical-align: top;
+	width: 80%;
+}
+
+.top {
+	vertical-align: top;
+}
+
+.headerClass {
+	position: realtive;
+	height: 43px;
+	width: 100%;
+	background-color: transparent;
+	background-image: url(../images/header500x100.png);
+	background-repeat: repeat;
+	background-position: center;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.headerTextClass {
+	font-size: 2em;
+	color: white;
+	font-weight: bold;
+	font-family: Arial, Helvetica, sans-serif;
+	text-align: center;
+}
+
+.divOverflowAuto {
+	overflow: auto;
+	width: 100%;
+	padding-bottom: 15px;
+}
+
+styleVertical {
+	vertical-align: top;
+}
+
+.bold {
+	font-weight: bold;
+}

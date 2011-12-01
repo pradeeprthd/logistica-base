@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>sixsigma</groupId>
+	<artifactId>logistica</artifactId>
+	<version>0.1</version>
+	<packaging>pom</packaging>
+
+	<name>logistica</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<org.springframework.version>3.0.5.RELEASE</org.springframework.version>
+		<org.hibernate.version>3.6.0.Final</org.hibernate.version>
+		<hibernate-jpa-2.0-api-version>1.0.0.Final</hibernate-jpa-2.0-api-version>
+		<log4j-version>1.2.16</log4j-version>
+		<postgres-version>9.0-801.jdbc4</postgres-version>
+		
+		<org.richfaces.bom.version>4.0.0.Final</org.richfaces.bom.version>
+	</properties>
+
+
+    
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	
+	
+	
+    
+	<modules>
+		<module>logistica_jar</module>
+		<module>logistica_webapp</module>
+	</modules>
+</project>
