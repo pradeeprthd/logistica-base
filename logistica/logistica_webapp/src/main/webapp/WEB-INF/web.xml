@@ -12,6 +12,12 @@
 	<session-config>
 		<session-timeout>480</session-timeout>
 	</session-config>
+	
+	<!-- Defino el archivo de configuracion de spring -->
+	<context-param>
+                <param-name>contextConfigLocation</param-name>
+                <param-value>classpath*:applicationContext.xml</param-value>
+        </context-param>
 
 	<!-- JSF -->
 	<!-- Change to "Production" when you are ready to deploy -->

@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns:s="http://www.springframework.org/schema/security" xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+<!--<beans
+	xmlns:s="http://www.springframework.org/schema/security" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:ehcache="http://www.springmodules.org/schema/ehcache"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springmodules.org/schema/ehcache http://www.springmodules.org/schema/cache/springmodules-ehcache.xsd
        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
        http://www.springframework.org/schema/security
- 	   http://www.springframework.org/schema/security/spring-security-3.0.xsd">
-
+ 	   http://www.springframework.org/schema/security/spring-security-3.0.5.xsd">
+ 	   
+	-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:security="http://www.springframework.org/schema/security" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd">
 
 	<!-- export de las estadisticas de la cache -->
-	<bean id="jmxExporter" class="org.springframework.jmx.export.MBeanExporter">
+	<!--<bean id="jmxExporter" class="org.springframework.jmx.export.MBeanExporter">
 		<property name="beans">
 			<map>
 				<entry key="Hibernate:name=statistics">
@@ -32,20 +37,20 @@
 
 	<bean name="ehCacheManagerMBean" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" />
 	
-	<!-- seguridad de spring security -->
-	<s:http auto-config="true" use-expressions="true">
-        <s:intercept-url pattern="/index.jsf" access="hasRole('ROLE_USER')"/>
-        <s:form-login login-page="/login.jsf" authentication-failure-url="/login.jsf?erro=true"/>
-    </s:http>
+	--><!-- seguridad de spring security -->
+	<security:http auto-config="true" use-expressions="true">
+        <security:intercept-url pattern="/index.jsf" access="hasRole('ROLE_USER')"/>
+        <security:form-login login-page="/login.jsf" authentication-failure-url="/login.jsf?erro=true"/>
+    </security:http>
  
-    <s:authentication-manager>
-        <s:authentication-provider>
-            <s:jdbc-user-service data-source-ref="dataSource"
+    <security:authentication-manager>
+        <security:authentication-provider>
+            <security:jdbc-user-service data-source-ref="myDataSource"
                users-by-username-query="SELECT usuario, contrasenia, enable FROM usuario WHERE usuario=?"
                authorities-by-username-query="SELECT Usuario_usuario as usuario, authority_nombre as authority FROM usuario_authority WHERE Usuario_usuario=?"
             />
-        </s:authentication-provider>
-    </s:authentication-manager>
+        </security:authentication-provider>
+    </security:authentication-manager>
  
 
 
