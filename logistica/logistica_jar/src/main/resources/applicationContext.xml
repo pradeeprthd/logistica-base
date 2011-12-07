@@ -39,74 +39,31 @@
 	
 	--><!-- seguridad de spring security -->
 	<security:http auto-config="true" use-expressions="true">
-        <security:intercept-url pattern="/index.jsf" access="hasRole('ROLE_USER')"/>
-        <security:form-login login-page="/login.jsf" authentication-failure-url="/login.jsf?erro=true"/>
+	 	<security:intercept-url pattern="/pages/login*" filters="none"/>
+        <security:intercept-url pattern="/**" access="hasRole('ROLE_USER')"/>
+        <security:form-login login-page="/pages/login.jsp" default-target-url="/pages/welcome.xhtml" authentication-failure-url="/pages/login.jsp?login_error=1"/>
     </security:http>
+     
  
+    <!--
+    <security:http auto-config='true'>
+    <security:intercept-url pattern="/**" access="ROLE_USER" />
+  </security:http>-->
+    
+    
     <security:authentication-manager>
         <security:authentication-provider>
+        
+        <!--<security:user-service>
+			<security:user name="admin" password="admin" authorities="ROLE_USER" />
+		</security:user-service>-->
+        
             <security:jdbc-user-service data-source-ref="myDataSource"
-               users-by-username-query="SELECT usuario, contrasenia, enable FROM usuario WHERE usuario=?"
-               authorities-by-username-query="SELECT Usuario_usuario as usuario, authority_nombre as authority FROM usuario_authority WHERE Usuario_usuario=?"
-            />
+               users-by-username-query="SELECT usuario, contrasenia, enable FROM logistica.usuario WHERE usuario=?"
+               authorities-by-username-query="select u.usuario,a.nombre from logistica.usuario u,logistica.authority a,logistica.usuario_authority ua 
+where ua.usuario_id=u.id and ua.authorityList_id=a.id and u.usuario =?"/>
         </security:authentication-provider>
     </security:authentication-manager>
- 
-
-
-	<!--<bean id="mbeanServer" class="org.springframework.jmx.support.MBeanServerFactoryBean"> 
-		<property name="locateExistingServerIfPossible" value="true" /> </bean> <bean 
-		class="net.sf.ehcache.management.ManagementService" init-method="init"> <constructor-arg 
-		ref="cacheManager" /> <constructor-arg ref="mbeanServer" /> <constructor-arg 
-		value="true" /> <constructor-arg value="true" /> <constructor-arg value="true" 
-		/> <constructor-arg value="true" /> </bean> <bean id="statisticsService" 
-		class="org.hibernate.jmx.StatisticsService"> <property name="statisticsEnabled" 
-		value="true"/> <property name="sessionFactory" ref="sessionFactory"/> </bean> --><!--<bean id="hibernateStatisticsMBean" class="org.hibernate.jmx.StatisticsService"> 
-		<property name="statisticsEnabled" value="true" /> <property name="sessionFactory" 
-		ref="sessionFactory" /> </bean> <bean id="ehCacheMBeanRegistration" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean"> 
-		<property name="staticMethod" value="net.sf.ehcache.management.ManagementService.registerMBeans" 
-		/> <property name="arguments"> <list> <ref bean="cacheManager" /> <ref bean="mbeanServer" 
-		/> <value>true</value> <value>true</value> <value>true</value> <value>true</value> 
-		</list> </property> </bean> <bean id="mbeanServer" class="org.springframework.jmx.support.MBeanServerFactoryBean"> 
-		<property name="locateExistingServerIfPossible" value="true" /> </bean> <bean 
-		id="mbeanExporter" class="org.springframework.jmx.export.MBeanExporter"> 
-		<property name="beans"> <map> <entry key="category=statistics,name=hibernate" 
-		value-ref="hibernateStatisticsMBean" /> </map> </property> <property name="server" 
-		ref="mbeanServer" /> </bean> <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"> 
-		<property name="configLocation" value="classpath:ehcache.xml" /> <property 
-		name="shared" value="true" /> </bean> <bean id="jmxExporter" class="org.springframework.jmx.export.MBeanExporter"> 
-		<property name="beans"> <map> <entry key="Hibernate:name=statistics"> <ref 
-		bean="statisticsBean" /> </entry> </map> </property> <property name="server" 
-		ref="mbeanServer"></property> </bean> <bean id="statisticsBean" class="org.hibernate.jmx.StatisticsService"> 
-		<property name="statisticsEnabled"> <value>true</value> </property> <property 
-		name="sessionFactory"> <ref bean="sessionFactory" /> </property> </bean> --><!-- only needed explicitly because ehcache needs it to register itself 
-		<bean id="mbeanServer" class="org.springframework.jmx.support.MBeanServerFactoryBean"> 
-		<property name="locateExistingServerIfPossible" value="true" /> </bean> <bean 
-		id="ehCacheMBeanRegistration" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean"> 
-		<property name="staticMethod" value="net.sf.ehcache.management.ManagementService.registerMBeans" 
-		/> <property name="arguments"> <list> <ref bean="innerCacheManager" /> <ref 
-		bean="mbeanServer" /> <value>true</value> <value>true</value> <value>true</value> 
-		<value>true</value> </list> </property> </bean> <bean id="innerCacheManager" 
-		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"> <property 
-		name="shared" value="true" /> </bean> <bean class="org.springframework.jmx.export.annotation.AnnotationMBeanExporter"> 
-		<property name="server" ref="mbeanServer" /> <property name="beans"> <map> 
-		<entry key="Hibernate:type=statistics,application=applicationOne"> <bean 
-		class="org.hibernate.jmx.StatisticsService"> <property name="statisticsEnabled" 
-		value="true" /> <property name="sessionFactory" ref="sessionFactory" /> </bean> 
-		</entry> </map> </property> </bean> -->
-
-
-
-	<!--<ehcache:config configLocation="classpath:ehcache.xml" /> <bean id="mbeanServer" 
-		class="org.springframework.jndi.JndiObjectFactoryBean"> <property name="jndiName" 
-		value="java:comp/env/jmx/runtime"/> </bean> <bean id="mbeanServer" class="org.springframework.jmx.support.MBeanServerFactoryBean"> 
-		<property name="locateExistingServerIfPossible" value="true" /> </bean> <bean 
-		class="net.sf.ehcache.management.ManagementService" init-method="init"> <constructor-arg 
-		ref="cacheManager" /> <constructor-arg ref="mbeanServer" /> <constructor-arg 
-		value="true" /> <constructor-arg value="true" /> <constructor-arg value="true" 
-		/> <constructor-arg value="true" /> </bean> <ehcache:proxy id="clienteDAOImpl" 
-		refId="clienteDAOTarget"> <ehcache:caching cacheName="clienteCache" methodName="*" 
-		/> </ehcache:proxy> -->
 
 	<bean id="clienteDAOImpl" class="logistica.common.dao.ClienteDAOImpl">
 		<property name="sessionFactory">
@@ -151,6 +108,8 @@
 			<list>
 				<value>logistica.model.Sujeto</value>
 				<value>logistica.model.Cliente</value>
+				<value>logistica.model.Authority</value>
+				<value>logistica.model.Usuario</value>
 			</list>
 		</property>
 	</bean>
