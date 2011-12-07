@@ -31,14 +31,14 @@ public class Usuario extends BaseModel {
 
 	@Column(length = 200)
 	private String contrasenia;
-	
+
 	@Column(name = "enable", columnDefinition = "BOOLEAN")
-    private boolean enable;
+	private boolean enable;
 
 	@OneToMany
 	private List<Authority> authorityList;
 
-	public Usuario(Long id, String usuario, String contrasenia,Boolean enable,
+	public Usuario(Long id, String usuario, String contrasenia, boolean enable,
 			List<Authority> authorityList) {
 		this.id = id;
 		this.usuario = usuario;
@@ -48,7 +48,7 @@ public class Usuario extends BaseModel {
 	}
 
 	public Usuario() {
-		this(null, null, null,null, null);
+		this(null, null, null, false, null);
 	}
 
 	public Long getID() {
