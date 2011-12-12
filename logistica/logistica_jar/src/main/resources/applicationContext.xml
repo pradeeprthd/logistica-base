@@ -57,6 +57,8 @@
         <!--<security:user-service>
 			<security:user name="admin" password="admin" authorities="ROLE_USER" />
 		</security:user-service>-->
+		
+		<security:password-encoder hash="sha" />
         
             <security:jdbc-user-service data-source-ref="myDataSource"
                users-by-username-query="SELECT usuario, contrasenia, enable FROM logistica.usuario WHERE usuario=?"
