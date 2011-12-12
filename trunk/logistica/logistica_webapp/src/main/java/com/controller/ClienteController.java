@@ -1,18 +1,21 @@
 package com.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import javax.faces.model.ListDataModel;
 
 import logistica.common.dao.BaseModelDAO;
 import logistica.model.Cliente;
 import logistica.query.ClienteQuery;
 
 import org.apache.log4j.Logger;
+import org.primefaces.model.LazyDataModel;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.builder.ClienteBuilder;
@@ -22,7 +25,7 @@ import com.view.ClienteView;
 @ManagedBean
 @ViewScoped
 @SuppressWarnings("serial")
-public class ClienteController extends BaseController<Cliente> {
+public class ClienteController extends PaginableController<Cliente> {
 	private Logger log = Logger.getLogger(ClienteController.class);
 	private ClassPathXmlApplicationContext ctx;
 	private BaseModelDAO<Cliente, ClienteQuery> dao;
@@ -40,7 +43,8 @@ public class ClienteController extends BaseController<Cliente> {
 			ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
 			dao = (BaseModelDAO<Cliente, ClienteQuery>) ctx
 					.getBean("clienteDAO");
-			listDM = new ListDataModel<Cliente>(dao.getList());
+			// listDM = new ListDataModel<Cliente>(dao.getList());
+			loadList();
 			addEdit = false;
 		} catch (Throwable e) {
 			log.error("Error al inicializar la clase ClienteController", e);
@@ -73,7 +77,7 @@ public class ClienteController extends BaseController<Cliente> {
 
 	public void edit(ActionEvent event) {
 		try {
-			cliente = (Cliente) listDM.getRowData();
+			cliente = (Cliente) lazyDM.getRowData();
 			cliente = dao.find(cliente.getID());
 			clienteView = clienteBuilder.toView(cliente);
 			addEdit = true;
@@ -88,9 +92,10 @@ public class ClienteController extends BaseController<Cliente> {
 
 	public void delete(ActionEvent event) {
 		try {
-			cliente = (Cliente) listDM.getRowData();
+			cliente = (Cliente) lazyDM.getRowData();
 			dao.delete(cliente);
-			listDM = new ListDataModel<Cliente>(dao.getList());
+			// listDM = new ListDataModel<Cliente>(dao.getList());
+			loadList();
 		} catch (Throwable e) {
 			log.error("Error al eliminar", e);
 			FacesContext.getCurrentInstance().addMessage(
@@ -110,7 +115,7 @@ public class ClienteController extends BaseController<Cliente> {
 			cliente = clienteBuilder.toDomain(clienteView);
 			if (cliente.getID() != null) {
 				dao.edit(cliente);
-				listDM = new ListDataModel<Cliente>(dao.getList());
+				// listDM = new ListDataModel<Cliente>(dao.getList());
 				addEdit = false;
 			} else {
 				dao.save(cliente);
@@ -128,12 +133,29 @@ public class ClienteController extends BaseController<Cliente> {
 	}
 
 	public void cancel(ActionEvent event) {
-		listDM = new ListDataModel<Cliente>(dao.getList());
+		// listDM = new ListDataModel<Cliente>(dao.getList());
+		loadList();
 		addEdit = false;
 	}
 
 	public void clear() {
 		cliente = new Cliente();
 		clienteView = new ClienteView();
+	}
+
+	private void loadList() {
+		lazyDM = new LazyDataModel<Cliente>() {
+
+			@Override
+			public List<Cliente> load(int first, int pageSize,
+					String sortField, boolean sortOrder,
+					Map<String, String> filters) {
+				return dao.getList(first, pageSize);
+			}
+		};
+
+		lazyDM.setRowCount(dao.count().intValue());
+		lazyDM.setPageSize(DEFAULT_PAGE_SIZE);
+		lazyDM.setRowIndex(0);
 	}
 }

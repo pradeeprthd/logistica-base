@@ -13,11 +13,12 @@
 		<h:form id="form">
 			<p:messages id="messages" />
 			<p:dataTable id="dataTable" var="cliente"
-				value="#{clienteController.listDM}" paginator="true" rows="10"
+				value="#{clienteController.lazyDM}" paginator="true" rows="5"
 				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				rowsPerPageTemplate="5,10,15"
 				rendered="#{!clienteController.addEdit}"
-				emptyMessage="No se encontraron registros">
+				emptyMessage="No se encontraron registros"
+				lazy="true" dynamic="true">
 
 				<f:facet name="header">
 					<h:outputText value="#{msgs.admCliente_title}" />
