@@ -7,7 +7,7 @@ import org.primefaces.model.LazyDataModel;
 @SuppressWarnings("serial")
 public abstract class PaginableController<T extends BaseModel> extends
 		BaseController<T> {
-	public static final int DEFAULT_PAGE_SIZE = 5;
+	public static final int DEFAULT_PAGE_SIZE = 10;
 
 	protected LazyDataModel<T> lazyDM;
 

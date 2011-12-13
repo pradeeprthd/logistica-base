@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
+import javax.faces.application.ViewHandler;
+import javax.faces.component.UIViewRoot;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
@@ -52,5 +54,14 @@ public final class JSFUtil {
 		final Principal p = FacesContext.getCurrentInstance()
 				.getExternalContext().getUserPrincipal();
 		return p != null ? p.getName() : "";
+	}
+
+	public static void reloadPage() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		String viewId = context.getViewRoot().getViewId();
+		ViewHandler handler = context.getApplication().getViewHandler();
+		UIViewRoot root = handler.createView(context, viewId);
+		root.setViewId(viewId);
+		context.setViewRoot(root);
 	}
 }
