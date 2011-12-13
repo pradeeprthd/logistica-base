@@ -45,6 +45,7 @@ public class ClienteController extends PaginableController<Cliente> {
 					.getBean("clienteDAO");
 			// listDM = new ListDataModel<Cliente>(dao.getList());
 			loadList();
+
 			addEdit = false;
 		} catch (Throwable e) {
 			log.error("Error al inicializar la clase ClienteController", e);
@@ -95,7 +96,7 @@ public class ClienteController extends PaginableController<Cliente> {
 			cliente = (Cliente) lazyDM.getRowData();
 			dao.delete(cliente);
 			// listDM = new ListDataModel<Cliente>(dao.getList());
-			loadList();
+			JSFUtil.reloadPage();
 		} catch (Throwable e) {
 			log.error("Error al eliminar", e);
 			FacesContext.getCurrentInstance().addMessage(
@@ -123,6 +124,9 @@ public class ClienteController extends PaginableController<Cliente> {
 			clear();
 			JSFUtil.saveMessage("Elemento guardado con exito",
 					FacesMessage.SEVERITY_INFO);
+			if (!addEdit) {
+				JSFUtil.reloadPage();
+			}
 		} catch (Throwable e) {
 			log.error("Error al guardar", e);
 			FacesContext.getCurrentInstance().addMessage(
@@ -134,8 +138,9 @@ public class ClienteController extends PaginableController<Cliente> {
 
 	public void cancel(ActionEvent event) {
 		// listDM = new ListDataModel<Cliente>(dao.getList());
-		loadList();
 		addEdit = false;
+
+		JSFUtil.reloadPage();
 	}
 
 	public void clear() {
@@ -144,6 +149,7 @@ public class ClienteController extends PaginableController<Cliente> {
 	}
 
 	private void loadList() {
+
 		lazyDM = new LazyDataModel<Cliente>() {
 
 			@Override
@@ -156,6 +162,7 @@ public class ClienteController extends PaginableController<Cliente> {
 
 		lazyDM.setRowCount(dao.count().intValue());
 		lazyDM.setPageSize(DEFAULT_PAGE_SIZE);
-		lazyDM.setRowIndex(0);
+
+		// PrimefacesHelper.dataTableClearReload("form:dataTable");
 	}
 }
