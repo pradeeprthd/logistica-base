@@ -1,5 +1,6 @@
 package com.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +17,7 @@ import logistica.query.ClienteQuery;
 
 import org.apache.log4j.Logger;
 import org.primefaces.model.LazyDataModel;
+import org.primefaces.model.SortOrder;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.builder.ClienteBuilder;
@@ -30,6 +32,7 @@ public class ClienteController extends PaginableController<Cliente> {
 	private ClassPathXmlApplicationContext ctx;
 	private BaseModelDAO<Cliente, ClienteQuery> dao;
 	private Cliente cliente;
+	private ClienteQuery clienteQuery;
 
 	@ManagedProperty("#{clienteView}")
 	private ClienteView clienteView;
@@ -43,9 +46,7 @@ public class ClienteController extends PaginableController<Cliente> {
 			ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
 			dao = (BaseModelDAO<Cliente, ClienteQuery>) ctx
 					.getBean("clienteDAO");
-			// listDM = new ListDataModel<Cliente>(dao.getList());
-			loadList();
-
+			clienteQuery = new ClienteQuery();
 			addEdit = false;
 		} catch (Throwable e) {
 			log.error("Error al inicializar la clase ClienteController", e);
@@ -72,14 +73,18 @@ public class ClienteController extends PaginableController<Cliente> {
 		this.clienteBuilder = clienteBuilder;
 	}
 
-	public void query(ActionEvent event) {
+	public ClienteQuery getClienteQuery() {
+		return clienteQuery;
+	}
 
+	public void query(ActionEvent event) {
+		loadList();
 	}
 
 	public void edit(ActionEvent event) {
 		try {
 			cliente = (Cliente) lazyDM.getRowData();
-			cliente = dao.find(cliente.getID());
+			// cliente = dao.find(cliente.getID());
 			clienteView = clienteBuilder.toView(cliente);
 			addEdit = true;
 		} catch (Throwable e) {
@@ -95,7 +100,6 @@ public class ClienteController extends PaginableController<Cliente> {
 		try {
 			cliente = (Cliente) lazyDM.getRowData();
 			dao.delete(cliente);
-			// listDM = new ListDataModel<Cliente>(dao.getList());
 			JSFUtil.reloadPage();
 		} catch (Throwable e) {
 			log.error("Error al eliminar", e);
@@ -116,7 +120,6 @@ public class ClienteController extends PaginableController<Cliente> {
 			cliente = clienteBuilder.toDomain(clienteView);
 			if (cliente.getID() != null) {
 				dao.edit(cliente);
-				// listDM = new ListDataModel<Cliente>(dao.getList());
 				addEdit = false;
 			} else {
 				dao.save(cliente);
@@ -137,9 +140,7 @@ public class ClienteController extends PaginableController<Cliente> {
 	}
 
 	public void cancel(ActionEvent event) {
-		// listDM = new ListDataModel<Cliente>(dao.getList());
 		addEdit = false;
-
 		JSFUtil.reloadPage();
 	}
 
@@ -154,15 +155,18 @@ public class ClienteController extends PaginableController<Cliente> {
 
 			@Override
 			public List<Cliente> load(int first, int pageSize,
-					String sortField, boolean sortOrder,
+					String sortField, SortOrder sortOrder,
 					Map<String, String> filters) {
-				return dao.getList(first, pageSize);
+
+				Map<String, String> filtro = new HashMap<String, String>();
+				filtro.put("nombre", clienteQuery.getNombre());
+				return dao.getList(first, pageSize, "nombre", true, filtro);
 			}
+
 		};
 
-		lazyDM.setRowCount(dao.count().intValue());
-		lazyDM.setPageSize(DEFAULT_PAGE_SIZE);
-
-		// PrimefacesHelper.dataTableClearReload("form:dataTable");
+		Map<String, String> filtro = new HashMap<String, String>();
+		filtro.put("nombre", clienteQuery.getNombre());
+		lazyDM.setRowCount(dao.count(filtro).intValue());
 	}
 }

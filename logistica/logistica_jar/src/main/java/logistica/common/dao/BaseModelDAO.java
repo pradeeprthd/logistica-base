@@ -1,6 +1,7 @@
 package logistica.common.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import logistica.common.BaseModel;
 import logistica.query.BaseQuery;
@@ -29,5 +30,9 @@ public interface BaseModelDAO<T extends BaseModel, Q extends BaseQuery> {
 
 	Long count() throws DataAccessException;
 
-	List<T> getList(int first, int pageSize) throws DataAccessException;
+	public Long count(Map<String, String> filters) throws DataAccessException;
+
+	List<T> getList(int first, int pageSize, String sortField,
+			boolean sortOrder, Map<String, String> filters)
+			throws DataAccessException;
 }

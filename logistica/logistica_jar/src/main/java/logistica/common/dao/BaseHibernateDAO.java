@@ -1,12 +1,18 @@
 package logistica.common.dao;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import logistica.common.BaseModel;
 import logistica.query.BaseQuery;
 
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
@@ -58,15 +64,54 @@ public abstract class BaseHibernateDAO<T extends BaseModel, Q extends BaseQuery>
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<T> getList(int first, int pageSize) throws DataAccessException {
+	public List<T> getList(int first, int pageSize, String sortField,
+			boolean sortOrder, Map<String, String> filters)
+			throws DataAccessException {
 		List<T> objectList = null;
 
 		DetachedCriteria criteria = DetachedCriteria.forClass(getModelClass());
+
+		if (sortField != null && !sortField.isEmpty()) {
+			if (sortOrder) {
+				criteria.addOrder(Order.asc(sortField));
+			} else {
+				criteria.addOrder(Order.desc(sortField));
+			}
+		}
+
+		if (!filters.isEmpty()) {
+			Iterator<Entry<String, String>> iterator = filters.entrySet()
+					.iterator();
+			while (iterator.hasNext()) {
+				Entry<String, String> entry = iterator.next();
+				criteria.add(Restrictions.ilike(entry.getKey(),
+						entry.getValue(), MatchMode.START));
+			}
+		}
 
 		objectList = getHibernateTemplate().findByCriteria(criteria, first,
 				pageSize);
 
 		return objectList;
+	}
+
+	public Long count(Map<String, String> filters) throws DataAccessException {
+		Long count = 0l;
+
+		DetachedCriteria criteria = DetachedCriteria.forClass(getModelClass());
+		criteria.setProjection(Projections.rowCount());
+		if (!filters.isEmpty()) {
+			Iterator<Entry<String, String>> iterator = filters.entrySet()
+					.iterator();
+			while (iterator.hasNext()) {
+				Entry<String, String> entry = iterator.next();
+				criteria.add(Restrictions.ilike(entry.getKey(),
+						entry.getValue(), MatchMode.START));
+			}
+		}
+		count = (Long) getHibernateTemplate().findByCriteria(criteria).get(0);
+
+		return count;
 	}
 
 	public Long count() throws DataAccessException {
