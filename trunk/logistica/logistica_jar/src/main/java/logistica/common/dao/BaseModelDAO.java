@@ -4,11 +4,10 @@ import java.util.List;
 import java.util.Map;
 
 import logistica.common.BaseModel;
-import logistica.query.BaseQuery;
 
 import org.springframework.dao.DataAccessException;
 
-public interface BaseModelDAO<T extends BaseModel, Q extends BaseQuery> {
+public interface BaseModelDAO<T extends BaseModel> {
 
 	T find(Long id) throws DataAccessException;
 
@@ -25,8 +24,6 @@ public interface BaseModelDAO<T extends BaseModel, Q extends BaseQuery> {
 	List<T> getList(String query) throws DataAccessException;
 
 	T get(String query) throws DataAccessException;
-
-	public List<T> getList(Q query) throws DataAccessException;
 
 	Long count() throws DataAccessException;
 

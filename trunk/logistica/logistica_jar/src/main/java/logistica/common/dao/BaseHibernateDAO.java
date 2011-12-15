@@ -17,7 +17,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 public abstract class BaseHibernateDAO<T extends BaseModel, Q extends BaseQuery>
-		extends HibernateDaoSupport implements BaseModelDAO<T, Q> {
+		extends HibernateDaoSupport implements BaseModelDAO<T> {
 
 	public abstract Class<T> getModelClass();
 
@@ -125,11 +125,6 @@ public abstract class BaseHibernateDAO<T extends BaseModel, Q extends BaseQuery>
 	}
 
 	public T get(String query) throws DataAccessException {
-		// TODO implementar donde sea necesario
-		return null;
-	}
-
-	public List<T> getList(Q query) throws DataAccessException {
 		// TODO implementar donde sea necesario
 		return null;
 	}
