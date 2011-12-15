@@ -30,7 +30,7 @@ import com.view.ClienteView;
 public class ClienteController extends PaginableController<Cliente> {
 	private Logger log = Logger.getLogger(ClienteController.class);
 	private ClassPathXmlApplicationContext ctx;
-	private BaseModelDAO<Cliente, ClienteQuery> dao;
+	private BaseModelDAO<Cliente> dao;
 	private Cliente cliente;
 	private ClienteQuery clienteQuery;
 
@@ -44,8 +44,7 @@ public class ClienteController extends PaginableController<Cliente> {
 	public ClienteController() {
 		try {
 			ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
-			dao = (BaseModelDAO<Cliente, ClienteQuery>) ctx
-					.getBean("clienteDAO");
+			dao = (BaseModelDAO<Cliente>) ctx.getBean("clienteDAO");
 			clienteQuery = new ClienteQuery();
 			addEdit = false;
 		} catch (Throwable e) {
