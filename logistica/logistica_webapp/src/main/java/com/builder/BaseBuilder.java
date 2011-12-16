@@ -1,9 +1,33 @@
 package com.builder;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-public interface BaseBuilder<V extends Serializable, M extends Serializable> {
-	M toDomain(V view);
+public abstract class BaseBuilder<V extends Serializable, M extends Serializable> {
+	abstract M toDomain(V view);
 
-	V toView(M model);
+	abstract V toView(M model);
+
+	public List<M> toDomain(List<V> listView) {
+
+		List<M> list = new ArrayList<M>();
+
+		for (V v : listView) {
+			list.add(toDomain(v));
+		}
+
+		return list;
+	}
+
+	public List<V> toView(List<M> listModel) {
+
+		List<V> list = new ArrayList<V>();
+
+		for (M m : listModel) {
+			list.add(toView(m));
+		}
+
+		return list;
+	}
 }

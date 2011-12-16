@@ -12,7 +12,7 @@ import com.view.ClienteView;
 @SuppressWarnings("serial")
 @ManagedBean
 @ViewScoped
-public class ClienteBuilder implements BaseBuilder<ClienteView, Cliente>,
+public class ClienteBuilder extends BaseBuilder<ClienteView, Cliente> implements
 		Serializable {
 
 	public Cliente toDomain(ClienteView view) {
