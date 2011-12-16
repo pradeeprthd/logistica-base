@@ -72,6 +72,12 @@ where ua.usuario_id=u.id and ua.authorityList_id=a.id and u.usuario =?"/>
 			<ref local="sessionFactory" />
 		</property>
 	</bean>
+	
+	<bean id="usuarioDAOImpl" class="logistica.common.dao.UsuarioDAOImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
 
 	<!-- Conexión a base de datos -->
 	<bean id="myDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
@@ -130,6 +136,23 @@ where ua.usuario_id=u.id and ua.authorityList_id=a.id and u.usuario =?"/>
 		</property>
 		<property name="target">
 			<ref local="clienteDAOImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<!-- defino como maneja las transacciones -->
+			<props>
+				<prop key="save*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="usuarioDAO"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+		<property name="target">
+			<ref local="usuarioDAOImpl" />
 		</property>
 		<property name="transactionAttributes">
 			<!-- defino como maneja las transacciones -->
