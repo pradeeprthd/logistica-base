@@ -12,18 +12,19 @@ import com.view.UsuarioView;
 @ViewScoped
 public class UsuarioBuilder extends BaseBuilder<UsuarioView, Usuario> {
 
-	@ManagedProperty("#{authorityBuilder}")
-	private AuthorityBuilder authorityBuilder;
+//	@ManagedProperty("#{authorityBuilder}")
+//	private AuthorityBuilder authorityBuilder;
 
+	// TODO revisar
 	public Usuario toDomain(UsuarioView view) {
 		return new Usuario(view.getId(), view.getUsuario(),
-				view.getContrsenia(), view.getEnabled().booleanValue(),
-				authorityBuilder.toDomain(view.getAuthorityViewList()));
+				view.getContrsenia(), view.getEnabled().booleanValue(),null
+				);
 	}
 
 	public UsuarioView toView(Usuario model) {
 		return new UsuarioView(model.getID(), model.getUsuario(),
-				model.getContrasenia(), model.isEnable(),
-				authorityBuilder.toView(model.getAuthorityList()));
+				model.getContrasenia(), model.isEnable()
+				);
 	}
 }

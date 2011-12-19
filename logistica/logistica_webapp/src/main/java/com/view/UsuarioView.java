@@ -4,10 +4,11 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import logistica.model.Authority;
 
 @ManagedBean
 @ViewScoped
@@ -26,20 +27,24 @@ public class UsuarioView implements Serializable {
 
 	private Boolean enabled;
 
-	@ManagedProperty("#{authorityView}")
-	private List<AuthorityView> authorityViewList;
+	private List<Authority> authorityList;
+
+	// TODO revisar
+
+	// @ManagedProperty("#{authorityView}")
+	// private List<AuthorityView> authorityViewList;
 
 	public UsuarioView(Long id, String usuario, String contrsenia,
-			Boolean enabled, List<AuthorityView> authorityViewList) {
+			Boolean enabled) {
 		this.id = id;
 		this.usuario = usuario;
 		this.contrsenia = contrsenia;
 		this.enabled = enabled;
-		this.authorityViewList = authorityViewList;
+		// this.authorityViewList = authorityViewList;
 	}
 
 	public UsuarioView() {
-		this(null, null, null, null, null);
+		this(null, null, null, Boolean.TRUE);
 	}
 
 	public Long getId() {
@@ -74,11 +79,11 @@ public class UsuarioView implements Serializable {
 		this.enabled = enabled;
 	}
 
-	public List<AuthorityView> getAuthorityViewList() {
-		return authorityViewList;
+	public List<Authority> getAuthorityList() {
+		return authorityList;
 	}
 
-	public void setAuthorityViewList(List<AuthorityView> authorityViewList) {
-		this.authorityViewList = authorityViewList;
+	public void setAuthorityList(List<Authority> authorityList) {
+		this.authorityList = authorityList;
 	}
 }

@@ -10,13 +10,13 @@
 <u:composition template="/pages/layout/pageLayout.xhtml">
 	<u:define name="body">
 		<h:form id="filtroForm">
-			<p:panel id="panelFiltro" rendered="#{!clienteController.addEdit}">
+			<p:panel id="panelFiltro" rendered="#{!usuarioController.addEdit}">
 				<h:panelGrid columns="5">
 					<h:outputText value="Nombre: " />
-					<p:inputText value="#{clienteController.clienteQuery.nombre}">
+					<p:inputText value="#{usuarioController.usuarioQuery.usuario}">
 					</p:inputText>
 					<p:commandButton value="Consultar"
-						actionListener="#{clienteController.query}" update="form">
+						actionListener="#{usuarioController.query}" update="form">
 					</p:commandButton>
 				</h:panelGrid>
 			</p:panel>
@@ -24,22 +24,22 @@
 
 		<h:form id="form">
 			<p:messages id="messages" />
-			<p:dataTable id="dataTable" var="cliente"
-				value="#{clienteController.lazyDM}" paginator="true" rows="10"
+			<p:dataTable id="dataTable" var="usuario"
+				value="#{usuarioController.lazyDM}" paginator="true" rows="10"
 				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				rowsPerPageTemplate="10,15,20"
-				rendered="#{!clienteController.addEdit}"
+				rendered="#{!usuarioController.addEdit}"
 				emptyMessage="No se encontraron registros" dynamic="true">
 
 				<f:facet name="header">
-					<h:outputText value="#{msgs.admCliente_title}" />
+					<h:outputText value="#{msgs.admUsuario_title}" />
 				</f:facet>
 
 				<p:column>
 					<f:facet name="header">
 						<h:outputText value="Nombre" />
 					</f:facet>
-					<h:outputText value="#{cliente.nombre}" />
+					<h:outputText value="#{usuario.usuario}" />
 				</p:column>
 
 				<p:column>
@@ -47,12 +47,12 @@
 						<h:outputText value="Opciones" />
 					</f:facet>
 					<h:panelGrid columns="3">
-						<p:commandLink actionListener="#{clienteController.edit}"
+						<p:commandLink actionListener="#{usuarioController.edit}"
 							update="form,filtroForm">
 							<h:graphicImage url="/resource/images/edit.gif" title="Modificar"
 								style="border:0px" />
 						</p:commandLink>
-						<h:commandLink actionListener="#{clienteController.delete}"
+						<h:commandLink actionListener="#{usuarioController.delete}"
 							onclick="return confirm('¿Está seguro de eliminar el registro?');">
 							<h:graphicImage url="/resource/images/delete.gif"
 								title="Eliminar" style="border:0px" />
@@ -62,22 +62,39 @@
 
 				<f:facet name="footer">
 					<p:commandButton value="Agregar"
-						actionListener="#{clienteController.add}" update="form,filtroForm" />
+						actionListener="#{usuarioController.add}" update="form,filtroForm" />
 				</f:facet>
 			</p:dataTable>
 
 
 			<h:panelGrid id="panel" columns="1"
-				rendered="#{clienteController.addEdit}">
+				rendered="#{usuarioController.addEdit}">
 				<p:panel>
 					<p:focus for="nombreIT" />
 					<h:panelGrid columns="3">
-						<h:outputText value="Nombre" />
+						<h:outputText value="Usuario" />
 						<p:inputText id="nombreIT"
-							value="#{clienteController.clienteView.nombre}">
+							value="#{usuarioController.usuarioView.usuario}">
 							<f:validateBean for="nombreIT" />
 						</p:inputText>
 						<h:message id="mnIT" for="nombreIT" />
+
+						<h:outputText value="Contraseña" />
+						<p:password value="#{usuarioController.usuarioView.contrsenia}"
+							id="contraseniaIT">
+							<f:validateBean for="contraseniaIT" />
+						</p:password>
+						<h:message id="mcIT" for="contraseniaIT" />
+					</h:panelGrid>
+					<h:panelGrid columns="3">
+						<p:pickList value="#{usuarioController.rolList}" var="rol"
+							iconOnly="true" itemLabel="#{rol.label}" itemValue="#{rol}"
+							converter="rolConverter" showSourceControls="true"
+							showTargetControls="true">
+							<f:facet name="sourceCaption">Roles disponibles</f:facet>
+							<f:facet name="targetCaption">Roles seleccionados</f:facet>
+						</p:pickList>
+
 					</h:panelGrid>
 				</p:panel>
 
@@ -86,11 +103,11 @@
 				<!-- ================================================== -->
 				<h:panelGrid columns="2">
 					<p:commandButton value="Guardar"
-						actionListener="#{clienteController.save}"
+						actionListener="#{usuarioController.save}"
 						update="form,filtroForm">
 					</p:commandButton>
 					<p:commandButton value="Cancelar"
-						actionListener="#{clienteController.cancel}" immediate="true"
+						actionListener="#{usuarioController.cancel}" immediate="true"
 						update="form,filtroForm">
 					</p:commandButton>
 				</h:panelGrid>

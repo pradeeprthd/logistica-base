@@ -1,5 +1,6 @@
 package com.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,10 +13,14 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
 import logistica.common.dao.BaseModelDAO;
+import logistica.model.Authority;
 import logistica.model.Usuario;
 import logistica.query.UsuarioQuery;
+import logistica.type.RolEnum;
+import logistica.util.EncriptadorUtil;
 
 import org.apache.log4j.Logger;
+import org.primefaces.model.DualListModel;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -34,6 +39,8 @@ public class UsuarioController extends PaginableController<Usuario> {
 	private BaseModelDAO<Usuario> dao;
 	private Usuario usuario;
 	private UsuarioQuery usuarioQuery;
+	private DualListModel<RolEnum> rolList;
+	private List<Authority> authorityList;
 
 	@ManagedProperty("#{usuarioView}")
 	private UsuarioView usuarioView;
@@ -48,6 +55,16 @@ public class UsuarioController extends PaginableController<Usuario> {
 			dao = (BaseModelDAO<Usuario>) ctx.getBean("usuarioDAO");
 			usuarioQuery = new UsuarioQuery();
 			addEdit = false;
+
+			// roles
+			List<RolEnum> source = new ArrayList<RolEnum>();
+			List<RolEnum> target = new ArrayList<RolEnum>();
+			source.add(RolEnum.ROLE_USER);
+			source.add(RolEnum.ADMIN_USER);
+
+			authorityList = new ArrayList<Authority>();
+
+			rolList = new DualListModel<RolEnum>(source, target);
 		} catch (Throwable e) {
 			log.error("Error al inicializar la clase UsuarioController", e);
 			FacesContext.getCurrentInstance().addMessage(
@@ -69,6 +86,26 @@ public class UsuarioController extends PaginableController<Usuario> {
 		return usuarioView;
 	}
 
+	public void setUsuarioView(UsuarioView usuarioView) {
+		this.usuarioView = usuarioView;
+	}
+
+	public UsuarioBuilder getUsuarioBuilder() {
+		return usuarioBuilder;
+	}
+
+	public void setUsuarioBuilder(UsuarioBuilder usuarioBuilder) {
+		this.usuarioBuilder = usuarioBuilder;
+	}
+
+	public DualListModel<RolEnum> getRolList() {
+		return rolList;
+	}
+
+	public void setRolList(DualListModel<RolEnum> rolList) {
+		this.rolList = rolList;
+	}
+
 	public void query(ActionEvent event) {
 		loadList();
 	}
@@ -76,6 +113,7 @@ public class UsuarioController extends PaginableController<Usuario> {
 	public void edit(ActionEvent event) {
 		try {
 			usuario = (Usuario) lazyDM.getRowData();
+			setRoles(usuario);
 			usuarioView = usuarioBuilder.toView(usuario);
 			addEdit = true;
 		} catch (Throwable e) {
@@ -109,6 +147,13 @@ public class UsuarioController extends PaginableController<Usuario> {
 	public void save(ActionEvent event) {
 		try {
 			usuario = usuarioBuilder.toDomain(usuarioView);
+			getRoles();
+			usuario.setAuthorityList(authorityList);
+
+			// encripto la contraseña
+			usuario.setContrasenia(EncriptadorUtil.getStringMessageDigest(
+					usuario.getContrasenia(), EncriptadorUtil.SHA1));
+
 			if (usuario.getID() != null) {
 				dao.edit(usuario);
 				addEdit = false;
@@ -158,5 +203,24 @@ public class UsuarioController extends PaginableController<Usuario> {
 		Map<String, String> filtro = new HashMap<String, String>();
 		filtro.put("usuario", usuarioQuery.getUsuario());
 		lazyDM.setRowCount(dao.count(filtro).intValue());
+	}
+
+	private void getRoles() {
+		authorityList.clear();
+
+		for (RolEnum rol : rolList.getTarget()) {
+			authorityList.add(new Authority(null, rol.name()));
+		}
+	}
+
+	private void setRoles(Usuario usuario) {
+		List<RolEnum> list = new ArrayList<RolEnum>();
+
+		for (Authority a : usuario.getAuthorityList()) {
+			list.add(RolEnum.valueOf(a.getNombre()));
+		}
+
+		rolList.setTarget(list);
+
 	}
 }
