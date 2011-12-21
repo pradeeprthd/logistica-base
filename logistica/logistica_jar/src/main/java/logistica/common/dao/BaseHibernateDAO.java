@@ -8,6 +8,7 @@ import java.util.Map.Entry;
 import logistica.common.BaseModel;
 import logistica.query.BaseQuery;
 
+import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
@@ -23,6 +24,18 @@ public abstract class BaseHibernateDAO<T extends BaseModel, Q extends BaseQuery>
 
 	public T find(Long id) throws DataAccessException {
 		T object = getHibernateTemplate().get(getModelClass(), id);
+		return object;
+	}
+
+	@SuppressWarnings({ "unchecked", "deprecation" })
+	public T findFULL(Long id) throws DataAccessException {
+
+		DetachedCriteria criteria = DetachedCriteria.forClass(getModelClass())
+				.add(Restrictions.eq("id", id))
+				.setFetchMode("rolEnumList", FetchMode.EAGER);
+
+		T object = (T) getHibernateTemplate().findByCriteria(criteria).get(0);
+
 		return object;
 	}
 

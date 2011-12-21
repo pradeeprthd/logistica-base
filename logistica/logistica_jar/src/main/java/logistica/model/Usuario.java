@@ -3,14 +3,20 @@ package logistica.model;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.SequenceGenerator;
 
 import logistica.common.BaseModel;
+import logistica.type.RolEnum;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -35,16 +41,19 @@ public class Usuario extends BaseModel {
 	@Column(name = "enable", columnDefinition = "BOOLEAN")
 	private boolean enable;
 
-	@OneToMany
-	private List<Authority> authorityList;
+	@ElementCollection(fetch = FetchType.LAZY)
+	@JoinTable(name = "rolEnum")
+	@JoinColumn(name = "usuarioID")
+	@Enumerated(EnumType.STRING)
+	private List<RolEnum> rolEnumList;
 
 	public Usuario(Long id, String usuario, String contrasenia, boolean enable,
-			List<Authority> authorityList) {
+			List<RolEnum> rolEnumList) {
 		this.id = id;
 		this.usuario = usuario;
 		this.contrasenia = contrasenia;
 		this.enable = enable;
-		this.authorityList = authorityList;
+		this.rolEnumList = rolEnumList;
 	}
 
 	public Usuario() {
@@ -83,11 +92,11 @@ public class Usuario extends BaseModel {
 		this.enable = enable;
 	}
 
-	public List<Authority> getAuthorityList() {
-		return authorityList;
+	public List<RolEnum> getRolEnumList() {
+		return rolEnumList;
 	}
 
-	public void setAuthorityList(List<Authority> authorityList) {
-		this.authorityList = authorityList;
+	public void setRolEnumList(List<RolEnum> rolEnumList) {
+		this.rolEnumList = rolEnumList;
 	}
 }

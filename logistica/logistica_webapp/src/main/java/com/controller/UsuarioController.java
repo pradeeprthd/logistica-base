@@ -13,7 +13,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
 import logistica.common.dao.BaseModelDAO;
-import logistica.model.Authority;
 import logistica.model.Usuario;
 import logistica.query.UsuarioQuery;
 import logistica.type.RolEnum;
@@ -40,7 +39,7 @@ public class UsuarioController extends PaginableController<Usuario> {
 	private Usuario usuario;
 	private UsuarioQuery usuarioQuery;
 	private DualListModel<RolEnum> rolList;
-	private List<Authority> authorityList;
+	private List<RolEnum> rolEnumList;
 
 	@ManagedProperty("#{usuarioView}")
 	private UsuarioView usuarioView;
@@ -62,7 +61,7 @@ public class UsuarioController extends PaginableController<Usuario> {
 			source.add(RolEnum.ROLE_USER);
 			source.add(RolEnum.ADMIN_USER);
 
-			authorityList = new ArrayList<Authority>();
+			rolEnumList = new ArrayList<RolEnum>();
 
 			rolList = new DualListModel<RolEnum>(source, target);
 		} catch (Throwable e) {
@@ -113,6 +112,7 @@ public class UsuarioController extends PaginableController<Usuario> {
 	public void edit(ActionEvent event) {
 		try {
 			usuario = (Usuario) lazyDM.getRowData();
+			usuario = dao.findFULL(usuario.getID());
 			setRoles(usuario);
 			usuarioView = usuarioBuilder.toView(usuario);
 			addEdit = true;
@@ -140,6 +140,13 @@ public class UsuarioController extends PaginableController<Usuario> {
 	}
 
 	public void add(ActionEvent event) {
+		// roles
+		List<RolEnum> source = new ArrayList<RolEnum>();
+		List<RolEnum> target = new ArrayList<RolEnum>();
+		source.add(RolEnum.ROLE_USER);
+		source.add(RolEnum.ADMIN_USER);
+		rolList = new DualListModel<RolEnum>(source, target);
+
 		addEdit = true;
 		clear();
 	}
@@ -148,7 +155,7 @@ public class UsuarioController extends PaginableController<Usuario> {
 		try {
 			usuario = usuarioBuilder.toDomain(usuarioView);
 			getRoles();
-			usuario.setAuthorityList(authorityList);
+			usuario.setRolEnumList(rolEnumList);
 
 			// encripto la contraseña
 			usuario.setContrasenia(EncriptadorUtil.getStringMessageDigest(
@@ -206,21 +213,21 @@ public class UsuarioController extends PaginableController<Usuario> {
 	}
 
 	private void getRoles() {
-		authorityList.clear();
-
-		for (RolEnum rol : rolList.getTarget()) {
-			authorityList.add(new Authority(null, rol.name()));
-		}
+		rolEnumList = rolList.getTarget();
 	}
 
 	private void setRoles(Usuario usuario) {
-		List<RolEnum> list = new ArrayList<RolEnum>();
 
-		for (Authority a : usuario.getAuthorityList()) {
-			list.add(RolEnum.valueOf(a.getNombre()));
+		// rolList.setTarget(list);
+
+		// saco los roles que estan sleccionados.
+		List<RolEnum> source = new ArrayList<RolEnum>();
+		for (RolEnum rol : RolEnum.values()) {
+			if (!usuario.getRolEnumList().contains(rol)) {
+				source.add(rol);
+			}
 		}
 
-		rolList.setTarget(list);
-
+		rolList = new DualListModel<RolEnum>(source, usuario.getRolEnumList());
 	}
 }
