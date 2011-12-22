@@ -40,6 +40,8 @@ public class UsuarioController extends PaginableController<Usuario> {
 	private UsuarioQuery usuarioQuery;
 	private DualListModel<RolEnum> rolList;
 	private List<RolEnum> rolEnumList;
+	private List<RolEnum> source;
+	private List<RolEnum> target;
 
 	@ManagedProperty("#{usuarioView}")
 	private UsuarioView usuarioView;
@@ -56,11 +58,8 @@ public class UsuarioController extends PaginableController<Usuario> {
 			addEdit = false;
 
 			// roles
-			List<RolEnum> source = new ArrayList<RolEnum>();
-			List<RolEnum> target = new ArrayList<RolEnum>();
-			source.add(RolEnum.ROLE_USER);
-			source.add(RolEnum.ADMIN_USER);
-
+			source = new ArrayList<RolEnum>();
+			target = new ArrayList<RolEnum>();
 			rolEnumList = new ArrayList<RolEnum>();
 
 			rolList = new DualListModel<RolEnum>(source, target);
@@ -141,11 +140,12 @@ public class UsuarioController extends PaginableController<Usuario> {
 
 	public void add(ActionEvent event) {
 		// roles
-		List<RolEnum> source = new ArrayList<RolEnum>();
-		List<RolEnum> target = new ArrayList<RolEnum>();
+		source.clear();
+		target.clear();
 		source.add(RolEnum.ROLE_USER);
 		source.add(RolEnum.ADMIN_USER);
-		rolList = new DualListModel<RolEnum>(source, target);
+		rolList.setSource(source);
+		rolList.setTarget(target);
 
 		addEdit = true;
 		clear();
@@ -190,6 +190,12 @@ public class UsuarioController extends PaginableController<Usuario> {
 	public void clear() {
 		usuario = new Usuario();
 		usuarioView = new UsuarioView();
+		source.clear();
+		target.clear();
+		source.add(RolEnum.ROLE_USER);
+		source.add(RolEnum.ADMIN_USER);
+		rolList.setSource(source);
+		rolList.setTarget(target);
 	}
 
 	private void loadList() {
@@ -217,17 +223,15 @@ public class UsuarioController extends PaginableController<Usuario> {
 	}
 
 	private void setRoles(Usuario usuario) {
-
-		// rolList.setTarget(list);
-
 		// saco los roles que estan sleccionados.
-		List<RolEnum> source = new ArrayList<RolEnum>();
+		source.clear();
 		for (RolEnum rol : RolEnum.values()) {
 			if (!usuario.getRolEnumList().contains(rol)) {
 				source.add(rol);
 			}
 		}
 
-		rolList = new DualListModel<RolEnum>(source, usuario.getRolEnumList());
+		rolList.setSource(source);
+		rolList.setTarget(usuario.getRolEnumList());
 	}
 }

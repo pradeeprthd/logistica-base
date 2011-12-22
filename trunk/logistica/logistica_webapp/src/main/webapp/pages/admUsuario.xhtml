@@ -90,7 +90,7 @@
 						<p:pickList value="#{usuarioController.rolList}" var="rol"
 							iconOnly="true" itemLabel="#{rol.label}" itemValue="#{rol}"
 							converter="rolConverter" showSourceControls="true"
-							showTargetControls="true">
+							showTargetControls="true" immediate="true">
 							<f:facet name="sourceCaption">Roles disponibles</f:facet>
 							<f:facet name="targetCaption">Roles seleccionados</f:facet>
 						</p:pickList>
