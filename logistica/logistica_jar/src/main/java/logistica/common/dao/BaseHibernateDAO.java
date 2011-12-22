@@ -27,15 +27,17 @@ public abstract class BaseHibernateDAO<T extends BaseModel, Q extends BaseQuery>
 		return object;
 	}
 
-	@SuppressWarnings({ "unchecked", "deprecation" })
+	@SuppressWarnings({ "unchecked" })
 	public T findFULL(Long id) throws DataAccessException {
 
 		DetachedCriteria criteria = DetachedCriteria.forClass(getModelClass())
-				.add(Restrictions.eq("id", id))
-				.setFetchMode("rolEnumList", FetchMode.EAGER);
+				.add(Restrictions.eq("id", id));
+
+		for (String listName : getListNames()) {
+			criteria.setFetchMode(listName, FetchMode.JOIN);
+		}
 
 		T object = (T) getHibernateTemplate().findByCriteria(criteria).get(0);
-
 		return object;
 	}
 
@@ -139,6 +141,10 @@ public abstract class BaseHibernateDAO<T extends BaseModel, Q extends BaseQuery>
 
 	public T get(String query) throws DataAccessException {
 		// TODO implementar donde sea necesario
+		return null;
+	}
+
+	public List<String> getListNames() {
 		return null;
 	}
 }
