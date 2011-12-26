@@ -139,14 +139,6 @@ public class UsuarioController extends PaginableController<Usuario> {
 	}
 
 	public void add(ActionEvent event) {
-		// roles
-		source.clear();
-		target.clear();
-		source.add(RolEnum.ROLE_USER);
-		source.add(RolEnum.ADMIN_USER);
-		rolList.setSource(source);
-		rolList.setTarget(target);
-
 		addEdit = true;
 		clear();
 	}
@@ -184,7 +176,7 @@ public class UsuarioController extends PaginableController<Usuario> {
 
 	public void cancel(ActionEvent event) {
 		addEdit = false;
-		loadList();
+		lazyDM = null;
 	}
 
 	public void clear() {
@@ -194,8 +186,7 @@ public class UsuarioController extends PaginableController<Usuario> {
 		target.clear();
 		source.add(RolEnum.ROLE_USER);
 		source.add(RolEnum.ADMIN_USER);
-		rolList.setSource(source);
-		rolList.setTarget(target);
+		rolList = new DualListModel<RolEnum>(source, target);
 	}
 
 	private void loadList() {
@@ -230,8 +221,6 @@ public class UsuarioController extends PaginableController<Usuario> {
 				source.add(rol);
 			}
 		}
-
-		rolList.setSource(source);
-		rolList.setTarget(usuario.getRolEnumList());
+		rolList = new DualListModel<RolEnum>(source, usuario.getRolEnumList());
 	}
 }

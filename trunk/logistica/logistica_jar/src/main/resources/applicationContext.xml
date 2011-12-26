@@ -1,80 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--<beans
-	xmlns:s="http://www.springframework.org/schema/security" 
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-	xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:ehcache="http://www.springmodules.org/schema/ehcache"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-       http://www.springmodules.org/schema/ehcache http://www.springmodules.org/schema/cache/springmodules-ehcache.xsd
-       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
-       http://www.springframework.org/schema/security
- 	   http://www.springframework.org/schema/security/spring-security-3.0.5.xsd">
- 	   
-	-->
+<!--<beans xmlns:s="http://www.springframework.org/schema/security" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:ehcache="http://www.springmodules.org/schema/ehcache" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd 
+	http://www.springmodules.org/schema/ehcache http://www.springmodules.org/schema/cache/springmodules-ehcache.xsd 
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd 
+	http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.5.xsd"> -->
 <beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:security="http://www.springframework.org/schema/security" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd">
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd">
 
 	<!-- export de las estadisticas de la cache -->
-	<!--<bean id="jmxExporter" class="org.springframework.jmx.export.MBeanExporter">
-		<property name="beans">
-			<map>
-				<entry key="Hibernate:name=statistics">
-					<ref local="statisticsBean" />
-				</entry>
-				<entry key="ehcache:name=ehCacheManagerMBean" value-ref="ehCacheManagerMBean" />
-			</map>
-		</property>
-	</bean>
-
-	<bean id="statisticsBean" class="org.hibernate.jmx.StatisticsService">
-		<property name="statisticsEnabled">
-			<value>true</value>
-		</property>
-		<property name="sessionFactory">
-			<ref local="sessionFactory" />
-		</property>
-	</bean>
-
-	<bean name="ehCacheManagerMBean" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" />
-	
-	--><!-- seguridad de spring security -->
+	<!--<bean id="jmxExporter" class="org.springframework.jmx.export.MBeanExporter"> 
+		<property name="beans"> <map> <entry key="Hibernate:name=statistics"> <ref 
+		local="statisticsBean" /> </entry> <entry key="ehcache:name=ehCacheManagerMBean" 
+		value-ref="ehCacheManagerMBean" /> </map> </property> </bean> <bean id="statisticsBean" 
+		class="org.hibernate.jmx.StatisticsService"> <property name="statisticsEnabled"> 
+		<value>true</value> </property> <property name="sessionFactory"> <ref local="sessionFactory" 
+		/> </property> </bean> <bean name="ehCacheManagerMBean" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" 
+		/> --><!-- seguridad de spring security -->
 	<security:http auto-config="true" use-expressions="true">
-	 	<security:intercept-url pattern="/pages/login*" filters="none"/>
-	 	<security:intercept-url pattern="/pages/admUsuario*" access="hasRole('ADMIN_USER')"/>
-        <security:intercept-url pattern="/**" access="hasRole('ROLE_USER')"/>
-        <security:form-login login-page="/pages/login.jsp" default-target-url="/pages/welcome.xhtml" authentication-failure-url="/pages/login.jsp?login_error=1"/>
-    </security:http>
-     
- 
-    <!--
-    <security:http auto-config='true'>
-    <security:intercept-url pattern="/**" access="ROLE_USER" />
-  </security:http>-->
-    
-    
-    <security:authentication-manager>
-        <security:authentication-provider>
-        
-        <!--<security:user-service>
-			<security:user name="admin" password="admin" authorities="ROLE_USER" />
-		</security:user-service>-->
-		
-		<security:password-encoder hash="sha" />
-        
-            <security:jdbc-user-service data-source-ref="myDataSource"
-               users-by-username-query="SELECT usuario, contrasenia, enable FROM logistica.usuario WHERE usuario=?"
-               authorities-by-username-query="select u.usuario,r.rolenumlist from logistica.usuario u,logistica.rolenum r
-where r.usuario_id=u.id and u.usuario =?"/>
-        </security:authentication-provider>
-    </security:authentication-manager>
+		<security:intercept-url pattern="/pages/login*"
+			filters="none" />
+		<security:intercept-url pattern="/pages/admUsuario*"
+			access="hasRole('ADMIN_USER')" />
+		<security:intercept-url pattern="/**"
+			access="hasRole('ROLE_USER')" />
+		<security:form-login login-page="/pages/login.jsp"
+			default-target-url="/pages/welcome.xhtml" authentication-failure-url="/pages/login.jsp?login_error=1" />
+	</security:http>
+
+
+	<!-- <security:http auto-config='true'> <security:intercept-url pattern="/**" 
+		access="ROLE_USER" /> </security:http> -->
+
+
+	<security:authentication-manager>
+		<security:authentication-provider>
+
+			<!--<security:user-service> <security:user name="admin" password="admin" 
+				authorities="ROLE_USER" /> </security:user-service> -->
+
+			<security:password-encoder hash="sha" />
+
+			<security:jdbc-user-service
+				data-source-ref="myDataSource"
+				users-by-username-query="SELECT usuario, contrasenia, enable FROM logistica.usuario WHERE usuario=?"
+				authorities-by-username-query="select u.usuario,r.rolenumlist from logistica.usuario u,logistica.rolenum r
+where r.usuario_id=u.id and u.usuario =?" />
+		</security:authentication-provider>
+	</security:authentication-manager>
 
 	<bean id="clienteDAOImpl" class="logistica.common.dao.ClienteDAOImpl">
 		<property name="sessionFactory">
 			<ref local="sessionFactory" />
 		</property>
 	</bean>
-	
+
 	<bean id="usuarioDAOImpl" class="logistica.common.dao.UsuarioDAOImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="proveedorDAOImpl" class="logistica.common.dao.ProveedorDAOImpl">
 		<property name="sessionFactory">
 			<ref local="sessionFactory" />
 		</property>
@@ -119,6 +107,7 @@ where r.usuario_id=u.id and u.usuario =?"/>
 				<value>logistica.model.Cliente</value>
 				<value>logistica.model.Authority</value>
 				<value>logistica.model.Usuario</value>
+				<value>logistica.model.Proveedor</value>
 			</list>
 		</property>
 	</bean>
@@ -146,7 +135,7 @@ where r.usuario_id=u.id and u.usuario =?"/>
 			</props>
 		</property>
 	</bean>
-	
+
 	<bean id="usuarioDAO"
 		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
 		<property name="transactionManager">
@@ -154,6 +143,23 @@ where r.usuario_id=u.id and u.usuario =?"/>
 		</property>
 		<property name="target">
 			<ref local="usuarioDAOImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<!-- defino como maneja las transacciones -->
+			<props>
+				<prop key="save*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="proveedorDAO"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+		<property name="target">
+			<ref local="proveedorDAOImpl" />
 		</property>
 		<property name="transactionAttributes">
 			<!-- defino como maneja las transacciones -->
