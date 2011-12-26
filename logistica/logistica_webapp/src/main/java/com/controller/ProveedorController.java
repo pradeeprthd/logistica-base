@@ -12,43 +12,44 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
 import logistica.common.dao.BaseModelDAO;
-import logistica.model.Cliente;
-import logistica.query.ClienteQuery;
+import logistica.model.Proveedor;
+import logistica.query.ProveedorQuery;
 
 import org.apache.log4j.Logger;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.builder.ClienteBuilder;
+import com.builder.ProveedorBuilder;
 import com.util.JSFUtil;
-import com.view.ClienteView;
+import com.view.ProveedorView;
 
 @ManagedBean
 @ViewScoped
 @SuppressWarnings("serial")
-public class ClienteController extends PaginableController<Cliente> {
-	private Logger log = Logger.getLogger(ClienteController.class);
+public class ProveedorController extends PaginableController<Proveedor> {
+
+	private Logger log = Logger.getLogger(ProveedorController.class);
 	private ClassPathXmlApplicationContext ctx;
-	private BaseModelDAO<Cliente> dao;
-	private Cliente cliente;
-	private ClienteQuery clienteQuery;
+	private BaseModelDAO<Proveedor> dao;
+	private Proveedor proveedor;
+	private ProveedorQuery proveedorQuery;
 
-	@ManagedProperty("#{clienteView}")
-	private ClienteView clienteView;
+	@ManagedProperty("#{proveedorView}")
+	private ProveedorView proveedorView;
 
-	@ManagedProperty("#{clienteBuilder}")
-	private ClienteBuilder clienteBuilder;
+	@ManagedProperty("#{proveedorBuilder}")
+	private ProveedorBuilder proveedorBuilder;
 
 	@SuppressWarnings("unchecked")
-	public ClienteController() {
+	public ProveedorController() {
 		try {
 			ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
-			dao = (BaseModelDAO<Cliente>) ctx.getBean("clienteDAO");
-			clienteQuery = new ClienteQuery();
+			dao = (BaseModelDAO<Proveedor>) ctx.getBean("proveedorDAO");
+			proveedorQuery = new ProveedorQuery();
 			addEdit = false;
 		} catch (Throwable e) {
-			log.error("Error al inicializar la clase ClienteController", e);
+			log.error("Error al inicializar la clase ProveedorController", e);
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR,
@@ -56,24 +57,24 @@ public class ClienteController extends PaginableController<Cliente> {
 		}
 	}
 
-	public ClienteView getClienteView() {
-		return clienteView;
+	public ProveedorView getProveedorView() {
+		return proveedorView;
 	}
 
-	public void setClienteView(ClienteView clienteView) {
-		this.clienteView = clienteView;
+	public void setProveedorView(ProveedorView proveedorView) {
+		this.proveedorView = proveedorView;
 	}
 
-	public ClienteBuilder getClienteBuilder() {
-		return clienteBuilder;
+	public ProveedorBuilder getProveedorBuilder() {
+		return proveedorBuilder;
 	}
 
-	public void setClienteBuilder(ClienteBuilder clienteBuilder) {
-		this.clienteBuilder = clienteBuilder;
+	public void setProveedorBuilder(ProveedorBuilder proveedorBuilder) {
+		this.proveedorBuilder = proveedorBuilder;
 	}
 
-	public ClienteQuery getClienteQuery() {
-		return clienteQuery;
+	public ProveedorQuery getProveedorQuery() {
+		return proveedorQuery;
 	}
 
 	public void query(ActionEvent event) {
@@ -82,9 +83,8 @@ public class ClienteController extends PaginableController<Cliente> {
 
 	public void edit(ActionEvent event) {
 		try {
-			cliente = (Cliente) lazyDM.getRowData();
-			// cliente = dao.find(cliente.getID());
-			clienteView = clienteBuilder.toView(cliente);
+			proveedor = (Proveedor) lazyDM.getRowData();
+			proveedorView = proveedorBuilder.toView(proveedor);
 			addEdit = true;
 		} catch (Throwable e) {
 			log.error("Error al editar", e);
@@ -97,8 +97,8 @@ public class ClienteController extends PaginableController<Cliente> {
 
 	public void delete(ActionEvent event) {
 		try {
-			cliente = (Cliente) lazyDM.getRowData();
-			dao.delete(cliente);
+			proveedor = (Proveedor) lazyDM.getRowData();
+			dao.delete(proveedor);
 			loadList();
 		} catch (Throwable e) {
 			log.error("Error al eliminar", e);
@@ -116,12 +116,12 @@ public class ClienteController extends PaginableController<Cliente> {
 
 	public void save(ActionEvent event) {
 		try {
-			cliente = clienteBuilder.toDomain(clienteView);
-			if (cliente.getID() != null) {
-				dao.edit(cliente);
+			proveedor = proveedorBuilder.toDomain(proveedorView);
+			if (proveedor.getID() != null) {
+				dao.edit(proveedor);
 				addEdit = false;
 			} else {
-				dao.save(cliente);
+				dao.save(proveedor);
 			}
 			clear();
 			JSFUtil.saveMessage("Elemento guardado con exito",
@@ -144,28 +144,27 @@ public class ClienteController extends PaginableController<Cliente> {
 	}
 
 	public void clear() {
-		cliente = new Cliente();
-		clienteView = new ClienteView();
+		proveedor = new Proveedor();
+		proveedorView = new ProveedorView();
 	}
 
 	private void loadList() {
 
-		lazyDM = new LazyDataModel<Cliente>() {
+		lazyDM = new LazyDataModel<Proveedor>() {
 
 			@Override
-			public List<Cliente> load(int first, int pageSize,
+			public List<Proveedor> load(int first, int pageSize,
 					String sortField, SortOrder sortOrder,
 					Map<String, String> filters) {
 
 				Map<String, String> filtro = new HashMap<String, String>();
-				filtro.put("nombre", clienteQuery.getNombre());
+				filtro.put("nombre", proveedorQuery.getNombre());
 				return dao.getList(first, pageSize, "nombre", true, filtro);
 			}
-
 		};
 
 		Map<String, String> filtro = new HashMap<String, String>();
-		filtro.put("nombre", clienteQuery.getNombre());
+		filtro.put("nombre", proveedorQuery.getNombre());
 		lazyDM.setRowCount(dao.count(filtro).intValue());
 	}
 }

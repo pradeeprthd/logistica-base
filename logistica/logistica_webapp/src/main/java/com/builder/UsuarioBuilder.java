@@ -12,10 +12,6 @@ import com.view.UsuarioView;
 @ViewScoped
 public class UsuarioBuilder extends BaseBuilder<UsuarioView, Usuario> {
 
-	// @ManagedProperty("#{authorityBuilder}")
-	// private AuthorityBuilder authorityBuilder;
-
-	// TODO revisar
 	public Usuario toDomain(UsuarioView view) {
 		return new Usuario(view.getId(), view.getUsuario(),
 				view.getContrsenia(), view.getEnabled().booleanValue(), null);
