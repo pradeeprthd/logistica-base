@@ -68,6 +68,24 @@ where r.usuario_id=u.id and u.usuario =?" />
 		</property>
 	</bean>
 
+	<bean id="choferDAOImpl" class="logistica.common.dao.ChoferDAOImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="provinciaDAOImpl" class="logistica.common.dao.ProvinciaDAOImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+	
+	<bean id="localidadDAOImpl" class="logistica.common.dao.LocalidadDAOImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+	
 	<!-- Conexión a base de datos -->
 	<bean id="myDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
 		<property name="jndiName">
@@ -108,6 +126,9 @@ where r.usuario_id=u.id and u.usuario =?" />
 				<value>logistica.model.Authority</value>
 				<value>logistica.model.Usuario</value>
 				<value>logistica.model.Proveedor</value>
+				<value>logistica.model.Chofer</value>
+				<value>logistica.model.Provincia</value>
+				<value>logistica.model.Localidad</value>
 			</list>
 		</property>
 	</bean>
@@ -160,6 +181,57 @@ where r.usuario_id=u.id and u.usuario =?" />
 		</property>
 		<property name="target">
 			<ref local="proveedorDAOImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<!-- defino como maneja las transacciones -->
+			<props>
+				<prop key="save*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="choferDAO"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+		<property name="target">
+			<ref local="choferDAOImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<!-- defino como maneja las transacciones -->
+			<props>
+				<prop key="save*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="provinciaDAO"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+		<property name="target">
+			<ref local="provinciaDAOImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<!-- defino como maneja las transacciones -->
+			<props>
+				<prop key="save*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="localidadDAO"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+		<property name="target">
+			<ref local="localidadDAOImpl" />
 		</property>
 		<property name="transactionAttributes">
 			<!-- defino como maneja las transacciones -->
