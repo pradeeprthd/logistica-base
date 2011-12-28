@@ -7,6 +7,7 @@ import logistica.model.Authority;
 
 import com.view.AuthorityView;
 
+@SuppressWarnings("serial")
 @ManagedBean
 @ViewScoped
 public class AuthorityBuilder extends BaseBuilder<AuthorityView, Authority> {
