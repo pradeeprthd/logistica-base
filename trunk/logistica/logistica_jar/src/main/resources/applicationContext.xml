@@ -25,6 +25,8 @@
 			access="hasRole('ADMIN_USER')" />
 		<security:intercept-url pattern="/**"
 			access="hasRole('ROLE_USER')" />
+		<security:intercept-url pattern="/**"
+			access="hasRole('ADMIN_USER')" />
 		<security:form-login login-page="/pages/login.jsp"
 			default-target-url="/pages/welcome.xhtml" authentication-failure-url="/pages/login.jsp?login_error=1" />
 	</security:http>
@@ -79,13 +81,13 @@ where r.usuario_id=u.id and u.usuario =?" />
 			<ref local="sessionFactory" />
 		</property>
 	</bean>
-	
+
 	<bean id="localidadDAOImpl" class="logistica.common.dao.LocalidadDAOImpl">
 		<property name="sessionFactory">
 			<ref local="sessionFactory" />
 		</property>
 	</bean>
-	
+
 	<!-- Conexión a base de datos -->
 	<bean id="myDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
 		<property name="jndiName">
@@ -207,7 +209,7 @@ where r.usuario_id=u.id and u.usuario =?" />
 			</props>
 		</property>
 	</bean>
-	
+
 	<bean id="provinciaDAO"
 		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
 		<property name="transactionManager">
@@ -224,7 +226,7 @@ where r.usuario_id=u.id and u.usuario =?" />
 			</props>
 		</property>
 	</bean>
-	
+
 	<bean id="localidadDAO"
 		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
 		<property name="transactionManager">
