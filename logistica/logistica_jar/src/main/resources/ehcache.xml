@@ -4,11 +4,47 @@
 
 	<defaultCache maxElementsInMemory="1000"
 		maxElementsOnDisk="10000" eternal="false" overflowToDisk="false"
-		timeToIdleSeconds="120" timeToLiveSeconds="240"
+		timeToIdleSeconds="14400" timeToLiveSeconds="0"
 		memoryStoreEvictionPolicy="LRU" statistics="true">
 	</defaultCache>
 
-	<cache name="clienteCache" maxElementsInMemory="100"
+	<cache name="logistica.model.Cliente" maxElementsInMemory="100"
+		maxElementsOnDisk="1000" eternal="false" overflowToDisk="false"
+		timeToIdleSeconds="14400" timeToLiveSeconds="0"
+		memoryStoreEvictionPolicy="LRU" statistics="true">
+	</cache>
+	
+	<cache name="logistica.model.Chofer" maxElementsInMemory="100"
+		maxElementsOnDisk="1000" eternal="false" overflowToDisk="false"
+		timeToIdleSeconds="14400" timeToLiveSeconds="0"
+		memoryStoreEvictionPolicy="LRU" statistics="true">
+	</cache>
+	
+	<cache name="logistica.model.Configuracion" maxElementsInMemory="3"
+		maxElementsOnDisk="10" eternal="false" overflowToDisk="false"
+		timeToIdleSeconds="14400" timeToLiveSeconds="0"
+		memoryStoreEvictionPolicy="LRU" statistics="true">
+	</cache>
+	
+	<cache name="logistica.model.Localidad" maxElementsInMemory="300"
+		maxElementsOnDisk="1000" eternal="false" overflowToDisk="false"
+		timeToIdleSeconds="14400" timeToLiveSeconds="0"
+		memoryStoreEvictionPolicy="LRU" statistics="true">
+	</cache>
+	
+	<cache name="logistica.model.Proveedor" maxElementsInMemory="100"
+		maxElementsOnDisk="1000" eternal="false" overflowToDisk="false"
+		timeToIdleSeconds="14400" timeToLiveSeconds="0"
+		memoryStoreEvictionPolicy="LRU" statistics="true">
+	</cache>
+	
+	<cache name="logistica.model.Provincia" maxElementsInMemory="50"
+		maxElementsOnDisk="100" eternal="false" overflowToDisk="false"
+		timeToIdleSeconds="14400" timeToLiveSeconds="0"
+		memoryStoreEvictionPolicy="LRU" statistics="true">
+	</cache>
+	
+	<cache name="logistica.model.Usuario" maxElementsInMemory="100"
 		maxElementsOnDisk="1000" eternal="false" overflowToDisk="false"
 		timeToIdleSeconds="14400" timeToLiveSeconds="0"
 		memoryStoreEvictionPolicy="LRU" statistics="true">
