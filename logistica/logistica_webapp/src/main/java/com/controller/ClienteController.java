@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -21,6 +22,7 @@ import org.primefaces.model.SortOrder;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.builder.ClienteBuilder;
+import com.controller.common.DireccionBean;
 import com.util.JSFUtil;
 import com.view.ClienteView;
 
@@ -36,6 +38,9 @@ public class ClienteController extends PaginableController<Cliente> {
 
 	@ManagedProperty("#{clienteView}")
 	private ClienteView clienteView;
+
+	@ManagedProperty("#{direccionBean}")
+	private DireccionBean direccionBean;
 
 	@ManagedProperty("#{clienteBuilder}")
 	private ClienteBuilder clienteBuilder;
@@ -74,6 +79,14 @@ public class ClienteController extends PaginableController<Cliente> {
 
 	public ClienteQuery getClienteQuery() {
 		return clienteQuery;
+	}
+
+	public DireccionBean getDireccionBean() {
+		return direccionBean;
+	}
+
+	public void setDireccionBean(DireccionBean direccionBean) {
+		this.direccionBean = direccionBean;
 	}
 
 	public void query(ActionEvent event) {
@@ -167,5 +180,10 @@ public class ClienteController extends PaginableController<Cliente> {
 		Map<String, String> filtro = new HashMap<String, String>();
 		filtro.put("nombre", clienteQuery.getNombre());
 		lazyDM.setRowCount(dao.count(filtro).intValue());
+	}
+
+	@PostConstruct
+	public void init() {
+		direccionBean.init();
 	}
 }

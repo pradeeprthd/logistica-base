@@ -28,4 +28,16 @@ public class LocalidadDAOImpl extends
 		list = getHibernateTemplate().findByCriteria(criteria);
 		return list;
 	}
+
+	@SuppressWarnings("unchecked")
+	public Localidad get(String nombre) throws DataAccessException {
+		List<Localidad> list = null;
+		Localidad localidad = new Localidad();
+		localidad.setDescripcion(nombre);
+		list = getHibernateTemplate().findByExample(localidad);
+		if (list != null && list.size() > 0) {
+			return list.get(0);
+		}
+		return null;
+	}
 }
