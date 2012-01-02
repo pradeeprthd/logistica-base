@@ -4,6 +4,7 @@
 <html xmlns:u="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://com.ss.logistica/jsf"
 	xmlns:p="http://primefaces.org/ui" xmlns="http://www.w3.org/1999/xhtml">
 
 <body>
@@ -79,6 +80,7 @@
 						</p:inputText>
 						<h:message id="mnIT" for="nombreIT" />
 					</h:panelGrid>
+					<s:direccion direccionBean="#{clienteController.direccionBean}" />
 				</p:panel>
 
 				<!-- ================================================== -->

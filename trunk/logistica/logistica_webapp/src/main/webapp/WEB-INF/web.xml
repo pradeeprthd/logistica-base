@@ -12,12 +12,12 @@
 	<session-config>
 		<session-timeout>480</session-timeout>
 	</session-config>
-	
+
 	<!-- Defino el archivo de configuracion de spring -->
 	<context-param>
-                <param-name>contextConfigLocation</param-name>
-                <param-value>classpath*:applicationContext.xml</param-value>
-        </context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath*:applicationContext.xml</param-value>
+	</context-param>
 
 	<!-- JSF -->
 	<!-- Change to "Production" when you are ready to deploy -->
@@ -48,6 +48,11 @@
 		<param-value>true</param-value>
 	</context-param>
 
+	<context-param>
+		<param-name>facelets.LIBRARIES</param-name>
+		<param-value>/WEB-INF/taglib.xml</param-value>
+	</context-param>
+
 
 
 	<!-- Primefaces -->
@@ -67,18 +72,18 @@
 		<param-name>primefaces.THEME</param-name>
 		<param-value>redmond</param-value>
 	</context-param>
-	
+
 	<!-- configuraciones para Spring Security 3 -->
-    <filter>
-        <filter-name>springSecurityFilterChain</filter-name>
-        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-    </filter>
-    <listener>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>
-    <filter-mapping>
-        <filter-name>springSecurityFilterChain</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 
 </web-app>

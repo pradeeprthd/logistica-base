@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns:u="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:p="http://primefaces.org/ui" xmlns="http://www.w3.org/1999/xhtml">
+
+<u:composition>
+	<h:panelGrid columns="2">
+		<h:outputText value="Provincia" />
+		<p:selectOneMenu id="provinciaSelectOne"
+			value="#{direccionBean.provinciaID}" styleClass="selectOneMenu">
+			<f:selectItems value="#{direccionBean.provinciaSIL}" />
+		</p:selectOneMenu>
+	</h:panelGrid>
+
+	<h:panelGrid columns="4">
+		<h:outputText value="Localidad" />
+		<p:autoComplete id="localidadAC"
+			disabled="#{direccionBean.localidadSelected}"
+			value="#{direccionBean.localidad}"
+			completeMethod="#{direccionBean.completeLocalidad}" var="localidad"
+			itemLabel="#{localidad.descripcion}" itemValue="#{localidad}"
+			converter="com.converter.LocalidadConverter"
+			selectListener="#{direccionBean.handleSelect}" onSelectUpdate="form">
+			<f:validateBean for="localidadAC" />
+			<!-- <f:ajax event="change" render="nombre"/> -->
+			<p:ajax event="itemSelect" listener="#{direccionBean.handleSelect}"
+				update="nombre" />
+			<p:ajax update="nombre" />
+		</p:autoComplete>
+		<h:panelGroup>
+			<h:outputText id="nombre"
+				value="#{localidadBean.localidad.descripcion}" />
+			<p:commandLink disabled="#{!direccionBean.localidadSelected}"
+				actionListener="#{localidadBean.deselecionarLocalidad}"
+				update="form">
+				<h:graphicImage url="/resource/images/delete.gif"
+					title="Deseleccionar" style="border:0px" />
+			</p:commandLink>
+		</h:panelGroup>
+		<h:message id="mlac" for="localidadAC" />
+	</h:panelGrid>
+
+	<h:panelGrid columns="4">
+		<h:outputText value="Calle" />
+		<p:inputText value="#{direccionBean.direccion.calle}" maxlength="200" />
+
+		<h:outputText value="Altura" />
+		<p:inputText value="#{direccionBean.direccion.altura}" maxlength="20" />
+
+		<h:outputText value="Piso" />
+		<p:inputText value="#{direccionBean.direccion.piso}" maxlength="20" />
+
+		<h:outputText value="Departamento" />
+		<p:inputText value="#{direccionBean.direccion.departamento}"
+			maxlength="20" />
+
+		<h:outputText value="Código postal" />
+		<p:inputText value="#{direccionBean.direccion.codigoPostal}"
+			maxlength="20" />
+	</h:panelGrid>
+
+</u:composition>
+
+</html>
