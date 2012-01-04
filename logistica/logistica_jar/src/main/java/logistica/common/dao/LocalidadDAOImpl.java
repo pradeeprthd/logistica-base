@@ -40,4 +40,20 @@ public class LocalidadDAOImpl extends
 		}
 		return null;
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Localidad> getList(Object query) throws DataAccessException {
+		LocalidadQuery localidadQuery = (LocalidadQuery) query;
+		List<Localidad> list = null;
+
+		DetachedCriteria criteria = DetachedCriteria.forClass(Localidad.class);
+		criteria.add(Restrictions.ilike("descripcion",
+				localidadQuery.getDescripcion(), MatchMode.START));
+		criteria.add(Restrictions.eq("provincia.id",
+				localidadQuery.getProvinciaID()));
+
+		list = getHibernateTemplate().findByCriteria(criteria);
+		return list;
+	}
 }

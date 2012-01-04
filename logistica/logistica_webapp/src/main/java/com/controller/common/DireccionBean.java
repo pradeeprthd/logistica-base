@@ -16,6 +16,7 @@ import logistica.common.dao.BaseModelDAO;
 import logistica.model.Localidad;
 import logistica.model.Provincia;
 import logistica.model.composite.Direccion;
+import logistica.query.LocalidadQuery;
 
 import org.apache.log4j.Logger;
 import org.primefaces.event.SelectEvent;
@@ -66,8 +67,8 @@ public class DireccionBean implements Serializable {
 		return provinciaID;
 	}
 
-	public void setProvinciaID(Long provinviaID) {
-		this.provinciaID = provinviaID;
+	public void setProvinciaID(Long provinciaID) {
+		this.provinciaID = provinciaID;
 	}
 
 	public Localidad getLocalidad() {
@@ -85,8 +86,6 @@ public class DireccionBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		this.direccion = new Direccion();
-		this.provinciaID = null;
-		this.localidad = null;
 	}
 
 	/**
@@ -105,7 +104,9 @@ public class DireccionBean implements Serializable {
 	public List<Localidad> completeLocalidad(String query) {
 		List<Localidad> localidadList = null;
 		try {
-			localidadList = daoLocalidad.getList(query);
+			LocalidadQuery localidadQuery = new LocalidadQuery(null, query,
+					provinciaID);
+			localidadList = daoLocalidad.getList(localidadQuery);
 
 		} catch (Throwable e) {
 			log.error("Error en le metodo completeLocalidad: ", e);
@@ -127,5 +128,6 @@ public class DireccionBean implements Serializable {
 
 	public void handleSelect(SelectEvent event) {
 		System.out.println("se eligio una localidad");
+		localidad = (Localidad) event.getObject();
 	}
 }

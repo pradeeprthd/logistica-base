@@ -10,7 +10,7 @@ import org.springframework.dao.DataAccessException;
 public interface BaseModelDAO<T extends BaseModel> {
 
 	T find(Long id) throws DataAccessException;
-	
+
 	T findFULL(Long id) throws DataAccessException;
 
 	List<T> getList() throws DataAccessException;
@@ -26,6 +26,8 @@ public interface BaseModelDAO<T extends BaseModel> {
 	List<T> getList(String query) throws DataAccessException;
 
 	T get(String query) throws DataAccessException;
+
+	List<T> getList(Object query) throws DataAccessException;
 
 	Long count() throws DataAccessException;
 
