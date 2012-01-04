@@ -147,4 +147,9 @@ public abstract class BaseHibernateDAO<T extends BaseModel, Q extends BaseQuery>
 	public List<String> getListNames() {
 		return null;
 	}
+
+	public List<T> getList(Object query) throws DataAccessException {
+		// TODO implementar donde sea necesario
+		return null;
+	}
 }

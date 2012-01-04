@@ -11,10 +11,9 @@
 <u:composition>
 	<h:panelGrid columns="2">
 		<h:outputText value="Provincia" />
-		<p:selectOneMenu id="provinciaSelectOne"
-			value="#{direccionBean.provinciaID}" styleClass="selectOneMenu">
+		<h:selectOneMenu value="#{direccionBean.provinciaID}">
 			<f:selectItems value="#{direccionBean.provinciaSIL}" />
-		</p:selectOneMenu>
+		</h:selectOneMenu>
 	</h:panelGrid>
 
 	<h:panelGrid columns="4">
@@ -24,23 +23,22 @@
 			value="#{direccionBean.localidad}"
 			completeMethod="#{direccionBean.completeLocalidad}" var="localidad"
 			itemLabel="#{localidad.descripcion}" itemValue="#{localidad}"
-			converter="com.converter.LocalidadConverter"
-			selectListener="#{direccionBean.handleSelect}" onSelectUpdate="form">
-			<f:validateBean for="localidadAC" />
+			converter="com.converter.LocalidadConverter" maxResults="10">
 			<!-- <f:ajax event="change" render="nombre"/> -->
 			<p:ajax event="itemSelect" listener="#{direccionBean.handleSelect}"
-				update="nombre" />
-			<p:ajax update="nombre" />
+				update="localidadAC,nombre,deseleccinarLink" />
+
 		</p:autoComplete>
 		<h:panelGroup>
 			<h:outputText id="nombre"
-				value="#{localidadBean.localidad.descripcion}" />
-			<p:commandLink disabled="#{!direccionBean.localidadSelected}"
-				actionListener="#{localidadBean.deselecionarLocalidad}"
-				update="form">
+				value="#{direccionBean.localidad.descripcion}" />
+			<h:commandLink id="deseleccinarLink"
+				disabled="#{!direccionBean.localidadSelected}"
+				actionListener="#{direccionBean.deselecionarLocalidad}"
+				update="form" immediate="true">
 				<h:graphicImage url="/resource/images/delete.gif"
 					title="Deseleccionar" style="border:0px" />
-			</p:commandLink>
+			</h:commandLink>
 		</h:panelGroup>
 		<h:message id="mlac" for="localidadAC" />
 	</h:panelGrid>
