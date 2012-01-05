@@ -35,6 +35,7 @@ public class DireccionBean implements Serializable {
 	private ClassPathXmlApplicationContext ctx;
 	private BaseModelDAO<Provincia> daoProvincia;
 	private BaseModelDAO<Localidad> daoLocalidad;
+	private List<SelectItem> provinciaSIL;
 
 	@SuppressWarnings("unchecked")
 	public DireccionBean(Direccion direccion, Long provinviaID,
@@ -49,6 +50,12 @@ public class DireccionBean implements Serializable {
 
 		ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
 		daoLocalidad = (BaseModelDAO<Localidad>) ctx.getBean("localidadDAO");
+
+		provinciaSIL = new ArrayList<SelectItem>();
+		for (Provincia provincia : daoProvincia.getList()) {
+			provinciaSIL.add(new SelectItem(provincia.getID(), provincia
+					.getDescripcion()));
+		}
 	}
 
 	public DireccionBean() {
@@ -83,22 +90,13 @@ public class DireccionBean implements Serializable {
 		this.localidad = localidad;
 	}
 
+	public List<SelectItem> getProvinciaSIL() {
+		return provinciaSIL;
+	}
+
 	@PostConstruct
 	public void init() {
 		this.direccion = new Direccion();
-	}
-
-	/**
-	 */
-	public final List<SelectItem> getProvinciaSIL() {
-		final List<SelectItem> list = new ArrayList<SelectItem>();
-
-		for (Provincia provincia : daoProvincia.getList()) {
-			list.add(new SelectItem(provincia.getID(), provincia
-					.getDescripcion()));
-		}
-
-		return list;
 	}
 
 	public List<Localidad> completeLocalidad(String query) {
