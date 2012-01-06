@@ -7,6 +7,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -15,12 +16,13 @@ import javax.faces.model.SelectItem;
 import logistica.common.dao.BaseModelDAO;
 import logistica.model.Localidad;
 import logistica.model.Provincia;
-import logistica.model.composite.Direccion;
 import logistica.query.LocalidadQuery;
 
 import org.apache.log4j.Logger;
 import org.primefaces.event.SelectEvent;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.view.DireccionView;
 
 @SuppressWarnings("serial")
 @ManagedBean
@@ -28,7 +30,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class DireccionBean implements Serializable {
 
 	private Logger log = Logger.getLogger(DireccionBean.class);
-	private Direccion direccion;
+	@ManagedProperty("#{clienteBuilder}")
+	private DireccionView direccionView;
 	private Long provinciaID;
 	private Localidad localidad;
 
@@ -38,10 +41,10 @@ public class DireccionBean implements Serializable {
 	private List<SelectItem> provinciaSIL;
 
 	@SuppressWarnings("unchecked")
-	public DireccionBean(Direccion direccion, Long provinviaID,
+	public DireccionBean(DireccionView direccionView, Long provinviaID,
 			Localidad localidad) {
 		super();
-		this.direccion = direccion;
+		this.direccionView = direccionView;
 		this.provinciaID = provinviaID;
 		this.localidad = localidad;
 
@@ -62,12 +65,12 @@ public class DireccionBean implements Serializable {
 		this(null, null, null);
 	}
 
-	public Direccion getDireccion() {
-		return direccion;
+	public DireccionView getDireccionView() {
+		return direccionView;
 	}
 
-	public void setDireccion(Direccion direccion) {
-		this.direccion = direccion;
+	public void setDireccionView(DireccionView direccionView) {
+		this.direccionView = direccionView;
 	}
 
 	public Long getProvinciaID() {
@@ -96,7 +99,7 @@ public class DireccionBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		this.direccion = new Direccion();
+		this.direccionView = new DireccionView();
 	}
 
 	public List<Localidad> completeLocalidad(String query) {
@@ -127,5 +130,9 @@ public class DireccionBean implements Serializable {
 	public void handleSelect(SelectEvent event) {
 		System.out.println("se eligio una localidad");
 		localidad = (Localidad) event.getObject();
+	}
+
+	public void provinciaListener() {
+		System.out.println(provinciaID);
 	}
 }

@@ -50,8 +50,10 @@ public class LocalidadDAOImpl extends
 		DetachedCriteria criteria = DetachedCriteria.forClass(Localidad.class);
 		criteria.add(Restrictions.ilike("descripcion",
 				localidadQuery.getDescripcion(), MatchMode.START));
-		criteria.add(Restrictions.eq("provincia.id",
-				localidadQuery.getProvinciaID()));
+		if (localidadQuery.getProvinciaID() != null) {
+			criteria.add(Restrictions.eq("provincia.id",
+					localidadQuery.getProvinciaID()));
+		}
 
 		list = getHibernateTemplate().findByCriteria(criteria);
 		return list;

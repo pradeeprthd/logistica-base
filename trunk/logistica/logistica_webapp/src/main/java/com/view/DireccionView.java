@@ -1,39 +1,30 @@
-package logistica.model.composite;
+package com.view;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 
 import logistica.model.Localidad;
 
+@ManagedBean
+@ViewScoped
 @SuppressWarnings("serial")
-@Embeddable
-public class Direccion implements Serializable {
+public class DireccionView implements Serializable {
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "localidadID")
 	private Localidad localidad;
 
-	@Column(length = 200)
 	private String calle;
 
-	@Column(length = 20)
 	private String altura;
 
-	@Column(length = 20)
 	private String piso;
 
-	@Column(length = 20)
 	private String departamento;
 
-	@Column(length = 20)
 	private String codigoPostal;
 
-	public Direccion(Localidad localidad, String calle, String altura,
+	public DireccionView(Localidad localidad, String calle, String altura,
 			String piso, String departamento, String codigoPostal) {
 		super();
 		this.localidad = localidad;
@@ -44,7 +35,7 @@ public class Direccion implements Serializable {
 		this.codigoPostal = codigoPostal;
 	}
 
-	public Direccion() {
+	public DireccionView() {
 		this(null, null, null, null, null, null);
 	}
 
@@ -95,4 +86,5 @@ public class Direccion implements Serializable {
 	public void setCodigoPostal(String codigoPostal) {
 		this.codigoPostal = codigoPostal;
 	}
+
 }

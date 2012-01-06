@@ -1,0 +1,4 @@
+Poner esta propiedad en el apache apra que no ponga los null en cero
+-Dorg.apache.el.parser.COERCE_TO_ZERO=false
+
+poner esto  en JAVA-OPTS del catalina.bat dentro del Tomcat
