@@ -9,14 +9,17 @@
 	xmlns:p="http://primefaces.org/ui" xmlns="http://www.w3.org/1999/xhtml">
 
 <u:composition>
-	<h:panelGrid columns="2">
-		<h:outputText value="Provincia" />
-		<h:selectOneMenu value="#{direccionBean.provinciaID}">
-			<f:selectItems value="#{direccionBean.provinciaSIL}" />
-		</h:selectOneMenu>
-	</h:panelGrid>
-
 	<h:panelGrid columns="4">
+		<h:outputText value="Provincia" />
+		<p:selectOneMenu value="#{direccionBean.provinciaID}">
+			<f:selectItem itemLabel="Selecione" itemValue="" />
+			<f:selectItems value="#{direccionBean.provinciaSIL}" />
+			<p:ajax listener="#{direccionBean.provinciaListener}" />
+		</p:selectOneMenu>
+		<h:outputText value="" />
+		<h:outputText value="" />
+
+
 		<h:outputText value="Localidad" />
 		<p:autoComplete id="localidadAC"
 			disabled="#{direccionBean.localidadSelected}"
@@ -41,24 +44,25 @@
 			</h:commandLink>
 		</h:panelGroup>
 		<h:message id="mlac" for="localidadAC" />
-	</h:panelGrid>
 
-	<h:panelGrid columns="4">
 		<h:outputText value="Calle" />
-		<p:inputText value="#{direccionBean.direccion.calle}" maxlength="200" />
+		<p:inputText value="#{direccionBean.direccionView.calle}"
+			maxlength="200" />
 
 		<h:outputText value="Altura" />
-		<p:inputText value="#{direccionBean.direccion.altura}" maxlength="20" />
+		<p:inputText value="#{direccionBean.direccionView.altura}"
+			maxlength="20" />
 
 		<h:outputText value="Piso" />
-		<p:inputText value="#{direccionBean.direccion.piso}" maxlength="20" />
+		<p:inputText value="#{direccionBean.direccionView.piso}"
+			maxlength="20" />
 
 		<h:outputText value="Departamento" />
-		<p:inputText value="#{direccionBean.direccion.departamento}"
+		<p:inputText value="#{direccionBean.direccionView.departamento}"
 			maxlength="20" />
 
 		<h:outputText value="Código postal" />
-		<p:inputText value="#{direccionBean.direccion.codigoPostal}"
+		<p:inputText value="#{direccionBean.direccionView.codigoPostal}"
 			maxlength="20" />
 	</h:panelGrid>
 

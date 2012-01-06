@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 
+import logistica.model.composite.Direccion;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -24,15 +26,15 @@ public class Cliente extends Sujeto {
 	@Column(length = 100)
 	private String apellido;
 
-	public Cliente(Long id, String nombre, String apellido) {
-		super(nombre);
+	public Cliente(Long id, String nombre, Direccion direccion, String apellido) {
+		super(nombre, direccion);
 		this.id = id;
 		this.apellido = apellido;
 
 	}
 
 	public Cliente() {
-		this(null, null, null);
+		this(null, null, null, null);
 	}
 
 	public Long getID() {
