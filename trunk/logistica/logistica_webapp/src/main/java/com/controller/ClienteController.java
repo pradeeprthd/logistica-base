@@ -28,7 +28,7 @@ import com.view.ClienteView;
 
 @ManagedBean
 @ViewScoped
-@SuppressWarnings("serial")
+@SuppressWarnings({ "serial", "restriction" })
 public class ClienteController extends PaginableController<Cliente> {
 	private Logger log = Logger.getLogger(ClienteController.class);
 	private ClassPathXmlApplicationContext ctx;
@@ -98,6 +98,7 @@ public class ClienteController extends PaginableController<Cliente> {
 			cliente = (Cliente) lazyDM.getRowData();
 			// cliente = dao.find(cliente.getID());
 			clienteView = clienteBuilder.toView(cliente);
+			direccionBean.setDireccionView(clienteView.getDireccionView());
 			addEdit = true;
 		} catch (Throwable e) {
 			log.error("Error al editar", e);
@@ -129,6 +130,7 @@ public class ClienteController extends PaginableController<Cliente> {
 
 	public void save(ActionEvent event) {
 		try {
+			clienteView.setDireccionView(direccionBean.getDireccionView());
 			cliente = clienteBuilder.toDomain(clienteView);
 			if (cliente.getID() != null) {
 				dao.edit(cliente);
@@ -159,6 +161,7 @@ public class ClienteController extends PaginableController<Cliente> {
 	public void clear() {
 		cliente = new Cliente();
 		clienteView = new ClienteView();
+		direccionBean.clear();
 	}
 
 	private void loadList() {

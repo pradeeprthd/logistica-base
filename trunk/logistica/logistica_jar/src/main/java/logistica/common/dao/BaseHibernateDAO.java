@@ -99,8 +99,13 @@ public abstract class BaseHibernateDAO<T extends BaseModel, Q extends BaseQuery>
 					.iterator();
 			while (iterator.hasNext()) {
 				Entry<String, String> entry = iterator.next();
-				criteria.add(Restrictions.ilike(entry.getKey(),
-						entry.getValue(), MatchMode.START));
+				try {
+					Long numero = Long.parseLong(entry.getValue());
+					criteria.add(Restrictions.eq(entry.getKey(), numero));
+				} catch (NumberFormatException e) {
+					criteria.add(Restrictions.ilike(entry.getKey(),
+							entry.getValue(), MatchMode.START));
+				}
 			}
 		}
 
@@ -120,8 +125,13 @@ public abstract class BaseHibernateDAO<T extends BaseModel, Q extends BaseQuery>
 					.iterator();
 			while (iterator.hasNext()) {
 				Entry<String, String> entry = iterator.next();
-				criteria.add(Restrictions.ilike(entry.getKey(),
-						entry.getValue(), MatchMode.START));
+				try {
+					Long numero = Long.parseLong(entry.getValue());
+					criteria.add(Restrictions.eq(entry.getKey(), numero));
+				} catch (NumberFormatException e) {
+					criteria.add(Restrictions.ilike(entry.getKey(),
+							entry.getValue(), MatchMode.START));
+				}
 			}
 		}
 		count = (Long) getHibernateTemplate().findByCriteria(criteria).get(0);

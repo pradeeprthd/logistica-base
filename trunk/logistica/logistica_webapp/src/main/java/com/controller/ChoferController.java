@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -21,6 +22,7 @@ import org.primefaces.model.SortOrder;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.builder.ChoferBuilder;
+import com.controller.common.DireccionBean;
 import com.util.JSFUtil;
 import com.view.ChoferView;
 
@@ -37,6 +39,9 @@ public class ChoferController extends PaginableController<Chofer> {
 
 	@ManagedProperty("#{choferView}")
 	private ChoferView choferView;
+
+	@ManagedProperty("#{direccionBean}")
+	private DireccionBean direccionBean;
 
 	@ManagedProperty("#{choferBuilder}")
 	private ChoferBuilder choferBuilder;
@@ -77,6 +82,14 @@ public class ChoferController extends PaginableController<Chofer> {
 		return choferQuery;
 	}
 
+	public DireccionBean getDireccionBean() {
+		return direccionBean;
+	}
+
+	public void setDireccionBean(DireccionBean direccionBean) {
+		this.direccionBean = direccionBean;
+	}
+
 	public void query(ActionEvent event) {
 		loadList();
 	}
@@ -85,6 +98,7 @@ public class ChoferController extends PaginableController<Chofer> {
 		try {
 			chofer = (Chofer) lazyDM.getRowData();
 			choferView = choferBuilder.toView(chofer);
+			direccionBean.setDireccionView(choferView.getDireccionView());
 			addEdit = true;
 		} catch (Throwable e) {
 			log.error("Error al editar", e);
@@ -116,6 +130,7 @@ public class ChoferController extends PaginableController<Chofer> {
 
 	public void save(ActionEvent event) {
 		try {
+			choferView.setDireccionView(direccionBean.getDireccionView());
 			chofer = choferBuilder.toDomain(choferView);
 			if (chofer.getID() != null) {
 				dao.edit(chofer);
@@ -146,6 +161,7 @@ public class ChoferController extends PaginableController<Chofer> {
 	public void clear() {
 		chofer = new Chofer();
 		choferView = new ChoferView();
+		direccionBean.clear();
 	}
 
 	private void loadList() {
@@ -167,4 +183,8 @@ public class ChoferController extends PaginableController<Chofer> {
 		lazyDM.setRowCount(dao.count(filtro).intValue());
 	}
 
+	@PostConstruct
+	public void init() {
+		direccionBean.init();
+	}
 }

@@ -22,18 +22,20 @@ import org.apache.log4j.Logger;
 import org.primefaces.event.SelectEvent;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.builder.DireccionBuilder;
 import com.view.DireccionView;
 
-@SuppressWarnings("serial")
+@SuppressWarnings({ "serial", "restriction" })
 @ManagedBean
 @ViewScoped
 public class DireccionBean implements Serializable {
 
 	private Logger log = Logger.getLogger(DireccionBean.class);
-	@ManagedProperty("#{clienteBuilder}")
+	@ManagedProperty("#{direccionView}")
 	private DireccionView direccionView;
+	@ManagedProperty("#{direccionBuilder}")
+	private DireccionBuilder direccionBuilder;
 	private Long provinciaID;
-	private Localidad localidad;
 
 	private ClassPathXmlApplicationContext ctx;
 	private BaseModelDAO<Provincia> daoProvincia;
@@ -46,7 +48,6 @@ public class DireccionBean implements Serializable {
 		super();
 		this.direccionView = direccionView;
 		this.provinciaID = provinviaID;
-		this.localidad = localidad;
 
 		ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
 		daoProvincia = (BaseModelDAO<Provincia>) ctx.getBean("provinciaDAO");
@@ -81,22 +82,6 @@ public class DireccionBean implements Serializable {
 		this.provinciaID = provinciaID;
 	}
 
-	public Localidad getLocalidad() {
-		return localidad;
-	}
-
-	public void setLocalidad(Localidad localidad) {
-		this.localidad = localidad;
-	}
-
-	public void setLocalidadID(Localidad localidad) {
-		this.localidad = localidad;
-	}
-
-	public List<SelectItem> getProvinciaSIL() {
-		return provinciaSIL;
-	}
-
 	@PostConstruct
 	public void init() {
 		this.direccionView = new DireccionView();
@@ -120,19 +105,36 @@ public class DireccionBean implements Serializable {
 	}
 
 	public boolean isLocalidadSelected() {
-		return (getLocalidad() != null);
+		return (direccionView.getLocalidad() != null);
 	}
 
 	public void deselecionarLocalidad(ActionEvent event) {
-		localidad = null;
+		direccionView.setLocalidad(null);
 	}
 
 	public void handleSelect(SelectEvent event) {
 		System.out.println("se eligio una localidad");
-		localidad = (Localidad) event.getObject();
+		direccionView.setLocalidad((Localidad) event.getObject());
 	}
 
 	public void provinciaListener() {
 		System.out.println(provinciaID);
+	}
+
+	public DireccionBuilder getDireccionBuilder() {
+		return direccionBuilder;
+	}
+
+	public void setDireccionBuilder(DireccionBuilder direccionBuilder) {
+		this.direccionBuilder = direccionBuilder;
+	}
+
+	public List<SelectItem> getProvinciaSIL() {
+		return provinciaSIL;
+	}
+
+	public void clear() {
+		direccionView = new DireccionView();
+		provinciaID = null;
 	}
 }

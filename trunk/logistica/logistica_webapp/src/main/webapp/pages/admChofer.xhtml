@@ -4,100 +4,106 @@
 <html xmlns:u="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://com.ss.logistica/jsf"
 	xmlns:p="http://primefaces.org/ui" xmlns="http://www.w3.org/1999/xhtml">
 
 <body>
-<u:composition template="/pages/layout/pageLayout.xhtml">
-	<u:define name="body">
-		<h:form id="filtroForm">
-			<p:panel id="panelFiltro" rendered="#{!choferController.addEdit}">
-				<h:panelGrid columns="5">
-					<h:outputText value="Nombre: " />
-					<p:inputText value="#{choferController.choferQuery.nombre}">
-					</p:inputText>
-					<p:commandButton value="Consultar"
-						actionListener="#{choferController.query}" update="form">
-					</p:commandButton>
-				</h:panelGrid>
-			</p:panel>
-		</h:form>
-
-		<h:form id="form">
-			<p:messages id="messages" />
-			<p:dataTable id="dataTable" var="chofer"
-				value="#{choferController.lazyDM}" paginator="true" rows="10"
-				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-				rowsPerPageTemplate="10,15,20"
-				rendered="#{!choferController.addEdit}"
-				emptyMessage="No se encontraron registros" dynamic="true">
-
-				<f:facet name="header">
-					<h:outputText value="#{msgs.admChofer_title}" />
-				</f:facet>
-
-				<p:column>
-					<f:facet name="header">
-						<h:outputText value="Nombre" />
-					</f:facet>
-					<h:outputText value="#{chofer.nombre}" />
-				</p:column>
-
-				<p:column>
-					<f:facet name="header">
-						<h:outputText value="Opciones" />
-					</f:facet>
-					<h:panelGrid columns="3">
-						<p:commandLink actionListener="#{choferController.edit}"
-							update="form,filtroForm">
-							<h:graphicImage url="/resource/images/edit.gif" title="Modificar"
-								style="border:0px" />
-						</p:commandLink>
-						<h:commandLink actionListener="#{choferController.delete}"
-							onclick="return confirm('¿Está seguro de eliminar el registro?');">
-							<h:graphicImage url="/resource/images/delete.gif"
-								title="Eliminar" style="border:0px" />
-						</h:commandLink>
-					</h:panelGrid>
-				</p:column>
-
-				<f:facet name="footer">
-					<p:commandButton value="Agregar"
-						actionListener="#{choferController.add}"
-						update="form,filtroForm" />
-				</f:facet>
-			</p:dataTable>
-
-
-			<h:panelGrid id="panel" columns="1"
-				rendered="#{choferController.addEdit}">
-				<p:panel>
-					<p:focus for="nombreIT" />
-					<h:panelGrid columns="3">
-						<h:outputText value="Nombre" />
-						<p:inputText id="nombreIT"
-							value="#{choferController.choferView.nombre}">
-							<f:validateBean for="nombreIT" />
+	<u:composition template="/pages/layout/pageLayout.xhtml">
+		<u:define name="body">
+			<h:form id="filtroForm">
+				<p:panel id="panelFiltro" rendered="#{!choferController.addEdit}">
+					<h:panelGrid columns="5">
+						<h:outputText value="Nombre: " />
+						<p:inputText value="#{choferController.choferQuery.nombre}">
 						</p:inputText>
-						<h:message id="mnIT" for="nombreIT" />
+						<p:commandButton value="Consultar"
+							actionListener="#{choferController.query}" update="form">
+						</p:commandButton>
 					</h:panelGrid>
 				</p:panel>
+			</h:form>
 
-				<!-- ================================================== -->
-				<!-- Opciones											-->
-				<!-- ================================================== -->
-				<h:panelGrid columns="2">
-					<p:commandButton value="Guardar"
-						actionListener="#{choferController.save}"
-						update="form,filtroForm">
-					</p:commandButton>
-					<p:commandButton value="Cancelar"
-						actionListener="#{choferController.cancel}" immediate="true"
-						update="form,filtroForm">
-					</p:commandButton>
+			<h:form id="form">
+				<p:messages id="messages" />
+				<p:dataTable id="dataTable" var="chofer"
+					value="#{choferController.lazyDM}" paginator="true" rows="10"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="10,15,20"
+					rendered="#{!choferController.addEdit}"
+					emptyMessage="No se encontraron registros" dynamic="true">
+
+					<f:facet name="header">
+						<h:outputText value="#{msgs.admChofer_title}" />
+					</f:facet>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Nombre" />
+						</f:facet>
+						<h:outputText value="#{chofer.nombre}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Opciones" />
+						</f:facet>
+						<h:panelGrid columns="3">
+							<p:commandLink actionListener="#{choferController.edit}"
+								update="form,filtroForm">
+								<h:graphicImage url="/resource/images/edit.gif"
+									title="Modificar" style="border:0px" />
+							</p:commandLink>
+							<h:commandLink actionListener="#{choferController.delete}"
+								onclick="return confirm('¿Está seguro de eliminar el registro?');">
+								<h:graphicImage url="/resource/images/delete.gif"
+									title="Eliminar" style="border:0px" />
+							</h:commandLink>
+						</h:panelGrid>
+					</p:column>
+
+					<f:facet name="footer">
+						<p:commandButton value="Agregar"
+							actionListener="#{choferController.add}" update="form,filtroForm" />
+					</f:facet>
+				</p:dataTable>
+
+
+				<h:panelGrid id="panel" columns="1"
+					rendered="#{choferController.addEdit}">
+					<p:tabView>
+						<p:tab title="Datos Principales">
+							<p:focus for="nombreIT" />
+							<h:panelGrid columns="3">
+								<h:outputText value="Nombre" />
+								<p:inputText id="nombreIT"
+									value="#{choferController.choferView.nombre}">
+									<f:validateBean for="nombreIT" />
+								</p:inputText>
+								<h:message id="mnIT" for="nombreIT" />
+							</h:panelGrid>
+						</p:tab>
+						<p:tab title="Dirección">
+							<s:direccion direccionBean="#{clienteController.direccionBean}" />
+						</p:tab>
+					</p:tabView>
+
+
+					<!-- ================================================== -->
+					<!-- Opciones											-->
+					<!-- ================================================== -->
+					<h:panelGrid columns="2">
+						<p:commandButton value="Guardar"
+							actionListener="#{choferController.save}"
+							update="form,filtroForm">
+						</p:commandButton>
+						<p:commandButton value="Volver"
+							actionListener="#{choferController.cancel}" immediate="true"
+							update="form,filtroForm">
+						</p:commandButton>
+					</h:panelGrid>
 				</h:panelGrid>
-			</h:panelGrid>
-		</h:form>
-	</u:define>
-</u:composition>
+			</h:form>
+		</u:define>
+	</u:composition>
 </body>
 </html>
