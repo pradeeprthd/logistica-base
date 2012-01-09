@@ -71,7 +71,7 @@
 
 				<h:panelGrid id="panel" columns="1"
 					rendered="#{clienteController.addEdit}">
-					<p:tabView>
+					<p:tabView activeIndex="#{clienteController.activeTabIndex}">
 						<p:tab title="Datos Principales">
 							<p:focus for="nombreIT" />
 							<h:panelGrid columns="3">
