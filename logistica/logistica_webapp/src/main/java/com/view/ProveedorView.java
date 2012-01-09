@@ -3,6 +3,7 @@ package com.view;
 import java.io.Serializable;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -13,17 +14,21 @@ import javax.validation.constraints.Size;
 public class ProveedorView implements Serializable {
 	private Long id;
 
+	@ManagedProperty("#{direccionView}")
+	private DireccionView direccionView;
+
 	@NotNull(message = "Valor requerido")
 	@Size(min = 1, max = 200, message = "El nombre del proveedor debe tener entre 1 y 200 caracteres.")
 	private String nombre;
 
-	public ProveedorView(Long id, String nombre) {
+	public ProveedorView(Long id, String nombre, DireccionView direccionView) {
 		this.id = id;
 		this.nombre = nombre;
+		this.direccionView = direccionView;
 	}
 
 	public ProveedorView() {
-		this(null, null);
+		this(null, null, null);
 	}
 
 	public Long getId() {
@@ -40,5 +45,13 @@ public class ProveedorView implements Serializable {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	public DireccionView getDireccionView() {
+		return direccionView;
+	}
+
+	public void setDireccionView(DireccionView direccionView) {
+		this.direccionView = direccionView;
 	}
 }

@@ -23,7 +23,7 @@
 		<h:outputText value="Localidad" />
 		<p:autoComplete id="localidadAC"
 			disabled="#{direccionBean.localidadSelected}"
-			value="#{direccionBean.localidad}"
+			value="#{direccionBean.direccionView.localidad}"
 			completeMethod="#{direccionBean.completeLocalidad}" var="localidad"
 			itemLabel="#{localidad.descripcion}" itemValue="#{localidad}"
 			converter="com.converter.LocalidadConverter" maxResults="10">
@@ -34,7 +34,7 @@
 		</p:autoComplete>
 		<h:panelGroup>
 			<h:outputText id="nombre"
-				value="#{direccionBean.localidad.descripcion}" />
+				value="#{direccionBean.direccionView.localidad.descripcion}" />
 			<h:commandLink id="deseleccinarLink"
 				disabled="#{!direccionBean.localidadSelected}"
 				actionListener="#{direccionBean.deselecionarLocalidad}"

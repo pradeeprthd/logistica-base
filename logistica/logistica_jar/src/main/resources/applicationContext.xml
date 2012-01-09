@@ -21,9 +21,9 @@
 	<security:http auto-config="true" use-expressions="true">
 		<security:intercept-url pattern="/pages/login*"
 			filters="none" />
-			<security:intercept-url pattern="/pages/admUsuario*"
+		<security:intercept-url pattern="/pages/admUsuario*"
 			access="hasRole('ROLE_ADMIN')" />
-			<security:intercept-url pattern="/**"
+		<security:intercept-url pattern="/**"
 			access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')" />
 		<security:form-login login-page="/pages/login.jsp"
 			default-target-url="/pages/welcome.xhtml" authentication-failure-url="/pages/login.jsp?login_error=1" />
@@ -86,6 +86,12 @@ where r.usuario_id=u.id and u.usuario =?" />
 		</property>
 	</bean>
 
+	<bean id="sucursalDAOImpl" class="logistica.common.dao.SucursalDAOImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
 	<!-- Conexión a base de datos -->
 	<bean id="myDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
 		<property name="jndiName">
@@ -129,6 +135,7 @@ where r.usuario_id=u.id and u.usuario =?" />
 				<value>logistica.model.Chofer</value>
 				<value>logistica.model.Provincia</value>
 				<value>logistica.model.Localidad</value>
+				<value>logistica.model.Sucursal</value>
 			</list>
 		</property>
 	</bean>
@@ -232,6 +239,23 @@ where r.usuario_id=u.id and u.usuario =?" />
 		</property>
 		<property name="target">
 			<ref local="localidadDAOImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<!-- defino como maneja las transacciones -->
+			<props>
+				<prop key="save*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="sucursalDAO"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+		<property name="target">
+			<ref local="sucursalDAOImpl" />
 		</property>
 		<property name="transactionAttributes">
 			<!-- defino como maneja las transacciones -->

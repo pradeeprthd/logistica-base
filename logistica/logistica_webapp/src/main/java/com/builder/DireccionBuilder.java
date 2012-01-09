@@ -13,14 +13,14 @@ import com.view.DireccionView;
 public class DireccionBuilder extends BaseBuilder<DireccionView, Direccion> {
 
 	@Override
-	Direccion toDomain(DireccionView view) {
+	public Direccion toDomain(DireccionView view) {
 		return new Direccion(view.getLocalidad(), view.getCalle(),
 				view.getAltura(), view.getPiso(), view.getDepartamento(),
 				view.getCodigoPostal());
 	}
 
 	@Override
-	DireccionView toView(Direccion model) {
+	public DireccionView toView(Direccion model) {
 		return new DireccionView(model.getLocalidad(), model.getCalle(),
 				model.getAltura(), model.getPiso(), model.getDepartamento(),
 				model.getCodigoPostal());

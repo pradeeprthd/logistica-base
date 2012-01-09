@@ -7,9 +7,9 @@ import java.util.List;
 @SuppressWarnings("serial")
 public abstract class BaseBuilder<V extends Serializable, M extends Serializable> implements
 Serializable {
-	abstract M toDomain(V view);
+	public abstract M toDomain(V view);
 
-	abstract V toView(M model);
+	public abstract V toView(M model);
 
 	public List<M> toDomain(List<V> listView) {
 
