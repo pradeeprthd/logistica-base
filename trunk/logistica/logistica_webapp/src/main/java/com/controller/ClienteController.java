@@ -35,6 +35,7 @@ public class ClienteController extends PaginableController<Cliente> {
 	private BaseModelDAO<Cliente> dao;
 	private Cliente cliente;
 	private ClienteQuery clienteQuery;
+	private Integer activeTabIndex;
 
 	@ManagedProperty("#{clienteView}")
 	private ClienteView clienteView;
@@ -52,6 +53,7 @@ public class ClienteController extends PaginableController<Cliente> {
 			dao = (BaseModelDAO<Cliente>) ctx.getBean("clienteDAO");
 			clienteQuery = new ClienteQuery();
 			addEdit = false;
+			activeTabIndex = 0;
 		} catch (Throwable e) {
 			log.error("Error al inicializar la clase ClienteController", e);
 			FacesContext.getCurrentInstance().addMessage(
@@ -87,6 +89,14 @@ public class ClienteController extends PaginableController<Cliente> {
 
 	public void setDireccionBean(DireccionBean direccionBean) {
 		this.direccionBean = direccionBean;
+	}
+
+	public Integer getActiveTabIndex() {
+		return activeTabIndex;
+	}
+
+	public void setActiveTabIndex(Integer activeTabIndex) {
+		this.activeTabIndex = activeTabIndex;
 	}
 
 	public void query(ActionEvent event) {
@@ -156,12 +166,14 @@ public class ClienteController extends PaginableController<Cliente> {
 	public void cancel(ActionEvent event) {
 		addEdit = false;
 		lazyDM = null;
+		activeTabIndex = 0;
 	}
 
 	public void clear() {
 		cliente = new Cliente();
 		clienteView = new ClienteView();
 		direccionBean.clear();
+		activeTabIndex = 0;
 	}
 
 	private void loadList() {
