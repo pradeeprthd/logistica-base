@@ -49,7 +49,7 @@
 						</f:facet>
 						<h:panelGrid columns="3">
 							<p:commandLink actionListener="#{choferController.edit}"
-								update="form,filtroForm">
+								update="form,filtroForm" oncomplete="tabView.select(0)">
 								<h:graphicImage url="/resource/images/edit.gif"
 									title="Modificar" style="border:0px" />
 							</p:commandLink>
@@ -63,14 +63,15 @@
 
 					<f:facet name="footer">
 						<p:commandButton value="Agregar"
-							actionListener="#{choferController.add}" update="form,filtroForm" />
+							actionListener="#{choferController.add}" update="form,filtroForm"
+							oncomplete="tabView.select(0)" />
 					</f:facet>
 				</p:dataTable>
 
 
 				<h:panelGrid id="panel" columns="1"
 					rendered="#{choferController.addEdit}">
-					<p:tabView>
+					<p:tabView widgetVar="tabView">
 						<p:tab title="Datos Principales">
 							<p:focus for="nombreIT" />
 							<h:panelGrid columns="3">
