@@ -92,6 +92,12 @@ where r.usuario_id=u.id and u.usuario =?" />
 		</property>
 	</bean>
 
+	<bean id="movilDAOImpl" class="logistica.common.dao.MovilDAOImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
 	<!-- Conexión a base de datos -->
 	<bean id="myDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
 		<property name="jndiName">
@@ -136,6 +142,7 @@ where r.usuario_id=u.id and u.usuario =?" />
 				<value>logistica.model.Provincia</value>
 				<value>logistica.model.Localidad</value>
 				<value>logistica.model.Sucursal</value>
+				<value>logistica.model.Movil</value>
 			</list>
 		</property>
 	</bean>
@@ -256,6 +263,23 @@ where r.usuario_id=u.id and u.usuario =?" />
 		</property>
 		<property name="target">
 			<ref local="sucursalDAOImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<!-- defino como maneja las transacciones -->
+			<props>
+				<prop key="save*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="movilDAO"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+		<property name="target">
+			<ref local="movilDAOImpl" />
 		</property>
 		<property name="transactionAttributes">
 			<!-- defino como maneja las transacciones -->
