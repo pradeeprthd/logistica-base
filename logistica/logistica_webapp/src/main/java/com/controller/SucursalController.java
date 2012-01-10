@@ -20,6 +20,7 @@ import org.apache.log4j.Logger;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import com.builder.SucursalBuilder;
 import com.controller.common.DireccionBean;
@@ -143,6 +144,10 @@ public class SucursalController extends PaginableController<Sucursal> {
 			if (!addEdit) {
 				loadList();
 			}
+		} catch (DataIntegrityViolationException e) {
+			JSFUtil.saveMessage(
+					"Error al guardar: El nombre y el número de sucursal deben ser únicos en el sistema.",
+					FacesMessage.SEVERITY_ERROR);
 		} catch (Throwable e) {
 			log.error("Error al guardar", e);
 			FacesContext.getCurrentInstance().addMessage(

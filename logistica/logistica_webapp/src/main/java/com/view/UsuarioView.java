@@ -22,7 +22,7 @@ public class UsuarioView implements Serializable {
 	private String usuario;
 
 	@NotNull(message = "Valor requerido")
-	@Size(min = 6, max = 200, message = "La contraseÃ±a del usuario debe tener entre 6 y 200 caracteres.")
+	@Size(min = 6, max = 200, message = "La contraseña del usuario debe tener entre 6 y 200 caracteres.")
 	private String contrsenia;
 
 	private Boolean enabled;
