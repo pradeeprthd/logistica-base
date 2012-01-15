@@ -6,24 +6,27 @@
 	xmlns:p="http://primefaces.org/ui" xmlns="http://www.w3.org/1999/xhtml">
 
 <body>
-<u:composition>
+	<u:composition>
 
-	<p:menubar autoSubmenuDisplay="true">
-		<p:submenu label="Clientes">
-			<p:menuitem value="Clientes" url="/pages/admCliente.xhtml" />
-		</p:submenu>
-		<p:submenu label="Sucursales">
-			<p:menuitem value="Sucursales" url="/pages/admSucursal.xhtml" />
-		</p:submenu>
-		<p:submenu label="Choferes">
-			<p:menuitem value="Choferes" url="/pages/admChofer.xhtml" />
-		</p:submenu>
-		<p:submenu label="Usuarios" rendered="#{p:ifGranted('ROLE_ADMIN')}">
-			<p:menuitem value="Usuarios" url="/pages/admUsuario.xhtml" />
-		</p:submenu>
-		<p:menuitem value="Salir"
-			url="#{facesContext.externalContext.requestContextPath}/j_spring_security_logout" />
-	</p:menubar>
-</u:composition>
+		<p:menubar autoSubmenuDisplay="true">
+			<p:submenu label="Clientes">
+				<p:menuitem value="Clientes" url="/pages/admCliente.xhtml" />
+			</p:submenu>
+			<p:submenu label="Sucursales">
+				<p:menuitem value="Sucursales" url="/pages/admSucursal.xhtml" />
+			</p:submenu>
+			<p:submenu label="Choferes">
+				<p:menuitem value="Choferes" url="/pages/admChofer.xhtml" />
+			</p:submenu>
+			<p:submenu label="Móviles">
+				<p:menuitem value="Móviles" url="/pages/admMovil.xhtml" />
+			</p:submenu>
+			<p:submenu label="Usuarios" rendered="#{p:ifGranted('ROLE_ADMIN')}">
+				<p:menuitem value="Usuarios" url="/pages/admUsuario.xhtml" />
+			</p:submenu>
+			<p:menuitem value="Salir"
+				url="#{facesContext.externalContext.requestContextPath}/j_spring_security_logout" />
+		</p:menubar>
+	</u:composition>
 </body>
 </html>
