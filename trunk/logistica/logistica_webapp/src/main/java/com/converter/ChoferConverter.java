@@ -22,9 +22,11 @@ public class ChoferConverter implements Converter {
 	}
 
 	public Object getAsObject(FacesContext arg0, UIComponent arg1, String arg2) {
+		String[] temp = arg2.split("-");
+		Long clave = Long.parseLong(temp[0]);
 		Chofer chofer = null;
 		if (arg2 != null && !"".equalsIgnoreCase(arg2)) {
-			chofer = dao.get(arg2);
+			chofer = dao.find(clave);
 		}
 		return chofer;
 	}
@@ -34,7 +36,7 @@ public class ChoferConverter implements Converter {
 		String ret = null;
 		if (value != null) {
 			Chofer chofer = (Chofer) value;
-			ret = chofer.getNombre();
+			ret = chofer.getID() + "-" + chofer.getNombre();
 		}
 		return ret;
 	}

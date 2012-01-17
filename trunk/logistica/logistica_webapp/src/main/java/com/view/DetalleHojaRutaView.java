@@ -114,7 +114,13 @@ public class DetalleHojaRutaView implements Serializable {
 	public boolean equals(Object detalleHojaRuta) {
 		boolean ret = true;
 		DetalleHojaRutaView detalle2 = (DetalleHojaRutaView) detalleHojaRuta;
-		ret = direccion.equalsIgnoreCase(detalle2.getDireccion());
+		if (direccion != null && detalle2.getDireccion() != null) {
+			ret = direccion.equalsIgnoreCase(detalle2.getDireccion());
+		} else if (direccion == null && detalle2.getDireccion() == null) {
+			ret = true;
+		} else {
+			ret = false;
+		}
 		if (localidad != null && detalle2.getLocalidad() != null) {
 			ret = ret
 					& localidad.getID().intValue() == detalle2.getLocalidad()
@@ -130,4 +136,12 @@ public class DetalleHojaRutaView implements Serializable {
 		ret = ret && fechaHasta == detalle2.getFechaHasta();
 		return ret;
 	}
+
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		DetalleHojaRutaView detalle = new DetalleHojaRutaView(id, direccion,
+				localidad, unidadMedida, cantidad, fechaDesde, fechaHasta);
+		return detalle;
+	}
+
 }

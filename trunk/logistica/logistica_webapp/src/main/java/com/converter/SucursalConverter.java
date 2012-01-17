@@ -22,9 +22,11 @@ public class SucursalConverter implements Converter {
 	}
 
 	public Object getAsObject(FacesContext arg0, UIComponent arg1, String arg2) {
+		String[] temp = arg2.split("-");
+		Long clave = Long.parseLong(temp[0]);
 		Sucursal sucursal = null;
 		if (arg2 != null && !"".equalsIgnoreCase(arg2)) {
-			sucursal = dao.get(arg2);
+			sucursal = dao.find(clave);
 		}
 		return sucursal;
 	}
@@ -34,7 +36,7 @@ public class SucursalConverter implements Converter {
 		String ret = null;
 		if (value != null) {
 			Sucursal sucursal = (Sucursal) value;
-			ret = sucursal.getNombre();
+			ret = sucursal.getID() + "-" + sucursal.getNombre();
 		}
 		return ret;
 	}

@@ -1,6 +1,7 @@
 package com.view;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -56,6 +57,7 @@ public class HojaRutaView implements Serializable {
 
 	private String observaciones;
 
+	@NotNull(message = "Valor requerido")
 	private List<DetalleHojaRutaView> detalleHojaRutaViewList;
 
 	public HojaRutaView(Long id, Sucursal sucursal, Date fechaEmision,
@@ -81,7 +83,7 @@ public class HojaRutaView implements Serializable {
 
 	public HojaRutaView() {
 		this(null, null, null, null, null, null, null, null, null, null, null,
-				null, null);
+				null, new ArrayList<DetalleHojaRutaView>());
 	}
 
 	public Long getId() {
