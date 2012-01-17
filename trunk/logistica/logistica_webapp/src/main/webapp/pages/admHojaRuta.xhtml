@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd ">
+<html xmlns:u="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://com.ss.logistica/jsf"
+	xmlns:p="http://primefaces.org/ui" xmlns="http://www.w3.org/1999/xhtml">
+
+<body>
+	<u:composition template="/pages/layout/pageLayout.xhtml">
+		<u:define name="body">
+			<h:form id="filtroForm">
+				<p:panel id="panelFiltro" rendered="#{!hojaRutaController.addEdit}">
+					<h:panelGrid columns="7">
+						<h:outputText value="Fecha Emisión" />
+						<p:calendar
+							value="#{hojaRutaController.hojaRutaQuery.fechaEmision}"
+							mode="popup" showOn="button" locale="es"
+							pattern="#{msgs.common_inputDateFormat}" />
+
+						<h:outputText value="Prefijo" />
+						<p:spinner id="prefijoS"
+							value="#{hojaRutaController.hojaRutaQuery.prefijo}" min="0"
+							stepFactor="1" size="30">
+						</p:spinner>
+
+						<h:outputText value="Número" />
+						<p:spinner id="numeroS"
+							value="#{hojaRutaController.hojaRutaQuery.numero}" min="0"
+							stepFactor="1" size="30">
+						</p:spinner>
+
+						<p:commandButton value="Consultar"
+							actionListener="#{hojaRutaController.query}" update="form">
+						</p:commandButton>
+					</h:panelGrid>
+				</p:panel>
+			</h:form>
+
+			<h:form id="form">
+				<p:messages id="messages" />
+				<p:dataTable id="dataTable" var="hojaRuta"
+					value="#{hojaRutaController.lazyDM}" paginator="true" rows="10"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="10,15,20"
+					rendered="#{!hojaRutaController.addEdit}"
+					emptyMessage="No se encontraron registros" dynamic="true">
+
+					<f:facet name="header">
+						<h:outputText value="#{msgs.admHojaRuta_title}" />
+					</f:facet>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Sucursal" />
+						</f:facet>
+						<h:outputText value="#{hojaRuta.sucursal.nombre}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Fecha Emisión" />
+						</f:facet>
+						<h:outputText value="#{hojaRuta.fechaEmision}">
+							<f:convertDateTime pattern="#{msgs.common_showDateFormat}"
+								timeZone="#{msgs.common_timeZone}" />
+						</h:outputText>
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Prefijo-número" />
+						</f:facet>
+						<h:outputText value="#{hojaRuta.prefijo} - #{hojaRuta.numero}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Cliente" />
+						</f:facet>
+						<h:outputText value="#{hojaRuta.cliente.nombre}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Chofer" />
+						</f:facet>
+						<h:outputText value="#{hojaRuta.chofer.nombre}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Número móvil - patente" />
+						</f:facet>
+						<h:outputText
+							value="#{hojaRuta.movil.numeroMovil} - #{hojaRuta.movil.patente}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Número remito" />
+						</f:facet>
+						<h:outputText value="#{hojaRuta.numeroRemito}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Opciones" />
+						</f:facet>
+						<h:panelGrid columns="3">
+							<p:commandLink actionListener="#{hojaRutaController.edit}"
+								update="form,filtroForm" oncomplete="tabView.select(0)">
+								<h:graphicImage url="/resource/images/edit.gif"
+									title="Modificar" style="border:0px" />
+							</p:commandLink>
+							<h:commandLink actionListener="#{hojaRutaController.delete}"
+								onclick="return confirm('¿Está seguro de eliminar el registro?');">
+								<h:graphicImage url="/resource/images/delete.gif"
+									title="Eliminar" style="border:0px" />
+							</h:commandLink>
+						</h:panelGrid>
+					</p:column>
+
+					<f:facet name="footer">
+						<p:commandButton value="Agregar"
+							actionListener="#{hojaRutaController.add}"
+							update="form,filtroForm" oncomplete="tabView.select(0)" />
+					</f:facet>
+				</p:dataTable>
+
+
+				<h:panelGrid id="panel" columns="1"
+					rendered="#{hojaRutaController.addEdit}">
+					<p:tabView widgetVar="tabView">
+						<p:tab title="Datos Principales">
+							<p:focus for="sucursalAC" />
+							<h:panelGrid columns="4">
+								<h:outputText value="Sucursal" />
+								<p:autoComplete id="sucursalAC"
+									disabled="#{hojaRutaController.sucursalSelected}"
+									value="#{hojaRutaController.hojaRutaView.sucursal}"
+									completeMethod="#{hojaRutaController.completeSucursal}"
+									var="sucursal" itemLabel="#{sucursal.nombre}"
+									itemValue="#{sucursal}"
+									converter="com.converter.SucursalConverter" maxResults="10">
+									<p:ajax event="itemSelect"
+										listener="#{hojaRutaController.handleSucursalSelect}"
+										update="sucursalAC,nombreSucursal,deseleccinarSucursalLink" />
+								</p:autoComplete>
+								<h:panelGroup>
+									<h:outputText id="nombreSucursal"
+										value="#{hojaRutaController.hojaRutaView.sucursal.nombre}" />
+									<h:commandLink id="deseleccinarSucursalLink"
+										disabled="#{!hojaRutaController.sucursalSelected}"
+										actionListener="#{hojaRutaController.deselecionarSucursal}"
+										update="form" immediate="true">
+										<h:graphicImage url="/resource/images/delete.gif"
+											title="Deseleccionar" style="border:0px" />
+									</h:commandLink>
+								</h:panelGroup>
+								<h:message id="mlac" for="sucursalAC" />
+
+								<h:outputText value="Cliente" />
+								<p:autoComplete id="clienteAC"
+									disabled="#{hojaRutaController.clienteSelected}"
+									value="#{hojaRutaController.hojaRutaView.cliente}"
+									completeMethod="#{hojaRutaController.completeCliente}"
+									var="cliente" itemLabel="#{cliente.nombre}"
+									itemValue="#{cliente}"
+									converter="com.converter.ClienteConverter" maxResults="10">
+									<p:ajax event="itemSelect"
+										listener="#{hojaRutaController.handleClienteSelect}"
+										update="clienteAC,nombreCliente,deseleccinarClienteLink" />
+								</p:autoComplete>
+								<h:panelGroup>
+									<h:outputText id="nombreCliente"
+										value="#{hojaRutaController.hojaRutaView.cliente.nombre}" />
+									<h:commandLink id="deseleccinarClienteLink"
+										disabled="#{!hojaRutaController.clienteSelected}"
+										actionListener="#{hojaRutaController.deselecionarCliente}"
+										update="form" immediate="true">
+										<h:graphicImage url="/resource/images/delete.gif"
+											title="Deseleccionar" style="border:0px" />
+									</h:commandLink>
+								</h:panelGroup>
+								<h:message id="mcac" for="clienteAC" />
+
+								<h:outputText value="Chofer" />
+								<p:autoComplete id="choferAC"
+									disabled="#{hojaRutaController.choferSelected}"
+									value="#{hojaRutaController.hojaRutaView.chofer}"
+									completeMethod="#{hojaRutaController.completeChofer}"
+									var="chofer" itemLabel="#{chofer.nombre}" itemValue="#{chofer}"
+									converter="com.converter.ChoferConverter" maxResults="10"
+									queryDelay="300">
+									<p:ajax event="itemSelect"
+										listener="#{hojaRutaController.handleChoferSelect}"
+										update="choferAC,nombreChofer,deseleccionarChoferLink" />
+								</p:autoComplete>
+								<h:panelGroup>
+									<h:outputText id="nombreChofer"
+										value="#{hojaRutaController.hojaRutaView.chofer.nombre}" />
+									<h:commandLink id="deseleccionarChoferLink"
+										disabled="#{!hojaRutaController.choferSelected}"
+										actionListener="#{hojaRutaController.deseleccionarChofer}"
+										update="form" immediate="true">
+										<h:graphicImage url="/resource/images/delete.gif"
+											title="Deseleccionar" style="border:0px" />
+									</h:commandLink>
+								</h:panelGroup>
+								<h:message id="mchac" for="choferAC" />
+
+								<h:outputText value="Móvil" />
+								<p:autoComplete id="movilAC"
+									disabled="#{hojaRutaController.movilSelected}"
+									value="#{hojaRutaController.hojaRutaView.movil}"
+									completeMethod="#{hojaRutaController.completeMovil}"
+									var="movil" itemLabel="#{movil.numeroMovil} - #{movil.patente}"
+									itemValue="#{movil}" converter="com.converter.MovilConverter"
+									maxResults="10" queryDelay="300">
+									<p:ajax event="itemSelect"
+										listener="#{hojaRutaController.handleMovilSelect}"
+										update="movilAC,nombreMovil,deseleccionarMovilLink" />
+								</p:autoComplete>
+								<h:panelGroup>
+									<h:outputText id="nombreMovil"
+										value="#{hojaRutaController.hojaRutaView.movil.numeroMovil} #{hojaRutaController.hojaRutaView.movil.patente}" />
+									<h:commandLink id="deseleccionarMovilLink"
+										disabled="#{!hojaRutaController.movilSelected}"
+										actionListener="#{hojaRutaController.deseleccionarMovil}"
+										update="form" immediate="true">
+										<h:graphicImage url="/resource/images/delete.gif"
+											title="Deseleccionar" style="border:0px" />
+									</h:commandLink>
+								</h:panelGroup>
+								<h:message id="mmlac" for="movilAC" />
+
+								<h:outputText value="Nro remito" />
+								<p:inputText id="numeroRemitoIT"
+									value="#{hojaRutaController.hojaRutaView.numeroRemito}">
+									<f:validateBean for="numeroRemitoIT" />
+								</p:inputText>
+								<h:message id="nrIT" for="numeroRemitoIT" />
+								<h:outputText value="" />
+
+								<h:outputText value="Dirección" />
+								<p:inputTextarea id="direccionIT"
+									value="#{hojaRutaController.hojaRutaView.direccion}">
+									<f:validateBean for="direccionIT" />
+								</p:inputTextarea>
+								<h:message id="dirIT" for="direccionIT" />
+								<h:outputText value="" />
+
+								<h:outputText value="Localidad" />
+								<p:autoComplete id="localidadAC"
+									disabled="#{hojaRutaController.localidadSelected}"
+									value="#{hojaRutaController.hojaRutaView.localidad}"
+									completeMethod="#{hojaRutaController.completeLocalidad}"
+									var="localidad" itemLabel="#{localidad.descripcion}"
+									itemValue="#{localidad}"
+									converter="com.converter.LocalidadConverter" maxResults="10">
+									<!-- <f:ajax event="change" render="nombre"/> -->
+									<p:ajax event="itemSelect"
+										listener="#{hojaRutaController.handleSelect}"
+										update="localidadAC,nombre,deseleccinarLink" />
+
+								</p:autoComplete>
+								<h:panelGroup>
+									<h:outputText id="nombre"
+										value="#{hojaRutaController.hojaRutaView.localidad.descripcion}" />
+									<h:commandLink id="deseleccinarLink"
+										disabled="#{!hojaRutaController.localidadSelected}"
+										actionListener="#{hojaRutaController.deselecionarLocalidad}"
+										update="form" immediate="true">
+										<h:graphicImage url="/resource/images/delete.gif"
+											title="Deseleccionar" style="border:0px" />
+									</h:commandLink>
+								</h:panelGroup>
+								<h:message id="mlocac" for="localidadAC" />
+
+								<h:outputText value="Observaciones" />
+								<p:inputTextarea id="observacionesIT"
+									value="#{hojaRutaController.hojaRutaView.observaciones}">
+									<f:validateBean for="observacionesIT" />
+								</p:inputTextarea>
+								<h:message id="obserIT" for="observacionesIT" />
+								<h:outputText value="" />
+
+
+							</h:panelGrid>
+						</p:tab>
+
+					</p:tabView>
+
+					<!-- ================================================== -->
+					<!-- Opciones											-->
+					<!-- ================================================== -->
+					<h:panelGrid columns="2">
+						<p:commandButton value="Guardar"
+							actionListener="#{hojaRutaController.save}"
+							update="form,filtroForm">
+						</p:commandButton>
+						<p:commandButton value="Volver"
+							actionListener="#{hojaRutaController.cancel}" immediate="true"
+							update="form,filtroForm">
+						</p:commandButton>
+					</h:panelGrid>
+				</h:panelGrid>
+			</h:form>
+		</u:define>
+	</u:composition>
+</body>
+</html>

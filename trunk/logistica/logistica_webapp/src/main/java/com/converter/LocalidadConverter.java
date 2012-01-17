@@ -13,14 +13,19 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 @FacesConverter("com.converter.LocalidadConverter")
 public class LocalidadConverter implements Converter {
 
+	private BaseModelDAO<Localidad> dao;
+
 	@SuppressWarnings("unchecked")
+	public LocalidadConverter() {
+		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext(
+				"applicationContext.xml");
+		dao = (BaseModelDAO<Localidad>) ctx.getBean("localidadDAO");
+	}
+
 	public Object getAsObject(FacesContext arg0, UIComponent arg1, String arg2) {
 		Localidad localidad = null;
 		if (arg2 != null && !"".equalsIgnoreCase(arg2)) {
-			ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext(
-					"applicationContext.xml");
-			BaseModelDAO<Localidad> dao = (BaseModelDAO<Localidad>) ctx
-					.getBean("localidadDAO");
+
 			localidad = dao.get(arg2);
 		}
 		return localidad;

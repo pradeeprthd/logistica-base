@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -57,7 +56,6 @@ public class HojaRutaView implements Serializable {
 
 	private String observaciones;
 
-	@ManagedProperty("#{detalleHojaRutaView}")
 	private List<DetalleHojaRutaView> detalleHojaRutaViewList;
 
 	public HojaRutaView(Long id, Sucursal sucursal, Date fechaEmision,
