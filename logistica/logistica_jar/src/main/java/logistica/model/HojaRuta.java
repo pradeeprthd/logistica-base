@@ -52,7 +52,7 @@ public class HojaRuta extends BaseModel {
 	@JoinColumn(name = "movilID")
 	private Movil movil;
 
-	@Column(length = 50, unique = true, nullable = false)
+	@Column(length = 50, nullable = false)
 	private String numeroRemito;
 
 	@Column(length = 200, nullable = false)
@@ -65,7 +65,7 @@ public class HojaRuta extends BaseModel {
 	@Column(length = 200)
 	private String observaciones;
 
-	@OneToMany(mappedBy = "hojaRuta", orphanRemoval = true, fetch = FetchType.LAZY)
+	@OneToMany(orphanRemoval = true, fetch = FetchType.LAZY)
 	private List<DetalleHojaRuta> detalleHojaRutaList;
 
 	public HojaRuta(Long id, Sucursal sucursal, Date fechaEmision,

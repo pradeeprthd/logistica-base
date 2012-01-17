@@ -6,6 +6,7 @@ import logistica.model.Cliente;
 import logistica.query.ClienteQuery;
 
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.DataAccessException;
@@ -41,11 +42,13 @@ public class ClienteDAOImpl extends BaseHibernateDAO<Cliente, ClienteQuery> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Cliente> getList(ClienteQuery query) {
+	public List<Cliente> getList(Object query) {
+		ClienteQuery clienteQuery = (ClienteQuery) query;
 		List<Cliente> list = null;
 
 		DetachedCriteria criteria = DetachedCriteria.forClass(Cliente.class);
-		criteria.add(Restrictions.ilike("nombre", query.getNombre()));
+		criteria.add(Restrictions.ilike("nombre", clienteQuery.getNombre(),
+				MatchMode.START));
 		criteria.addOrder(Order.desc("nombre"));
 		list = getHibernateTemplate().findByCriteria(criteria);
 

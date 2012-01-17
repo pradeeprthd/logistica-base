@@ -121,4 +121,26 @@ public class DetalleHojaRuta extends BaseModel {
 	public void setFechaHasta(Date fechaHasta) {
 		this.fechaHasta = fechaHasta;
 	}
+
+	@Override
+	public boolean equals(Object detalleHojaRuta) {
+		boolean ret = true;
+		DetalleHojaRuta detalle2 = (DetalleHojaRuta) detalleHojaRuta;
+		ret = direccion.equalsIgnoreCase(detalle2.getDireccion());
+		if (localidad != null && detalle2.getLocalidad() != null) {
+			ret = ret
+					& localidad.getID().intValue() == detalle2.getLocalidad()
+							.getID().intValue();
+		} else if (localidad == null && detalle2.getLocalidad() == null) {
+			ret = true;
+		} else {
+			ret = false;
+		}
+		ret = ret && unidadMedida == detalle2.getUnidadMedida();
+		ret = ret && cantidad == detalle2.getCantidad();
+		ret = ret && fechaDesde == detalle2.getFechaDesde();
+		ret = ret && fechaHasta == detalle2.getFechaHasta();
+		return ret;
+	}
+
 }

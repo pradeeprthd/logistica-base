@@ -47,11 +47,13 @@ public class MovilDAOImpl extends BaseHibernateDAO<Movil, MovilQuery> {
 		List<Movil> list = null;
 
 		DetachedCriteria criteria = DetachedCriteria.forClass(Movil.class);
-		criteria.add(Restrictions.ilike("patente", movilQuery.getPatente(),
-				MatchMode.START));
 		if (movilQuery.getNumeroMovil() != null) {
-			criteria.add(Restrictions.eq("numeroMovil",
-					movilQuery.getNumeroMovil()));
+			criteria.add(Restrictions.or(Restrictions.eq("numeroMovil",
+					movilQuery.getNumeroMovil()), Restrictions.ilike("patente",
+					movilQuery.getPatente(), MatchMode.START)));
+		} else {
+			criteria.add(Restrictions.ilike("patente", movilQuery.getPatente(),
+					MatchMode.START));
 		}
 
 		list = getHibernateTemplate().findByCriteria(criteria);
