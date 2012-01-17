@@ -22,9 +22,11 @@ public class ClienteConverter implements Converter {
 	}
 
 	public Object getAsObject(FacesContext arg0, UIComponent arg1, String arg2) {
+		String[] temp = arg2.split("-");
+		Long clave = Long.parseLong(temp[0]);
 		Cliente cliente = null;
 		if (arg2 != null && !"".equalsIgnoreCase(arg2)) {
-			cliente = dao.get(arg2);
+			cliente = dao.find(clave);
 		}
 		return cliente;
 	}
@@ -34,7 +36,7 @@ public class ClienteConverter implements Converter {
 		String ret = null;
 		if (value != null) {
 			Cliente cliente = (Cliente) value;
-			ret = cliente.getNombre();
+			ret = cliente.getID() + "-" + cliente.getNombre();
 		}
 		return ret;
 	}

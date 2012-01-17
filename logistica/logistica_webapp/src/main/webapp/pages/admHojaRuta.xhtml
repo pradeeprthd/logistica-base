@@ -192,8 +192,7 @@
 									value="#{hojaRutaController.hojaRutaView.chofer}"
 									completeMethod="#{hojaRutaController.completeChofer}"
 									var="chofer" itemLabel="#{chofer.nombre}" itemValue="#{chofer}"
-									converter="com.converter.ChoferConverter" maxResults="10"
-									queryDelay="300">
+									converter="com.converter.ChoferConverter" maxResults="10">
 									<p:ajax event="itemSelect"
 										listener="#{hojaRutaController.handleChoferSelect}"
 										update="choferAC,nombreChofer,deseleccionarChoferLink" />
@@ -288,8 +287,97 @@
 								<h:outputText value="" />
 
 
+
+
 							</h:panelGrid>
 						</p:tab>
+
+						<p:tab title="Detalle">
+
+							<p:panel header="Agregar detalle" id="agregarDetalleID">
+								<h:panelGrid columns="4">
+									<h:outputText value="Dirección" />
+									<p:inputText id="direccionDIT"
+										value="#{hojaRutaController.detalleHojaRutaView.direccion}"
+										valueChangeListener="#{hojaRutaController.valueChangeMethod}">
+										<!-- <p:ajax update="out" event="onchange"/>  -->
+										<f:ajax execute="@this" />
+										<f:validateBean for="direccionDIT" />
+									</p:inputText>
+									<h:message for="direccionDIT" />
+									<h:outputText value="" />
+
+									<h:outputText value="Localidad" />
+									<p:autoComplete id="localidadDAC"
+										disabled="#{!(hojaRutaController.detalleHojaRutaView.localidad eq null)}"
+										value="#{hojaRutaController.detalleHojaRutaView.localidad}"
+										completeMethod="#{hojaRutaController.completeLocalidad}"
+										var="localidad" itemLabel="#{localidad.descripcion}"
+										itemValue="#{localidad}"
+										converter="com.converter.LocalidadConverter" maxResults="10"
+										queryDelay="300">
+										<p:ajax event="itemSelect"
+											listener="#{hojaRutaController.handleSelectDetalle}"
+											update="localidadDAC,nombreLocalidadDetalle,deseleccinarLocalidadDetalleLink" />
+									</p:autoComplete>
+									<h:message for="localidadDAC" />
+									<h:panelGroup>
+										<h:outputText id="nombreLocalidadDetalle"
+											value="#{hojaRutaController.detalleHojaRutaView.localidad.descripcion}" />
+										<h:commandLink id="deseleccinarLocalidadDetalleLink"
+											disabled="#{hojaRutaController.detalleHojaRutaView.localidad eq null}"
+											actionListener="#{hojaRutaController.deselecionarDetalleLocalidad}"
+											update="form" immediate="true">
+											<h:graphicImage url="/resource/images/delete.gif"
+												title="Deseleccionar" style="border:0px" />
+										</h:commandLink>
+									</h:panelGroup>
+									<h:message for="localidadDAC" />
+
+									<p:commandButton value="Agregar Detalle"
+										actionListener="#{hojaRutaController.addDetalle}"
+										update="detalleListDT,agregarDetalleID,direccionDIT"
+										immediate="true" />
+
+								</h:panelGrid>
+							</p:panel>
+							<p:dataTable id="detalleListDT" var="detalle"
+								value="#{hojaRutaController.detalleHojaRutaDM}" emptyMessage="">
+
+								<f:facet name="header">
+									<h:outputText value="Detalles" />
+								</f:facet>
+
+								<p:column align="center">
+									<f:facet name="header">
+										<h:outputText value="Dirección" />
+									</f:facet>
+									<h:outputText value="#{detalle.direccion}" />
+								</p:column>
+
+								<p:column align="center">
+									<f:facet name="header">
+										<h:outputText value="Localidad" />
+									</f:facet>
+									<h:outputText value="#{detalle.localidad.descripcion}" />
+								</p:column>
+
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Opciones" />
+									</f:facet>
+									<h:panelGrid columns="3">
+										<h:commandLink
+											actionListener="#{hojaRutaController.deleteDetalle}"
+											immediate="true">
+											<h:graphicImage url="/resource/images/delete.gif"
+												title="Eliminar" style="border:0px" />
+										</h:commandLink>
+									</h:panelGrid>
+								</p:column>
+							</p:dataTable>
+						</p:tab>
+
 
 					</p:tabView>
 

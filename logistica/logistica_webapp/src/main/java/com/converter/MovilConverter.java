@@ -22,9 +22,11 @@ public class MovilConverter implements Converter {
 	}
 
 	public Object getAsObject(FacesContext arg0, UIComponent arg1, String arg2) {
+		String[] temp = arg2.split("-");
+		Long clave = Long.parseLong(temp[0]);
 		Movil movil = null;
 		if (arg2 != null && !"".equalsIgnoreCase(arg2)) {
-			movil = dao.get(arg2);
+			movil = dao.find(clave);
 		}
 		return movil;
 	}
@@ -34,7 +36,7 @@ public class MovilConverter implements Converter {
 		String ret = null;
 		if (value != null) {
 			Movil movil = (Movil) value;
-			ret = movil.getPatente();
+			ret = movil.getID() + "-" + movil.getPatente();
 		}
 		return ret;
 	}

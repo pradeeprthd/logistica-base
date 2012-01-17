@@ -11,6 +11,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 
@@ -57,6 +58,9 @@ public class HojaRutaController extends PaginableController<HojaRuta> {
 
 	@ManagedProperty("#{hojaRutaView}")
 	private HojaRutaView hojaRutaView;
+
+	@ManagedProperty("#{detalleHojaRutaView}")
+	private DetalleHojaRutaView detalleHojaRutaView;
 
 	@ManagedProperty("#{hojaRutaBuilder}")
 	private HojaRutaBuilder hojaRutaBuilder;
@@ -106,6 +110,14 @@ public class HojaRutaController extends PaginableController<HojaRuta> {
 
 	public HojaRutaQuery getHojaRutaQuery() {
 		return hojaRutaQuery;
+	}
+
+	public DetalleHojaRutaView getDetalleHojaRutaView() {
+		return detalleHojaRutaView;
+	}
+
+	public void setDetalleHojaRutaView(DetalleHojaRutaView detalleHojaRutaView) {
+		this.detalleHojaRutaView = detalleHojaRutaView;
 	}
 
 	public DataModel<DetalleHojaRutaView> getDetalleHojaRutaDM() {
@@ -235,10 +247,15 @@ public class HojaRutaController extends PaginableController<HojaRuta> {
 	}
 
 	public void addDetalle(ActionEvent event) {
-		hojaRutaView.getDetalleHojaRutaViewList()
-				.add(new DetalleHojaRutaView());
-		detalleHojaRutaDM = new ListDataModel<DetalleHojaRutaView>(
-				hojaRutaView.getDetalleHojaRutaViewList());
+		try {
+			hojaRutaView.getDetalleHojaRutaViewList().add(
+					(DetalleHojaRutaView) detalleHojaRutaView.clone());
+			detalleHojaRutaDM = new ListDataModel<DetalleHojaRutaView>(
+					hojaRutaView.getDetalleHojaRutaViewList());
+			detalleHojaRutaView.setLocalidad(null);
+		} catch (CloneNotSupportedException e) {
+		}
+
 	}
 
 	public void deleteDetalle(ActionEvent event) {
@@ -274,7 +291,7 @@ public class HojaRutaController extends PaginableController<HojaRuta> {
 
 	public void handleSucursalSelect(SelectEvent event) {
 		System.out.println("se eligio una Sucursal");
-		hojaRutaView.setSucursal((Sucursal) event.getObject());
+		// hojaRutaView.setSucursal((Sucursal) event.getObject());
 	}
 
 	public boolean isClienteSelected() {
@@ -303,7 +320,7 @@ public class HojaRutaController extends PaginableController<HojaRuta> {
 
 	public void handleClienteSelect(SelectEvent event) {
 		System.out.println("se eligio un cliente");
-		hojaRutaView.setCliente((Cliente) event.getObject());
+		// hojaRutaView.setCliente((Cliente) event.getObject());
 	}
 
 	public boolean isChoferSelected() {
@@ -332,7 +349,7 @@ public class HojaRutaController extends PaginableController<HojaRuta> {
 
 	public void handleChoferSelect(SelectEvent event) {
 		System.out.println("se eligio un chofer");
-		hojaRutaView.setChofer((Chofer) event.getObject());
+		// hojaRutaView.setChofer((Chofer) event.getObject());
 	}
 
 	public boolean isMovilSelected() {
@@ -368,7 +385,7 @@ public class HojaRutaController extends PaginableController<HojaRuta> {
 
 	public void handleMovilSelect(SelectEvent event) {
 		System.out.println("se eligio un movil");
-		hojaRutaView.setMovil((Movil) event.getObject());
+		// hojaRutaView.setMovil((Movil) event.getObject());
 	}
 
 	public List<Localidad> completeLocalidad(String query) {
@@ -398,6 +415,19 @@ public class HojaRutaController extends PaginableController<HojaRuta> {
 
 	public void handleSelect(SelectEvent event) {
 		System.out.println("se eligio una localidad");
-		hojaRutaView.setLocalidad((Localidad) event.getObject());
+		// hojaRutaView.setLocalidad((Localidad) event.getObject());
+	}
+
+	public void handleSelectDetalle(SelectEvent event) {
+		System.out.println("se eligio una localidad en el detalle");
+	}
+
+	public void deselecionarDetalleLocalidad(ActionEvent event) {
+		detalleHojaRutaView.setLocalidad(null);
+	}
+
+	public void valueChangeMethod(ValueChangeEvent e) {
+		String valor = e.getNewValue().toString();
+		System.out.println(valor);
 	}
 }
