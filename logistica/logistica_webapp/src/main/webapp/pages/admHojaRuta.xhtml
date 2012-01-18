@@ -143,7 +143,8 @@
 									completeMethod="#{hojaRutaController.completeSucursal}"
 									var="sucursal" itemLabel="#{sucursal.nombre}"
 									itemValue="#{sucursal}"
-									converter="com.converter.SucursalConverter" maxResults="10">
+									converter="com.converter.SucursalConverter" maxResults="10"
+									forceSelection="true">
 									<p:ajax event="itemSelect"
 										listener="#{hojaRutaController.handleSucursalSelect}"
 										update="sucursalAC,nombreSucursal,deseleccinarSucursalLink" />
@@ -168,7 +169,8 @@
 									completeMethod="#{hojaRutaController.completeCliente}"
 									var="cliente" itemLabel="#{cliente.nombre}"
 									itemValue="#{cliente}"
-									converter="com.converter.ClienteConverter" maxResults="10">
+									converter="com.converter.ClienteConverter" maxResults="10"
+									forceSelection="true">
 									<p:ajax event="itemSelect"
 										listener="#{hojaRutaController.handleClienteSelect}"
 										update="clienteAC,nombreCliente,deseleccinarClienteLink" />
@@ -192,7 +194,8 @@
 									value="#{hojaRutaController.hojaRutaView.chofer}"
 									completeMethod="#{hojaRutaController.completeChofer}"
 									var="chofer" itemLabel="#{chofer.nombre}" itemValue="#{chofer}"
-									converter="com.converter.ChoferConverter" maxResults="10">
+									converter="com.converter.ChoferConverter" maxResults="10"
+									forceSelection="true">
 									<p:ajax event="itemSelect"
 										listener="#{hojaRutaController.handleChoferSelect}"
 										update="choferAC,nombreChofer,deseleccionarChoferLink" />
@@ -217,7 +220,7 @@
 									completeMethod="#{hojaRutaController.completeMovil}"
 									var="movil" itemLabel="#{movil.numeroMovil} - #{movil.patente}"
 									itemValue="#{movil}" converter="com.converter.MovilConverter"
-									maxResults="10" queryDelay="300">
+									maxResults="10" queryDelay="300" forceSelection="true">
 									<p:ajax event="itemSelect"
 										listener="#{hojaRutaController.handleMovilSelect}"
 										update="movilAC,nombreMovil,deseleccionarMovilLink" />
@@ -258,7 +261,8 @@
 									completeMethod="#{hojaRutaController.completeLocalidad}"
 									var="localidad" itemLabel="#{localidad.descripcion}"
 									itemValue="#{localidad}"
-									converter="com.converter.LocalidadConverter" maxResults="10">
+									converter="com.converter.LocalidadConverter" maxResults="10"
+									forceSelection="true">
 									<!-- <f:ajax event="change" render="nombre"/> -->
 									<p:ajax event="itemSelect"
 										listener="#{hojaRutaController.handleSelect}"
@@ -285,20 +289,15 @@
 								</p:inputTextarea>
 								<h:message id="obserIT" for="observacionesIT" />
 								<h:outputText value="" />
-
-
-
-
 							</h:panelGrid>
 						</p:tab>
 
 						<p:tab title="Detalle">
-
-							<p:panel header="Agregar detalle" id="agregarDetalleID">
+							<p:panel header="Agregar detalle">
 								<h:panelGrid columns="4">
 									<h:outputText value="Dirección" />
 									<p:inputText id="direccionDIT"
-										value="#{hojaRutaController.detalleHojaRutaView.direccion}"
+										value="#{hojaRutaController.detalleHojaRuta.direccion}"
 										valueChangeListener="#{hojaRutaController.valueChangeMethod}">
 										<!-- <p:ajax update="out" event="onchange"/>  -->
 										<f:ajax execute="@this" />
@@ -309,13 +308,13 @@
 
 									<h:outputText value="Localidad" />
 									<p:autoComplete id="localidadDAC"
-										disabled="#{!(hojaRutaController.detalleHojaRutaView.localidad eq null)}"
-										value="#{hojaRutaController.detalleHojaRutaView.localidad}"
+										disabled="#{!(hojaRutaController.detalleHojaRuta.localidad eq null)}"
+										value="#{hojaRutaController.detalleHojaRuta.localidad}"
 										completeMethod="#{hojaRutaController.completeLocalidad}"
 										var="localidad" itemLabel="#{localidad.descripcion}"
 										itemValue="#{localidad}"
 										converter="com.converter.LocalidadConverter" maxResults="10"
-										queryDelay="300">
+										queryDelay="300" forceSelection="true">
 										<p:ajax event="itemSelect"
 											listener="#{hojaRutaController.handleSelectDetalle}"
 											update="localidadDAC,nombreLocalidadDetalle,deseleccinarLocalidadDetalleLink" />
@@ -323,24 +322,68 @@
 									<h:message for="localidadDAC" />
 									<h:panelGroup>
 										<h:outputText id="nombreLocalidadDetalle"
-											value="#{hojaRutaController.detalleHojaRutaView.localidad.descripcion}" />
+											value="#{hojaRutaController.detalleHojaRuta.localidad.descripcion}" />
 										<h:commandLink id="deseleccinarLocalidadDetalleLink"
-											disabled="#{hojaRutaController.detalleHojaRutaView.localidad eq null}"
+											disabled="#{hojaRutaController.detalleHojaRuta.localidad eq null}"
 											actionListener="#{hojaRutaController.deselecionarDetalleLocalidad}"
 											update="form" immediate="true">
 											<h:graphicImage url="/resource/images/delete.gif"
 												title="Deseleccionar" style="border:0px" />
 										</h:commandLink>
 									</h:panelGroup>
-									<h:message for="localidadDAC" />
+
+									<h:outputText value="Cantidad" />
+									<p:spinner id="cantiadDS"
+										value="#{hojaRutaController.detalleHojaRuta.cantidad}" min="0"
+										stepFactor="1" size="30">
+										<f:ajax execute="@this" />
+									</p:spinner>
+									<h:message for="cantiadDS" />
+									<h:outputText value="" />
+
+									<h:outputText value="Unidad Medida" />
+									<p:selectOneMenu
+										value="#{hojaRutaController.detalleHojaRuta.unidadMedida}"
+										converter="com.converter.UnidadMedidaConverter">
+										<f:selectItems
+											value="#{hojaRutaController.unidadMedidaEnumList}" />
+										<f:ajax execute="@this" />
+										<!--  <p:ajax listener="#{direccionBean.provinciaListener}" /> -->
+									</p:selectOneMenu>
+									<h:outputText value="" />
+									<h:outputText value="" />
+
+									<h:outputText value="Fecha Desde" />
+									<p:calendar id="fechaDesdeC"
+										value="#{hojaRutaController.detalleHojaRuta.fechaDesde}"
+										mode="popup" showOn="button" locale="es"
+										pattern="#{msgs.common_showDateFormat}" immediate="true"
+										readOnlyInputText="true">
+										<p:ajax event="dateSelect"
+											listener="#{hojaRutaController.handleDateSelect}" />
+									</p:calendar>
+									<h:outputText value="" />
+									<h:outputText value="" />
+
+									<h:outputText value="Fecha Hasta" />
+									<p:calendar id="fechaHastaC"
+										value="#{hojaRutaController.detalleHojaRuta.fechaHasta}"
+										mode="popup" showOn="button" locale="es"
+										pattern="#{msgs.common_showDateFormat}" immediate="true"
+										readOnlyInputText="true">
+										<p:ajax event="dateSelect"
+											listener="#{hojaRutaController.handleDateSelect}" />
+										<f:ajax execute="@this" />
+									</p:calendar>
+									<h:outputText value="" />
+									<h:outputText value="" />
 
 									<p:commandButton value="Agregar Detalle"
 										actionListener="#{hojaRutaController.addDetalle}"
-										update="detalleListDT,agregarDetalleID,direccionDIT"
-										immediate="true" />
-
+										update="form" immediate="true" />
 								</h:panelGrid>
 							</p:panel>
+
 							<p:dataTable id="detalleListDT" var="detalle"
 								value="#{hojaRutaController.detalleHojaRutaDM}" emptyMessage="">
 
@@ -364,6 +407,42 @@
 
 								<p:column>
 									<f:facet name="header">
+										<h:outputText value="Cantidad" />
+									</f:facet>
+									<h:outputText value="#{detalle.cantidad}">
+									</h:outputText>
+								</p:column>
+
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Unidad Medida" />
+									</f:facet>
+									<h:outputText value="#{detalle.unidadMedida}">
+									</h:outputText>
+								</p:column>
+
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Fecha desde" />
+									</f:facet>
+									<h:outputText value="#{detalle.fechaDesde}">
+										<f:convertDateTime pattern="#{msgs.common_showDateFormat}"
+											timeZone="#{msgs.common_timeZone}" />
+									</h:outputText>
+								</p:column>
+
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Fecha hasta" />
+									</f:facet>
+									<h:outputText value="#{detalle.fechaHasta}">
+										<f:convertDateTime pattern="#{msgs.common_showDateFormat}"
+											timeZone="#{msgs.common_timeZone}" />
+									</h:outputText>
+								</p:column>
+
+								<p:column>
+									<f:facet name="header">
 										<h:outputText value="Opciones" />
 									</f:facet>
 									<h:panelGrid columns="3">
@@ -376,6 +455,7 @@
 									</h:panelGrid>
 								</p:column>
 							</p:dataTable>
+
 						</p:tab>
 
 

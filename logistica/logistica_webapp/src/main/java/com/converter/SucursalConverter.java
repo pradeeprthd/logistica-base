@@ -22,11 +22,16 @@ public class SucursalConverter implements Converter {
 	}
 
 	public Object getAsObject(FacesContext arg0, UIComponent arg1, String arg2) {
-		String[] temp = arg2.split("-");
-		Long clave = Long.parseLong(temp[0]);
 		Sucursal sucursal = null;
-		if (arg2 != null && !"".equalsIgnoreCase(arg2)) {
-			sucursal = dao.find(clave);
+
+		try {
+			String[] temp = arg2.split("-");
+			Long clave = Long.parseLong(temp[0]);
+
+			if (arg2 != null && !"".equalsIgnoreCase(arg2)) {
+				sucursal = dao.find(clave);
+			}
+		} catch (Exception e) {
 		}
 		return sucursal;
 	}

@@ -177,23 +177,22 @@ public class SucursalController extends PaginableController<Sucursal> {
 					String sortField, SortOrder sortOrder,
 					Map<String, String> filters) {
 
-				Map<String, String> filtro = new HashMap<String, String>();
+				Map<String, Object> filtro = new HashMap<String, Object>();
 				filtro.put("nombre", sucursalQuery.getNombre());
 				if (sucursalQuery.getNumeroSucursal() != null
 						&& sucursalQuery.getNumeroSucursal() != 0) {
-					filtro.put("numeroSucursal", sucursalQuery
-							.getNumeroSucursal().toString());
+					filtro.put("numeroSucursal",
+							sucursalQuery.getNumeroSucursal());
 				}
 				return dao.getList(first, pageSize, "nombre", true, filtro);
 			}
 
 		};
-		Map<String, String> filtro = new HashMap<String, String>();
+		Map<String, Object> filtro = new HashMap<String, Object>();
 		filtro.put("nombre", sucursalQuery.getNombre());
 		if (sucursalQuery.getNumeroSucursal() != null
 				&& sucursalQuery.getNumeroSucursal() != 0) {
-			filtro.put("numeroSucursal", sucursalQuery.getNumeroSucursal()
-					.toString());
+			filtro.put("numeroSucursal", sucursalQuery.getNumeroSucursal());
 		}
 		lazyDM.setRowCount(dao.count(filtro).intValue());
 	}

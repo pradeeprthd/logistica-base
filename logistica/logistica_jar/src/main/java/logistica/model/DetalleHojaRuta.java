@@ -16,7 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 
 import logistica.common.BaseModel;
-import logistica.type.UnidadMedida;
+import logistica.type.UnidadMedidaEnum;
 
 @SuppressWarnings("serial")
 @Entity
@@ -36,7 +36,7 @@ public class DetalleHojaRuta extends BaseModel {
 	private Localidad localidad;
 
 	@Enumerated(EnumType.STRING)
-	private UnidadMedida unidadMedida;
+	private UnidadMedidaEnum unidadMedida;
 
 	@Basic
 	private Integer cantidad;
@@ -48,7 +48,7 @@ public class DetalleHojaRuta extends BaseModel {
 	private Date fechaHasta;
 
 	public DetalleHojaRuta(Long id, String direccion, Localidad localidad,
-			UnidadMedida unidadMedida, Integer cantidad, Date fechaDesde,
+			UnidadMedidaEnum unidadMedida, Integer cantidad, Date fechaDesde,
 			Date fechaHasta) {
 		super();
 		this.id = id;
@@ -90,11 +90,11 @@ public class DetalleHojaRuta extends BaseModel {
 		this.localidad = localidad;
 	}
 
-	public UnidadMedida getUnidadMedida() {
+	public UnidadMedidaEnum getUnidadMedida() {
 		return unidadMedida;
 	}
 
-	public void setUnidadMedida(UnidadMedida unidadMedida) {
+	public void setUnidadMedida(UnidadMedidaEnum unidadMedida) {
 		this.unidadMedida = unidadMedida;
 	}
 

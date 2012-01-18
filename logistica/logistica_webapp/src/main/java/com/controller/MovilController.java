@@ -164,23 +164,22 @@ public class MovilController extends PaginableController<Movil> {
 			public List<Movil> load(int first, int pageSize, String sortField,
 					SortOrder sortOrder, Map<String, String> filters) {
 
-				Map<String, String> filtro = new HashMap<String, String>();
+				Map<String, Object> filtro = new HashMap<String, Object>();
 				filtro.put("patente", movilQuery.getPatente());
 				if (movilQuery.getNumeroMovil() != null
 						&& movilQuery.getNumeroMovil() != 0) {
-					filtro.put("numeroMovil", movilQuery.getNumeroMovil()
-							.toString());
+					filtro.put("numeroMovil", movilQuery.getNumeroMovil());
 				}
 				return dao
 						.getList(first, pageSize, "numeroMovil", true, filtro);
 			}
 
 		};
-		Map<String, String> filtro = new HashMap<String, String>();
+		Map<String, Object> filtro = new HashMap<String, Object>();
 		filtro.put("patente", movilQuery.getPatente());
 		if (movilQuery.getNumeroMovil() != null
 				&& movilQuery.getNumeroMovil() != 0) {
-			filtro.put("numeroMovil", movilQuery.getNumeroMovil().toString());
+			filtro.put("numeroMovil", movilQuery.getNumeroMovil());
 		}
 		lazyDM.setRowCount(dao.count(filtro).intValue());
 	}

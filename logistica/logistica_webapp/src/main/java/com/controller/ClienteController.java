@@ -178,14 +178,14 @@ public class ClienteController extends PaginableController<Cliente> {
 					String sortField, SortOrder sortOrder,
 					Map<String, String> filters) {
 
-				Map<String, String> filtro = new HashMap<String, String>();
+				Map<String, Object> filtro = new HashMap<String, Object>();
 				filtro.put("nombre", clienteQuery.getNombre());
 				return dao.getList(first, pageSize, "nombre", true, filtro);
 			}
 
 		};
 
-		Map<String, String> filtro = new HashMap<String, String>();
+		Map<String, Object> filtro = new HashMap<String, Object>();
 		filtro.put("nombre", clienteQuery.getNombre());
 		lazyDM.setRowCount(dao.count(filtro).intValue());
 	}

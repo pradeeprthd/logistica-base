@@ -6,7 +6,7 @@ import java.util.List;
 import javax.faces.model.SelectItem;
 
 import logistica.type.RolEnum;
-import logistica.type.UnidadMedida;
+import logistica.type.UnidadMedidaEnum;
 
 public class JSFBuilder {
 
@@ -23,7 +23,7 @@ public class JSFBuilder {
 	public static final List<SelectItem> getUnidadesMedida() {
 		final List<SelectItem> rList = new ArrayList<SelectItem>();
 
-		for (UnidadMedida e : UnidadMedida.values()) {
+		for (UnidadMedidaEnum e : UnidadMedidaEnum.values()) {
 			rList.add(new SelectItem(e, e.getLabel()));
 		}
 

@@ -2,12 +2,12 @@ package com.converter;
 
 import javax.faces.convert.FacesConverter;
 
-import logistica.type.UnidadMedida;
+import logistica.type.UnidadMedidaEnum;
 
-@FacesConverter("unidadMedidaConverter")
-public class UnidadMedidaConverter extends BaseEnumConverter<UnidadMedida> {
+@FacesConverter("com.converter.UnidadMedidaConverter")
+public class UnidadMedidaConverter extends BaseEnumConverter<UnidadMedidaEnum> {
 
 	public UnidadMedidaConverter() {
-		super(UnidadMedida.class);
+		super(UnidadMedidaEnum.class);
 	}
 }

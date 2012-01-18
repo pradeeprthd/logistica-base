@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -65,7 +66,8 @@ public class HojaRuta extends BaseModel {
 	@Column(length = 200)
 	private String observaciones;
 
-	@OneToMany(orphanRemoval = true, fetch = FetchType.LAZY)
+	@OneToMany(orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "hojaRutaID")
 	private List<DetalleHojaRuta> detalleHojaRutaList;
 
 	public HojaRuta(Long id, Sucursal sucursal, Date fechaEmision,
