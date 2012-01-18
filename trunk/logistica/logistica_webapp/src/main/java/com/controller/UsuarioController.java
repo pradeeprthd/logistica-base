@@ -203,13 +203,13 @@ public class UsuarioController extends PaginableController<Usuario> {
 					String sortField, SortOrder sortOrder,
 					Map<String, String> filters) {
 
-				Map<String, String> filtro = new HashMap<String, String>();
+				Map<String, Object> filtro = new HashMap<String, Object>();
 				filtro.put("usuario", usuarioQuery.getUsuario());
 				return dao.getList(first, pageSize, "usuario", true, filtro);
 			}
 		};
 
-		Map<String, String> filtro = new HashMap<String, String>();
+		Map<String, Object> filtro = new HashMap<String, Object>();
 		filtro.put("usuario", usuarioQuery.getUsuario());
 		lazyDM.setRowCount(dao.count(filtro).intValue());
 	}

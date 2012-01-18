@@ -1,5 +1,6 @@
 package logistica.common.dao;
 
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -7,6 +8,7 @@ import java.util.Map.Entry;
 
 import logistica.common.BaseModel;
 import logistica.query.BaseQuery;
+import logistica.util.DateUtil;
 
 import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
@@ -80,7 +82,7 @@ public abstract class BaseHibernateDAO<T extends BaseModel, Q extends BaseQuery>
 
 	@SuppressWarnings("unchecked")
 	public List<T> getList(int first, int pageSize, String sortField,
-			boolean sortOrder, Map<String, String> filters)
+			boolean sortOrder, Map<String, Object> filters)
 			throws DataAccessException {
 		List<T> objectList = null;
 
@@ -95,16 +97,25 @@ public abstract class BaseHibernateDAO<T extends BaseModel, Q extends BaseQuery>
 		}
 
 		if (!filters.isEmpty()) {
-			Iterator<Entry<String, String>> iterator = filters.entrySet()
+			Iterator<Entry<String, Object>> iterator = filters.entrySet()
 					.iterator();
 			while (iterator.hasNext()) {
-				Entry<String, String> entry = iterator.next();
-				try {
-					Long numero = Long.parseLong(entry.getValue());
-					criteria.add(Restrictions.eq(entry.getKey(), numero));
-				} catch (NumberFormatException e) {
+				Entry<String, Object> entry = iterator.next();
+				Object object = entry.getValue();
+				if (object instanceof Long) {
+					try {
+						Long numero = Long.parseLong(object.toString());
+						criteria.add(Restrictions.eq(entry.getKey(), numero));
+					} catch (NumberFormatException e) {
+					}
+				} else if (object instanceof String) {
 					criteria.add(Restrictions.ilike(entry.getKey(),
-							entry.getValue(), MatchMode.START));
+							object.toString(), MatchMode.START));
+				} else if (object instanceof Date) {
+					Date fecha = (Date) object;
+					criteria.add(Restrictions.between(entry.getKey(),
+							DateUtil.getFirstTime(fecha),
+							DateUtil.getLastTime(fecha)));
 				}
 			}
 		}
@@ -115,22 +126,31 @@ public abstract class BaseHibernateDAO<T extends BaseModel, Q extends BaseQuery>
 		return objectList;
 	}
 
-	public Long count(Map<String, String> filters) throws DataAccessException {
+	public Long count(Map<String, Object> filters) throws DataAccessException {
 		Long count = 0l;
 
 		DetachedCriteria criteria = DetachedCriteria.forClass(getModelClass());
 		criteria.setProjection(Projections.rowCount());
 		if (!filters.isEmpty()) {
-			Iterator<Entry<String, String>> iterator = filters.entrySet()
+			Iterator<Entry<String, Object>> iterator = filters.entrySet()
 					.iterator();
 			while (iterator.hasNext()) {
-				Entry<String, String> entry = iterator.next();
-				try {
-					Long numero = Long.parseLong(entry.getValue());
-					criteria.add(Restrictions.eq(entry.getKey(), numero));
-				} catch (NumberFormatException e) {
+				Entry<String, Object> entry = iterator.next();
+				Object object = entry.getValue();
+				if (object instanceof Long) {
+					try {
+						Long numero = Long.parseLong(object.toString());
+						criteria.add(Restrictions.eq(entry.getKey(), numero));
+					} catch (NumberFormatException e) {
+					}
+				} else if (object instanceof String) {
 					criteria.add(Restrictions.ilike(entry.getKey(),
-							entry.getValue(), MatchMode.START));
+							object.toString(), MatchMode.START));
+				} else if (object instanceof Date) {
+					Date fecha = (Date) object;
+					criteria.add(Restrictions.between(entry.getKey(),
+							DateUtil.getFirstTime(fecha),
+							DateUtil.getLastTime(fecha)));
 				}
 			}
 		}

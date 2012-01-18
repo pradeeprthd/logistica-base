@@ -31,9 +31,9 @@ public interface BaseModelDAO<T extends BaseModel> {
 
 	Long count() throws DataAccessException;
 
-	public Long count(Map<String, String> filters) throws DataAccessException;
+	public Long count(Map<String, Object> filters) throws DataAccessException;
 
 	List<T> getList(int first, int pageSize, String sortField,
-			boolean sortOrder, Map<String, String> filters)
+			boolean sortOrder, Map<String, Object> filters)
 			throws DataAccessException;
 }

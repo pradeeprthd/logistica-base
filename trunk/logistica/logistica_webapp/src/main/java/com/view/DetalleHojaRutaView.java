@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import logistica.model.Localidad;
-import logistica.type.UnidadMedida;
+import logistica.type.UnidadMedidaEnum;
 
 @ManagedBean
 @ViewScoped
@@ -26,7 +26,7 @@ public class DetalleHojaRutaView implements Serializable {
 	private Localidad localidad;
 
 	@NotNull(message = "Valor requerido")
-	private UnidadMedida unidadMedida;
+	private UnidadMedidaEnum unidadMedida;
 
 	@NotNull(message = "Valor requerido")
 	private Integer cantidad;
@@ -38,7 +38,7 @@ public class DetalleHojaRutaView implements Serializable {
 	private Date fechaHasta;
 
 	public DetalleHojaRutaView(Long id, String direccion, Localidad localidad,
-			UnidadMedida unidadMedida, Integer cantidad, Date fechaDesde,
+			UnidadMedidaEnum unidadMedida, Integer cantidad, Date fechaDesde,
 			Date fechaHasta) {
 		super();
 		this.id = id;
@@ -78,11 +78,11 @@ public class DetalleHojaRutaView implements Serializable {
 		this.localidad = localidad;
 	}
 
-	public UnidadMedida getUnidadMedida() {
+	public UnidadMedidaEnum getUnidadMedida() {
 		return unidadMedida;
 	}
 
-	public void setUnidadMedida(UnidadMedida unidadMedida) {
+	public void setUnidadMedida(UnidadMedidaEnum unidadMedida) {
 		this.unidadMedida = unidadMedida;
 	}
 

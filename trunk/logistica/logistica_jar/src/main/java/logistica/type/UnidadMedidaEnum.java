@@ -1,11 +1,11 @@
 package logistica.type;
 
-public enum UnidadMedida implements Labeled {
+public enum UnidadMedidaEnum implements Labeled {
 	BULTOS("Bultos"), KILOGRAMOS("Kilogramos"), METROS_CUBICOS("Metros cúbicos");
 
 	private String label;
 
-	private UnidadMedida(String label) {
+	private UnidadMedidaEnum(String label) {
 		this.label = label;
 	}
 

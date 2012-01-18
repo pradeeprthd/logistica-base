@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -58,6 +59,7 @@ public class HojaRutaView implements Serializable {
 	private String observaciones;
 
 	@NotNull(message = "Valor requerido")
+	@Valid
 	private List<DetalleHojaRutaView> detalleHojaRutaViewList;
 
 	public HojaRutaView(Long id, Sucursal sucursal, Date fechaEmision,

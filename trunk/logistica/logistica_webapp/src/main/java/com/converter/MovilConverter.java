@@ -22,11 +22,15 @@ public class MovilConverter implements Converter {
 	}
 
 	public Object getAsObject(FacesContext arg0, UIComponent arg1, String arg2) {
-		String[] temp = arg2.split("-");
-		Long clave = Long.parseLong(temp[0]);
 		Movil movil = null;
-		if (arg2 != null && !"".equalsIgnoreCase(arg2)) {
-			movil = dao.find(clave);
+		try {
+			String[] temp = arg2.split("-");
+			Long clave = Long.parseLong(temp[0]);
+
+			if (arg2 != null && !"".equalsIgnoreCase(arg2)) {
+				movil = dao.find(clave);
+			}
+		} catch (Exception e) {
 		}
 		return movil;
 	}

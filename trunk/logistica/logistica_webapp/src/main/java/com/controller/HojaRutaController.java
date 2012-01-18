@@ -1,5 +1,6 @@
 package com.controller;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +19,7 @@ import javax.faces.model.ListDataModel;
 import logistica.common.dao.BaseModelDAO;
 import logistica.model.Chofer;
 import logistica.model.Cliente;
+import logistica.model.DetalleHojaRuta;
 import logistica.model.HojaRuta;
 import logistica.model.Localidad;
 import logistica.model.Movil;
@@ -28,13 +30,16 @@ import logistica.query.HojaRutaQuery;
 import logistica.query.LocalidadQuery;
 import logistica.query.MovilQuery;
 import logistica.query.SucursalQuery;
+import logistica.type.UnidadMedidaEnum;
 
 import org.apache.log4j.Logger;
+import org.primefaces.event.DateSelectEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.builder.DetalleHojaRutaBuilder;
 import com.builder.HojaRutaBuilder;
 import com.util.JSFUtil;
 import com.view.DetalleHojaRutaView;
@@ -55,15 +60,18 @@ public class HojaRutaController extends PaginableController<HojaRuta> {
 	private HojaRuta hojaRuta;
 	private HojaRutaQuery hojaRutaQuery;
 	private DataModel<DetalleHojaRutaView> detalleHojaRutaDM;
+	private List<UnidadMedidaEnum> unidadMedidaEnumList;
 
 	@ManagedProperty("#{hojaRutaView}")
 	private HojaRutaView hojaRutaView;
 
-	@ManagedProperty("#{detalleHojaRutaView}")
-	private DetalleHojaRutaView detalleHojaRutaView;
+	private DetalleHojaRuta detalleHojaRuta;
 
 	@ManagedProperty("#{hojaRutaBuilder}")
 	private HojaRutaBuilder hojaRutaBuilder;
+
+	@ManagedProperty("#{detalleHojaRutaBuilder}")
+	private DetalleHojaRutaBuilder detalleHojaRutaBuilder;
 
 	@SuppressWarnings("unchecked")
 	public HojaRutaController() {
@@ -78,6 +86,9 @@ public class HojaRutaController extends PaginableController<HojaRuta> {
 					.getBean("localidadDAO");
 			hojaRutaQuery = new HojaRutaQuery();
 			detalleHojaRutaDM = new ListDataModel<DetalleHojaRutaView>();
+			detalleHojaRuta = new DetalleHojaRuta();
+			detalleHojaRuta.setUnidadMedida(UnidadMedidaEnum.BULTOS);
+			unidadMedidaEnumList = Arrays.asList(UnidadMedidaEnum.values());
 			addEdit = false;
 		} catch (Throwable e) {
 			log.error("Error al inicializar la clase HojaRutaController", e);
@@ -112,16 +123,29 @@ public class HojaRutaController extends PaginableController<HojaRuta> {
 		return hojaRutaQuery;
 	}
 
-	public DetalleHojaRutaView getDetalleHojaRutaView() {
-		return detalleHojaRutaView;
+	public DetalleHojaRuta getDetalleHojaRuta() {
+		return detalleHojaRuta;
 	}
 
-	public void setDetalleHojaRutaView(DetalleHojaRutaView detalleHojaRutaView) {
-		this.detalleHojaRutaView = detalleHojaRutaView;
+	public void setDetalleHojaRuta(DetalleHojaRuta detalleHojaRuta) {
+		this.detalleHojaRuta = detalleHojaRuta;
 	}
 
 	public DataModel<DetalleHojaRutaView> getDetalleHojaRutaDM() {
 		return detalleHojaRutaDM;
+	}
+
+	public DetalleHojaRutaBuilder getDetalleHojaRutaBuilder() {
+		return detalleHojaRutaBuilder;
+	}
+
+	public void setDetalleHojaRutaBuilder(
+			DetalleHojaRutaBuilder detalleHojaRutaBuilder) {
+		this.detalleHojaRutaBuilder = detalleHojaRutaBuilder;
+	}
+
+	public List<UnidadMedidaEnum> getUnidadMedidaEnumList() {
+		return unidadMedidaEnumList;
 	}
 
 	public void query(ActionEvent event) {
@@ -131,6 +155,10 @@ public class HojaRutaController extends PaginableController<HojaRuta> {
 	public void edit(ActionEvent event) {
 		try {
 			hojaRuta = (HojaRuta) lazyDM.getRowData();
+			hojaRuta = dao.findFULL(hojaRuta.getID());
+			detalleHojaRutaDM = new ListDataModel<DetalleHojaRutaView>(
+					detalleHojaRutaBuilder.toView(hojaRuta
+							.getDetalleHojaRutaList()));
 			hojaRutaView = hojaRutaBuilder.toView(hojaRuta);
 			addEdit = true;
 		} catch (Throwable e) {
@@ -177,7 +205,7 @@ public class HojaRutaController extends PaginableController<HojaRuta> {
 				Sucursal sucursal = hojaRuta.getSucursal();
 				sucursal.setNumeroHojaRuta(hojaRuta.getSucursal()
 						.getNumeroHojaRuta() + 1);
-				daoSucursal.save(sucursal);
+				daoSucursal.edit(sucursal);
 			}
 			clear();
 			JSFUtil.saveMessage("Elemento guardado con exito",
@@ -202,6 +230,9 @@ public class HojaRutaController extends PaginableController<HojaRuta> {
 	public void clear() {
 		hojaRuta = new HojaRuta();
 		hojaRutaView = new HojaRutaView();
+		detalleHojaRuta = new DetalleHojaRuta();
+		detalleHojaRuta.setUnidadMedida(UnidadMedidaEnum.BULTOS);
+		detalleHojaRutaDM = new ListDataModel<DetalleHojaRutaView>(null);
 	}
 
 	private void loadList() {
@@ -213,49 +244,44 @@ public class HojaRutaController extends PaginableController<HojaRuta> {
 					String sortField, SortOrder sortOrder,
 					Map<String, String> filters) {
 
-				Map<String, String> filtro = new HashMap<String, String>();
+				Map<String, Object> filtro = new HashMap<String, Object>();
 				if (hojaRutaQuery.getFechaEmision() != null) {
-					filtro.put("fechaEmision", hojaRutaQuery.getFechaEmision()
-							.toString());
+					filtro.put("fechaEmision", hojaRutaQuery.getFechaEmision());
 				}
 				if (hojaRutaQuery.getPrefijo() != null
 						&& hojaRutaQuery.getPrefijo() != 0) {
-					filtro.put("prefijo", hojaRutaQuery.getPrefijo().toString());
+					filtro.put("prefijo", hojaRutaQuery.getPrefijo());
 				}
 				if (hojaRutaQuery.getNumero() != null
 						&& hojaRutaQuery.getNumero() != 0) {
-					filtro.put("numero", hojaRutaQuery.getNumero().toString());
+					filtro.put("numero", hojaRutaQuery.getNumero());
 				}
-				return dao.getList(first, pageSize, "id", true, filtro);
+				return dao.getList(first, pageSize, "fechaEmision", false,
+						filtro);
 			}
 
 		};
 
-		Map<String, String> filtro = new HashMap<String, String>();
+		Map<String, Object> filtro = new HashMap<String, Object>();
 		if (hojaRutaQuery.getFechaEmision() != null) {
-			filtro.put("fechaEmision", hojaRutaQuery.getFechaEmision()
-					.toString());
+			filtro.put("fechaEmision", hojaRutaQuery.getFechaEmision());
 		}
 		if (hojaRutaQuery.getPrefijo() != null
 				&& hojaRutaQuery.getPrefijo() != 0) {
-			filtro.put("prefijo", hojaRutaQuery.getPrefijo().toString());
+			filtro.put("prefijo", hojaRutaQuery.getPrefijo());
 		}
 		if (hojaRutaQuery.getNumero() != null && hojaRutaQuery.getNumero() != 0) {
-			filtro.put("numero", hojaRutaQuery.getNumero().toString());
+			filtro.put("numero", hojaRutaQuery.getNumero());
 		}
 		lazyDM.setRowCount(dao.count(filtro).intValue());
 	}
 
 	public void addDetalle(ActionEvent event) {
-		try {
-			hojaRutaView.getDetalleHojaRutaViewList().add(
-					(DetalleHojaRutaView) detalleHojaRutaView.clone());
-			detalleHojaRutaDM = new ListDataModel<DetalleHojaRutaView>(
-					hojaRutaView.getDetalleHojaRutaViewList());
-			detalleHojaRutaView.setLocalidad(null);
-		} catch (CloneNotSupportedException e) {
-		}
-
+		hojaRutaView.getDetalleHojaRutaViewList().add(
+				(DetalleHojaRutaView) detalleHojaRutaBuilder
+						.toView(detalleHojaRuta));
+		detalleHojaRutaDM = new ListDataModel<DetalleHojaRutaView>(
+				hojaRutaView.getDetalleHojaRutaViewList());
 	}
 
 	public void deleteDetalle(ActionEvent event) {
@@ -423,11 +449,16 @@ public class HojaRutaController extends PaginableController<HojaRuta> {
 	}
 
 	public void deselecionarDetalleLocalidad(ActionEvent event) {
-		detalleHojaRutaView.setLocalidad(null);
+		detalleHojaRuta.setLocalidad(null);
 	}
 
 	public void valueChangeMethod(ValueChangeEvent e) {
 		String valor = e.getNewValue().toString();
 		System.out.println(valor);
+	}
+
+	public void handleDateSelect(DateSelectEvent event) {
+		// Date date = event.getDate();
+		// Add facesmessage
 	}
 }

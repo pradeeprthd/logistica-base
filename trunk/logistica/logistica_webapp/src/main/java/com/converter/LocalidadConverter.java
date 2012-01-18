@@ -23,12 +23,15 @@ public class LocalidadConverter implements Converter {
 	}
 
 	public Object getAsObject(FacesContext arg0, UIComponent arg1, String arg2) {
+		Localidad localidad = null;
+		try{
 		String[] temp = arg2.split("-");
 		Long clave = Long.parseLong(temp[0]);
-		Localidad localidad = null;
 		if (arg2 != null && !"".equalsIgnoreCase(arg2)) {
 
 			localidad = dao.find(clave);
+		}
+		}catch (Exception e) {
 		}
 		return localidad;
 	}
