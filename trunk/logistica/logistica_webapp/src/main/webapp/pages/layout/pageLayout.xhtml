@@ -3,29 +3,62 @@
 <html xmlns:u="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns="http://www.w3.org/1999/xhtml">
+	xmlns:p="http://primefaces.org/ui" xmlns="http://www.w3.org/1999/xhtml">
 
 <h:head>
 
-	<link href="/sixsigmasoft/resource/css/styles.css"
-		type="text/css" rel="stylesheet" />
+	<link href="/sixsigmasoft/resource/css/styles.css" type="text/css"
+		rel="stylesheet" />
+
+	<script type="text/javascript">
+		PrimeFaces.locales['es'] = {
+			closeText : 'Cerrar',
+			prevText : 'Anterior',
+			nextText : 'Siguiente',
+			currentText : 'Inicio',
+			monthNames : [ 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo',
+					'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre',
+					'Noviembre', 'Diciembre' ],
+			monthNamesShort : [ 'Lunes', 'Martes', 'Miércoles', 'Jueves',
+					'Viernes', 'Sábado' ],
+			dayNames : [ 'Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves',
+					'Viernes', 'Sábado' ],
+			dayNamesShort : [ 'Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab' ],
+			dayNamesMin : [ 'D', 'L', 'M', 'M', 'J', 'V', 'S' ],
+			weekHeader : 'Semana',
+			firstDay : 1,
+			isRTL : false,
+			showMonthAfterYear : false,
+			yearSuffix : '',
+			timeOnlyTitle : 'Sólo hora',
+			timeText : 'Tiempo',
+			hourText : 'Hora',
+			minuteText : 'Minuto',
+			secondText : 'Segundo',
+			currentText : 'Fecha actual',
+			ampm : false,
+			month : 'Mes',
+			week : 'Semana',
+			day : 'Día',
+			allDayText : 'Todo el día'
+		};
+	</script>
 
 </h:head>
 <body>
-<u:include src="headerLayout.xhtml" />
+	<u:include src="headerLayout.xhtml" />
 
-<h:panelGrid columns="1" columnClasses="top" rowClasses="top">
+	<h:panelGrid columns="1" columnClasses="top" rowClasses="top">
 
-	<h:panelGrid columns="1">
-		<u:include src="menu.xhtml" />
+		<h:panelGrid columns="1">
+			<u:include src="menu.xhtml" />
+		</h:panelGrid>
+
+		<h:panelGrid columns="1">
+			<u:include src="content.xhtml" />
+		</h:panelGrid>
 	</h:panelGrid>
 
-	<h:panelGrid columns="1">
-		<u:include src="content.xhtml" />
-	</h:panelGrid>
-</h:panelGrid>
-
-<u:include src="footerLayout.xhtml" />
+	<u:include src="footerLayout.xhtml" />
 </body>
 </html>
