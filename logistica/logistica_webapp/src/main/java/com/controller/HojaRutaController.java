@@ -1,5 +1,7 @@
 package com.controller;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
@@ -15,8 +17,11 @@ import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletResponse;
 
 import logistica.common.dao.BaseModelDAO;
+import logistica.jasper.HojaRutaReport;
 import logistica.model.Chofer;
 import logistica.model.Cliente;
 import logistica.model.DetalleHojaRuta;
@@ -31,6 +36,13 @@ import logistica.query.LocalidadQuery;
 import logistica.query.MovilQuery;
 import logistica.query.SucursalQuery;
 import logistica.type.UnidadMedidaEnum;
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.util.JRLoader;
 
 import org.apache.log4j.Logger;
 import org.primefaces.event.DateSelectEvent;
@@ -61,6 +73,7 @@ public class HojaRutaController extends PaginableController<HojaRuta> {
 	private HojaRutaQuery hojaRutaQuery;
 	private DataModel<DetalleHojaRutaView> detalleHojaRutaDM;
 	private List<UnidadMedidaEnum> unidadMedidaEnumList;
+	private List<Sucursal> sucursalList;
 
 	@ManagedProperty("#{hojaRutaView}")
 	private HojaRutaView hojaRutaView;
@@ -89,6 +102,7 @@ public class HojaRutaController extends PaginableController<HojaRuta> {
 			detalleHojaRuta = new DetalleHojaRuta();
 			detalleHojaRuta.setUnidadMedida(UnidadMedidaEnum.BULTOS);
 			unidadMedidaEnumList = Arrays.asList(UnidadMedidaEnum.values());
+			sucursalList = daoSucursal.getList();
 			addEdit = false;
 		} catch (Throwable e) {
 			log.error("Error al inicializar la clase HojaRutaController", e);
@@ -146,6 +160,10 @@ public class HojaRutaController extends PaginableController<HojaRuta> {
 
 	public List<UnidadMedidaEnum> getUnidadMedidaEnumList() {
 		return unidadMedidaEnumList;
+	}
+
+	public List<Sucursal> getSucursalList() {
+		return sucursalList;
 	}
 
 	public void query(ActionEvent event) {
@@ -206,6 +224,9 @@ public class HojaRutaController extends PaginableController<HojaRuta> {
 				sucursal.setNumeroHojaRuta(hojaRuta.getSucursal()
 						.getNumeroHojaRuta() + 1);
 				daoSucursal.edit(sucursal);
+
+				// exporto a PDF
+				// toPDF(hojaRuta);
 			}
 			clear();
 			JSFUtil.saveMessage("Elemento guardado con exito",
@@ -458,7 +479,107 @@ public class HojaRutaController extends PaginableController<HojaRuta> {
 	}
 
 	public void handleDateSelect(DateSelectEvent event) {
-		// Date date = event.getDate();
-		// Add facesmessage
+	}
+
+	@SuppressWarnings({ "deprecation", "unchecked", "rawtypes" })
+	public void toPDF(HojaRuta hojaRuta) {
+		try {
+
+			HttpServletResponse response = (HttpServletResponse) FacesContext
+					.getCurrentInstance().getExternalContext().getResponse();
+			ServletContext sc = (ServletContext) FacesContext
+					.getCurrentInstance().getExternalContext().getContext();
+
+			String realpath = sc.getRealPath(File.separator
+					+ "resource/jasper/HojaRuta.jasper");
+
+			JasperReport jasperReport = (JasperReport) JRLoader
+					.loadObject(realpath);
+
+			JRDataSource datasource = new JRBeanCollectionDataSource(
+					getReporteHojaRuta(hojaRuta));
+			JasperPrint print = JasperFillManager.fillReport(jasperReport,
+					new HashMap(), datasource);
+
+			response.setContentType("application/pdf");
+			response.addHeader("Content-Disposition",
+					"attachment; filename=HojaRuta.pdf");
+
+			/* JasperExportManager.exportReportToPdfFile(print, "hojaRuta.pdf"); */
+
+			JasperExportManager.exportReportToPdfStream(print,
+					response.getOutputStream());
+
+			FacesContext.getCurrentInstance().responseComplete();
+		} catch (Throwable e) {
+			log.error("Error al exportar a PDF: ", e);
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR,
+							"Error al exportar a PDF", ""));
+			System.out.println("error al exportar: " + e.getMessage());
+		}
+	}
+
+	public void toPDF(ActionEvent actionEvent) {
+		hojaRuta = (HojaRuta) lazyDM.getRowData();
+		hojaRuta = dao.findFULL(hojaRuta.getID());
+		toPDF(hojaRuta);
+	}
+
+	private List<HojaRutaReport> getReporteHojaRuta(HojaRuta hojaRuta) {
+		List<HojaRutaReport> list = new ArrayList<HojaRutaReport>();
+		if (hojaRuta.getDetalleHojaRutaList() == null
+				|| hojaRuta.getDetalleHojaRutaList().size() == 0) {
+			HojaRutaReport hojaRutaReport = new HojaRutaReport(
+					hojaRuta.getPrefijo() + "-" + hojaRuta.getNumero(),
+					hojaRuta.getFechaEmision(), hojaRuta.getCliente()
+							.getNombre(), hojaRuta.getMovil().getNumeroMovil()
+							.toString()
+							+ "-" + hojaRuta.getMovil().getPatente(), hojaRuta
+							.getChofer().getNombre(),
+					hojaRuta.getNumeroRemito(), hojaRuta.getDireccion(),
+					hojaRuta.getLocalidad().getDescripcion(), 0, 0, 0,
+					hojaRuta.getObservaciones(), "", "", "", null, null, null);
+			list.add(hojaRutaReport);
+		} else {
+			Integer cantidadBultos = 0;
+			Integer cantidadKilogramos = 0;
+			Integer cantidadMetrosCubicos = 0;
+			// calculo los totales
+			for (DetalleHojaRuta detalle : hojaRuta.getDetalleHojaRutaList()) {
+				if (detalle.getUnidadMedida().equals(UnidadMedidaEnum.BULTOS)) {
+					cantidadBultos = cantidadBultos + detalle.getCantidad();
+				} else if (detalle.getUnidadMedida().equals(
+						UnidadMedidaEnum.KILOGRAMOS)) {
+					cantidadKilogramos = cantidadKilogramos
+							+ detalle.getCantidad();
+				} else if (detalle.getUnidadMedida().equals(
+						UnidadMedidaEnum.METROS_CUBICOS)) {
+					cantidadMetrosCubicos = cantidadMetrosCubicos
+							+ detalle.getCantidad();
+				}
+			}
+
+			for (DetalleHojaRuta detalle : hojaRuta.getDetalleHojaRutaList()) {
+				HojaRutaReport hojaRutaReport = new HojaRutaReport(
+						hojaRuta.getPrefijo() + "-" + hojaRuta.getNumero(),
+						hojaRuta.getFechaEmision(), hojaRuta.getCliente()
+								.getNombre(), hojaRuta.getMovil()
+								.getNumeroMovil().toString()
+								+ "-" + hojaRuta.getMovil().getPatente(),
+						hojaRuta.getChofer().getNombre(),
+						hojaRuta.getNumeroRemito(), hojaRuta.getDireccion(),
+						hojaRuta.getLocalidad().getDescripcion(),
+						cantidadBultos, cantidadKilogramos,
+						cantidadMetrosCubicos, hojaRuta.getObservaciones(),
+						detalle.getDireccion(), detalle.getLocalidad()
+								.getDescripcion(), detalle.getUnidadMedida()
+								.toString(), detalle.getCantidad(),
+						detalle.getFechaDesde(), detalle.getFechaHasta());
+				list.add(hojaRutaReport);
+			}
+		}
+		return list;
 	}
 }

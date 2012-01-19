@@ -39,7 +39,7 @@
 			</h:form>
 
 			<h:form id="form">
-				<p:messages id="messages" />
+				<p:growl id="messages" life="5000" />
 				<p:dataTable id="dataTable" var="hojaRuta"
 					value="#{hojaRutaController.lazyDM}" paginator="true" rows="10"
 					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -114,6 +114,12 @@
 								<h:graphicImage url="/resource/images/edit.gif"
 									title="Modificar" style="border:0px" />
 							</p:commandLink>
+							<p:commandLink actionListener="#{hojaRutaController.toPDF}"
+								ajax="false">
+								<h:graphicImage url="/resource/images/pdf.gif" title="A PDF"
+									style="border:0px" />
+							</p:commandLink>
+
 							<h:commandLink actionListener="#{hojaRutaController.delete}"
 								onclick="return confirm('¿Está seguro de eliminar el registro?');">
 								<h:graphicImage url="/resource/images/delete.gif"
@@ -134,33 +140,17 @@
 					rendered="#{hojaRutaController.addEdit}">
 					<p:tabView widgetVar="tabView">
 						<p:tab title="Datos Principales">
-							<p:focus for="sucursalAC" />
+							<p:focus for="sucursalSOM" />
 							<h:panelGrid columns="4">
 								<h:outputText value="Sucursal" />
-								<p:autoComplete id="sucursalAC"
-									disabled="#{hojaRutaController.sucursalSelected}"
+								<p:selectOneMenu id="sucursalSOM"
 									value="#{hojaRutaController.hojaRutaView.sucursal}"
-									completeMethod="#{hojaRutaController.completeSucursal}"
-									var="sucursal" itemLabel="#{sucursal.nombre}"
-									itemValue="#{sucursal}"
-									converter="com.converter.SucursalConverter" maxResults="10"
-									forceSelection="true">
-									<p:ajax event="itemSelect"
-										listener="#{hojaRutaController.handleSucursalSelect}"
-										update="sucursalAC,nombreSucursal,deseleccinarSucursalLink" />
-								</p:autoComplete>
-								<h:panelGroup>
-									<h:outputText id="nombreSucursal"
-										value="#{hojaRutaController.hojaRutaView.sucursal.nombre}" />
-									<h:commandLink id="deseleccinarSucursalLink"
-										disabled="#{!hojaRutaController.sucursalSelected}"
-										actionListener="#{hojaRutaController.deselecionarSucursal}"
-										update="form" immediate="true">
-										<h:graphicImage url="/resource/images/delete.gif"
-											title="Deseleccionar" style="border:0px" />
-									</h:commandLink>
-								</h:panelGroup>
-								<h:message id="mlac" for="sucursalAC" />
+									converter="com.converter.SucursalConverter">
+									<f:selectItems value="#{hojaRutaController.sucursalList}" var="sucursal" itemLabel="#{sucursal.nombre}" itemValue="#{sucursal}"/>
+									<f:ajax execute="@this" />
+								</p:selectOneMenu>
+								<h:outputText value="" />
+								<h:outputText value="" />
 
 								<h:outputText value="Cliente" />
 								<p:autoComplete id="clienteAC"
@@ -247,7 +237,7 @@
 								<h:outputText value="" />
 
 								<h:outputText value="Dirección" />
-								<p:inputTextarea id="direccionIT"
+								<p:inputTextarea id="direccionIT" style="width:200px;height:100px;"
 									value="#{hojaRutaController.hojaRutaView.direccion}">
 									<f:validateBean for="direccionIT" />
 								</p:inputTextarea>
@@ -283,7 +273,7 @@
 								<h:message id="mlocac" for="localidadAC" />
 
 								<h:outputText value="Observaciones" />
-								<p:inputTextarea id="observacionesIT"
+								<p:inputTextarea id="observacionesIT" style="width:200px;height:100px;"
 									value="#{hojaRutaController.hojaRutaView.observaciones}">
 									<f:validateBean for="observacionesIT" />
 								</p:inputTextarea>
