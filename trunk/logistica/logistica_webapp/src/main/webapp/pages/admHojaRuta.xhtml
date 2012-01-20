@@ -146,7 +146,9 @@
 								<p:selectOneMenu id="sucursalSOM"
 									value="#{hojaRutaController.hojaRutaView.sucursal}"
 									converter="com.converter.SucursalConverter">
-									<f:selectItems value="#{hojaRutaController.sucursalList}" var="sucursal" itemLabel="#{sucursal.nombre}" itemValue="#{sucursal}"/>
+									<f:selectItems value="#{hojaRutaController.sucursalList}"
+										var="sucursal" itemLabel="#{sucursal.nombre}"
+										itemValue="#{sucursal}" />
 									<f:ajax execute="@this" />
 								</p:selectOneMenu>
 								<h:outputText value="" />
@@ -171,7 +173,7 @@
 									<h:commandLink id="deseleccinarClienteLink"
 										disabled="#{!hojaRutaController.clienteSelected}"
 										actionListener="#{hojaRutaController.deselecionarCliente}"
-										update="form" immediate="true">
+										update="clienteAC,nombreCliente,deseleccinarClienteLink" immediate="true">
 										<h:graphicImage url="/resource/images/delete.gif"
 											title="Deseleccionar" style="border:0px" />
 									</h:commandLink>
@@ -196,7 +198,7 @@
 									<h:commandLink id="deseleccionarChoferLink"
 										disabled="#{!hojaRutaController.choferSelected}"
 										actionListener="#{hojaRutaController.deseleccionarChofer}"
-										update="form" immediate="true">
+										update="choferAC,nombreChofer,deseleccionarChoferLink" immediate="true">
 										<h:graphicImage url="/resource/images/delete.gif"
 											title="Deseleccionar" style="border:0px" />
 									</h:commandLink>
@@ -221,7 +223,7 @@
 									<h:commandLink id="deseleccionarMovilLink"
 										disabled="#{!hojaRutaController.movilSelected}"
 										actionListener="#{hojaRutaController.deseleccionarMovil}"
-										update="form" immediate="true">
+										update="movilAC,nombreMovil,deseleccionarMovilLink" immediate="true">
 										<h:graphicImage url="/resource/images/delete.gif"
 											title="Deseleccionar" style="border:0px" />
 									</h:commandLink>
@@ -237,7 +239,8 @@
 								<h:outputText value="" />
 
 								<h:outputText value="Dirección" />
-								<p:inputTextarea id="direccionIT" style="width:200px;height:100px;"
+								<p:inputTextarea id="direccionIT"
+									style="width:200px;height:100px;"
 									value="#{hojaRutaController.hojaRutaView.direccion}">
 									<f:validateBean for="direccionIT" />
 								</p:inputTextarea>
@@ -265,7 +268,7 @@
 									<h:commandLink id="deseleccinarLink"
 										disabled="#{!hojaRutaController.localidadSelected}"
 										actionListener="#{hojaRutaController.deselecionarLocalidad}"
-										update="form" immediate="true">
+										update="localidadAC,nombre,deseleccinarLink" immediate="true">
 										<h:graphicImage url="/resource/images/delete.gif"
 											title="Deseleccionar" style="border:0px" />
 									</h:commandLink>
@@ -273,7 +276,8 @@
 								<h:message id="mlocac" for="localidadAC" />
 
 								<h:outputText value="Observaciones" />
-								<p:inputTextarea id="observacionesIT" style="width:200px;height:100px;"
+								<p:inputTextarea id="observacionesIT"
+									style="width:200px;height:100px;"
 									value="#{hojaRutaController.hojaRutaView.observaciones}">
 									<f:validateBean for="observacionesIT" />
 								</p:inputTextarea>
@@ -316,7 +320,8 @@
 										<h:commandLink id="deseleccinarLocalidadDetalleLink"
 											disabled="#{hojaRutaController.detalleHojaRuta.localidad eq null}"
 											actionListener="#{hojaRutaController.deselecionarDetalleLocalidad}"
-											update="form" immediate="true">
+											update="localidadDAC,nombreLocalidadDetalle,deseleccinarLocalidadDetalleLink"
+											immediate="true">
 											<h:graphicImage url="/resource/images/delete.gif"
 												title="Deseleccionar" style="border:0px" />
 										</h:commandLink>
@@ -369,7 +374,7 @@
 
 									<p:commandButton value="Agregar Detalle"
 										actionListener="#{hojaRutaController.addDetalle}"
-										update="form" immediate="true" />
+										update="detalleListDT" immediate="true" />
 								</h:panelGrid>
 							</p:panel>
 
