@@ -104,6 +104,18 @@ where r.usuario_id=u.id and u.usuario =?" />
 		</property>
 	</bean>
 
+	<bean id="movilNoOperativoDAOImpl" class="logistica.common.dao.MovilNoOperativoDAOImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="otrosServiciosDAOImpl" class="logistica.common.dao.OtrosServiciosDAOImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
 	<!-- Conexión a base de datos -->
 	<bean id="myDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
 		<property name="jndiName">
@@ -151,6 +163,8 @@ where r.usuario_id=u.id and u.usuario =?" />
 				<value>logistica.model.Movil</value>
 				<value>logistica.model.HojaRuta</value>
 				<value>logistica.model.DetalleHojaRuta</value>
+				<value>logistica.model.MovilNoOperativo</value>
+				<value>logistica.model.OtrosServicios</value>
 			</list>
 		</property>
 	</bean>
@@ -305,6 +319,40 @@ where r.usuario_id=u.id and u.usuario =?" />
 		</property>
 		<property name="target">
 			<ref local="hojaRutaDAOImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<!-- defino como maneja las transacciones -->
+			<props>
+				<prop key="save*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="movilNoOperativoDAO"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+		<property name="target">
+			<ref local="movilNoOperativoDAOImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<!-- defino como maneja las transacciones -->
+			<props>
+				<prop key="save*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="otrosServiciosDAO"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+		<property name="target">
+			<ref local="otrosServiciosDAOImpl" />
 		</property>
 		<property name="transactionAttributes">
 			<!-- defino como maneja las transacciones -->

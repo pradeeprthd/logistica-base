@@ -1,5 +1,6 @@
 package logistica.common.dao;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -99,8 +100,18 @@ public abstract class BaseHibernateDAO<T extends BaseModel, Q extends BaseQuery>
 		if (!filters.isEmpty()) {
 			Iterator<Entry<String, Object>> iterator = filters.entrySet()
 					.iterator();
+			List<String> alias = new ArrayList<String>();
 			while (iterator.hasNext()) {
 				Entry<String, Object> entry = iterator.next();
+				String[] temp = entry.getKey().split("\\.");
+				if (temp.length > 1) {
+					String objeto = temp[0];
+					if (!alias.contains(objeto)) {
+						criteria.createAlias(objeto, objeto);
+						alias.add(objeto);
+					}
+				}
+
 				Object object = entry.getValue();
 				if (object instanceof Long) {
 					try {
@@ -134,8 +145,17 @@ public abstract class BaseHibernateDAO<T extends BaseModel, Q extends BaseQuery>
 		if (!filters.isEmpty()) {
 			Iterator<Entry<String, Object>> iterator = filters.entrySet()
 					.iterator();
+			List<String> alias = new ArrayList<String>();
 			while (iterator.hasNext()) {
 				Entry<String, Object> entry = iterator.next();
+				String[] temp = entry.getKey().split("\\.");
+				if (temp.length > 1) {
+					String objeto = temp[0];
+					if (!alias.contains(objeto)) {
+						criteria.createAlias(objeto, objeto);
+						alias.add(objeto);
+					}
+				}
 				Object object = entry.getValue();
 				if (object instanceof Long) {
 					try {
