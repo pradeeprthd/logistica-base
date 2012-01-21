@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd ">
+<html xmlns:u="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://com.ss.logistica/jsf"
+	xmlns:p="http://primefaces.org/ui" xmlns="http://www.w3.org/1999/xhtml">
+
+<body>
+	<u:composition template="/pages/layout/pageLayout.xhtml">
+		<u:define name="body">
+			<h:form id="filtroForm">
+				<p:panel id="panelFiltro"
+					rendered="#{!movilNoOperativoController.addEdit}">
+					<h:panelGrid columns="5">
+						<h:outputText value="Patente: " />
+						<p:inputText
+							value="#{movilNoOperativoController.movilNoOperativoQuery.patente}">
+						</p:inputText>
+
+						<h:outputText value="Número móvil" />
+						<p:spinner id="numeroS"
+							value="#{movilNoOperativoController.movilNoOperativoQuery.numeroMovil}"
+							min="0" stepFactor="1" size="30">
+						</p:spinner>
+
+						<p:commandButton value="Consultar"
+							actionListener="#{movilNoOperativoController.query}"
+							update="form">
+						</p:commandButton>
+					</h:panelGrid>
+				</p:panel>
+			</h:form>
+
+			<h:form id="form">
+				<p:growl id="messages" life="5000" />
+				<p:dataTable id="dataTable" var="movilNoOperativo"
+					value="#{movilNoOperativoController.lazyDM}" paginator="true"
+					rows="10"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="10,15,20"
+					rendered="#{!movilNoOperativoController.addEdit}"
+					emptyMessage="No se encontraron registros" dynamic="true">
+
+					<f:facet name="header">
+						<h:outputText value="#{msgs.admMovilNoOperativo_title}" />
+					</f:facet>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Nro movil" />
+						</f:facet>
+						<h:outputText value="#{movilNoOperativo.movil.numeroMovil}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Patente" />
+						</f:facet>
+						<h:outputText value="#{movilNoOperativo.movil.patente}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Fecha desde" />
+						</f:facet>
+						<h:outputText value="#{movilNoOperativo.fechaDesde}">
+							<f:convertDateTime pattern="#{msgs.common_inputDateFormat}"
+								timeZone="#{msgs.common_timeZone}" />
+						</h:outputText>
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Fecha hasta" />
+						</f:facet>
+						<h:outputText value="#{movilNoOperativo.fechaHasta}">
+							<f:convertDateTime pattern="#{msgs.common_inputDateFormat}"
+								timeZone="#{msgs.common_timeZone}" />
+						</h:outputText>
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Estado Móvil" />
+						</f:facet>
+						<h:outputText value="#{movilNoOperativo.estadoMovilEnum}">
+						</h:outputText>
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Opciones" />
+						</f:facet>
+						<h:panelGrid columns="3">
+							<p:commandLink
+								actionListener="#{movilNoOperativoController.edit}"
+								update="form,filtroForm" oncomplete="tabView.select(0)">
+								<h:graphicImage url="/resource/images/edit.gif"
+									title="Modificar" style="border:0px" />
+							</p:commandLink>
+							<h:commandLink
+								actionListener="#{movilNoOperativoController.delete}"
+								onclick="return confirm('¿Está seguro de eliminar el registro?');">
+								<h:graphicImage url="/resource/images/delete.gif"
+									title="Eliminar" style="border:0px" />
+							</h:commandLink>
+						</h:panelGrid>
+					</p:column>
+
+					<f:facet name="footer">
+						<p:commandButton value="Agregar"
+							actionListener="#{movilNoOperativoController.add}"
+							update="form,filtroForm" oncomplete="tabView.select(0)" />
+					</f:facet>
+				</p:dataTable>
+
+				<h:panelGrid id="panel" columns="1"
+					rendered="#{movilNoOperativoController.addEdit}">
+					<p:tabView widgetVar="tabView">
+						<p:tab title="Datos Principales">
+							<p:focus for="movilAC" />
+							<h:panelGrid columns="4">
+								<h:outputText value="Móvil" />
+								<p:autoComplete id="movilAC"
+									disabled="#{movilNoOperativoController.movilSelected}"
+									value="#{movilNoOperativoController.movilNoOperativoView.movil}"
+									completeMethod="#{movilNoOperativoController.completeMovil}"
+									var="movil" itemLabel="#{movil.numeroMovil} - #{movil.patente}"
+									itemValue="#{movil}" converter="com.converter.MovilConverter"
+									maxResults="10" queryDelay="300" forceSelection="true">
+									<p:ajax event="itemSelect"
+										listener="#{movilNoOperativoController.handleMovilSelect}"
+										update="movilAC,nombreMovil,deseleccionarMovilLink" />
+								</p:autoComplete>
+								<h:panelGroup>
+									<h:outputText id="nombreMovil"
+										value="#{movilNoOperativoController.movilNoOperativoView.movil.numeroMovil} #{movilNoOperativoController.movilNoOperativoView.movil.patente}" />
+									<h:commandLink id="deseleccionarMovilLink"
+										disabled="#{!movilNoOperativoController.movilSelected}"
+										actionListener="#{movilNoOperativoController.deseleccionarMovil}"
+										update="movilAC,nombreMovil,deseleccionarMovilLink"
+										immediate="true">
+										<h:graphicImage url="/resource/images/delete.gif"
+											title="Deseleccionar" style="border:0px" />
+									</h:commandLink>
+								</h:panelGroup>
+								<h:message id="mmlac" for="movilAC" />
+
+								<h:outputText value="Fecha Desde" />
+								<p:calendar id="fechaDesdeC"
+									value="#{movilNoOperativoController.movilNoOperativoView.fechaDesde}"
+									mode="popup" showOn="button" locale="es"
+									pattern="#{msgs.common_inputDateFormat}" 
+									readOnlyInputText="true">
+								</p:calendar>
+								<h:message  for="fechaDesdeC" />
+								<h:outputText value="" />
+
+								<h:outputText value="Fecha Hasta" />
+								<p:calendar id="fechaHastaC"
+									value="#{movilNoOperativoController.movilNoOperativoView.fechaHasta}"
+									mode="popup" showOn="button" locale="es"
+									pattern="#{msgs.common_inputDateFormat}" 
+									readOnlyInputText="true">
+								</p:calendar>
+								<h:message  for="fechaHastaC" />
+								<h:outputText value="" />
+
+								<h:outputText value="Motivo" />
+								<p:selectOneMenu
+									value="#{movilNoOperativoController.movilNoOperativoView.estadoMovilEnum}"
+									converter="com.converter.EstadoMovilConverter">
+									<f:selectItems
+										value="#{movilNoOperativoController.estadoMovilEnumList}" />
+								</p:selectOneMenu>
+								<h:outputText value="" />
+								<h:outputText value="" />
+							</h:panelGrid>
+						</p:tab>
+					</p:tabView>
+
+					<!-- ================================================== -->
+					<!-- Opciones											-->
+					<!-- ================================================== -->
+					<h:panelGrid columns="2">
+						<p:commandButton value="Guardar"
+							actionListener="#{movilNoOperativoController.save}"
+							update="form,filtroForm">
+						</p:commandButton>
+						<p:commandButton value="Volver"
+							actionListener="#{movilNoOperativoController.cancel}"
+							immediate="true" update="form,filtroForm">
+						</p:commandButton>
+					</h:panelGrid>
+				</h:panelGrid>
+			</h:form>
+		</u:define>
+	</u:composition>
+</body>
+</html>

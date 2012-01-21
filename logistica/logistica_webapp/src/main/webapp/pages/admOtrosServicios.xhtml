@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd ">
+<html xmlns:u="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://com.ss.logistica/jsf"
+	xmlns:p="http://primefaces.org/ui" xmlns="http://www.w3.org/1999/xhtml">
+
+<body>
+	<u:composition template="/pages/layout/pageLayout.xhtml">
+		<u:define name="body">
+			<h:form id="filtroForm">
+				<p:panel id="panelFiltro"
+					rendered="#{!otrosServiciosController.addEdit}">
+					<h:panelGrid columns="5">
+						<h:outputText value="Patente: " />
+						<p:inputText
+							value="#{otrosServiciosController.otrosServiciosQuery.patente}">
+						</p:inputText>
+
+						<h:outputText value="Número móvil" />
+						<p:spinner id="numeroS"
+							value="#{otrosServiciosController.otrosServiciosQuery.numeroMovil}"
+							min="0" stepFactor="1" size="30">
+						</p:spinner>
+						<h:outputText value="" />
+
+						<h:outputText value="Chofer: " />
+						<p:inputText
+							value="#{otrosServiciosController.otrosServiciosQuery.nombreChofer}">
+						</p:inputText>
+
+						<h:outputText value="Fecha" />
+						<p:calendar
+							value="#{otrosServiciosController.otrosServiciosQuery.fecha}"
+							mode="popup" showOn="button" locale="es"
+							pattern="#{msgs.common_inputDateFormat}" />
+
+						<p:commandButton value="Consultar"
+							actionListener="#{otrosServiciosController.query}" update="form">
+						</p:commandButton>
+					</h:panelGrid>
+				</p:panel>
+			</h:form>
+
+			<h:form id="form">
+				<p:growl id="messages" life="5000" />
+				<p:dataTable id="dataTable" var="otrosServicios"
+					value="#{otrosServiciosController.lazyDM}" paginator="true"
+					rows="10"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="10,15,20"
+					rendered="#{!otrosServiciosController.addEdit}"
+					emptyMessage="No se encontraron registros" dynamic="true">
+
+					<f:facet name="header">
+						<h:outputText value="#{msgs.admOtrosServicios_title}" />
+					</f:facet>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Nro movil" />
+						</f:facet>
+						<h:outputText value="#{otrosServicios.movil.numeroMovil}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Patente" />
+						</f:facet>
+						<h:outputText value="#{otrosServicios.movil.patente}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Chofer" />
+						</f:facet>
+						<h:outputText value="#{otrosServicios.chofer.nombre}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Fecha" />
+						</f:facet>
+						<h:outputText value="#{otrosServicios.fecha}">
+							<f:convertDateTime pattern="#{msgs.common_inputDateFormat}"
+								timeZone="#{msgs.common_timeZone}" />
+						</h:outputText>
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Asignado a" />
+						</f:facet>
+						<h:outputText value="#{otrosServicios.asignadoA}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Horario entrada" />
+						</f:facet>
+						<h:outputText value="#{otrosServicios.horarioEntrada}">
+							<f:convertDateTime pattern="#{msgs.common_timeOnly}"
+								timeZone="#{msgs.common_timeZone}" />
+						</h:outputText>
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Opciones" />
+						</f:facet>
+						<h:panelGrid columns="3">
+							<p:commandLink actionListener="#{otrosServiciosController.edit}"
+								update="form,filtroForm" oncomplete="tabView.select(0)">
+								<h:graphicImage url="/resource/images/edit.gif"
+									title="Modificar" style="border:0px" />
+							</p:commandLink>
+							<h:commandLink
+								actionListener="#{otrosServiciosController.delete}"
+								onclick="return confirm('¿Está seguro de eliminar el registro?');">
+								<h:graphicImage url="/resource/images/delete.gif"
+									title="Eliminar" style="border:0px" />
+							</h:commandLink>
+						</h:panelGrid>
+					</p:column>
+
+					<f:facet name="footer">
+						<p:commandButton value="Agregar"
+							actionListener="#{otrosServiciosController.add}"
+							update="form,filtroForm" oncomplete="tabView.select(0)" />
+					</f:facet>
+				</p:dataTable>
+
+				<h:panelGrid id="panel" columns="1"
+					rendered="#{otrosServiciosController.addEdit}">
+					<p:tabView widgetVar="tabView">
+						<p:tab title="Datos Principales">
+							<p:focus for="movilAC" />
+							<h:panelGrid columns="4">
+								<h:outputText value="Móvil" />
+								<p:autoComplete id="movilAC"
+									disabled="#{otrosServiciosController.movilSelected}"
+									value="#{otrosServiciosController.otrosServiciosView.movil}"
+									completeMethod="#{otrosServiciosController.completeMovil}"
+									var="movil" itemLabel="#{movil.numeroMovil} - #{movil.patente}"
+									itemValue="#{movil}" converter="com.converter.MovilConverter"
+									maxResults="10" queryDelay="300" forceSelection="true">
+									<p:ajax event="itemSelect"
+										listener="#{otrosServiciosController.handleMovilSelect}"
+										update="movilAC,nombreMovil,deseleccionarMovilLink" />
+								</p:autoComplete>
+								<h:panelGroup>
+									<h:outputText id="nombreMovil"
+										value="#{otrosServiciosController.otrosServiciosView.movil.numeroMovil} #{otrosServiciosController.otrosServiciosView.movil.patente}" />
+									<h:commandLink id="deseleccionarMovilLink"
+										disabled="#{!otrosServiciosController.movilSelected}"
+										actionListener="#{otrosServiciosController.deseleccionarMovil}"
+										update="movilAC,nombreMovil,deseleccionarMovilLink"
+										immediate="true">
+										<h:graphicImage url="/resource/images/delete.gif"
+											title="Deseleccionar" style="border:0px" />
+									</h:commandLink>
+								</h:panelGroup>
+								<h:message id="mmlac" for="movilAC" />
+
+								<h:outputText value="Chofer" />
+								<p:autoComplete id="choferAC"
+									disabled="#{otrosServiciosController.choferSelected}"
+									value="#{otrosServiciosController.otrosServiciosView.chofer}"
+									completeMethod="#{otrosServiciosController.completeChofer}"
+									var="chofer" itemLabel="#{chofer.nombre}" itemValue="#{chofer}"
+									converter="com.converter.ChoferConverter" maxResults="10"
+									forceSelection="true">
+									<p:ajax event="itemSelect"
+										listener="#{otrosServiciosController.handleChoferSelect}"
+										update="choferAC,nombreChofer,deseleccionarChoferLink" />
+								</p:autoComplete>
+								<h:panelGroup>
+									<h:outputText id="nombreChofer"
+										value="#{otrosServiciosController.otrosServiciosView.chofer.nombre}" />
+									<h:commandLink id="deseleccionarChoferLink"
+										disabled="#{!otrosServiciosController.choferSelected}"
+										actionListener="#{otrosServiciosController.deseleccionarChofer}"
+										update="choferAC,nombreChofer,deseleccionarChoferLink"
+										immediate="true">
+										<h:graphicImage url="/resource/images/delete.gif"
+											title="Deseleccionar" style="border:0px" />
+									</h:commandLink>
+								</h:panelGroup>
+								<h:message id="mchac" for="choferAC" />
+
+								<h:outputText value="Horario entrada" />
+								<p:calendar id="horarioEntradaC"
+									value="#{otrosServiciosController.otrosServiciosView.horarioEntrada}"
+									mode="popup" showOn="button" locale="es"
+									pattern="#{msgs.common_timeOnly}" timeOnly="true"
+									readOnlyInputText="true">
+								</p:calendar>
+								<h:message for="horarioEntradaC" />
+								<h:outputText value="" />
+
+								<h:outputText value="Asignado a" />
+								<p:inputTextarea id="asignadoATA"
+									style="width:200px;height:100px;"
+									value="#{otrosServiciosController.otrosServiciosView.asignadoA}">
+									<f:validateBean for="asignadoATA" />
+								</p:inputTextarea>
+								<h:message for="asignadoATA" />
+								<h:outputText value="" />
+							</h:panelGrid>
+						</p:tab>
+					</p:tabView>
+
+					<!-- ================================================== -->
+					<!-- Opciones											-->
+					<!-- ================================================== -->
+					<h:panelGrid columns="2">
+						<p:commandButton value="Guardar"
+							actionListener="#{otrosServiciosController.save}"
+							update="form,filtroForm">
+						</p:commandButton>
+						<p:commandButton value="Volver"
+							actionListener="#{otrosServiciosController.cancel}"
+							immediate="true" update="form,filtroForm">
+						</p:commandButton>
+					</h:panelGrid>
+				</h:panelGrid>
+			</h:form>
+		</u:define>
+	</u:composition>
+</body>
+</html>
