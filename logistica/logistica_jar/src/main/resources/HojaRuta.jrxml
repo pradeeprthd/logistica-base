@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="HojaRuta" pageWidth="595" pageHeight="842" columnWidth="575" leftMargin="10" rightMargin="10" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="82"/>
+	<property name="ireport.y" value="0"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -179,8 +179,8 @@
 				<text><![CDATA[Localidad:]]></text>
 			</staticText>
 			<image>
-				<reportElement x="1" y="0" width="111" height="35"/>
-				<imageExpression><![CDATA["C:\\proyectos\\logistica\\logo degac (1).JPG"]]></imageExpression>
+				<reportElement x="1" y="0" width="125" height="44"/>
+				<imageExpression><![CDATA["C:\\proyectos\\logistica\\LOGO DEGAC 2010.jpg"]]></imageExpression>
 			</image>
 		</band>
 	</title>
