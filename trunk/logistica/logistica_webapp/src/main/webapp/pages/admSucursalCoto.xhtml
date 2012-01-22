@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd ">
+<html xmlns:u="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://com.ss.logistica/jsf"
+	xmlns:p="http://primefaces.org/ui" xmlns="http://www.w3.org/1999/xhtml">
+
+<body>
+	<u:composition template="/pages/layout/pageLayout.xhtml">
+		<u:define name="body">
+			<h:form id="filtroForm">
+				<p:panel id="panelFiltro"
+					rendered="#{!sucursalCotoController.addEdit}">
+					<h:panelGrid columns="5">
+						<h:outputText value="Nombre: " />
+						<p:inputText
+							value="#{sucursalCotoController.sucursalCotoQuery.nombre}">
+						</p:inputText>
+
+						<h:outputText value="Número" />
+						<p:spinner id="numeroS"
+							value="#{sucursalCotoController.sucursalCotoQuery.numeroSucursal}"
+							min="0" stepFactor="1" size="30">
+						</p:spinner>
+
+						<p:commandButton value="Consultar"
+							actionListener="#{sucursalCotoController.query}" update="form">
+						</p:commandButton>
+					</h:panelGrid>
+				</p:panel>
+			</h:form>
+
+			<h:form id="form">
+				<p:growl id="messages" life="5000" />
+				<p:dataTable id="dataTable" var="sucursalCoto"
+					value="#{sucursalCotoController.lazyDM}" paginator="true" rows="10"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="10,15,20"
+					rendered="#{!sucursalCotoController.addEdit}"
+					emptyMessage="No se encontraron registros" dynamic="true">
+
+					<f:facet name="header">
+						<h:outputText value="#{msgs.admSucursalCoto_title}" />
+					</f:facet>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Nombre" />
+						</f:facet>
+						<h:outputText value="#{sucursalCoto.nombre}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Nro Sucursal" />
+						</f:facet>
+						<h:outputText value="#{sucursalCoto.numeroSucursal}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Cantidad Móviles" />
+						</f:facet>
+						<h:outputText value="#{sucursalCoto.cantidadMoviles}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Opciones" />
+						</f:facet>
+						<h:panelGrid columns="3">
+							<p:commandLink actionListener="#{sucursalCotoController.edit}"
+								update="form,filtroForm" oncomplete="tabView.select(0)">
+								<h:graphicImage url="/resource/images/edit.gif"
+									title="Modificar" style="border:0px" />
+							</p:commandLink>
+							<h:commandLink actionListener="#{sucursalCotoController.delete}"
+								onclick="return confirm('¿Está seguro de eliminar el registro?');">
+								<h:graphicImage url="/resource/images/delete.gif"
+									title="Eliminar" style="border:0px" />
+							</h:commandLink>
+						</h:panelGrid>
+					</p:column>
+
+					<f:facet name="footer">
+						<p:commandButton value="Agregar"
+							actionListener="#{sucursalCotoController.add}"
+							update="form,filtroForm" oncomplete="tabView.select(0)" />
+					</f:facet>
+				</p:dataTable>
+
+
+				<h:panelGrid id="panel" columns="1"
+					rendered="#{sucursalCotoController.addEdit}">
+					<p:tabView widgetVar="tabView">
+						<p:tab title="Datos Principales">
+							<p:focus for="nombreIT" />
+							<h:panelGrid columns="3">
+								<h:outputText value="Nombre" />
+								<p:inputText id="nombreIT"
+									value="#{sucursalCotoController.sucursalCotoView.nombre}">
+								</p:inputText>
+								<h:outputText value="" />
+
+								<h:outputText value="Nro Sucursal" />
+								<p:spinner id="numeroS"
+									value="#{sucursalCotoController.sucursalCotoView.numeroSucursal}"
+									min="1" stepFactor="1" size="30">
+									<f:validateBean for="numeroS" />
+								</p:spinner>
+								<h:message id="mns" for="numeroS" />
+
+								<h:outputText value="Cantidad Móviles" />
+								<p:spinner id="cantidadMovilesS"
+									value="#{sucursalCotoController.sucursalCotoView.cantidadMoviles}"
+									min="0" stepFactor="1" size="30">
+									<f:validateBean for="cantidadMovilesS" />
+								</p:spinner>
+								<h:message id="cms" for="cantidadMovilesS" />
+							</h:panelGrid>
+						</p:tab>
+						<p:tab title="Dirección">
+							<s:direccion
+								direccionBean="#{sucursalCotoController.direccionBean}" />
+						</p:tab>
+					</p:tabView>
+
+					<!-- ================================================== -->
+					<!-- Opciones											-->
+					<!-- ================================================== -->
+					<h:panelGrid columns="2">
+						<p:commandButton value="Guardar"
+							actionListener="#{sucursalCotoController.save}"
+							update="form,filtroForm">
+						</p:commandButton>
+						<p:commandButton value="Volver"
+							actionListener="#{sucursalCotoController.cancel}"
+							immediate="true" update="form,filtroForm">
+						</p:commandButton>
+					</h:panelGrid>
+				</h:panelGrid>
+			</h:form>
+		</u:define>
+	</u:composition>
+</body>
+</html>
