@@ -122,6 +122,12 @@ where r.usuario_id=u.id and u.usuario =?" />
 		</property>
 	</bean>
 
+	<bean id="diagramacionDiariaDAOImpl" class="logistica.common.dao.DiagramacionDiariaDAOImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
 	<!-- Conexión a base de datos -->
 	<bean id="myDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
 		<property name="jndiName">
@@ -172,6 +178,9 @@ where r.usuario_id=u.id and u.usuario =?" />
 				<value>logistica.model.MovilNoOperativo</value>
 				<value>logistica.model.OtrosServicios</value>
 				<value>logistica.model.SucursalCoto</value>
+				<value>logistica.model.DiagramacionDiaria</value>
+				<value>logistica.model.DetalleSucursal</value>
+				<value>logistica.model.DetalleAsignacion</value>
 			</list>
 		</property>
 	</bean>
@@ -377,6 +386,23 @@ where r.usuario_id=u.id and u.usuario =?" />
 		</property>
 		<property name="target">
 			<ref local="sucursalCotoDAOImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<!-- defino como maneja las transacciones -->
+			<props>
+				<prop key="save*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="diagramacionDiariaDAO"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+		<property name="target">
+			<ref local="diagramacionDiariaDAOImpl" />
 		</property>
 		<property name="transactionAttributes">
 			<!-- defino como maneja las transacciones -->
