@@ -20,13 +20,13 @@ public class SucursalCotoView implements Serializable {
 	private Long numeroSucursal;
 
 	@NotNull(message = "Valor requerido")
-	private Long cantidadMoviles;
+	private Integer cantidadMoviles;
 
 	@ManagedProperty("#{direccionView}")
 	private DireccionView direccionView;
 
 	public SucursalCotoView(Long id, String nombre, Long numeroSucursal,
-			Long cantidadMoviles, DireccionView direccionView) {
+			Integer cantidadMoviles, DireccionView direccionView) {
 		super();
 		this.id = id;
 		this.direccionView = direccionView;
@@ -71,11 +71,11 @@ public class SucursalCotoView implements Serializable {
 		this.numeroSucursal = numeroSucursal;
 	}
 
-	public Long getCantidadMoviles() {
+	public Integer getCantidadMoviles() {
 		return cantidadMoviles;
 	}
 
-	public void setCantidadMoviles(Long cantidadMoviles) {
+	public void setCantidadMoviles(Integer cantidadMoviles) {
 		this.cantidadMoviles = cantidadMoviles;
 	}
 }

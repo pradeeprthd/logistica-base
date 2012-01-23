@@ -33,13 +33,13 @@ public class SucursalCoto extends BaseModel {
 	private Long numeroSucursal;
 
 	@Basic
-	private Long cantidadMoviles;
+	private Integer cantidadMoviles;
 
 	@Embedded
 	private Direccion direccion;
 
 	public SucursalCoto(Long id, String nombre, Long numeroSucursal,
-			Long cantidadMoviles, Direccion direccion) {
+			Integer cantidadMoviles, Direccion direccion) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -78,11 +78,11 @@ public class SucursalCoto extends BaseModel {
 		this.numeroSucursal = numeroSucursal;
 	}
 
-	public Long getCantidadMoviles() {
+	public Integer getCantidadMoviles() {
 		return cantidadMoviles;
 	}
 
-	public void setCantidadMoviles(Long cantidadMoviles) {
+	public void setCantidadMoviles(Integer cantidadMoviles) {
 		this.cantidadMoviles = cantidadMoviles;
 	}
 

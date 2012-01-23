@@ -28,8 +28,8 @@ public class DetalleSucursal extends BaseModel {
 	private Long id;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "sucursalID")
-	private Sucursal sucursal;
+	@JoinColumn(name = "sucursalCotoID")
+	private SucursalCoto sucursalCoto;
 
 	@Basic
 	private Integer cantidadMoviles;
@@ -38,11 +38,12 @@ public class DetalleSucursal extends BaseModel {
 	@JoinColumn(name = "detalleSucursalID")
 	private List<DetalleAsignacion> detalleAsignacionList;
 
-	public DetalleSucursal(Long id, Sucursal sucursal, Integer cantidadMoviles,
+	public DetalleSucursal(Long id, SucursalCoto sucursalCoto,
+			Integer cantidadMoviles,
 			List<DetalleAsignacion> detalleAsignacionList) {
 		super();
 		this.id = id;
-		this.sucursal = sucursal;
+		this.sucursalCoto = sucursalCoto;
 		this.cantidadMoviles = cantidadMoviles;
 		this.detalleAsignacionList = detalleAsignacionList;
 	}
@@ -61,12 +62,12 @@ public class DetalleSucursal extends BaseModel {
 		this.id = id;
 	}
 
-	public Sucursal getSucursal() {
-		return sucursal;
+	public SucursalCoto getSucursalCoto() {
+		return sucursalCoto;
 	}
 
-	public void setSucursal(Sucursal sucursal) {
-		this.sucursal = sucursal;
+	public void setSucursalCoto(SucursalCoto sucursalCoto) {
+		this.sucursalCoto = sucursalCoto;
 	}
 
 	public Integer getCantidadMoviles() {

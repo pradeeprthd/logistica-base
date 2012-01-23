@@ -92,4 +92,18 @@ public class DetalleAsignacionView implements Serializable {
 	public void setCodigoCoto(String codigoCoto) {
 		this.codigoCoto = codigoCoto;
 	}
+
+	public String getLabel() {
+		String label = null;
+
+		if (movil != null) {
+			label = movil.getNumeroMovil() + "-" + movil.getPatente();
+		} else {
+			if (nombreAgenciaFlete != null) {
+				label = label + " Flete: " + nombreAgenciaFlete;
+			}
+		}
+
+		return label;
+	}
 }

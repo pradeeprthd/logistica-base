@@ -19,7 +19,7 @@ public class DetalleSucursalBuilder extends
 
 	@Override
 	public DetalleSucursal toDomain(DetalleSucursalView view) {
-		return new DetalleSucursal(view.getId(), view.getSucursal(),
+		return new DetalleSucursal(view.getId(), view.getSucursalCoto(),
 				view.getCantidadMoviles(),
 				detalleAsignacionBuilder.toDomain(view
 						.getDetalleAsignacionViewList()));
@@ -27,7 +27,7 @@ public class DetalleSucursalBuilder extends
 
 	@Override
 	public DetalleSucursalView toView(DetalleSucursal model) {
-		return new DetalleSucursalView(model.getID(), model.getSucursal(),
+		return new DetalleSucursalView(model.getID(), model.getSucursalCoto(),
 				model.getCantidadMoviles(),
 				detalleAsignacionBuilder.toView(model
 						.getDetalleAsignacionList()));
