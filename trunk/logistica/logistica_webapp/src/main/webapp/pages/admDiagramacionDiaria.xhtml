@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd ">
+<html xmlns:u="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://com.ss.logistica/jsf"
+	xmlns:p="http://primefaces.org/ui" xmlns="http://www.w3.org/1999/xhtml">
+
+<body>
+	<u:composition template="/pages/layout/pageLayout.xhtml">
+		<u:define name="body">
+			<h:form id="filtroForm">
+				<p:panel id="panelFiltro"
+					rendered="#{!diagramacionDiariaController.addEdit}">
+					<h:panelGrid columns="7">
+						<h:outputText value="Fecha Emisión" />
+						<p:calendar
+							value="#{diagramacionDiariaController.diagramacionDiariaQuery.fecha}"
+							mode="popup" showOn="button" locale="es"
+							pattern="#{msgs.common_inputDateFormat}" />
+
+						<p:commandButton value="Consultar"
+							actionListener="#{diagramacionDiariaController.query}"
+							update="form">
+						</p:commandButton>
+					</h:panelGrid>
+				</p:panel>
+			</h:form>
+
+			<h:form id="form">
+				<p:growl id="messages" life="5000" />
+				<p:dataTable id="dataTable" var="diagramacionDiaria"
+					value="#{diagramacionDiariaController.lazyDM}" paginator="true"
+					rows="10"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="10,15,20"
+					rendered="#{!diagramacionDiariaController.addEdit}"
+					emptyMessage="No se encontraron registros" dynamic="true">
+
+					<f:facet name="header">
+						<h:outputText value="#{msgs.admDiagramacionDiaria_title}" />
+					</f:facet>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Fecha" />
+						</f:facet>
+						<h:outputText value="#{diagramacionDiaria.fecha}">
+							<f:convertDateTime pattern="#{msgs.common_showDateFormat}"
+								timeZone="#{msgs.common_timeZone}" />
+						</h:outputText>
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Opciones" />
+						</f:facet>
+						<h:panelGrid columns="3">
+							<p:commandLink
+								actionListener="#{diagramacionDiariaController.edit}"
+								update="form,filtroForm" oncomplete="tabView.select(0)">
+								<h:graphicImage url="/resource/images/edit.gif"
+									title="Modificar" style="border:0px" />
+							</p:commandLink>
+							<p:commandLink
+								actionListener="#{diagramacionDiariaController.toPDF}"
+								ajax="false">
+								<h:graphicImage url="/resource/images/pdf.gif" title="A PDF"
+									style="border:0px" />
+							</p:commandLink>
+
+							<h:commandLink
+								actionListener="#{diagramacionDiariaController.delete}"
+								onclick="return confirm('¿Está seguro de eliminar el registro?');">
+								<h:graphicImage url="/resource/images/delete.gif"
+									title="Eliminar" style="border:0px" />
+							</h:commandLink>
+						</h:panelGrid>
+					</p:column>
+
+					<f:facet name="footer">
+						<p:commandButton value="Agregar"
+							actionListener="#{diagramacionDiariaController.add}"
+							update="form,filtroForm,dataTableSucursal"
+							oncomplete="tabView.select(0)" />
+					</f:facet>
+				</p:dataTable>
+
+				<h:panelGrid id="panel" columns="1"
+					rendered="#{diagramacionDiariaController.addEdit}">
+					<p:tabView widgetVar="tabView">
+						<p:tab title="Datos Principales">
+							<p:focus for="fechaC" />
+							<h:panelGrid columns="1">
+								<h:panelGrid columns="2">
+									<h:outputText value="Fecha" />
+									<p:calendar id="fechaC"
+										value="#{diagramacionDiariaController.diagramacionDiariaView.fecha}"
+										mode="popup" showOn="button" locale="es"
+										pattern="#{msgs.common_inputDateFormat}" immediate="true"
+										readOnlyInputText="true">
+										<p:ajax event="dateSelect"
+											listener="#{diagramacionDiariaController.handleDateSelect}" />
+									</p:calendar>
+								</h:panelGrid>
+
+
+								<p:dataTable id="dataTableSucursal" var="detalleSucursal"
+									value="#{diagramacionDiariaController.diagramacionDiariaView.detalleSucursalViewList}"
+									paginator="false" emptyMessage="Sin detalles" dynamic="true">
+
+									<p:column>
+										<f:facet name="header">
+											<h:outputText value="Sucursal" />
+										</f:facet>
+										<h:outputText
+											value="#{detalleSucursal.sucursalCoto.numeroSucursal}">
+										</h:outputText>
+									</p:column>
+
+									<p:column>
+										<f:facet name="header">
+											<h:outputText value="Móviles asignados" />
+										</f:facet>
+										<p:dataTable id="dataTableSucursal" var="detalleAsignacion"
+											value="#{detalleSucursal.detalleAsignacionViewList}"
+											paginator="false" emptyMessage="Sin detalles" dynamic="true">
+
+											<p:column>
+												<f:facet name="header">
+													<h:outputText value="Horario entrada" />
+												</f:facet>
+												<p:calendar id="horarioEntradaC"
+													value="#{detalleAsignacion.horarioEntrada}" mode="popup"
+													showOn="button" locale="es"
+													pattern="#{msgs.common_timeOnly}" timeOnly="true"
+													readOnlyInputText="true" stepMinute="30">
+												</p:calendar>
+											</p:column>
+
+											<p:column>
+												<f:facet name="header">
+													<h:outputText value="Horario salida" />
+												</f:facet>
+												<p:calendar id="horarioSalidaC"
+													value="#{detalleAsignacion.horarioSalida}" mode="popup"
+													showOn="button" locale="es"
+													pattern="#{msgs.common_timeOnly}" timeOnly="true"
+													readOnlyInputText="true" stepMinute="30">
+												</p:calendar>
+											</p:column>
+
+											<p:column>
+												<f:facet name="header">
+													<h:outputText value="Móvil/Flete" />
+												</f:facet>
+												<h:panelGrid columns="3">
+													<h:outputText value="#{detalleAsignacion.label}" />
+
+													<p:commandLink oncomplete="movilDialog.show()">
+														<h:graphicImage url="/resource/images/find.gif"
+															title="Elegir móvil" style="border:0px" />
+														<f:setPropertyActionListener value="#{detalleAsignacion}"
+															target="#{diagramacionDiariaController.detalleAsignacionView}" />
+													</p:commandLink>
+
+													<p:commandLink oncomplete="fleteDialog.show()">
+														<h:graphicImage url="/resource/images/find.gif"
+															title="Elegir flete" style="border:0px" />
+														<f:setPropertyActionListener value="#{detalleAsignacion}"
+															target="#{diagramacionDiariaController.detalleAsignacionView}" />
+													</p:commandLink>
+												</h:panelGrid>
+											</p:column>
+
+											<p:column>
+												<f:facet name="header">
+													<h:outputText value="Código Coto" />
+												</f:facet>
+												<p:inputText value="#{detalleAsignacion.codigoCoto}" />
+											</p:column>
+										</p:dataTable>
+									</p:column>
+								</p:dataTable>
+							</h:panelGrid>
+						</p:tab>
+
+					</p:tabView>
+
+					<!-- ================================================== -->
+					<!-- Opciones											-->
+					<!-- ================================================== -->
+					<h:panelGrid columns="2">
+						<p:commandButton value="Guardar"
+							actionListener="#{diagramacionDiariaController.save}"
+							update="form,filtroForm">
+						</p:commandButton>
+						<p:commandButton value="Volver"
+							actionListener="#{diagramacionDiariaController.cancel}"
+							immediate="true" update="form,filtroForm">
+						</p:commandButton>
+					</h:panelGrid>
+				</h:panelGrid>
+
+				<p:dialog header="Selección móvil" widgetVar="movilDialog"
+					resizable="false" width="700" modal="true" onCloseUpdate="panel">
+					<h:panelGrid id="dialogPanelGrid" columns="4" cellpadding="4">
+						<h:outputText value="Móvil" />
+						<p:autoComplete id="movilAC"
+							disabled="#{diagramacionDiariaController.movilSelected}"
+							value="#{diagramacionDiariaController.detalleAsignacionView.movil}"
+							completeMethod="#{diagramacionDiariaController.completeMovil}"
+							var="movil" itemLabel="#{movil.numeroMovil} - #{movil.patente}"
+							itemValue="#{movil}" converter="com.converter.MovilConverter"
+							maxResults="10" queryDelay="300" forceSelection="true">
+							<p:ajax event="itemSelect"
+								listener="#{diagramacionDiariaController.handleMovilSelect}"
+								update="movilAC,nombreMovil,deseleccionarMovilLink" />
+						</p:autoComplete>
+						<h:panelGroup>
+							<h:outputText id="nombreMovil"
+								value="#{diagramacionDiariaController.detalleAsignacionView.movil.numeroMovil} #{diagramacionDiariaController.detalleAsignacionView.movil.patente}" />
+							<h:commandLink id="deseleccionarMovilLink"
+								disabled="#{!diagramacionDiariaController.movilSelected}"
+								actionListener="#{diagramacionDiariaController.deseleccionarMovil}"
+								update="movilAC,nombreMovil,deseleccionarMovilLink"
+								immediate="true">
+								<h:graphicImage url="/resource/images/delete.gif"
+									title="Deseleccionar" style="border:0px" />
+							</h:commandLink>
+						</h:panelGroup>
+						<h:message id="mmlac" for="movilAC" />
+
+						<p:commandButton value="Confirmar"
+							actionListener="#{diagramacionDiariaController.seleccionarMovil}"
+							update="panel" onclick="movilDialog.hide()" />
+
+					</h:panelGrid>
+				</p:dialog>
+
+
+				<p:dialog header="Selección Flete" widgetVar="fleteDialog"
+					resizable="false" width="700" modal="true" onCloseUpdate="panel">
+					<h:panelGrid columns="2" cellpadding="4">
+						<h:outputText value="Horario pedido flete" />
+						<p:calendar id="horarioPedidoFleteC"
+							value="#{diagramacionDiariaController.detalleAsignacionView.horarioPedidoFlete}"
+							mode="popup" showOn="button" locale="es"
+							pattern="#{msgs.common_timeOnly}" timeOnly="true"
+							readOnlyInputText="true" stepMinute="30">
+						</p:calendar>
+
+						<h:outputText value="Nombre agencia flete" />
+						<p:inputText
+							value="#{diagramacionDiariaController.detalleAsignacionView.nombreAgenciaFlete}" />
+
+						<p:commandButton value="Confirmar"
+							actionListener="#{diagramacionDiariaController.seleccionarFlete}"
+							update="panel" onclick="fleteDialog.hide()" />
+					</h:panelGrid>
+				</p:dialog>
+			</h:form>
+		</u:define>
+	</u:composition>
+</body>
+</html>

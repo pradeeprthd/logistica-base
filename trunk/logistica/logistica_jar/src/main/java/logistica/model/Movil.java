@@ -77,4 +77,21 @@ public class Movil extends BaseModel {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
+
+	@Override
+	public boolean equals(Object movilArg) {
+		boolean ret = true;
+		Movil movil = (Movil) movilArg;
+		if (numeroMovil != null && movil.getNumeroMovil() != null) {
+			if (numeroMovil.intValue() != movil.getNumeroMovil().intValue()) {
+				ret = false;
+			}
+		} else if (numeroMovil == null && movil.getNumeroMovil() == null) {
+			ret = true;
+		} else {
+			ret = false;
+		}
+
+		return ret;
+	}
 }

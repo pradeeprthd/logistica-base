@@ -89,4 +89,11 @@ public class DiagramacionDiaria extends BaseModel {
 	public void setDetalleSucursalList(List<DetalleSucursal> detalleSucursalList) {
 		this.detalleSucursalList = detalleSucursalList;
 	}
+
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		DiagramacionDiaria diagramacionDiaria = new DiagramacionDiaria(id,
+				fecha, novedades, detalleSucursalList);
+		return diagramacionDiaria;
+	}
 }

@@ -6,24 +6,25 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import logistica.model.Sucursal;
+import logistica.model.SucursalCoto;
 
 @ManagedBean
 @ViewScoped
 @SuppressWarnings("serial")
-public class DetalleSucursalView implements Serializable {
+public class DetalleSucursalView implements Serializable,
+		Comparable<DetalleSucursalView> {
 
 	private Long id;
-	private Sucursal sucursal;
+	private SucursalCoto sucursalCoto;
 	private Integer cantidadMoviles;
 	private List<DetalleAsignacionView> detalleAsignacionViewList;
 
-	public DetalleSucursalView(Long id, Sucursal sucursal,
+	public DetalleSucursalView(Long id, SucursalCoto sucursalCoto,
 			Integer cantidadMoviles,
 			List<DetalleAsignacionView> detalleAsignacionViewList) {
 		super();
 		this.id = id;
-		this.sucursal = sucursal;
+		this.sucursalCoto = sucursalCoto;
 		this.cantidadMoviles = cantidadMoviles;
 		this.detalleAsignacionViewList = detalleAsignacionViewList;
 	}
@@ -40,12 +41,12 @@ public class DetalleSucursalView implements Serializable {
 		this.id = id;
 	}
 
-	public Sucursal getSucursal() {
-		return sucursal;
+	public SucursalCoto getSucursalCoto() {
+		return sucursalCoto;
 	}
 
-	public void setSucursal(Sucursal sucursal) {
-		this.sucursal = sucursal;
+	public void setSucursalCoto(SucursalCoto sucursalCoto) {
+		this.sucursalCoto = sucursalCoto;
 	}
 
 	public Integer getCantidadMoviles() {
@@ -63,5 +64,20 @@ public class DetalleSucursalView implements Serializable {
 	public void setDetalleAsignacionViewList(
 			List<DetalleAsignacionView> detalleAsignacionViewList) {
 		this.detalleAsignacionViewList = detalleAsignacionViewList;
+	}
+
+	public int compareTo(DetalleSucursalView o) {
+		int ret = 0;
+		if (sucursalCoto.getNumeroSucursal().intValue() == o.getSucursalCoto()
+				.getNumeroSucursal().intValue()) {
+			ret = 0;
+		} else if (sucursalCoto.getNumeroSucursal().intValue() > o
+				.getSucursalCoto().getNumeroSucursal().intValue()) {
+			ret = 1;
+		} else {
+			ret = -1;
+		}
+
+		return ret;
 	}
 }
