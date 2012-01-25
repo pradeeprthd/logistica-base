@@ -34,7 +34,6 @@ public class DetalleAsignacion extends BaseModel {
 	private String descripcionFlete;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(nullable = false)
 	private Date horarioEntrada;
 
 	@Temporal(TemporalType.TIMESTAMP)

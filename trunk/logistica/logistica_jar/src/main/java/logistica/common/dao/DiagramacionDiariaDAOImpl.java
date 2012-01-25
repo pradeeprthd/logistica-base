@@ -22,7 +22,6 @@ public class DiagramacionDiariaDAOImpl extends
 	public List<String> getListNames() {
 		List<String> list = new ArrayList<String>();
 		list.add("detalleSucursalList");
-		list.add("novedades");
 		return list;
 	}
 

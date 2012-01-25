@@ -13,6 +13,8 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.model.DataModel;
+import javax.faces.model.ListDataModel;
 
 import logistica.common.dao.BaseModelDAO;
 import logistica.model.DetalleAsignacion;
@@ -26,6 +28,7 @@ import logistica.query.DiagramacionDiariaQuery;
 import logistica.query.MovilNoOperativoQuery;
 import logistica.query.MovilQuery;
 import logistica.query.OtrosServiciosQuery;
+import logistica.util.DateUtil;
 
 import org.apache.log4j.Logger;
 import org.primefaces.context.RequestContext;
@@ -34,6 +37,7 @@ import org.primefaces.event.SelectEvent;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import com.builder.DetalleAsignacionBuilder;
 import com.builder.DiagramacionDiariaBuilder;
@@ -60,14 +64,16 @@ public class DiagramacionDiariaController extends
 	private List<MovilNoOperativo> movilNoOperativoList;
 	private List<Movil> movilSeleccionadoList;
 	private List<SucursalCoto> sucursalCotoList;
+	private DetalleAsignacionView detalleAsignacionView;
+	private DetalleAsignacionView detalleAsignacionViewOld;
+	private String novedad;
+	private List<String> novedades;
+	private DataModel<String> novedadDM;
+
+	private DetalleSucursalView detalleSucursalView;
 
 	@ManagedProperty("#{diagramacionDiariaView}")
 	private DiagramacionDiariaView diagramacionDiariaView;
-
-	private DetalleAsignacionView detalleAsignacionView;
-	private DetalleAsignacionView detalleAsignacionViewOld;
-
-	private DetalleSucursalView detalleSucursalView;
 
 	@ManagedProperty("#{diagramacionDiariaBuilder}")
 	private DiagramacionDiariaBuilder diagramacionDiariaBuilder;
@@ -94,6 +100,7 @@ public class DiagramacionDiariaController extends
 			diagramacionDiariaQuery = new DiagramacionDiariaQuery();
 			detalleAsignacionView = new DetalleAsignacionView();
 			movilSeleccionadoList = new ArrayList<Movil>();
+			novedadDM = new ListDataModel<String>();
 			sucursalCotoList = daoSucursalCoto.getList();
 			addEdit = false;
 		} catch (Throwable e) {
@@ -150,12 +157,26 @@ public class DiagramacionDiariaController extends
 			this.detalleAsignacionViewOld = (DetalleAsignacionView) detalleAsignacionView
 					.clone();
 
-			// RequestContext.getCurrentInstance().execute("movilDialog.show();");
 			RequestContext.getCurrentInstance().addPartialUpdateTarget(
 					"form:movilDialogID");
 
 			RequestContext.getCurrentInstance().addPartialUpdateTarget(
 					"form:fleteDialogID");
+
+		} catch (CloneNotSupportedException e) {
+		}
+	}
+
+	public void setDetalleAsignacionViewToDelete(
+			DetalleAsignacionView detalleAsignacionView) {
+		try {
+			this.detalleAsignacionView = (DetalleAsignacionView) detalleAsignacionView
+					.clone();
+
+			deleteAndReloadListView();
+
+			RequestContext.getCurrentInstance().addPartialUpdateTarget(
+					"form:panel");
 
 		} catch (CloneNotSupportedException e) {
 		}
@@ -169,6 +190,27 @@ public class DiagramacionDiariaController extends
 		this.detalleSucursalView = detalleSucursalView;
 	}
 
+	public void setDetalleSucursalViewAdd(
+			DetalleSucursalView detalleSucursalView) {
+		this.detalleSucursalView = detalleSucursalView;
+		addDetalleAsignacion();
+
+		RequestContext.getCurrentInstance()
+				.addPartialUpdateTarget("form:panel");
+	}
+
+	public String getNovedad() {
+		return novedad;
+	}
+
+	public void setNovedad(String novedad) {
+		this.novedad = novedad;
+	}
+
+	public DataModel<String> getNovedadDM() {
+		return novedadDM;
+	}
+
 	public void query(ActionEvent event) {
 		loadList();
 	}
@@ -179,6 +221,11 @@ public class DiagramacionDiariaController extends
 			diagramacionDiaria = dao.findFULL(diagramacionDiaria.getID());
 			diagramacionDiariaView = diagramacionDiariaBuilder
 					.toView(diagramacionDiaria);
+			novedades = diagramacionDiaria.getNovedades();
+			novedadDM = new ListDataModel<String>(novedades);
+
+			novedadDM = new ListDataModel<String>(
+					diagramacionDiaria.getNovedades());
 			addEdit = true;
 		} catch (Throwable e) {
 			log.error("Error al editar", e);
@@ -206,25 +253,28 @@ public class DiagramacionDiariaController extends
 	public void add(ActionEvent event) {
 		addEdit = true;
 		crearDiagramacionDiaria();
-		// clear();
 	}
 
 	public void save(ActionEvent event) {
 		try {
 			diagramacionDiaria = diagramacionDiariaBuilder
 					.toDomain(diagramacionDiariaView);
+			diagramacionDiaria.setNovedades(novedades);
 			if (diagramacionDiaria.getID() != null) {
 				dao.edit(diagramacionDiaria);
-				addEdit = false;
 			} else {
 				dao.save(diagramacionDiaria);
 			}
-			clear();
+			// clear();
 			JSFUtil.saveMessage("Elemento guardado con exito",
 					FacesMessage.SEVERITY_INFO);
-			if (!addEdit) {
-				loadList();
-			}
+			addEdit = false;
+			loadList();
+
+		} catch (DataIntegrityViolationException e) {
+			JSFUtil.saveMessage(
+					"Error al guardar: Solo puede existir una diagramación para una fecha.",
+					FacesMessage.SEVERITY_ERROR);
 		} catch (Throwable e) {
 			log.error("Error al guardar", e);
 			FacesContext.getCurrentInstance().addMessage(
@@ -332,11 +382,13 @@ public class DiagramacionDiariaController extends
 	}
 
 	private void cargarMovilesNoOperativos(Date fecha) {
+
+		Date fechaSinHora = DateUtil.getFirstTime(fecha);
 		MovilNoOperativoQuery mnoQuery = new MovilNoOperativoQuery();
-		mnoQuery.setFecha(fecha);
+		mnoQuery.setFecha(fechaSinHora);
 		movilNoOperativoList = daoMovilNoOperativo.getList(mnoQuery);
 		OtrosServiciosQuery osquery = new OtrosServiciosQuery();
-		osquery.setFecha(fecha);
+		osquery.setFecha(fechaSinHora);
 		otrosServiciosList = daoOtrosServicios.getList(osquery);
 	}
 
@@ -371,8 +423,27 @@ public class DiagramacionDiariaController extends
 		diagramacionDiariaView = diagramacionDiariaBuilder
 				.toView(diagramacionDiaria);
 
+		// limpio los ids
+		diagramacionDiariaView = clearIDS(diagramacionDiariaView);
+
 		// ordeno por sucursal
 		Collections.sort(diagramacionDiariaView.getDetalleSucursalViewList());
+	}
+
+	private DiagramacionDiariaView clearIDS(
+			DiagramacionDiariaView diagramacionDiariaView) {
+		if (diagramacionDiariaView != null) {
+			diagramacionDiariaView.setId(null);
+			for (DetalleSucursalView detalleSucursal : diagramacionDiariaView
+					.getDetalleSucursalViewList()) {
+				detalleSucursal.setId(null);
+				for (DetalleAsignacionView detalleAsignacion : detalleSucursal
+						.getDetalleAsignacionViewList()) {
+					detalleAsignacion.setId(null);
+				}
+			}
+		}
+		return diagramacionDiariaView;
 	}
 
 	public void seleccionarMovil(ActionEvent event) {
@@ -426,8 +497,93 @@ public class DiagramacionDiariaController extends
 				}
 			}
 		}
-
 		// ordeno por sucursal
 		Collections.sort(diagramacionDiariaView.getDetalleSucursalViewList());
+	}
+
+	private void deleteAndReloadListView() {
+		DetalleSucursalView detalleSucursalAux = null;
+		if (diagramacionDiariaView != null) {
+			for (DetalleSucursalView detalleSucursal : diagramacionDiariaView
+					.getDetalleSucursalViewList()) {
+				if (detalleSucursal.equals(detalleSucursalView)) {
+					detalleSucursalAux = detalleSucursal;
+					break;
+				}
+			}
+			if (detalleSucursalAux != null) {
+				detalleSucursalAux.getDetalleAsignacionViewList().remove(
+						detalleAsignacionView);
+
+				diagramacionDiariaView.getDetalleSucursalViewList().remove(
+						detalleSucursalAux);
+				diagramacionDiariaView.getDetalleSucursalViewList().add(
+						detalleSucursalAux);
+			}
+
+			movilSeleccionadoList = new ArrayList<Movil>();
+			// veo cuales moviles estan seleccionados
+			for (DetalleSucursalView detalleSucursal : diagramacionDiariaView
+					.getDetalleSucursalViewList()) {
+				for (DetalleAsignacionView detalleAsignacion : detalleSucursal
+						.getDetalleAsignacionViewList()) {
+					if (detalleAsignacion.getMovil() != null) {
+						movilSeleccionadoList.add(detalleAsignacion.getMovil());
+					}
+				}
+			}
+		}
+		// ordeno por sucursal
+		Collections.sort(diagramacionDiariaView.getDetalleSucursalViewList());
+	}
+
+	private void addDetalleAsignacion() {
+		DetalleSucursalView detalleSucursalAux = null;
+		if (diagramacionDiariaView != null) {
+			for (DetalleSucursalView detalleSucursal : diagramacionDiariaView
+					.getDetalleSucursalViewList()) {
+				if (detalleSucursal.equals(detalleSucursalView)) {
+					detalleSucursalAux = detalleSucursal;
+					break;
+				}
+			}
+			if (detalleSucursalAux != null) {
+				detalleSucursalAux.getDetalleAsignacionViewList().add(
+						new DetalleAsignacionView());
+
+				diagramacionDiariaView.getDetalleSucursalViewList().remove(
+						detalleSucursalAux);
+				diagramacionDiariaView.getDetalleSucursalViewList().add(
+						detalleSucursalAux);
+			}
+
+			movilSeleccionadoList = new ArrayList<Movil>();
+			// veo cuales moviles estan seleccionados
+			for (DetalleSucursalView detalleSucursal : diagramacionDiariaView
+					.getDetalleSucursalViewList()) {
+				for (DetalleAsignacionView detalleAsignacion : detalleSucursal
+						.getDetalleAsignacionViewList()) {
+					if (detalleAsignacion.getMovil() != null) {
+						movilSeleccionadoList.add(detalleAsignacion.getMovil());
+					}
+				}
+			}
+		}
+		// ordeno por sucursal
+		Collections.sort(diagramacionDiariaView.getDetalleSucursalViewList());
+	}
+
+	public void addNovedad(ActionEvent event) {
+		if (novedades == null) {
+			novedades = new ArrayList<String>();
+		}
+		novedades.add(novedad);
+		novedadDM = new ListDataModel<String>(novedades);
+	}
+
+	public void deleteNovedad(ActionEvent event) {
+		String detalle = novedadDM.getRowData();
+		novedades.remove(detalle);
+		novedadDM = new ListDataModel<String>(novedades);
 	}
 }
