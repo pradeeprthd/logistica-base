@@ -17,6 +17,9 @@ import javax.persistence.SequenceGenerator;
 
 import logistica.common.BaseModel;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 @Entity
 @SuppressWarnings("serial")
 public class DetalleSucursal extends BaseModel {
@@ -34,7 +37,8 @@ public class DetalleSucursal extends BaseModel {
 	@Basic
 	private Integer cantidadMoviles;
 
-	@OneToMany(orphanRemoval = true, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
 	@JoinColumn(name = "detalleSucursalID")
 	private List<DetalleAsignacion> detalleAsignacionList;
 

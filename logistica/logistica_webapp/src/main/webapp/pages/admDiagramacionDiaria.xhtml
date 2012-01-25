@@ -14,7 +14,7 @@
 				<p:panel id="panelFiltro"
 					rendered="#{!diagramacionDiariaController.addEdit}">
 					<h:panelGrid columns="7">
-						<h:outputText value="Fecha Emisión" />
+						<h:outputText value="Fecha" />
 						<p:calendar
 							value="#{diagramacionDiariaController.diagramacionDiariaQuery.fecha}"
 							mode="popup" showOn="button" locale="es"
@@ -47,7 +47,7 @@
 							<h:outputText value="Fecha" />
 						</f:facet>
 						<h:outputText value="#{diagramacionDiaria.fecha}">
-							<f:convertDateTime pattern="#{msgs.common_showDateFormat}"
+							<f:convertDateTime pattern="#{msgs.common_inputDateFormat}"
 								timeZone="#{msgs.common_timeZone}" />
 						</h:outputText>
 					</p:column>
@@ -80,10 +80,12 @@
 					</p:column>
 
 					<f:facet name="footer">
-						<p:commandButton value="Agregar"
-							actionListener="#{diagramacionDiariaController.add}"
-							update="form,filtroForm,dataTableSucursal"
-							oncomplete="tabView.select(0)" />
+						<h:panelGrid columns="2">
+							<p:commandButton value="Agregar"
+								actionListener="#{diagramacionDiariaController.add}"
+								update="form,filtroForm,dataTableSucursal"
+								oncomplete="tabView.select(0)" />
+						</h:panelGrid>
 					</f:facet>
 				</p:dataTable>
 
@@ -113,9 +115,18 @@
 										<f:facet name="header">
 											<h:outputText value="Sucursal" />
 										</f:facet>
-										<h:outputText
-											value="#{detalleSucursal.sucursalCoto.numeroSucursal}">
-										</h:outputText>
+										<h:panelGrid columns="2">
+											<h:outputText
+												value="#{detalleSucursal.sucursalCoto.numeroSucursal}">
+											</h:outputText>
+
+											<p:commandLink>
+												<h:graphicImage url="/resource/images/add.gif"
+													title="Agregar fila" style="border:0px" />
+												<f:setPropertyActionListener value="#{detalleSucursal}"
+													target="#{diagramacionDiariaController.detalleSucursalViewAdd}" />
+											</p:commandLink>
+										</h:panelGrid>
 									</p:column>
 
 									<p:column>
@@ -145,8 +156,9 @@
 												<h:panelGrid columns="2">
 													<h:outputText value="#{detalleAsignacion.label}" />
 
-													<h:panelGrid columns="2">
-														<p:commandLink oncomplete="movilDialog.show()"
+													<h:panelGrid columns="3">
+														<p:commandLink
+															oncomplete="movilDialog.show(); movilDialog.initPosition()"
 															actionListener="#{diagramacionDiariaController.selectFleteMovil}"
 															update="movilDialogID">
 															<h:graphicImage url="/resource/images/find.gif"
@@ -157,7 +169,8 @@
 																target="#{diagramacionDiariaController.detalleSucursalView}" />
 														</p:commandLink>
 
-														<p:commandLink oncomplete="fleteDialog.show()"
+														<p:commandLink
+															oncomplete="fleteDialog.show(); fleteDialog.initPosition()"
 															actionListener="#{diagramacionDiariaController.selectFleteMovil}">
 															<h:graphicImage url="/resource/images/find.gif"
 																title="Elegir flete" style="border:0px" />
@@ -166,6 +179,16 @@
 															<f:setPropertyActionListener value="#{detalleSucursal}"
 																target="#{diagramacionDiariaController.detalleSucursalView}" />
 														</p:commandLink>
+
+														<p:commandLink>
+															<h:graphicImage url="/resource/images/delete.gif"
+																title="Borrar fila" style="border:0px" />
+															<f:setPropertyActionListener value="#{detalleSucursal}"
+																target="#{diagramacionDiariaController.detalleSucursalView}" />
+															<f:setPropertyActionListener value="#{detalleAsignacion}"
+																target="#{diagramacionDiariaController.detalleAsignacionViewToDelete}" />
+														</p:commandLink>
+
 													</h:panelGrid>
 												</h:panelGrid>
 											</p:column>
@@ -182,6 +205,53 @@
 							</h:panelGrid>
 						</p:tab>
 
+						<p:tab title="Novedades">
+							<p:panel header="Agregar novedad">
+								<h:panelGrid columns="2">
+									<h:outputText value="Novedad" />
+									<p:inputTextarea id="novedadITA"
+										style="width:200px;height:100px;"
+										value="#{diagramacionDiariaController.novedad}"
+										immediate="true">
+										<f:ajax execute="@this" />
+									</p:inputTextarea>
+
+									<p:commandButton value="Agregar novedad"
+										actionListener="#{diagramacionDiariaController.addNovedad}"
+										update="detalleListDT" immediate="true" />
+								</h:panelGrid>
+							</p:panel>
+
+							<p:dataTable id="detalleListDT" var="novedad"
+								value="#{diagramacionDiariaController.novedadDM}"
+								emptyMessage="">
+
+								<f:facet name="header">
+									<h:outputText value="Novedades" />
+								</f:facet>
+
+								<p:column align="center">
+									<f:facet name="header">
+										<h:outputText value="Novedad" />
+									</f:facet>
+									<h:outputText value="#{novedad}" />
+								</p:column>
+
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Opciones" />
+									</f:facet>
+									<h:panelGrid columns="3">
+										<h:commandLink
+											actionListener="#{diagramacionDiariaController.deleteNovedad}"
+											immediate="true">
+											<h:graphicImage url="/resource/images/delete.gif"
+												title="Eliminar" style="border:0px" />
+										</h:commandLink>
+									</h:panelGrid>
+								</p:column>
+							</p:dataTable>
+						</p:tab>
 					</p:tabView>
 
 					<!-- ================================================== -->

@@ -20,6 +20,9 @@ import javax.persistence.TemporalType;
 
 import logistica.common.BaseModel;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 @Entity
 @SuppressWarnings("serial")
 public class DiagramacionDiaria extends BaseModel {
@@ -31,11 +34,12 @@ public class DiagramacionDiaria extends BaseModel {
 	private Long id;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private Date fecha;
 
-	@ElementCollection(fetch = FetchType.LAZY)
-	@JoinTable(name = "rolEnum")
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@ElementCollection()
+	@JoinTable(name = "diagramacionNovedades")
 	@JoinColumn(name = "diagramacionDiariaID")
 	private List<String> novedades;
 
