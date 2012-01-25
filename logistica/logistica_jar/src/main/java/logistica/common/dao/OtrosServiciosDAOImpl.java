@@ -1,9 +1,11 @@
 package logistica.common.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import logistica.model.OtrosServicios;
 import logistica.query.OtrosServiciosQuery;
+import logistica.util.DateUtil;
 
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
@@ -26,7 +28,9 @@ public class OtrosServiciosDAOImpl extends
 
 		DetachedCriteria criteria = DetachedCriteria
 				.forClass(OtrosServicios.class);
-		criteria.add(Restrictions.eq("fecha", otrosServiciosQuery.getFecha()));
+		Date desde = DateUtil.getFirstTime(otrosServiciosQuery.getFecha());
+		Date hasta = DateUtil.getLastTime(otrosServiciosQuery.getFecha());
+		criteria.add(Restrictions.between("horarioEntrada", desde, hasta));
 
 		list = getHibernateTemplate().findByCriteria(criteria);
 		return list;

@@ -28,6 +28,7 @@ import logistica.query.MovilQuery;
 import logistica.query.OtrosServiciosQuery;
 
 import org.apache.log4j.Logger;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.DateSelectEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.LazyDataModel;
@@ -38,6 +39,7 @@ import com.builder.DetalleAsignacionBuilder;
 import com.builder.DiagramacionDiariaBuilder;
 import com.util.JSFUtil;
 import com.view.DetalleAsignacionView;
+import com.view.DetalleSucursalView;
 import com.view.DiagramacionDiariaView;
 
 @ManagedBean
@@ -63,6 +65,9 @@ public class DiagramacionDiariaController extends
 	private DiagramacionDiariaView diagramacionDiariaView;
 
 	private DetalleAsignacionView detalleAsignacionView;
+	private DetalleAsignacionView detalleAsignacionViewOld;
+
+	private DetalleSucursalView detalleSucursalView;
 
 	@ManagedProperty("#{diagramacionDiariaBuilder}")
 	private DiagramacionDiariaBuilder diagramacionDiariaBuilder;
@@ -139,7 +144,29 @@ public class DiagramacionDiariaController extends
 
 	public void setDetalleAsignacionView(
 			DetalleAsignacionView detalleAsignacionView) {
-		this.detalleAsignacionView = detalleAsignacionView;
+		try {
+			this.detalleAsignacionView = (DetalleAsignacionView) detalleAsignacionView
+					.clone();
+			this.detalleAsignacionViewOld = (DetalleAsignacionView) detalleAsignacionView
+					.clone();
+
+			// RequestContext.getCurrentInstance().execute("movilDialog.show();");
+			RequestContext.getCurrentInstance().addPartialUpdateTarget(
+					"form:movilDialogID");
+
+			RequestContext.getCurrentInstance().addPartialUpdateTarget(
+					"form:fleteDialogID");
+
+		} catch (CloneNotSupportedException e) {
+		}
+	}
+
+	public DetalleSucursalView getDetalleSucursalView() {
+		return detalleSucursalView;
+	}
+
+	public void setDetalleSucursalView(DetalleSucursalView detalleSucursalView) {
+		this.detalleSucursalView = detalleSucursalView;
 	}
 
 	public void query(ActionEvent event) {
@@ -293,12 +320,11 @@ public class DiagramacionDiariaController extends
 
 	public void handleMovilSelect(SelectEvent event) {
 		System.out.println("se eligio un movil");
-		movilSeleccionadoList.add((Movil) event.getObject());
 	}
 
 	public void handleDateSelect(DateSelectEvent event) {
 		Date fecha = event.getDate();
-		clear();
+		// clear();
 
 		// Cargo los miviles no operativo para la fecha y los que estan en otros
 		// servicios
@@ -350,13 +376,58 @@ public class DiagramacionDiariaController extends
 	}
 
 	public void seleccionarMovil(ActionEvent event) {
-		System.out
-				.println("aca se debe seleccionar recargar las listas segun los que eligio en el dialog");
-	}
-	
-	public void seleccionarFlete(ActionEvent event) {
-		System.out
-				.println("aca se debe seleccionar recargar las listas segun los que eligio en el dialog");
+		detalleAsignacionView.setDescripcionFlete(null);
+		detalleAsignacionView.setHorarioPedidoFlete(null);
+		detalleAsignacionView.setHorarioSalida(null);
+		detalleAsignacionView.setNombreAgenciaFlete(null);
+		reloadListView();
 	}
 
+	public void seleccionarFlete(ActionEvent event) {
+		detalleAsignacionView.setMovil(null);
+		reloadListView();
+	}
+
+	public void selectFleteMovil(ActionEvent event) {
+		detalleAsignacionView = new DetalleAsignacionView();
+	}
+
+	private void reloadListView() {
+		DetalleSucursalView detalleSucursalAux = null;
+		if (diagramacionDiariaView != null) {
+			for (DetalleSucursalView detalleSucursal : diagramacionDiariaView
+					.getDetalleSucursalViewList()) {
+				if (detalleSucursal.equals(detalleSucursalView)) {
+					detalleSucursalAux = detalleSucursal;
+					break;
+				}
+			}
+			if (detalleSucursalAux != null) {
+				detalleSucursalAux.getDetalleAsignacionViewList().remove(
+						detalleAsignacionViewOld);
+				detalleSucursalAux.getDetalleAsignacionViewList().add(
+						detalleAsignacionView);
+
+				diagramacionDiariaView.getDetalleSucursalViewList().remove(
+						detalleSucursalAux);
+				diagramacionDiariaView.getDetalleSucursalViewList().add(
+						detalleSucursalAux);
+			}
+
+			movilSeleccionadoList = new ArrayList<Movil>();
+			// veo cuales moviles estan seleccionados
+			for (DetalleSucursalView detalleSucursal : diagramacionDiariaView
+					.getDetalleSucursalViewList()) {
+				for (DetalleAsignacionView detalleAsignacion : detalleSucursal
+						.getDetalleAsignacionViewList()) {
+					if (detalleAsignacion.getMovil() != null) {
+						movilSeleccionadoList.add(detalleAsignacion.getMovil());
+					}
+				}
+			}
+		}
+
+		// ordeno por sucursal
+		Collections.sort(diagramacionDiariaView.getDetalleSucursalViewList());
+	}
 }

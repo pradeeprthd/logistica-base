@@ -83,7 +83,7 @@
 						<f:facet name="header">
 							<h:outputText value="Fecha" />
 						</f:facet>
-						<h:outputText value="#{otrosServicios.fecha}">
+						<h:outputText value="#{otrosServicios.horarioEntrada}">
 							<f:convertDateTime pattern="#{msgs.common_inputDateFormat}"
 								timeZone="#{msgs.common_timeZone}" />
 						</h:outputText>
@@ -194,7 +194,7 @@
 								<p:calendar id="horarioEntradaC"
 									value="#{otrosServiciosController.otrosServiciosView.horarioEntrada}"
 									mode="popup" showOn="button" locale="es"
-									pattern="#{msgs.common_timeOnly}" timeOnly="true"
+									pattern="#{msgs.common_showDateFormat}" timeOnly="false"
 									readOnlyInputText="true">
 								</p:calendar>
 								<h:message for="horarioEntradaC" />

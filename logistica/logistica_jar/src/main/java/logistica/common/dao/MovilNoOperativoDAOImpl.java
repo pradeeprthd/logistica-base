@@ -33,9 +33,9 @@ public class MovilNoOperativoDAOImpl extends
 						Restrictions.eq("fechaHasta",
 								movilNoOperativoQuery.getFecha())),
 				Restrictions.and(
-						Restrictions.gt("fechaDesde",
+						Restrictions.lt("fechaDesde",
 								movilNoOperativoQuery.getFecha()),
-						Restrictions.lt("fechaHasta",
+						Restrictions.gt("fechaHasta",
 								movilNoOperativoQuery.getFecha()))));
 
 		list = getHibernateTemplate().findByCriteria(criteria);

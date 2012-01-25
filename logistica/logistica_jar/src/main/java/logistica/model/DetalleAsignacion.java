@@ -30,6 +30,9 @@ public class DetalleAsignacion extends BaseModel {
 	@JoinColumn(name = "movilID")
 	private Movil movil;
 
+	@Column(length = 200)
+	private String descripcionFlete;
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable = false)
 	private Date horarioEntrada;
@@ -46,12 +49,13 @@ public class DetalleAsignacion extends BaseModel {
 	@Column(length = 200)
 	private String codigoCoto;
 
-	public DetalleAsignacion(Long id, Movil movil, Date horarioEntrada,
-			Date horarioSalida, Date horarioPedidoFlete,
+	public DetalleAsignacion(Long id, Movil movil, String descripcionFlete,
+			Date horarioEntrada, Date horarioSalida, Date horarioPedidoFlete,
 			String nombreAgenciaFlete, String codigoCoto) {
 		super();
 		this.id = id;
 		this.movil = movil;
+		this.descripcionFlete = descripcionFlete;
 		this.horarioEntrada = horarioEntrada;
 		this.horarioSalida = horarioSalida;
 		this.horarioPedidoFlete = horarioPedidoFlete;
@@ -60,7 +64,7 @@ public class DetalleAsignacion extends BaseModel {
 	}
 
 	public DetalleAsignacion() {
-		this(null, null, null, null, null, null, null);
+		this(null, null, null, null, null, null, null, null);
 	}
 
 	@Override
@@ -119,5 +123,13 @@ public class DetalleAsignacion extends BaseModel {
 
 	public void setCodigoCoto(String codigoCoto) {
 		this.codigoCoto = codigoCoto;
+	}
+
+	public String getDescripcionFlete() {
+		return descripcionFlete;
+	}
+
+	public void setDescripcionFlete(String descripcionFlete) {
+		this.descripcionFlete = descripcionFlete;
 	}
 }

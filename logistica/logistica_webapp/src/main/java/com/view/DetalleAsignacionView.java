@@ -14,18 +14,20 @@ import logistica.model.Movil;
 public class DetalleAsignacionView implements Serializable {
 	private Long id;
 	private Movil movil;
+	private String descripcionFlete;
 	private Date horarioEntrada;
 	private Date horarioSalida;
 	private Date horarioPedidoFlete;
 	private String nombreAgenciaFlete;
 	private String codigoCoto;
 
-	public DetalleAsignacionView(Long id, Movil movil, Date horarioEntrada,
-			Date horarioSalida, Date horarioPedidoFlete,
+	public DetalleAsignacionView(Long id, Movil movil, String descripcionFlete,
+			Date horarioEntrada, Date horarioSalida, Date horarioPedidoFlete,
 			String nombreAgenciaFlete, String codigoCoto) {
 		super();
 		this.id = id;
 		this.movil = movil;
+		this.descripcionFlete = descripcionFlete;
 		this.horarioEntrada = horarioEntrada;
 		this.horarioSalida = horarioSalida;
 		this.horarioPedidoFlete = horarioPedidoFlete;
@@ -34,7 +36,7 @@ public class DetalleAsignacionView implements Serializable {
 	}
 
 	public DetalleAsignacionView() {
-		this(null, null, null, null, null, null, null);
+		this(null, null, null, null, null, null, null, null);
 	}
 
 	public Long getId() {
@@ -93,17 +95,112 @@ public class DetalleAsignacionView implements Serializable {
 		this.codigoCoto = codigoCoto;
 	}
 
+	public String getDescripcionFlete() {
+		return descripcionFlete;
+	}
+
+	public void setDescripcionFlete(String descripcionFlete) {
+		this.descripcionFlete = descripcionFlete;
+	}
+
 	public String getLabel() {
 		String label = null;
 
 		if (movil != null) {
 			label = movil.getNumeroMovil() + "-" + movil.getPatente();
 		} else {
-			if (nombreAgenciaFlete != null) {
-				label = label + " Flete: " + nombreAgenciaFlete;
+			if (descripcionFlete != null && descripcionFlete.length() > 0) {
+				label = descripcionFlete;
+			}
+			if (nombreAgenciaFlete != null && nombreAgenciaFlete.length() > 0) {
+				label = label + " (" + nombreAgenciaFlete + ")";
 			}
 		}
-
 		return label;
+	}
+
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		return new DetalleAsignacionView(id, movil, descripcionFlete,
+				horarioEntrada, horarioSalida, horarioPedidoFlete,
+				nombreAgenciaFlete, codigoCoto);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		boolean ret = true;
+		DetalleAsignacionView detalle = (DetalleAsignacionView) obj;
+
+		if (movil != null && detalle.getMovil() != null) {
+			ret = movil.equals(detalle.getMovil());
+		} else if (movil == null && detalle.getMovil() == null) {
+			ret = true;
+		} else {
+			ret = false;
+		}
+
+		if (descripcionFlete != null && detalle.getDescripcionFlete() != null) {
+			ret = ret && descripcionFlete.equals(detalle.getDescripcionFlete());
+		} else if (descripcionFlete == null
+				&& detalle.getDescripcionFlete() == null) {
+			ret = ret && true;
+		} else {
+			ret = false;
+		}
+
+		if (horarioEntrada != null && detalle.getHorarioEntrada() != null) {
+			ret = ret
+					&& horarioEntrada.getTime() == detalle.getHorarioEntrada()
+							.getTime();
+		} else if (horarioEntrada == null
+				&& detalle.getHorarioEntrada() == null) {
+			ret = ret && true;
+		} else {
+			ret = false;
+		}
+
+		if (horarioSalida != null && detalle.getHorarioSalida() != null) {
+			ret = ret
+					&& horarioSalida.getTime() == detalle.getHorarioSalida()
+							.getTime();
+		} else if (horarioSalida == null && detalle.getHorarioSalida() == null) {
+			ret = ret && true;
+		} else {
+			ret = false;
+		}
+
+		if (horarioPedidoFlete != null
+				&& detalle.getHorarioPedidoFlete() != null) {
+			ret = ret
+					&& horarioPedidoFlete.getTime() == detalle
+							.getHorarioPedidoFlete().getTime();
+		} else if (horarioPedidoFlete == null
+				&& detalle.getHorarioPedidoFlete() == null) {
+			ret = ret && true;
+		} else {
+			ret = false;
+		}
+
+		if (nombreAgenciaFlete != null
+				&& detalle.getNombreAgenciaFlete() != null) {
+			ret = ret
+					&& nombreAgenciaFlete.equals(detalle
+							.getNombreAgenciaFlete());
+		} else if (nombreAgenciaFlete == null
+				&& detalle.getNombreAgenciaFlete() == null) {
+			ret = ret && true;
+		} else {
+			ret = false;
+		}
+
+		if (codigoCoto != null && detalle.getCodigoCoto() != null) {
+			ret = ret && codigoCoto.equals(detalle.getCodigoCoto());
+		} else if (codigoCoto == null && detalle.getCodigoCoto() == null) {
+			ret = ret && true;
+		} else {
+			ret = false;
+		}
+
+		return ret;
 	}
 }

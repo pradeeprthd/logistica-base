@@ -105,7 +105,6 @@
 									</p:calendar>
 								</h:panelGrid>
 
-
 								<p:dataTable id="dataTableSucursal" var="detalleSucursal"
 									value="#{diagramacionDiariaController.diagramacionDiariaView.detalleSucursalViewList}"
 									paginator="false" emptyMessage="Sin detalles" dynamic="true">
@@ -141,36 +140,33 @@
 
 											<p:column>
 												<f:facet name="header">
-													<h:outputText value="Horario salida" />
-												</f:facet>
-												<p:calendar id="horarioSalidaC"
-													value="#{detalleAsignacion.horarioSalida}" mode="popup"
-													showOn="button" locale="es"
-													pattern="#{msgs.common_timeOnly}" timeOnly="true"
-													readOnlyInputText="true" stepMinute="30">
-												</p:calendar>
-											</p:column>
-
-											<p:column>
-												<f:facet name="header">
 													<h:outputText value="Móvil/Flete" />
 												</f:facet>
-												<h:panelGrid columns="3">
+												<h:panelGrid columns="2">
 													<h:outputText value="#{detalleAsignacion.label}" />
 
-													<p:commandLink oncomplete="movilDialog.show()">
-														<h:graphicImage url="/resource/images/find.gif"
-															title="Elegir móvil" style="border:0px" />
-														<f:setPropertyActionListener value="#{detalleAsignacion}"
-															target="#{diagramacionDiariaController.detalleAsignacionView}" />
-													</p:commandLink>
+													<h:panelGrid columns="2">
+														<p:commandLink oncomplete="movilDialog.show()"
+															actionListener="#{diagramacionDiariaController.selectFleteMovil}"
+															update="movilDialogID">
+															<h:graphicImage url="/resource/images/find.gif"
+																title="Elegir móvil" style="border:0px" />
+															<f:setPropertyActionListener value="#{detalleAsignacion}"
+																target="#{diagramacionDiariaController.detalleAsignacionView}" />
+															<f:setPropertyActionListener value="#{detalleSucursal}"
+																target="#{diagramacionDiariaController.detalleSucursalView}" />
+														</p:commandLink>
 
-													<p:commandLink oncomplete="fleteDialog.show()">
-														<h:graphicImage url="/resource/images/find.gif"
-															title="Elegir flete" style="border:0px" />
-														<f:setPropertyActionListener value="#{detalleAsignacion}"
-															target="#{diagramacionDiariaController.detalleAsignacionView}" />
-													</p:commandLink>
+														<p:commandLink oncomplete="fleteDialog.show()"
+															actionListener="#{diagramacionDiariaController.selectFleteMovil}">
+															<h:graphicImage url="/resource/images/find.gif"
+																title="Elegir flete" style="border:0px" />
+															<f:setPropertyActionListener value="#{detalleAsignacion}"
+																target="#{diagramacionDiariaController.detalleAsignacionView}" />
+															<f:setPropertyActionListener value="#{detalleSucursal}"
+																target="#{diagramacionDiariaController.detalleSucursalView}" />
+														</p:commandLink>
+													</h:panelGrid>
 												</h:panelGrid>
 											</p:column>
 
@@ -203,8 +199,9 @@
 					</h:panelGrid>
 				</h:panelGrid>
 
-				<p:dialog header="Selección móvil" widgetVar="movilDialog"
-					resizable="false" width="700" modal="true" onCloseUpdate="panel">
+				<p:dialog id="movilDialogID" header="Selección móvil"
+					widgetVar="movilDialog" resizable="false" width="700" modal="true"
+					onCloseUpdate="panel">
 					<h:panelGrid id="dialogPanelGrid" columns="4" cellpadding="4">
 						<h:outputText value="Móvil" />
 						<p:autoComplete id="movilAC"
@@ -221,29 +218,37 @@
 						<h:panelGroup>
 							<h:outputText id="nombreMovil"
 								value="#{diagramacionDiariaController.detalleAsignacionView.movil.numeroMovil} #{diagramacionDiariaController.detalleAsignacionView.movil.patente}" />
-							<h:commandLink id="deseleccionarMovilLink"
+							<p:commandLink id="deseleccionarMovilLink"
 								disabled="#{!diagramacionDiariaController.movilSelected}"
-								actionListener="#{diagramacionDiariaController.deseleccionarMovil}"
 								update="movilAC,nombreMovil,deseleccionarMovilLink"
-								immediate="true">
+								immediate="true"
+								actionListener="#{diagramacionDiariaController.deseleccionarMovil}">
 								<h:graphicImage url="/resource/images/delete.gif"
 									title="Deseleccionar" style="border:0px" />
-							</h:commandLink>
+							</p:commandLink>
 						</h:panelGroup>
-						<h:message id="mmlac" for="movilAC" />
+						<h:outputText value="" />
 
 						<p:commandButton value="Confirmar"
 							actionListener="#{diagramacionDiariaController.seleccionarMovil}"
-							update="panel" onclick="movilDialog.hide()" />
-
+							update="form" onclick="movilDialog.hide()" />
+						<p:commandButton value="Cancelar" onclick="movilDialog.hide()" />
 					</h:panelGrid>
 				</p:dialog>
 
-
-				<p:dialog header="Selección Flete" widgetVar="fleteDialog"
-					resizable="false" width="700" modal="true" onCloseUpdate="panel">
+				<p:dialog id="fleteDialogID" header="Selección Flete"
+					widgetVar="fleteDialog" resizable="false" width="700" modal="true"
+					onCloseUpdate="panel">
 					<h:panelGrid columns="2" cellpadding="4">
-						<h:outputText value="Horario pedido flete" />
+						<h:outputText value="Descripción" />
+						<p:inputText
+							value="#{diagramacionDiariaController.detalleAsignacionView.descripcionFlete}" />
+
+						<h:outputText value="Nombre agencia" />
+						<p:inputText
+							value="#{diagramacionDiariaController.detalleAsignacionView.nombreAgenciaFlete}" />
+
+						<h:outputText value="Horario pedido" />
 						<p:calendar id="horarioPedidoFleteC"
 							value="#{diagramacionDiariaController.detalleAsignacionView.horarioPedidoFlete}"
 							mode="popup" showOn="button" locale="es"
@@ -251,13 +256,18 @@
 							readOnlyInputText="true" stepMinute="30">
 						</p:calendar>
 
-						<h:outputText value="Nombre agencia flete" />
-						<p:inputText
-							value="#{diagramacionDiariaController.detalleAsignacionView.nombreAgenciaFlete}" />
+						<h:outputText value="Horario salida" />
+						<p:calendar id="horarioSalidaC"
+							value="#{diagramacionDiariaController.detalleAsignacionView.horarioSalida}"
+							mode="popup" showOn="button" locale="es"
+							pattern="#{msgs.common_timeOnly}" timeOnly="true"
+							readOnlyInputText="true" stepMinute="30">
+						</p:calendar>
 
 						<p:commandButton value="Confirmar"
 							actionListener="#{diagramacionDiariaController.seleccionarFlete}"
-							update="panel" onclick="fleteDialog.hide()" />
+							update="form" onclick="fleteDialog.hide()" />
+						<p:commandButton value="Cancelar" onclick="fleteDialog.hide()" />
 					</h:panelGrid>
 				</p:dialog>
 			</h:form>

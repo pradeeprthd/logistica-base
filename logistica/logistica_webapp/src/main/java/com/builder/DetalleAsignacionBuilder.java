@@ -16,16 +16,16 @@ public class DetalleAsignacionBuilder extends
 	@Override
 	public DetalleAsignacion toDomain(DetalleAsignacionView view) {
 		return new DetalleAsignacion(view.getId(), view.getMovil(),
-				view.getHorarioEntrada(), view.getHorarioSalida(),
-				view.getHorarioPedidoFlete(), view.getNombreAgenciaFlete(),
-				view.getCodigoCoto());
+				view.getDescripcionFlete(), view.getHorarioEntrada(),
+				view.getHorarioSalida(), view.getHorarioPedidoFlete(),
+				view.getNombreAgenciaFlete(), view.getCodigoCoto());
 	}
 
 	@Override
 	public DetalleAsignacionView toView(DetalleAsignacion model) {
 		return new DetalleAsignacionView(model.getID(), model.getMovil(),
-				model.getHorarioEntrada(), model.getHorarioSalida(),
-				model.getHorarioPedidoFlete(), model.getNombreAgenciaFlete(),
-				model.getCodigoCoto());
+				model.getDescripcionFlete(), model.getHorarioEntrada(),
+				model.getHorarioSalida(), model.getHorarioPedidoFlete(),
+				model.getNombreAgenciaFlete(), model.getCodigoCoto());
 	}
 }
