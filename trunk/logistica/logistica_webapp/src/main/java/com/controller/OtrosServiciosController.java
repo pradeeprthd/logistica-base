@@ -164,6 +164,7 @@ public class OtrosServiciosController extends
 	public void clear() {
 		otrosServicios = new OtrosServicios();
 		otrosServiciosView = new OtrosServiciosView();
+		otrosServicios.setHorarioEntrada(new Date());
 	}
 
 	private void loadList() {
@@ -179,7 +180,7 @@ public class OtrosServiciosController extends
 				filtro.put("movil.patente", otrosServiciosQuery.getPatente());
 				filtro.put("chofer.nombre",
 						otrosServiciosQuery.getNombreChofer());
-				filtro.put("fecha", otrosServiciosQuery.getFecha());
+				filtro.put("horarioEntrada", otrosServiciosQuery.getFecha());
 				if (otrosServiciosQuery.getNumeroMovil() != null
 						&& otrosServiciosQuery.getNumeroMovil() != 0) {
 					filtro.put("movil.numeroMovil",
@@ -193,7 +194,7 @@ public class OtrosServiciosController extends
 		Map<String, Object> filtro = new HashMap<String, Object>();
 		filtro.put("movil.patente", otrosServiciosQuery.getPatente());
 		filtro.put("chofer.nombre", otrosServiciosQuery.getNombreChofer());
-		filtro.put("fecha", otrosServiciosQuery.getFecha());
+		filtro.put("horarioEntrada", otrosServiciosQuery.getFecha());
 		if (otrosServiciosQuery.getNumeroMovil() != null
 				&& otrosServiciosQuery.getNumeroMovil() != 0) {
 			filtro.put("movil.numeroMovil",

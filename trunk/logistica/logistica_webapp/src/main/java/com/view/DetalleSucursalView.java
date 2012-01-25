@@ -80,4 +80,21 @@ public class DetalleSucursalView implements Serializable,
 
 		return ret;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		boolean ret = true;
+		DetalleSucursalView detalle = (DetalleSucursalView) obj;
+
+		if (sucursalCoto != null && detalle.getSucursalCoto() != null) {
+			ret = sucursalCoto.getID().intValue() == detalle.getSucursalCoto()
+					.getID().intValue();
+		} else if (sucursalCoto == null && detalle.getSucursalCoto() == null) {
+			ret = true;
+		} else {
+			ret = false;
+		}
+
+		return ret;
+	}
 }
