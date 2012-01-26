@@ -100,7 +100,7 @@
 									<p:calendar id="fechaC"
 										value="#{diagramacionDiariaController.diagramacionDiariaView.fecha}"
 										mode="popup" showOn="button" locale="es"
-										pattern="#{msgs.common_inputDateFormat}" immediate="true"
+										pattern="#{msgs.common_inputDateFormat}" 
 										readOnlyInputText="true">
 										<p:ajax event="dateSelect"
 											listener="#{diagramacionDiariaController.handleDateSelect}" />
@@ -115,7 +115,7 @@
 										<f:facet name="header">
 											<h:outputText value="Sucursal" />
 										</f:facet>
-										<h:panelGrid columns="2">
+										<h:panelGrid columns="2" border="3" >
 											<h:outputText
 												value="#{detalleSucursal.sucursalCoto.numeroSucursal}">
 											</h:outputText>
@@ -153,10 +153,10 @@
 												<f:facet name="header">
 													<h:outputText value="Móvil/Flete" />
 												</f:facet>
-												<h:panelGrid columns="2">
+												<h:panelGrid columns="2" border="3">
 													<h:outputText value="#{detalleAsignacion.label}" />
 
-													<h:panelGrid columns="3">
+													<h:panelGrid columns="3" border="3">
 														<p:commandLink
 															oncomplete="movilDialog.show(); movilDialog.initPosition()"
 															actionListener="#{diagramacionDiariaController.selectFleteMovil}"
