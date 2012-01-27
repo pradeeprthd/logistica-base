@@ -80,11 +80,11 @@ public class Movil extends BaseModel {
 
 	@Override
 	public boolean equals(Object movilArg) {
-		boolean ret = true;
+		boolean ret = false;
 		Movil movil = (Movil) movilArg;
 		if (numeroMovil != null && movil.getNumeroMovil() != null) {
-			if (numeroMovil.intValue() != movil.getNumeroMovil().intValue()) {
-				ret = false;
+			if (numeroMovil.intValue() == movil.getNumeroMovil().intValue()) {
+				ret = true;
 			}
 		} else if (numeroMovil == null && movil.getNumeroMovil() == null) {
 			ret = true;
