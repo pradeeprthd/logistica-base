@@ -379,6 +379,12 @@ public class DiagramacionDiariaController extends
 		// Cargo los miviles no operativo para la fecha y los que estan en otros
 		// servicios
 		cargarMovilesNoOperativos(fecha);
+
+		// borro los movile no operativos para esa fecha
+		limpiarIDSMovilesNoOperativosYSeleccionados(diagramacionDiariaView);
+
+		RequestContext.getCurrentInstance()
+				.addPartialUpdateTarget("form:panel");
 	}
 
 	private void cargarMovilesNoOperativos(Date fecha) {
@@ -423,15 +429,19 @@ public class DiagramacionDiariaController extends
 		diagramacionDiariaView = diagramacionDiariaBuilder
 				.toView(diagramacionDiaria);
 
-		// limpio los ids
-		diagramacionDiariaView = clearIDS(diagramacionDiariaView);
+		// le pongo la fecha del día
+		diagramacionDiariaView.setFecha(DateUtil.getFirstTime(new Date()));
+
+		// limpio los idsy los moviles que estan no operatios para la fecha
+		diagramacionDiariaView = limpiarIDSMovilesNoOperativosYSeleccionados(diagramacionDiariaView);
 
 		// ordeno por sucursal
 		Collections.sort(diagramacionDiariaView.getDetalleSucursalViewList());
 	}
 
-	private DiagramacionDiariaView clearIDS(
+	private DiagramacionDiariaView limpiarIDSMovilesNoOperativosYSeleccionados(
 			DiagramacionDiariaView diagramacionDiariaView) {
+		movilSeleccionadoList = new ArrayList<Movil>();
 		if (diagramacionDiariaView != null) {
 			diagramacionDiariaView.setId(null);
 			for (DetalleSucursalView detalleSucursal : diagramacionDiariaView
@@ -440,10 +450,41 @@ public class DiagramacionDiariaController extends
 				for (DetalleAsignacionView detalleAsignacion : detalleSucursal
 						.getDetalleAsignacionViewList()) {
 					detalleAsignacion.setId(null);
+					// me fijo el movil esta no operativo para esa fecha
+					if (isMovilNoOperativo(detalleAsignacion.getMovil())) {
+						detalleAsignacion.setMovil(null);
+					} else {
+						movilSeleccionadoList.add(detalleAsignacion.getMovil());
+					}
 				}
 			}
 		}
 		return diagramacionDiariaView;
+	}
+
+	private boolean isMovilNoOperativo(Movil movil) {
+		boolean ret = false;
+
+		if (movil != null) {
+			// Quito de la lista los moviles no operativos
+			for (MovilNoOperativo mno : movilNoOperativoList) {
+				ret = mno.getMovil().equals(movil);
+				if (ret) {
+					break;
+				}
+			}
+
+			// Quito los moviles que estan en otros servicios
+			if (!ret) {
+				for (OtrosServicios os : otrosServiciosList) {
+					ret = os.getMovil().equals(movil);
+					if (ret) {
+						break;
+					}
+				}
+			}
+		}
+		return ret;
 	}
 
 	public void seleccionarMovil(ActionEvent event) {

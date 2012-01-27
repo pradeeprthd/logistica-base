@@ -52,3 +52,7 @@ styleVertical {
 .bold {
 	font-weight: bold;
 }
+
+.ui-widget, .ui-widget .ui-widget {
+font-size: 10px !important;
+}
