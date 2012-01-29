@@ -1,5 +1,6 @@
 package com.controller;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -15,8 +16,11 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletResponse;
 
 import logistica.common.dao.BaseModelDAO;
+import logistica.jasper.DiagramacionDiariaReport;
 import logistica.model.DetalleAsignacion;
 import logistica.model.DetalleSucursal;
 import logistica.model.DiagramacionDiaria;
@@ -29,6 +33,13 @@ import logistica.query.MovilNoOperativoQuery;
 import logistica.query.MovilQuery;
 import logistica.query.OtrosServiciosQuery;
 import logistica.util.DateUtil;
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.util.JRLoader;
 
 import org.apache.log4j.Logger;
 import org.primefaces.context.RequestContext;
@@ -626,5 +637,97 @@ public class DiagramacionDiariaController extends
 		String detalle = novedadDM.getRowData();
 		novedades.remove(detalle);
 		novedadDM = new ListDataModel<String>(novedades);
+	}
+
+	@SuppressWarnings({ "deprecation", "unchecked", "rawtypes" })
+	public void toPDF(DiagramacionDiaria diagramacionDiaria) {
+		try {
+
+			HttpServletResponse response = (HttpServletResponse) FacesContext
+					.getCurrentInstance().getExternalContext().getResponse();
+			ServletContext sc = (ServletContext) FacesContext
+					.getCurrentInstance().getExternalContext().getContext();
+
+			String realpath = sc.getRealPath(File.separator
+					+ "resource/jasper/diagramacionDiaira.jasper");
+
+			JasperReport jasperReport = (JasperReport) JRLoader
+					.loadObject(realpath);
+
+			JRDataSource datasource = new JRBeanCollectionDataSource(
+					getReporte(diagramacionDiaria));
+			JasperPrint print = JasperFillManager.fillReport(jasperReport,
+					new HashMap(), datasource);
+
+			response.setContentType("application/pdf");
+			response.addHeader("Content-Disposition",
+					"attachment; filename=DiagramacionDiaria.pdf");
+
+			/*
+			 * JasperExportManager.exportReportToPdfFile(print,
+			 * "DiagramacionDiaria.pdf");
+			 */
+
+			JasperExportManager.exportReportToPdfStream(print,
+					response.getOutputStream());
+
+			FacesContext.getCurrentInstance().responseComplete();
+		} catch (Throwable e) {
+			log.error("Error al exportar a PDF: ", e);
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR,
+							"Error al exportar a PDF", ""));
+			System.out.println("error al exportar: " + e.getMessage());
+		}
+	}
+
+	public void toPDF(ActionEvent actionEvent) {
+		DiagramacionDiaria diagramcionDiaria = (DiagramacionDiaria) lazyDM
+				.getRowData();
+		diagramcionDiaria = dao.findFULL(diagramcionDiaria.getID());
+		toPDF(diagramcionDiaria);
+	}
+
+	private List<DiagramacionDiariaReport> getReporte(
+			DiagramacionDiaria diagramacionDiaria) {
+		List<DiagramacionDiariaReport> diagramacionDiariaList = new ArrayList<DiagramacionDiariaReport>();
+		String novedades = "";
+
+		for (String novedad : diagramacionDiaria.getNovedades()) {
+			if (novedades.length() > 1) {
+				novedades = novedades + "//" + novedad;
+			} else {
+				novedades = novedad;
+			}
+		}
+
+		for (DetalleSucursal detalleSucursal : diagramacionDiaria
+				.getDetalleSucursalList()) {
+			for (DetalleAsignacion detalleAsignacion : detalleSucursal
+					.getDetalleAsignacionList()) {
+				String movil = null;
+				if (detalleAsignacion.getMovil() != null) {
+					movil = detalleAsignacion.getMovil().getNumeroMovil() + "-"
+							+ detalleAsignacion.getMovil().getPatente();
+				}
+
+				DiagramacionDiariaReport ddr = new DiagramacionDiariaReport(
+						diagramacionDiaria.getFecha(), novedades,
+						detalleSucursal.getSucursalCoto().getNumeroSucursal(),
+						detalleSucursal.getSucursalCoto().getNombre(), movil,
+						detalleAsignacion.getDescripcionFlete(),
+						detalleAsignacion.getHorarioEntrada(),
+						detalleAsignacion.getHorarioSalida(),
+						detalleAsignacion.getHorarioPedidoFlete(),
+						detalleAsignacion.getNombreAgenciaFlete(),
+						detalleAsignacion.getCodigoCoto());
+				diagramacionDiariaList.add(ddr);
+			}
+		}
+
+		Collections.sort(diagramacionDiariaList);
+
+		return diagramacionDiariaList;
 	}
 }
