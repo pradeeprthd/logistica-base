@@ -68,7 +68,7 @@
 			</staticText>
 			<image>
 				<reportElement x="1" y="1" width="82" height="43"/>
-				<imageExpression><![CDATA["C:\\proyectos\\logistica\\LOGO DEGAC 2010.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["logo.jpg"]]></imageExpression>
 			</image>
 		</band>
 	</title>
