@@ -44,21 +44,29 @@
 		};
 	</script>
 
+	<style>
+body,label,.ui-widget,.ui-menubar-item-label,.ui-menubar-item-label-hassubmenu,.ui-menubar-item-label-selected,.ui-menubar-item-label-hassubmenu-selected,.ui-widget input,.ui-widget select,.ui-widget textarea,.ui-widget button
+	{
+	font-family: Verdana, Arial, sans-serif;
+	font-size: 11px;
+}
+</style>
+
 </h:head>
 <body>
-	<u:include src="headerLayout.xhtml" />
+<u:include src="headerLayout.xhtml" />
 
-	<h:panelGrid columns="1" columnClasses="top" rowClasses="top">
+<h:panelGrid columns="1" columnClasses="top" rowClasses="top">
 
-		<h:panelGrid columns="1">
-			<u:include src="menu.xhtml" />
-		</h:panelGrid>
-
-		<h:panelGrid columns="1">
-			<u:include src="content.xhtml" />
-		</h:panelGrid>
+	<h:panelGrid columns="1">
+		<u:include src="menu.xhtml" />
 	</h:panelGrid>
 
-	<u:include src="footerLayout.xhtml" />
+	<h:panelGrid columns="1">
+		<u:include src="content.xhtml" />
+	</h:panelGrid>
+</h:panelGrid>
+
+<u:include src="footerLayout.xhtml" />
 </body>
 </html>
