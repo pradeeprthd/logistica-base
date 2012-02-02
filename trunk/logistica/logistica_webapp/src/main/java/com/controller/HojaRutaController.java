@@ -74,6 +74,8 @@ public class HojaRutaController extends PaginableController<HojaRuta> {
 	private DataModel<DetalleHojaRutaView> detalleHojaRutaDM;
 	private List<UnidadMedidaEnum> unidadMedidaEnumList;
 	private List<Sucursal> sucursalList;
+	private List<Localidad> localidadList;
+	private String localidadQueryString;
 
 	@ManagedProperty("#{hojaRutaView}")
 	private HojaRutaView hojaRutaView;
@@ -103,6 +105,7 @@ public class HojaRutaController extends PaginableController<HojaRuta> {
 			detalleHojaRuta.setUnidadMedida(UnidadMedidaEnum.BULTOS);
 			unidadMedidaEnumList = Arrays.asList(UnidadMedidaEnum.values());
 			sucursalList = daoSucursal.getList();
+			localidadList = new ArrayList<Localidad>();
 			addEdit = false;
 		} catch (Throwable e) {
 			log.error("Error al inicializar la clase HojaRutaController", e);
@@ -166,8 +169,24 @@ public class HojaRutaController extends PaginableController<HojaRuta> {
 		return sucursalList;
 	}
 
+	public List<Localidad> getLocalidadList() {
+		return localidadList;
+	}
+
+	public String getLocalidadQueryString() {
+		return localidadQueryString;
+	}
+
+	public void setLocalidadQueryString(String localidadQueryString) {
+		this.localidadQueryString = localidadQueryString;
+	}
+
 	public void query(ActionEvent event) {
 		loadList();
+	}
+
+	public void queryLocalidad(ActionEvent event) {
+		localidadList = completeLocalidad(localidadQueryString);
 	}
 
 	public void edit(ActionEvent event) {
@@ -219,7 +238,7 @@ public class HojaRutaController extends PaginableController<HojaRuta> {
 				hojaRuta.setNumero(hojaRuta.getSucursal().getNumeroHojaRuta() + 1);
 				dao.save(hojaRuta);
 
-				// incremento el número de hoja de ruta de la sucursal
+				// incremento el nï¿½mero de hoja de ruta de la sucursal
 				Sucursal sucursal = hojaRuta.getSucursal();
 				sucursal.setNumeroHojaRuta(hojaRuta.getSucursal()
 						.getNumeroHojaRuta() + 1);

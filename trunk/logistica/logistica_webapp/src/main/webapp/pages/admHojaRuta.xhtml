@@ -8,246 +8,249 @@
 	xmlns:p="http://primefaces.org/ui" xmlns="http://www.w3.org/1999/xhtml">
 
 <body>
-	<u:composition template="/pages/layout/pageLayout.xhtml">
-		<u:define name="body">
-			<h:form id="filtroForm">
-				<p:panel id="panelFiltro" rendered="#{!hojaRutaController.addEdit}">
-					<h:panelGrid columns="7">
-						<h:outputText value="Fecha Emisión" />
-						<p:calendar
-							value="#{hojaRutaController.hojaRutaQuery.fechaEmision}"
-							mode="popup" showOn="button" locale="es"
-							pattern="#{msgs.common_inputDateFormat}" />
+<u:composition template="/pages/layout/pageLayout.xhtml">
+	<u:define name="body">
+		<h:form id="filtroForm">
+			<p:panel id="panelFiltro" rendered="#{!hojaRutaController.addEdit}">
+				<h:panelGrid columns="7">
+					<h:outputText value="Fecha Emisión" />
+					<p:calendar
+						value="#{hojaRutaController.hojaRutaQuery.fechaEmision}"
+						mode="popup" showOn="button" locale="es"
+						pattern="#{msgs.common_inputDateFormat}" />
 
-						<h:outputText value="Prefijo" />
-						<p:spinner id="prefijoS"
-							value="#{hojaRutaController.hojaRutaQuery.prefijo}" min="0"
-							stepFactor="1" size="30">
-						</p:spinner>
+					<h:outputText value="Prefijo" />
+					<p:spinner id="prefijoS"
+						value="#{hojaRutaController.hojaRutaQuery.prefijo}" min="0"
+						stepFactor="1" size="30">
+					</p:spinner>
 
-						<h:outputText value="Número" />
-						<p:spinner id="numeroS"
-							value="#{hojaRutaController.hojaRutaQuery.numero}" min="0"
-							stepFactor="1" size="30">
-						</p:spinner>
+					<h:outputText value="Número" />
+					<p:spinner id="numeroS"
+						value="#{hojaRutaController.hojaRutaQuery.numero}" min="0"
+						stepFactor="1" size="30">
+					</p:spinner>
 
-						<p:commandButton value="Consultar"
-							actionListener="#{hojaRutaController.query}" update="form">
-						</p:commandButton>
-					</h:panelGrid>
-				</p:panel>
-			</h:form>
+					<p:commandButton value="Consultar"
+						actionListener="#{hojaRutaController.query}" update="form">
+					</p:commandButton>
+				</h:panelGrid>
+			</p:panel>
+		</h:form>
 
-			<h:form id="form">
-				<p:growl id="messages" life="5000" />
-				<p:dataTable id="dataTable" var="hojaRuta"
-					value="#{hojaRutaController.lazyDM}" paginator="true" rows="10"
-					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-					rowsPerPageTemplate="10,15,20"
-					rendered="#{!hojaRutaController.addEdit}"
-					emptyMessage="No se encontraron registros" dynamic="true">
+		<h:form id="form">
+			<p:growl id="messages" life="5000" />
+			<p:dataTable id="dataTable" var="hojaRuta"
+				value="#{hojaRutaController.lazyDM}" paginator="true" rows="10"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="10,15,20"
+				rendered="#{!hojaRutaController.addEdit}"
+				emptyMessage="No se encontraron registros" dynamic="true">
 
+				<f:facet name="header">
+					<h:outputText value="#{msgs.admHojaRuta_title}" />
+				</f:facet>
+
+				<p:column>
 					<f:facet name="header">
-						<h:outputText value="#{msgs.admHojaRuta_title}" />
+						<h:outputText value="Sucursal" />
 					</f:facet>
+					<h:outputText value="#{hojaRuta.sucursal.nombre}" />
+				</p:column>
 
-					<p:column>
-						<f:facet name="header">
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Fecha Emisión" />
+					</f:facet>
+					<h:outputText value="#{hojaRuta.fechaEmision}">
+						<f:convertDateTime pattern="#{msgs.common_showDateFormat}"
+							timeZone="#{msgs.common_timeZone}" />
+					</h:outputText>
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Prefijo-número" />
+					</f:facet>
+					<h:outputText value="#{hojaRuta.prefijo} - #{hojaRuta.numero}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Cliente" />
+					</f:facet>
+					<h:outputText value="#{hojaRuta.cliente.nombre}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Chofer" />
+					</f:facet>
+					<h:outputText value="#{hojaRuta.chofer.nombre}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Número móvil - patente" />
+					</f:facet>
+					<h:outputText
+						value="#{hojaRuta.movil.numeroMovil} - #{hojaRuta.movil.patente}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Número remito" />
+					</f:facet>
+					<h:outputText value="#{hojaRuta.numeroRemito}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Opciones" />
+					</f:facet>
+					<h:panelGrid columns="3">
+						<p:commandLink actionListener="#{hojaRutaController.edit}"
+							update="form,filtroForm" oncomplete="tabView.select(0)">
+							<h:graphicImage url="/resource/images/edit.gif" title="Modificar"
+								style="border:0px" />
+						</p:commandLink>
+						<p:commandLink actionListener="#{hojaRutaController.toPDF}"
+							ajax="false">
+							<h:graphicImage url="/resource/images/pdf.gif" title="A PDF"
+								style="border:0px" />
+						</p:commandLink>
+
+						<h:commandLink actionListener="#{hojaRutaController.delete}"
+							onclick="return confirm('¿Está seguro de eliminar el registro?');">
+							<h:graphicImage url="/resource/images/delete.gif"
+								title="Eliminar" style="border:0px" />
+						</h:commandLink>
+					</h:panelGrid>
+				</p:column>
+
+				<f:facet name="footer">
+					<p:commandButton value="Agregar"
+						actionListener="#{hojaRutaController.add}"
+						update="form,filtroForm" oncomplete="tabView.select(0)" />
+				</f:facet>
+			</p:dataTable>
+
+
+			<h:panelGrid id="panel" columns="1"
+				rendered="#{hojaRutaController.addEdit}">
+				<p:tabView widgetVar="tabView">
+					<p:tab title="Datos Principales">
+						<p:focus for="sucursalSOM" />
+						<h:panelGrid columns="4">
 							<h:outputText value="Sucursal" />
-						</f:facet>
-						<h:outputText value="#{hojaRuta.sucursal.nombre}" />
-					</p:column>
+							<p:selectOneMenu id="sucursalSOM"
+								value="#{hojaRutaController.hojaRutaView.sucursal}"
+								converter="com.converter.SucursalConverter">
+								<f:selectItems value="#{hojaRutaController.sucursalList}"
+									var="sucursal" itemLabel="#{sucursal.nombre}"
+									itemValue="#{sucursal}" />
+								<f:ajax execute="@this" />
+							</p:selectOneMenu>
+							<h:outputText value="" />
+							<h:outputText value="" />
 
-					<p:column>
-						<f:facet name="header">
-							<h:outputText value="Fecha Emisión" />
-						</f:facet>
-						<h:outputText value="#{hojaRuta.fechaEmision}">
-							<f:convertDateTime pattern="#{msgs.common_showDateFormat}"
-								timeZone="#{msgs.common_timeZone}" />
-						</h:outputText>
-					</p:column>
-
-					<p:column>
-						<f:facet name="header">
-							<h:outputText value="Prefijo-número" />
-						</f:facet>
-						<h:outputText value="#{hojaRuta.prefijo} - #{hojaRuta.numero}" />
-					</p:column>
-
-					<p:column>
-						<f:facet name="header">
 							<h:outputText value="Cliente" />
-						</f:facet>
-						<h:outputText value="#{hojaRuta.cliente.nombre}" />
-					</p:column>
+							<p:autoComplete id="clienteAC"
+								disabled="#{hojaRutaController.clienteSelected}"
+								value="#{hojaRutaController.hojaRutaView.cliente}"
+								completeMethod="#{hojaRutaController.completeCliente}"
+								var="cliente" itemLabel="#{cliente.nombre}"
+								itemValue="#{cliente}"
+								converter="com.converter.ClienteConverter" maxResults="10"
+								forceSelection="true">
+								<p:ajax event="itemSelect"
+									listener="#{hojaRutaController.handleClienteSelect}"
+									update="clienteAC,nombreCliente,deseleccinarClienteLink" />
+							</p:autoComplete>
+							<h:panelGroup>
+								<h:outputText id="nombreCliente"
+									value="#{hojaRutaController.hojaRutaView.cliente.nombre}" />
+								<h:commandLink id="deseleccinarClienteLink"
+									disabled="#{!hojaRutaController.clienteSelected}"
+									actionListener="#{hojaRutaController.deselecionarCliente}"
+									update="clienteAC,nombreCliente,deseleccinarClienteLink"
+									immediate="true">
+									<h:graphicImage url="/resource/images/delete.gif"
+										title="Deseleccionar" style="border:0px" />
+								</h:commandLink>
+							</h:panelGroup>
+							<h:message id="mcac" for="clienteAC" />
 
-					<p:column>
-						<f:facet name="header">
 							<h:outputText value="Chofer" />
-						</f:facet>
-						<h:outputText value="#{hojaRuta.chofer.nombre}" />
-					</p:column>
+							<p:autoComplete id="choferAC"
+								disabled="#{hojaRutaController.choferSelected}"
+								value="#{hojaRutaController.hojaRutaView.chofer}"
+								completeMethod="#{hojaRutaController.completeChofer}"
+								var="chofer" itemLabel="#{chofer.nombre}" itemValue="#{chofer}"
+								converter="com.converter.ChoferConverter" maxResults="10"
+								forceSelection="true">
+								<p:ajax event="itemSelect"
+									listener="#{hojaRutaController.handleChoferSelect}"
+									update="choferAC,nombreChofer,deseleccionarChoferLink" />
+							</p:autoComplete>
+							<h:panelGroup>
+								<h:outputText id="nombreChofer"
+									value="#{hojaRutaController.hojaRutaView.chofer.nombre}" />
+								<h:commandLink id="deseleccionarChoferLink"
+									disabled="#{!hojaRutaController.choferSelected}"
+									actionListener="#{hojaRutaController.deseleccionarChofer}"
+									update="choferAC,nombreChofer,deseleccionarChoferLink"
+									immediate="true">
+									<h:graphicImage url="/resource/images/delete.gif"
+										title="Deseleccionar" style="border:0px" />
+								</h:commandLink>
+							</h:panelGroup>
+							<h:message id="mchac" for="choferAC" />
 
-					<p:column>
-						<f:facet name="header">
-							<h:outputText value="Número móvil - patente" />
-						</f:facet>
-						<h:outputText
-							value="#{hojaRuta.movil.numeroMovil} - #{hojaRuta.movil.patente}" />
-					</p:column>
+							<h:outputText value="Móvil" />
+							<p:autoComplete id="movilAC"
+								disabled="#{hojaRutaController.movilSelected}"
+								value="#{hojaRutaController.hojaRutaView.movil}"
+								completeMethod="#{hojaRutaController.completeMovil}" var="movil"
+								itemLabel="#{movil.numeroMovil} - #{movil.patente}"
+								itemValue="#{movil}" converter="com.converter.MovilConverter"
+								maxResults="10" queryDelay="300" forceSelection="true">
+								<p:ajax event="itemSelect"
+									listener="#{hojaRutaController.handleMovilSelect}"
+									update="movilAC,nombreMovil,deseleccionarMovilLink" />
+							</p:autoComplete>
+							<h:panelGroup>
+								<h:outputText id="nombreMovil"
+									value="#{hojaRutaController.hojaRutaView.movil.numeroMovil} #{hojaRutaController.hojaRutaView.movil.patente}" />
+								<h:commandLink id="deseleccionarMovilLink"
+									disabled="#{!hojaRutaController.movilSelected}"
+									actionListener="#{hojaRutaController.deseleccionarMovil}"
+									update="movilAC,nombreMovil,deseleccionarMovilLink"
+									immediate="true">
+									<h:graphicImage url="/resource/images/delete.gif"
+										title="Deseleccionar" style="border:0px" />
+								</h:commandLink>
+							</h:panelGroup>
+							<h:message id="mmlac" for="movilAC" />
 
-					<p:column>
-						<f:facet name="header">
-							<h:outputText value="Número remito" />
-						</f:facet>
-						<h:outputText value="#{hojaRuta.numeroRemito}" />
-					</p:column>
+							<h:outputText value="Nro remito" />
+							<p:inputText id="numeroRemitoIT"
+								value="#{hojaRutaController.hojaRutaView.numeroRemito}">
+								<f:validateBean for="numeroRemitoIT" />
+							</p:inputText>
+							<h:message id="nrIT" for="numeroRemitoIT" />
+							<h:outputText value="" />
 
-					<p:column>
-						<f:facet name="header">
-							<h:outputText value="Opciones" />
-						</f:facet>
-						<h:panelGrid columns="3">
-							<p:commandLink actionListener="#{hojaRutaController.edit}"
-								update="form,filtroForm" oncomplete="tabView.select(0)">
-								<h:graphicImage url="/resource/images/edit.gif"
-									title="Modificar" style="border:0px" />
-							</p:commandLink>
-							<p:commandLink actionListener="#{hojaRutaController.toPDF}"
-								ajax="false">
-								<h:graphicImage url="/resource/images/pdf.gif" title="A PDF"
-									style="border:0px" />
-							</p:commandLink>
+							<h:outputText value="Dirección" />
+							<p:inputTextarea id="direccionIT"
+								style="width:200px;height:100px;"
+								value="#{hojaRutaController.hojaRutaView.direccion}">
+								<f:validateBean for="direccionIT" />
+							</p:inputTextarea>
+							<h:message id="dirIT" for="direccionIT" />
+							<h:outputText value="" />
 
-							<h:commandLink actionListener="#{hojaRutaController.delete}"
-								onclick="return confirm('¿Está seguro de eliminar el registro?');">
-								<h:graphicImage url="/resource/images/delete.gif"
-									title="Eliminar" style="border:0px" />
-							</h:commandLink>
-						</h:panelGrid>
-					</p:column>
-
-					<f:facet name="footer">
-						<p:commandButton value="Agregar"
-							actionListener="#{hojaRutaController.add}"
-							update="form,filtroForm" oncomplete="tabView.select(0)" />
-					</f:facet>
-				</p:dataTable>
-
-
-				<h:panelGrid id="panel" columns="1"
-					rendered="#{hojaRutaController.addEdit}">
-					<p:tabView widgetVar="tabView">
-						<p:tab title="Datos Principales">
-							<p:focus for="sucursalSOM" />
-							<h:panelGrid columns="4">
-								<h:outputText value="Sucursal" />
-								<p:selectOneMenu id="sucursalSOM"
-									value="#{hojaRutaController.hojaRutaView.sucursal}"
-									converter="com.converter.SucursalConverter">
-									<f:selectItems value="#{hojaRutaController.sucursalList}"
-										var="sucursal" itemLabel="#{sucursal.nombre}"
-										itemValue="#{sucursal}" />
-									<f:ajax execute="@this" />
-								</p:selectOneMenu>
-								<h:outputText value="" />
-								<h:outputText value="" />
-
-								<h:outputText value="Cliente" />
-								<p:autoComplete id="clienteAC"
-									disabled="#{hojaRutaController.clienteSelected}"
-									value="#{hojaRutaController.hojaRutaView.cliente}"
-									completeMethod="#{hojaRutaController.completeCliente}"
-									var="cliente" itemLabel="#{cliente.nombre}"
-									itemValue="#{cliente}"
-									converter="com.converter.ClienteConverter" maxResults="10"
-									forceSelection="true">
-									<p:ajax event="itemSelect"
-										listener="#{hojaRutaController.handleClienteSelect}"
-										update="clienteAC,nombreCliente,deseleccinarClienteLink" />
-								</p:autoComplete>
-								<h:panelGroup>
-									<h:outputText id="nombreCliente"
-										value="#{hojaRutaController.hojaRutaView.cliente.nombre}" />
-									<h:commandLink id="deseleccinarClienteLink"
-										disabled="#{!hojaRutaController.clienteSelected}"
-										actionListener="#{hojaRutaController.deselecionarCliente}"
-										update="clienteAC,nombreCliente,deseleccinarClienteLink" immediate="true">
-										<h:graphicImage url="/resource/images/delete.gif"
-											title="Deseleccionar" style="border:0px" />
-									</h:commandLink>
-								</h:panelGroup>
-								<h:message id="mcac" for="clienteAC" />
-
-								<h:outputText value="Chofer" />
-								<p:autoComplete id="choferAC"
-									disabled="#{hojaRutaController.choferSelected}"
-									value="#{hojaRutaController.hojaRutaView.chofer}"
-									completeMethod="#{hojaRutaController.completeChofer}"
-									var="chofer" itemLabel="#{chofer.nombre}" itemValue="#{chofer}"
-									converter="com.converter.ChoferConverter" maxResults="10"
-									forceSelection="true">
-									<p:ajax event="itemSelect"
-										listener="#{hojaRutaController.handleChoferSelect}"
-										update="choferAC,nombreChofer,deseleccionarChoferLink" />
-								</p:autoComplete>
-								<h:panelGroup>
-									<h:outputText id="nombreChofer"
-										value="#{hojaRutaController.hojaRutaView.chofer.nombre}" />
-									<h:commandLink id="deseleccionarChoferLink"
-										disabled="#{!hojaRutaController.choferSelected}"
-										actionListener="#{hojaRutaController.deseleccionarChofer}"
-										update="choferAC,nombreChofer,deseleccionarChoferLink" immediate="true">
-										<h:graphicImage url="/resource/images/delete.gif"
-											title="Deseleccionar" style="border:0px" />
-									</h:commandLink>
-								</h:panelGroup>
-								<h:message id="mchac" for="choferAC" />
-
-								<h:outputText value="Móvil" />
-								<p:autoComplete id="movilAC"
-									disabled="#{hojaRutaController.movilSelected}"
-									value="#{hojaRutaController.hojaRutaView.movil}"
-									completeMethod="#{hojaRutaController.completeMovil}"
-									var="movil" itemLabel="#{movil.numeroMovil} - #{movil.patente}"
-									itemValue="#{movil}" converter="com.converter.MovilConverter"
-									maxResults="10" queryDelay="300" forceSelection="true">
-									<p:ajax event="itemSelect"
-										listener="#{hojaRutaController.handleMovilSelect}"
-										update="movilAC,nombreMovil,deseleccionarMovilLink" />
-								</p:autoComplete>
-								<h:panelGroup>
-									<h:outputText id="nombreMovil"
-										value="#{hojaRutaController.hojaRutaView.movil.numeroMovil} #{hojaRutaController.hojaRutaView.movil.patente}" />
-									<h:commandLink id="deseleccionarMovilLink"
-										disabled="#{!hojaRutaController.movilSelected}"
-										actionListener="#{hojaRutaController.deseleccionarMovil}"
-										update="movilAC,nombreMovil,deseleccionarMovilLink" immediate="true">
-										<h:graphicImage url="/resource/images/delete.gif"
-											title="Deseleccionar" style="border:0px" />
-									</h:commandLink>
-								</h:panelGroup>
-								<h:message id="mmlac" for="movilAC" />
-
-								<h:outputText value="Nro remito" />
-								<p:inputText id="numeroRemitoIT"
-									value="#{hojaRutaController.hojaRutaView.numeroRemito}">
-									<f:validateBean for="numeroRemitoIT" />
-								</p:inputText>
-								<h:message id="nrIT" for="numeroRemitoIT" />
-								<h:outputText value="" />
-
-								<h:outputText value="Dirección" />
-								<p:inputTextarea id="direccionIT"
-									style="width:200px;height:100px;"
-									value="#{hojaRutaController.hojaRutaView.direccion}">
-									<f:validateBean for="direccionIT" />
-								</p:inputTextarea>
-								<h:message id="dirIT" for="direccionIT" />
-								<h:outputText value="" />
-
-								<h:outputText value="Localidad" />
+							<!--<h:outputText value="Localidad" />
 								<p:autoComplete id="localidadAC"
 									disabled="#{hojaRutaController.localidadSelected}"
 									value="#{hojaRutaController.hojaRutaView.localidad}"
@@ -256,221 +259,287 @@
 									itemValue="#{localidad}"
 									converter="com.converter.LocalidadConverter" maxResults="10"
 									forceSelection="true">
-									<!-- <f:ajax event="change" render="nombre"/> -->
+									 <f:ajax event="change" render="nombre"/> 
 									<p:ajax event="itemSelect"
 										listener="#{hojaRutaController.handleSelect}"
 										update="localidadAC,nombre,deseleccinarLink" />
 
+								</p:autoComplete>-->
+
+							<h:panelGrid columns="4" cellpadding="4" id="dialogPGID">
+								<h:outputText value="Localidad" />
+								<p:inputText id="localidadQSIT"
+									value="#{hojaRutaController.localidadQueryString}"
+									immediate="true">
+									<f:ajax execute="@this" />
+								</p:inputText>
+								<p:commandButton value="Consultar" process="@this"
+									actionListener="#{hojaRutaController.queryLocalidad}"
+									update="localidadSOM">
+								</p:commandButton>
+
+								<p:selectOneMenu id="localidadSOM"
+									value="#{hojaRutaController.hojaRutaView.localidad}"
+									converter="com.converter.LocalidadConverter" immediate="true">
+									<f:selectItems value="#{hojaRutaController.localidadList}"
+										var="localidad" itemLabel="#{localidad.descripcion}"
+										itemValue="#{localidad}" />
+									<f:ajax execute="@this" />
+								</p:selectOneMenu>
+
+								<p:commandButton value="Confirmar"
+									onclick="localidadDialog.hide()" />
+							</h:panelGrid>
+							
+							<h:outputText value="Localidad" />
+							<p:commandLink
+								oncomplete="localidadDialog.show(); localidadDialog.initPosition()"
+								update="localidadDialogID">
+								<h:graphicImage url="/resource/images/find.gif"
+									title="Elegir localidad" style="border:0px" />
+							</p:commandLink>
+							<h:panelGroup>
+								<h:outputText id="nombre"
+									value="#{hojaRutaController.hojaRutaView.localidad.descripcion}" />
+								<h:commandLink id="deseleccinarLink"
+									disabled="#{!hojaRutaController.localidadSelected}"
+									actionListener="#{hojaRutaController.deselecionarLocalidad}"
+									update="localidadAC,nombre,deseleccinarLink" immediate="true">
+									<h:graphicImage url="/resource/images/delete.gif"
+										title="Deseleccionar" style="border:0px" />
+								</h:commandLink>
+							</h:panelGroup>
+							<h:message id="mlocac" for="localidadAC" />
+
+
+
+							<h:outputText value="Observaciones" />
+							<p:inputTextarea id="observacionesIT"
+								style="width:200px;height:100px;"
+								value="#{hojaRutaController.hojaRutaView.observaciones}">
+								<f:validateBean for="observacionesIT" />
+							</p:inputTextarea>
+							<h:message id="obserIT" for="observacionesIT" />
+							<h:outputText value="" />
+						</h:panelGrid>
+					</p:tab>
+
+					<p:tab title="Detalle">
+						<p:panel header="Agregar detalle">
+							<h:panelGrid columns="4">
+								<h:outputText value="Dirección" />
+								<p:inputText id="direccionDIT"
+									value="#{hojaRutaController.detalleHojaRuta.direccion}"
+									valueChangeListener="#{hojaRutaController.valueChangeMethod}">
+									<!-- <p:ajax update="out" event="onchange"/>  -->
+									<f:ajax execute="@this" />
+									<f:validateBean for="direccionDIT" />
+								</p:inputText>
+								<h:message for="direccionDIT" />
+								<h:outputText value="" />
+
+								<h:outputText value="Localidad" />
+								<p:autoComplete id="localidadDAC"
+									disabled="#{!(hojaRutaController.detalleHojaRuta.localidad eq null)}"
+									value="#{hojaRutaController.detalleHojaRuta.localidad}"
+									completeMethod="#{hojaRutaController.completeLocalidad}"
+									var="localidad" itemLabel="#{localidad.descripcion}"
+									itemValue="#{localidad}"
+									converter="com.converter.LocalidadConverter" maxResults="10"
+									queryDelay="300" forceSelection="true">
+									<p:ajax event="itemSelect"
+										listener="#{hojaRutaController.handleSelectDetalle}"
+										update="localidadDAC,nombreLocalidadDetalle,deseleccinarLocalidadDetalleLink" />
 								</p:autoComplete>
+								<h:message for="localidadDAC" />
 								<h:panelGroup>
-									<h:outputText id="nombre"
-										value="#{hojaRutaController.hojaRutaView.localidad.descripcion}" />
-									<h:commandLink id="deseleccinarLink"
-										disabled="#{!hojaRutaController.localidadSelected}"
-										actionListener="#{hojaRutaController.deselecionarLocalidad}"
-										update="localidadAC,nombre,deseleccinarLink" immediate="true">
+									<h:outputText id="nombreLocalidadDetalle"
+										value="#{hojaRutaController.detalleHojaRuta.localidad.descripcion}" />
+									<h:commandLink id="deseleccinarLocalidadDetalleLink"
+										disabled="#{hojaRutaController.detalleHojaRuta.localidad eq null}"
+										actionListener="#{hojaRutaController.deselecionarDetalleLocalidad}"
+										update="localidadDAC,nombreLocalidadDetalle,deseleccinarLocalidadDetalleLink"
+										immediate="true">
 										<h:graphicImage url="/resource/images/delete.gif"
 											title="Deseleccionar" style="border:0px" />
 									</h:commandLink>
 								</h:panelGroup>
-								<h:message id="mlocac" for="localidadAC" />
 
-								<h:outputText value="Observaciones" />
-								<p:inputTextarea id="observacionesIT"
-									style="width:200px;height:100px;"
-									value="#{hojaRutaController.hojaRutaView.observaciones}">
-									<f:validateBean for="observacionesIT" />
-								</p:inputTextarea>
-								<h:message id="obserIT" for="observacionesIT" />
+								<h:outputText value="Cantidad" />
+								<p:spinner id="cantiadDS"
+									value="#{hojaRutaController.detalleHojaRuta.cantidad}" min="0"
+									stepFactor="1" size="30">
+									<f:ajax execute="@this" />
+								</p:spinner>
+								<h:message for="cantiadDS" />
 								<h:outputText value="" />
+
+								<h:outputText value="Unidad Medida" />
+								<p:selectOneMenu
+									value="#{hojaRutaController.detalleHojaRuta.unidadMedida}"
+									converter="com.converter.UnidadMedidaConverter">
+									<f:selectItems
+										value="#{hojaRutaController.unidadMedidaEnumList}" />
+									<f:ajax execute="@this" />
+									<!--  <p:ajax listener="#{direccionBean.provinciaListener}" /> -->
+								</p:selectOneMenu>
+								<h:outputText value="" />
+								<h:outputText value="" />
+
+								<h:outputText value="Fecha Desde" />
+								<p:calendar id="fechaDesdeC"
+									value="#{hojaRutaController.detalleHojaRuta.fechaDesde}"
+									mode="popup" showOn="button" locale="es"
+									pattern="#{msgs.common_showDateFormat}" immediate="true"
+									readOnlyInputText="true">
+									<p:ajax event="dateSelect"
+										listener="#{hojaRutaController.handleDateSelect}" />
+								</p:calendar>
+								<h:outputText value="" />
+								<h:outputText value="" />
+
+								<h:outputText value="Fecha Hasta" />
+								<p:calendar id="fechaHastaC"
+									value="#{hojaRutaController.detalleHojaRuta.fechaHasta}"
+									mode="popup" showOn="button" locale="es"
+									pattern="#{msgs.common_showDateFormat}" immediate="true"
+									readOnlyInputText="true">
+									<p:ajax event="dateSelect"
+										listener="#{hojaRutaController.handleDateSelect}" />
+								</p:calendar>
+								<h:outputText value="" />
+								<h:outputText value="" />
+
+								<p:commandButton value="Agregar Detalle"
+									actionListener="#{hojaRutaController.addDetalle}"
+									update="detalleListDT" immediate="true" />
 							</h:panelGrid>
-						</p:tab>
+						</p:panel>
 
-						<p:tab title="Detalle">
-							<p:panel header="Agregar detalle">
-								<h:panelGrid columns="4">
-									<h:outputText value="Dirección" />
-									<p:inputText id="direccionDIT"
-										value="#{hojaRutaController.detalleHojaRuta.direccion}"
-										valueChangeListener="#{hojaRutaController.valueChangeMethod}">
-										<!-- <p:ajax update="out" event="onchange"/>  -->
-										<f:ajax execute="@this" />
-										<f:validateBean for="direccionDIT" />
-									</p:inputText>
-									<h:message for="direccionDIT" />
-									<h:outputText value="" />
+						<p:dataTable id="detalleListDT" var="detalle"
+							value="#{hojaRutaController.detalleHojaRutaDM}" emptyMessage="">
 
-									<h:outputText value="Localidad" />
-									<p:autoComplete id="localidadDAC"
-										disabled="#{!(hojaRutaController.detalleHojaRuta.localidad eq null)}"
-										value="#{hojaRutaController.detalleHojaRuta.localidad}"
-										completeMethod="#{hojaRutaController.completeLocalidad}"
-										var="localidad" itemLabel="#{localidad.descripcion}"
-										itemValue="#{localidad}"
-										converter="com.converter.LocalidadConverter" maxResults="10"
-										queryDelay="300" forceSelection="true">
-										<p:ajax event="itemSelect"
-											listener="#{hojaRutaController.handleSelectDetalle}"
-											update="localidadDAC,nombreLocalidadDetalle,deseleccinarLocalidadDetalleLink" />
-									</p:autoComplete>
-									<h:message for="localidadDAC" />
-									<h:panelGroup>
-										<h:outputText id="nombreLocalidadDetalle"
-											value="#{hojaRutaController.detalleHojaRuta.localidad.descripcion}" />
-										<h:commandLink id="deseleccinarLocalidadDetalleLink"
-											disabled="#{hojaRutaController.detalleHojaRuta.localidad eq null}"
-											actionListener="#{hojaRutaController.deselecionarDetalleLocalidad}"
-											update="localidadDAC,nombreLocalidadDetalle,deseleccinarLocalidadDetalleLink"
-											immediate="true">
-											<h:graphicImage url="/resource/images/delete.gif"
-												title="Deseleccionar" style="border:0px" />
-										</h:commandLink>
-									</h:panelGroup>
+							<f:facet name="header">
+								<h:outputText value="Detalles" />
+							</f:facet>
 
-									<h:outputText value="Cantidad" />
-									<p:spinner id="cantiadDS"
-										value="#{hojaRutaController.detalleHojaRuta.cantidad}" min="0"
-										stepFactor="1" size="30">
-										<f:ajax execute="@this" />
-									</p:spinner>
-									<h:message for="cantiadDS" />
-									<h:outputText value="" />
-
-									<h:outputText value="Unidad Medida" />
-									<p:selectOneMenu
-										value="#{hojaRutaController.detalleHojaRuta.unidadMedida}"
-										converter="com.converter.UnidadMedidaConverter">
-										<f:selectItems
-											value="#{hojaRutaController.unidadMedidaEnumList}" />
-										<f:ajax execute="@this" />
-										<!--  <p:ajax listener="#{direccionBean.provinciaListener}" /> -->
-									</p:selectOneMenu>
-									<h:outputText value="" />
-									<h:outputText value="" />
-
-									<h:outputText value="Fecha Desde" />
-									<p:calendar id="fechaDesdeC"
-										value="#{hojaRutaController.detalleHojaRuta.fechaDesde}"
-										mode="popup" showOn="button" locale="es"
-										pattern="#{msgs.common_showDateFormat}" immediate="true"
-										readOnlyInputText="true">
-										<p:ajax event="dateSelect"
-											listener="#{hojaRutaController.handleDateSelect}" />
-									</p:calendar>
-									<h:outputText value="" />
-									<h:outputText value="" />
-
-									<h:outputText value="Fecha Hasta" />
-									<p:calendar id="fechaHastaC"
-										value="#{hojaRutaController.detalleHojaRuta.fechaHasta}"
-										mode="popup" showOn="button" locale="es"
-										pattern="#{msgs.common_showDateFormat}" immediate="true"
-										readOnlyInputText="true">
-										<p:ajax event="dateSelect"
-											listener="#{hojaRutaController.handleDateSelect}" />
-									</p:calendar>
-									<h:outputText value="" />
-									<h:outputText value="" />
-
-									<p:commandButton value="Agregar Detalle"
-										actionListener="#{hojaRutaController.addDetalle}"
-										update="detalleListDT" immediate="true" />
-								</h:panelGrid>
-							</p:panel>
-
-							<p:dataTable id="detalleListDT" var="detalle"
-								value="#{hojaRutaController.detalleHojaRutaDM}" emptyMessage="">
-
+							<p:column align="center">
 								<f:facet name="header">
-									<h:outputText value="Detalles" />
+									<h:outputText value="Dirección" />
 								</f:facet>
+								<h:outputText value="#{detalle.direccion}" />
+							</p:column>
 
-								<p:column align="center">
-									<f:facet name="header">
-										<h:outputText value="Dirección" />
-									</f:facet>
-									<h:outputText value="#{detalle.direccion}" />
-								</p:column>
+							<p:column align="center">
+								<f:facet name="header">
+									<h:outputText value="Localidad" />
+								</f:facet>
+								<h:outputText value="#{detalle.localidad.descripcion}" />
+							</p:column>
 
-								<p:column align="center">
-									<f:facet name="header">
-										<h:outputText value="Localidad" />
-									</f:facet>
-									<h:outputText value="#{detalle.localidad.descripcion}" />
-								</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Cantidad" />
+								</f:facet>
+								<h:outputText value="#{detalle.cantidad}">
+								</h:outputText>
+							</p:column>
 
-								<p:column>
-									<f:facet name="header">
-										<h:outputText value="Cantidad" />
-									</f:facet>
-									<h:outputText value="#{detalle.cantidad}">
-									</h:outputText>
-								</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Unidad Medida" />
+								</f:facet>
+								<h:outputText value="#{detalle.unidadMedida}">
+								</h:outputText>
+							</p:column>
 
-								<p:column>
-									<f:facet name="header">
-										<h:outputText value="Unidad Medida" />
-									</f:facet>
-									<h:outputText value="#{detalle.unidadMedida}">
-									</h:outputText>
-								</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Fecha desde" />
+								</f:facet>
+								<h:outputText value="#{detalle.fechaDesde}">
+									<f:convertDateTime pattern="#{msgs.common_showDateFormat}"
+										timeZone="#{msgs.common_timeZone}" />
+								</h:outputText>
+							</p:column>
 
-								<p:column>
-									<f:facet name="header">
-										<h:outputText value="Fecha desde" />
-									</f:facet>
-									<h:outputText value="#{detalle.fechaDesde}">
-										<f:convertDateTime pattern="#{msgs.common_showDateFormat}"
-											timeZone="#{msgs.common_timeZone}" />
-									</h:outputText>
-								</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Fecha hasta" />
+								</f:facet>
+								<h:outputText value="#{detalle.fechaHasta}">
+									<f:convertDateTime pattern="#{msgs.common_showDateFormat}"
+										timeZone="#{msgs.common_timeZone}" />
+								</h:outputText>
+							</p:column>
 
-								<p:column>
-									<f:facet name="header">
-										<h:outputText value="Fecha hasta" />
-									</f:facet>
-									<h:outputText value="#{detalle.fechaHasta}">
-										<f:convertDateTime pattern="#{msgs.common_showDateFormat}"
-											timeZone="#{msgs.common_timeZone}" />
-									</h:outputText>
-								</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Opciones" />
+								</f:facet>
+								<h:panelGrid columns="3">
+									<h:commandLink
+										actionListener="#{hojaRutaController.deleteDetalle}"
+										immediate="true">
+										<h:graphicImage url="/resource/images/delete.gif"
+											title="Eliminar" style="border:0px" />
+									</h:commandLink>
+								</h:panelGrid>
+							</p:column>
+						</p:dataTable>
 
-								<p:column>
-									<f:facet name="header">
-										<h:outputText value="Opciones" />
-									</f:facet>
-									<h:panelGrid columns="3">
-										<h:commandLink
-											actionListener="#{hojaRutaController.deleteDetalle}"
-											immediate="true">
-											<h:graphicImage url="/resource/images/delete.gif"
-												title="Eliminar" style="border:0px" />
-										</h:commandLink>
-									</h:panelGrid>
-								</p:column>
-							</p:dataTable>
+					</p:tab>
+				</p:tabView>
 
-						</p:tab>
+				<!-- ================================================== -->
+				<!-- Opciones											-->
+				<!-- ================================================== -->
+				<h:panelGrid columns="2">
+					<p:commandButton value="Guardar"
+						actionListener="#{hojaRutaController.save}"
+						update="form,filtroForm">
+					</p:commandButton>
+					<p:commandButton value="Volver"
+						actionListener="#{hojaRutaController.cancel}" immediate="true"
+						update="form,filtroForm">
+					</p:commandButton>
 
-
-					</p:tabView>
-
-					<!-- ================================================== -->
-					<!-- Opciones											-->
-					<!-- ================================================== -->
-					<h:panelGrid columns="2">
-						<p:commandButton value="Guardar"
-							actionListener="#{hojaRutaController.save}"
-							update="form,filtroForm">
-						</p:commandButton>
-						<p:commandButton value="Volver"
-							actionListener="#{hojaRutaController.cancel}" immediate="true"
-							update="form,filtroForm">
-						</p:commandButton>
-					</h:panelGrid>
 				</h:panelGrid>
-			</h:form>
-		</u:define>
-	</u:composition>
+			</h:panelGrid>
+		</h:form>
+		<!--
+
+		<h:form id="dialogForm">
+			<p:dialog id="localidadDialogID" header="Selección Localidad"
+				widgetVar="localidadDialog" resizable="false" width="700"
+				modal="true" onCloseUpdate="panel">
+				<h:panelGroup columns="4" cellpadding="4" id="dialogPGID">
+					<h:outputText value="Localidad" />
+					<p:inputText id="localidadQSIT"
+						value="#{hojaRutaController.localidadQueryString}"
+						immediate="true">
+						<f:ajax execute="@this" />
+					</p:inputText>
+					<p:commandButton value="Consultar" process="@this"
+						actionListener="#{hojaRutaController.queryLocalidad}"
+						update="localidadSOM">
+					</p:commandButton>
+
+					<p:selectOneMenu id="localidadSOM"
+						value="#{hojaRutaController.hojaRutaView.localidad}"
+						converter="com.converter.LocalidadConverter" immediate="true">
+						<f:selectItems value="#{hojaRutaController.localidadList}"
+							var="localidad" itemLabel="#{localidad.descripcion}"
+							itemValue="#{localidad}" />
+						<f:ajax execute="@this" />
+					</p:selectOneMenu>
+
+					<p:commandButton value="Confirmar" onclick="localidadDialog.hide()" />
+				</h:panelGroup>
+			</p:dialog>
+		</h:form>
+	-->
+	</u:define>
+</u:composition>
 </body>
 </html>
