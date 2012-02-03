@@ -18,8 +18,8 @@ import logistica.query.MovilQuery;
 import org.apache.log4j.Logger;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.web.jsf.FacesContextUtils;
 
 import com.builder.MovilBuilder;
 import com.util.JSFUtil;
@@ -30,7 +30,6 @@ import com.view.MovilView;
 @SuppressWarnings("serial")
 public class MovilController extends PaginableController<Movil> {
 	private Logger log = Logger.getLogger(MovilController.class);
-	private ClassPathXmlApplicationContext ctx;
 	private BaseModelDAO<Movil> dao;
 	private Movil movil;
 	private MovilQuery movilQuery;
@@ -44,8 +43,9 @@ public class MovilController extends PaginableController<Movil> {
 	@SuppressWarnings("unchecked")
 	public MovilController() {
 		try {
-			ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
-			dao = (BaseModelDAO<Movil>) ctx.getBean("movilDAO");
+			dao = (BaseModelDAO<Movil>) FacesContextUtils
+					.getWebApplicationContext(FacesContext.getCurrentInstance())
+					.getBean("movilDAO");
 			movilQuery = new MovilQuery();
 			addEdit = false;
 		} catch (Throwable e) {
@@ -135,7 +135,7 @@ public class MovilController extends PaginableController<Movil> {
 			}
 		} catch (DataIntegrityViolationException e) {
 			JSFUtil.saveMessage(
-					"Error al guardar: La patente y el número de móvil deben ser únicos en el sistema.",
+					"Error al guardar: La patente y el nï¿½mero de mï¿½vil deben ser ï¿½nicos en el sistema.",
 					FacesMessage.SEVERITY_ERROR);
 		} catch (Throwable e) {
 			log.error("Error al guardar", e);

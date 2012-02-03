@@ -22,8 +22,8 @@ import org.apache.log4j.Logger;
 import org.primefaces.model.DualListModel;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.web.jsf.FacesContextUtils;
 
 import com.builder.UsuarioBuilder;
 import com.util.JSFUtil;
@@ -35,7 +35,6 @@ import com.view.UsuarioView;
 public class UsuarioController extends PaginableController<Usuario> {
 
 	private Logger log = Logger.getLogger(UsuarioController.class);
-	private ClassPathXmlApplicationContext ctx;
 	private BaseModelDAO<Usuario> dao;
 	private Usuario usuario;
 	private UsuarioQuery usuarioQuery;
@@ -53,8 +52,9 @@ public class UsuarioController extends PaginableController<Usuario> {
 	@SuppressWarnings("unchecked")
 	public UsuarioController() {
 		try {
-			ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
-			dao = (BaseModelDAO<Usuario>) ctx.getBean("usuarioDAO");
+			dao = (BaseModelDAO<Usuario>) FacesContextUtils
+					.getWebApplicationContext(FacesContext.getCurrentInstance())
+					.getBean("usuarioDAO");
 			usuarioQuery = new UsuarioQuery();
 			addEdit = false;
 
@@ -168,7 +168,7 @@ public class UsuarioController extends PaginableController<Usuario> {
 			}
 		} catch (DataIntegrityViolationException e) {
 			JSFUtil.saveMessage(
-					"Error al guardar: El usuario debe ser único en el sistema.",
+					"Error al guardar: El usuario debe ser ï¿½nico en el sistema.",
 					FacesMessage.SEVERITY_ERROR);
 		} catch (Throwable e) {
 			log.error("Error al guardar", e);

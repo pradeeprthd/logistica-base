@@ -18,7 +18,7 @@ import logistica.query.ProveedorQuery;
 import org.apache.log4j.Logger;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.web.jsf.FacesContextUtils;
 
 import com.builder.ProveedorBuilder;
 import com.util.JSFUtil;
@@ -30,7 +30,6 @@ import com.view.ProveedorView;
 public class ProveedorController extends PaginableController<Proveedor> {
 
 	private Logger log = Logger.getLogger(ProveedorController.class);
-	private ClassPathXmlApplicationContext ctx;
 	private BaseModelDAO<Proveedor> dao;
 	private Proveedor proveedor;
 	private ProveedorQuery proveedorQuery;
@@ -44,8 +43,9 @@ public class ProveedorController extends PaginableController<Proveedor> {
 	@SuppressWarnings("unchecked")
 	public ProveedorController() {
 		try {
-			ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
-			dao = (BaseModelDAO<Proveedor>) ctx.getBean("proveedorDAO");
+			dao = (BaseModelDAO<Proveedor>) FacesContextUtils
+					.getWebApplicationContext(FacesContext.getCurrentInstance())
+					.getBean("proveedorDAO");
 			proveedorQuery = new ProveedorQuery();
 			addEdit = false;
 		} catch (Throwable e) {

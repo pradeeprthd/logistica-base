@@ -19,8 +19,8 @@ import logistica.query.ChoferQuery;
 import org.apache.log4j.Logger;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.web.jsf.FacesContextUtils;
 
 import com.builder.ChoferBuilder;
 import com.controller.common.DireccionBean;
@@ -33,7 +33,6 @@ import com.view.ChoferView;
 public class ChoferController extends PaginableController<Chofer> {
 
 	private Logger log = Logger.getLogger(ChoferController.class);
-	private ClassPathXmlApplicationContext ctx;
 	private BaseModelDAO<Chofer> dao;
 	private Chofer chofer;
 	private ChoferQuery choferQuery;
@@ -50,8 +49,9 @@ public class ChoferController extends PaginableController<Chofer> {
 	@SuppressWarnings("unchecked")
 	public ChoferController() {
 		try {
-			ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
-			dao = (BaseModelDAO<Chofer>) ctx.getBean("choferDAO");
+			dao = (BaseModelDAO<Chofer>) (BaseModelDAO<Chofer>) FacesContextUtils
+					.getWebApplicationContext(FacesContext.getCurrentInstance())
+					.getBean("choferDAO");
 			choferQuery = new ChoferQuery();
 			addEdit = false;
 		} catch (Throwable e) {
@@ -147,7 +147,7 @@ public class ChoferController extends PaginableController<Chofer> {
 			}
 		} catch (DataIntegrityViolationException e) {
 			JSFUtil.saveMessage(
-					"Error al guardar: El nombre debe ser único en el sistema.",
+					"Error al guardar: El nombre debe ser ï¿½nico en el sistema.",
 					FacesMessage.SEVERITY_ERROR);
 		} catch (Throwable e) {
 			log.error("Error al guardar", e);

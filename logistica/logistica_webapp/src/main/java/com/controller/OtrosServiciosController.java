@@ -24,8 +24,8 @@ import org.apache.log4j.Logger;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.web.jsf.FacesContextUtils;
 
 import com.builder.OtrosServiciosBuilder;
 import com.util.JSFUtil;
@@ -37,7 +37,6 @@ import com.view.OtrosServiciosView;
 public class OtrosServiciosController extends
 		PaginableController<OtrosServicios> {
 	private Logger log = Logger.getLogger(OtrosServiciosController.class);
-	private ClassPathXmlApplicationContext ctx;
 	private BaseModelDAO<OtrosServicios> dao;
 	private BaseModelDAO<Movil> daoMovil;
 	private BaseModelDAO<Chofer> daoChofer;
@@ -53,11 +52,15 @@ public class OtrosServiciosController extends
 	@SuppressWarnings("unchecked")
 	public OtrosServiciosController() {
 		try {
-			ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
-			dao = (BaseModelDAO<OtrosServicios>) ctx
+			dao = (BaseModelDAO<OtrosServicios>) FacesContextUtils
+					.getWebApplicationContext(FacesContext.getCurrentInstance())
 					.getBean("otrosServiciosDAO");
-			daoMovil = (BaseModelDAO<Movil>) ctx.getBean("movilDAO");
-			daoChofer = (BaseModelDAO<Chofer>) ctx.getBean("choferDAO");
+			daoMovil = (BaseModelDAO<Movil>) FacesContextUtils
+					.getWebApplicationContext(FacesContext.getCurrentInstance())
+					.getBean("movilDAO");
+			daoChofer = (BaseModelDAO<Chofer>) FacesContextUtils
+					.getWebApplicationContext(FacesContext.getCurrentInstance())
+					.getBean("choferDAO");
 			otrosServiciosQuery = new OtrosServiciosQuery();
 			addEdit = false;
 		} catch (Throwable e) {

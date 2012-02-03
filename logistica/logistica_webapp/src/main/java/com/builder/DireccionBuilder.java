@@ -21,8 +21,15 @@ public class DireccionBuilder extends BaseBuilder<DireccionView, Direccion> {
 
 	@Override
 	public DireccionView toView(Direccion model) {
-		return new DireccionView(model.getLocalidad(), model.getCalle(),
-				model.getAltura(), model.getPiso(), model.getDepartamento(),
-				model.getCodigoPostal());
+		DireccionView direccionView = null;
+		if (model != null) {
+			direccionView = new DireccionView(model.getLocalidad(),
+					model.getCalle(), model.getAltura(), model.getPiso(),
+					model.getDepartamento(), model.getCodigoPostal());
+		} else {
+			direccionView = new DireccionView();
+		}
+
+		return direccionView;
 	}
 }
