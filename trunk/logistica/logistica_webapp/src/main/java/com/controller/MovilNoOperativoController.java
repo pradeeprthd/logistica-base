@@ -23,8 +23,8 @@ import org.apache.log4j.Logger;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.web.jsf.FacesContextUtils;
 
 import com.builder.MovilNoOperativoBuilder;
 import com.util.JSFUtil;
@@ -36,7 +36,6 @@ import com.view.MovilNoOperativoView;
 public class MovilNoOperativoController extends
 		PaginableController<MovilNoOperativo> {
 	private Logger log = Logger.getLogger(MovilNoOperativoController.class);
-	private ClassPathXmlApplicationContext ctx;
 	private BaseModelDAO<MovilNoOperativo> dao;
 	private BaseModelDAO<Movil> daoMovil;
 	private MovilNoOperativo movilNoOperativo;
@@ -52,10 +51,12 @@ public class MovilNoOperativoController extends
 	@SuppressWarnings("unchecked")
 	public MovilNoOperativoController() {
 		try {
-			ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
-			dao = (BaseModelDAO<MovilNoOperativo>) ctx
+			dao = (BaseModelDAO<MovilNoOperativo>) FacesContextUtils
+					.getWebApplicationContext(FacesContext.getCurrentInstance())
 					.getBean("movilNoOperativoDAO");
-			daoMovil = (BaseModelDAO<Movil>) ctx.getBean("movilDAO");
+			daoMovil = (BaseModelDAO<Movil>) FacesContextUtils
+					.getWebApplicationContext(FacesContext.getCurrentInstance())
+					.getBean("movilDAO");
 			movilNoOperativoQuery = new MovilNoOperativoQuery();
 			estadoMovilEnumList = Arrays.asList(EstadoMovilEnum.values());
 			addEdit = false;

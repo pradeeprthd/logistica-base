@@ -19,8 +19,8 @@ import logistica.query.SucursalCotoQuery;
 import org.apache.log4j.Logger;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.web.jsf.FacesContextUtils;
 
 import com.builder.SucursalCotoBuilder;
 import com.controller.common.DireccionBean;
@@ -32,7 +32,6 @@ import com.view.SucursalCotoView;
 @SuppressWarnings({ "serial", "restriction" })
 public class SucursalCotoController extends PaginableController<SucursalCoto> {
 	private Logger log = Logger.getLogger(SucursalCotoController.class);
-	private ClassPathXmlApplicationContext ctx;
 	private BaseModelDAO<SucursalCoto> dao;
 	private SucursalCoto sucursalCoto;
 	private SucursalCotoQuery sucursalCotoQuery;
@@ -49,8 +48,9 @@ public class SucursalCotoController extends PaginableController<SucursalCoto> {
 	@SuppressWarnings("unchecked")
 	public SucursalCotoController() {
 		try {
-			ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
-			dao = (BaseModelDAO<SucursalCoto>) ctx.getBean("sucursalCotoDAO");
+			dao = (BaseModelDAO<SucursalCoto>) FacesContextUtils
+					.getWebApplicationContext(FacesContext.getCurrentInstance())
+					.getBean("sucursalCotoDAO");
 			sucursalCotoQuery = new SucursalCotoQuery();
 			addEdit = false;
 		} catch (Throwable e) {
@@ -146,7 +146,7 @@ public class SucursalCotoController extends PaginableController<SucursalCoto> {
 			}
 		} catch (DataIntegrityViolationException e) {
 			JSFUtil.saveMessage(
-					"Error al guardar: El número de sucursal debe ser único en el sistema.",
+					"Error al guardar: El nï¿½mero de sucursal debe ser ï¿½nico en el sistema.",
 					FacesMessage.SEVERITY_ERROR);
 		} catch (Throwable e) {
 			log.error("Error al guardar", e);

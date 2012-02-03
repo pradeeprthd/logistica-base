@@ -47,8 +47,8 @@ import org.primefaces.event.DateSelectEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.web.jsf.FacesContextUtils;
 
 import com.builder.DetalleAsignacionBuilder;
 import com.builder.DiagramacionDiariaBuilder;
@@ -63,7 +63,6 @@ import com.view.DiagramacionDiariaView;
 public class DiagramacionDiariaController extends
 		PaginableController<DiagramacionDiaria> {
 	private Logger log = Logger.getLogger(DiagramacionDiariaController.class);
-	private ClassPathXmlApplicationContext ctx;
 	private BaseModelDAO<DiagramacionDiaria> dao;
 	private BaseModelDAO<MovilNoOperativo> daoMovilNoOperativo;
 	private BaseModelDAO<OtrosServicios> daoOtrosServicios;
@@ -95,15 +94,20 @@ public class DiagramacionDiariaController extends
 	@SuppressWarnings("unchecked")
 	public DiagramacionDiariaController() {
 		try {
-			ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
-			dao = (BaseModelDAO<DiagramacionDiaria>) ctx
+			dao = (BaseModelDAO<DiagramacionDiaria>) FacesContextUtils
+					.getWebApplicationContext(FacesContext.getCurrentInstance())
 					.getBean("diagramacionDiariaDAO");
-			daoMovilNoOperativo = (BaseModelDAO<MovilNoOperativo>) ctx
+			daoMovilNoOperativo = (BaseModelDAO<MovilNoOperativo>) FacesContextUtils
+					.getWebApplicationContext(FacesContext.getCurrentInstance())
 					.getBean("movilNoOperativoDAO");
-			daoOtrosServicios = (BaseModelDAO<OtrosServicios>) ctx
+			daoOtrosServicios = (BaseModelDAO<OtrosServicios>) FacesContextUtils
+					.getWebApplicationContext(FacesContext.getCurrentInstance())
 					.getBean("otrosServiciosDAO");
-			daoMovil = (BaseModelDAO<Movil>) ctx.getBean("movilDAO");
-			daoSucursalCoto = (BaseModelDAO<SucursalCoto>) ctx
+			daoMovil = (BaseModelDAO<Movil>) FacesContextUtils
+					.getWebApplicationContext(FacesContext.getCurrentInstance())
+					.getBean("movilDAO");
+			daoSucursalCoto = (BaseModelDAO<SucursalCoto>) FacesContextUtils
+					.getWebApplicationContext(FacesContext.getCurrentInstance())
 					.getBean("sucursalCotoDAO");
 			diagramacionDiaria = new DiagramacionDiaria();
 			diagramacionDiaria.setFecha(new Date());
@@ -284,7 +288,7 @@ public class DiagramacionDiariaController extends
 
 		} catch (DataIntegrityViolationException e) {
 			JSFUtil.saveMessage(
-					"Error al guardar: Solo puede existir una diagramación para una fecha.",
+					"Error al guardar: Solo puede existir una diagramaciï¿½n para una fecha.",
 					FacesMessage.SEVERITY_ERROR);
 		} catch (Throwable e) {
 			log.error("Error al guardar", e);
@@ -440,7 +444,7 @@ public class DiagramacionDiariaController extends
 		diagramacionDiariaView = diagramacionDiariaBuilder
 				.toView(diagramacionDiaria);
 
-		// le pongo la fecha del día
+		// le pongo la fecha del dï¿½a
 		diagramacionDiariaView.setFecha(DateUtil.getFirstTime(new Date()));
 
 		// limpio los idsy los moviles que estan no operatios para la fecha

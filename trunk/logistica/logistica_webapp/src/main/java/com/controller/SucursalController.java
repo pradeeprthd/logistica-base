@@ -19,8 +19,8 @@ import logistica.query.SucursalQuery;
 import org.apache.log4j.Logger;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.web.jsf.FacesContextUtils;
 
 import com.builder.SucursalBuilder;
 import com.controller.common.DireccionBean;
@@ -32,7 +32,6 @@ import com.view.SucursalView;
 @SuppressWarnings({ "serial", "restriction" })
 public class SucursalController extends PaginableController<Sucursal> {
 	private Logger log = Logger.getLogger(SucursalController.class);
-	private ClassPathXmlApplicationContext ctx;
 	private BaseModelDAO<Sucursal> dao;
 	private Sucursal sucursal;
 	private SucursalQuery sucursalQuery;
@@ -49,8 +48,9 @@ public class SucursalController extends PaginableController<Sucursal> {
 	@SuppressWarnings("unchecked")
 	public SucursalController() {
 		try {
-			ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
-			dao = (BaseModelDAO<Sucursal>) ctx.getBean("sucursalDAO");
+			dao = (BaseModelDAO<Sucursal>) FacesContextUtils
+					.getWebApplicationContext(FacesContext.getCurrentInstance())
+					.getBean("sucursalDAO");
 			sucursalQuery = new SucursalQuery();
 			addEdit = false;
 		} catch (Throwable e) {
@@ -146,7 +146,7 @@ public class SucursalController extends PaginableController<Sucursal> {
 			}
 		} catch (DataIntegrityViolationException e) {
 			JSFUtil.saveMessage(
-					"Error al guardar: El nombre y el número de sucursal deben ser únicos en el sistema.",
+					"Error al guardar: El nombre y el nï¿½mero de sucursal deben ser ï¿½nicos en el sistema.",
 					FacesMessage.SEVERITY_ERROR);
 		} catch (Throwable e) {
 			log.error("Error al guardar", e);

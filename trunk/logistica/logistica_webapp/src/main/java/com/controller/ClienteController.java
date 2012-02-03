@@ -19,8 +19,8 @@ import logistica.query.ClienteQuery;
 import org.apache.log4j.Logger;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.web.jsf.FacesContextUtils;
 
 import com.builder.ClienteBuilder;
 import com.controller.common.DireccionBean;
@@ -32,7 +32,6 @@ import com.view.ClienteView;
 @SuppressWarnings({ "serial", "restriction" })
 public class ClienteController extends PaginableController<Cliente> {
 	private Logger log = Logger.getLogger(ClienteController.class);
-	private ClassPathXmlApplicationContext ctx;
 	private BaseModelDAO<Cliente> dao;
 	private Cliente cliente;
 	private ClienteQuery clienteQuery;
@@ -49,8 +48,9 @@ public class ClienteController extends PaginableController<Cliente> {
 	@SuppressWarnings("unchecked")
 	public ClienteController() {
 		try {
-			ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
-			dao = (BaseModelDAO<Cliente>) ctx.getBean("clienteDAO");
+			dao = (BaseModelDAO<Cliente>) FacesContextUtils
+					.getWebApplicationContext(FacesContext.getCurrentInstance())
+					.getBean("clienteDAO");
 			clienteQuery = new ClienteQuery();
 			addEdit = false;
 		} catch (Throwable e) {
@@ -147,7 +147,7 @@ public class ClienteController extends PaginableController<Cliente> {
 			}
 		} catch (DataIntegrityViolationException e) {
 			JSFUtil.saveMessage(
-					"Error al guardar: El nombre debe ser único en el sistema.",
+					"Error al guardar: El nombre debe ser ï¿½nico en el sistema.",
 					FacesMessage.SEVERITY_ERROR);
 		} catch (Throwable e) {
 			log.error("Error al guardar", e);

@@ -20,7 +20,7 @@ import logistica.query.LocalidadQuery;
 
 import org.apache.log4j.Logger;
 import org.primefaces.event.SelectEvent;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.web.jsf.FacesContextUtils;
 
 import com.builder.DireccionBuilder;
 import com.view.DireccionView;
@@ -37,7 +37,6 @@ public class DireccionBean implements Serializable {
 	private DireccionBuilder direccionBuilder;
 	private Long provinciaID;
 
-	private ClassPathXmlApplicationContext ctx;
 	private BaseModelDAO<Provincia> daoProvincia;
 	private BaseModelDAO<Localidad> daoLocalidad;
 	private List<SelectItem> provinciaSIL;
@@ -49,11 +48,13 @@ public class DireccionBean implements Serializable {
 		this.direccionView = direccionView;
 		this.provinciaID = provinviaID;
 
-		ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
-		daoProvincia = (BaseModelDAO<Provincia>) ctx.getBean("provinciaDAO");
+		daoProvincia = (BaseModelDAO<Provincia>) FacesContextUtils
+				.getWebApplicationContext(FacesContext.getCurrentInstance())
+				.getBean("provinciaDAO");
 
-		ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
-		daoLocalidad = (BaseModelDAO<Localidad>) ctx.getBean("localidadDAO");
+		daoLocalidad = (BaseModelDAO<Localidad>) FacesContextUtils
+				.getWebApplicationContext(FacesContext.getCurrentInstance())
+				.getBean("localidadDAO");
 
 		provinciaSIL = new ArrayList<SelectItem>();
 		for (Provincia provincia : daoProvincia.getList()) {
