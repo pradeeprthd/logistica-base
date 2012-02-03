@@ -8,22 +8,16 @@ import javax.faces.convert.FacesConverter;
 import logistica.common.dao.BaseModelDAO;
 import logistica.model.Sucursal;
 
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.web.jsf.FacesContextUtils;
 
 @FacesConverter("com.converter.SucursalConverter")
 public class SucursalConverter implements Converter {
-	private BaseModelDAO<Sucursal> dao;
 
 	@SuppressWarnings("unchecked")
-	public SucursalConverter() {
-		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext(
-				"applicationContext.xml");
-		dao = (BaseModelDAO<Sucursal>) ctx.getBean("sucursalDAO");
-	}
-
 	public Object getAsObject(FacesContext arg0, UIComponent arg1, String arg2) {
 		Sucursal sucursal = null;
-
+		BaseModelDAO<Sucursal> dao = (BaseModelDAO<Sucursal>) FacesContextUtils
+				.getWebApplicationContext(arg0).getBean("sucursalDAO");
 		try {
 			String[] temp = arg2.split("-");
 			Long clave = Long.parseLong(temp[0]);

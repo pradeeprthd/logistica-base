@@ -8,21 +8,16 @@ import javax.faces.convert.FacesConverter;
 import logistica.common.dao.BaseModelDAO;
 import logistica.model.Chofer;
 
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.web.jsf.FacesContextUtils;
 
 @FacesConverter("com.converter.ChoferConverter")
 public class ChoferConverter implements Converter {
-	private BaseModelDAO<Chofer> dao;
 
 	@SuppressWarnings("unchecked")
-	public ChoferConverter() {
-		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext(
-				"applicationContext.xml");
-		dao = (BaseModelDAO<Chofer>) ctx.getBean("choferDAO");
-	}
-
 	public Object getAsObject(FacesContext arg0, UIComponent arg1, String arg2) {
 		Chofer chofer = null;
+		BaseModelDAO<Chofer> dao = (BaseModelDAO<Chofer>) FacesContextUtils
+				.getWebApplicationContext(arg0).getBean("choferDAO");
 		try {
 			String[] temp = arg2.split("-");
 			Long clave = Long.parseLong(temp[0]);

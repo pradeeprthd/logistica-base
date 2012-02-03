@@ -8,21 +8,16 @@ import javax.faces.convert.FacesConverter;
 import logistica.common.dao.BaseModelDAO;
 import logistica.model.Cliente;
 
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.web.jsf.FacesContextUtils;
 
 @FacesConverter("com.converter.ClienteConverter")
 public class ClienteConverter implements Converter {
-	private BaseModelDAO<Cliente> dao;
 
 	@SuppressWarnings("unchecked")
-	public ClienteConverter() {
-		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext(
-				"applicationContext.xml");
-		dao = (BaseModelDAO<Cliente>) ctx.getBean("clienteDAO");
-	}
-
 	public Object getAsObject(FacesContext arg0, UIComponent arg1, String arg2) {
 		Cliente cliente = null;
+		BaseModelDAO<Cliente> dao = (BaseModelDAO<Cliente>) FacesContextUtils
+				.getWebApplicationContext(arg0).getBean("clienteDAO");
 		try {
 			String[] temp = arg2.split("-");
 			Long clave = Long.parseLong(temp[0]);

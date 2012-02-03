@@ -250,54 +250,20 @@
 							<h:message id="dirIT" for="direccionIT" />
 							<h:outputText value="" />
 
-							<!--<h:outputText value="Localidad" />
-								<p:autoComplete id="localidadAC"
-									disabled="#{hojaRutaController.localidadSelected}"
-									value="#{hojaRutaController.hojaRutaView.localidad}"
-									completeMethod="#{hojaRutaController.completeLocalidad}"
-									var="localidad" itemLabel="#{localidad.descripcion}"
-									itemValue="#{localidad}"
-									converter="com.converter.LocalidadConverter" maxResults="10"
-									forceSelection="true">
-									 <f:ajax event="change" render="nombre"/> 
-									<p:ajax event="itemSelect"
-										listener="#{hojaRutaController.handleSelect}"
-										update="localidadAC,nombre,deseleccinarLink" />
-
-								</p:autoComplete>-->
-
-							<h:panelGrid columns="4" cellpadding="4" id="dialogPGID">
-								<h:outputText value="Localidad" />
-								<p:inputText id="localidadQSIT"
-									value="#{hojaRutaController.localidadQueryString}"
-									immediate="true">
-									<f:ajax execute="@this" />
-								</p:inputText>
-								<p:commandButton value="Consultar" process="@this"
-									actionListener="#{hojaRutaController.queryLocalidad}"
-									update="localidadSOM">
-								</p:commandButton>
-
-								<p:selectOneMenu id="localidadSOM"
-									value="#{hojaRutaController.hojaRutaView.localidad}"
-									converter="com.converter.LocalidadConverter" immediate="true">
-									<f:selectItems value="#{hojaRutaController.localidadList}"
-										var="localidad" itemLabel="#{localidad.descripcion}"
-										itemValue="#{localidad}" />
-									<f:ajax execute="@this" />
-								</p:selectOneMenu>
-
-								<p:commandButton value="Confirmar"
-									onclick="localidadDialog.hide()" />
-							</h:panelGrid>
-							
 							<h:outputText value="Localidad" />
-							<p:commandLink
-								oncomplete="localidadDialog.show(); localidadDialog.initPosition()"
-								update="localidadDialogID">
-								<h:graphicImage url="/resource/images/find.gif"
-									title="Elegir localidad" style="border:0px" />
-							</p:commandLink>
+							<p:autoComplete id="localidadAC"
+								disabled="#{hojaRutaController.localidadSelected}"
+								value="#{hojaRutaController.hojaRutaView.localidad}"
+								completeMethod="#{hojaRutaController.completeLocalidad}"
+								var="localidad" itemLabel="#{localidad.descripcion}"
+								itemValue="#{localidad}"
+								converter="com.converter.LocalidadConverter" maxResults="10"
+								forceSelection="true">
+								<f:ajax event="change" render="nombre" />
+								<p:ajax event="itemSelect"
+									listener="#{hojaRutaController.handleSelect}"
+									update="localidadAC,nombre,deseleccinarLink" />
+							</p:autoComplete>
 							<h:panelGroup>
 								<h:outputText id="nombre"
 									value="#{hojaRutaController.hojaRutaView.localidad.descripcion}" />
@@ -310,8 +276,6 @@
 								</h:commandLink>
 							</h:panelGroup>
 							<h:message id="mlocac" for="localidadAC" />
-
-
 
 							<h:outputText value="Observaciones" />
 							<p:inputTextarea id="observacionesIT"
@@ -507,38 +471,6 @@
 				</h:panelGrid>
 			</h:panelGrid>
 		</h:form>
-		<!--
-
-		<h:form id="dialogForm">
-			<p:dialog id="localidadDialogID" header="Selección Localidad"
-				widgetVar="localidadDialog" resizable="false" width="700"
-				modal="true" onCloseUpdate="panel">
-				<h:panelGroup columns="4" cellpadding="4" id="dialogPGID">
-					<h:outputText value="Localidad" />
-					<p:inputText id="localidadQSIT"
-						value="#{hojaRutaController.localidadQueryString}"
-						immediate="true">
-						<f:ajax execute="@this" />
-					</p:inputText>
-					<p:commandButton value="Consultar" process="@this"
-						actionListener="#{hojaRutaController.queryLocalidad}"
-						update="localidadSOM">
-					</p:commandButton>
-
-					<p:selectOneMenu id="localidadSOM"
-						value="#{hojaRutaController.hojaRutaView.localidad}"
-						converter="com.converter.LocalidadConverter" immediate="true">
-						<f:selectItems value="#{hojaRutaController.localidadList}"
-							var="localidad" itemLabel="#{localidad.descripcion}"
-							itemValue="#{localidad}" />
-						<f:ajax execute="@this" />
-					</p:selectOneMenu>
-
-					<p:commandButton value="Confirmar" onclick="localidadDialog.hide()" />
-				</h:panelGroup>
-			</p:dialog>
-		</h:form>
-	-->
 	</u:define>
 </u:composition>
 </body>

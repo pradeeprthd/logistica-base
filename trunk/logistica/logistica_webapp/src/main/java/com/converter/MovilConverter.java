@@ -8,21 +8,16 @@ import javax.faces.convert.FacesConverter;
 import logistica.common.dao.BaseModelDAO;
 import logistica.model.Movil;
 
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.web.jsf.FacesContextUtils;
 
 @FacesConverter("com.converter.MovilConverter")
 public class MovilConverter implements Converter {
-	private BaseModelDAO<Movil> dao;
 
 	@SuppressWarnings("unchecked")
-	public MovilConverter() {
-		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext(
-				"applicationContext.xml");
-		dao = (BaseModelDAO<Movil>) ctx.getBean("movilDAO");
-	}
-
 	public Object getAsObject(FacesContext arg0, UIComponent arg1, String arg2) {
 		Movil movil = null;
+		BaseModelDAO<Movil> dao = (BaseModelDAO<Movil>) FacesContextUtils
+				.getWebApplicationContext(arg0).getBean("movilDAO");
 		try {
 			String[] temp = arg2.split("-");
 			Long clave = Long.parseLong(temp[0]);
