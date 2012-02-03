@@ -49,7 +49,7 @@ import org.primefaces.event.DateSelectEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.web.jsf.FacesContextUtils;
 
 import com.builder.DetalleHojaRutaBuilder;
 import com.builder.HojaRutaBuilder;
@@ -62,7 +62,6 @@ import com.view.HojaRutaView;
 @SuppressWarnings("serial")
 public class HojaRutaController extends PaginableController<HojaRuta> {
 	private Logger log = Logger.getLogger(HojaRutaController.class);
-	private ClassPathXmlApplicationContext ctx;
 	private BaseModelDAO<HojaRuta> dao;
 	private BaseModelDAO<Sucursal> daoSucursal;
 	private BaseModelDAO<Cliente> daoCliente;
@@ -91,13 +90,23 @@ public class HojaRutaController extends PaginableController<HojaRuta> {
 	@SuppressWarnings("unchecked")
 	public HojaRutaController() {
 		try {
-			ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
-			dao = (BaseModelDAO<HojaRuta>) ctx.getBean("hojaRutaDAO");
-			daoSucursal = (BaseModelDAO<Sucursal>) ctx.getBean("sucursalDAO");
-			daoCliente = (BaseModelDAO<Cliente>) ctx.getBean("clienteDAO");
-			daoMovil = (BaseModelDAO<Movil>) ctx.getBean("movilDAO");
-			daoChofer = (BaseModelDAO<Chofer>) ctx.getBean("choferDAO");
-			daoLocalidad = (BaseModelDAO<Localidad>) ctx
+			dao = (BaseModelDAO<HojaRuta>) FacesContextUtils
+					.getWebApplicationContext(FacesContext.getCurrentInstance())
+					.getBean("hojaRutaDAO");
+			daoSucursal = (BaseModelDAO<Sucursal>) FacesContextUtils
+					.getWebApplicationContext(FacesContext.getCurrentInstance())
+					.getBean("sucursalDAO");
+			daoCliente = (BaseModelDAO<Cliente>) FacesContextUtils
+					.getWebApplicationContext(FacesContext.getCurrentInstance())
+					.getBean("clienteDAO");
+			daoMovil = (BaseModelDAO<Movil>) FacesContextUtils
+					.getWebApplicationContext(FacesContext.getCurrentInstance())
+					.getBean("movilDAO");
+			daoChofer = (BaseModelDAO<Chofer>) FacesContextUtils
+					.getWebApplicationContext(FacesContext.getCurrentInstance())
+					.getBean("choferDAO");
+			daoLocalidad = (BaseModelDAO<Localidad>) FacesContextUtils
+					.getWebApplicationContext(FacesContext.getCurrentInstance())
 					.getBean("localidadDAO");
 			hojaRutaQuery = new HojaRutaQuery();
 			detalleHojaRutaDM = new ListDataModel<DetalleHojaRutaView>();
@@ -186,7 +195,11 @@ public class HojaRutaController extends PaginableController<HojaRuta> {
 	}
 
 	public void queryLocalidad(ActionEvent event) {
+		Date fechaInicio = new Date();
 		localidadList = completeLocalidad(localidadQueryString);
+		Date fechaFin = new Date();
+		Long millis = fechaFin.getTime() - fechaInicio.getTime();
+		System.out.println("Millis: " + millis);
 	}
 
 	public void edit(ActionEvent event) {
@@ -370,6 +383,7 @@ public class HojaRutaController extends PaginableController<HojaRuta> {
 
 	public List<Cliente> completeCliente(String query) {
 		List<Cliente> clienteList = null;
+		Date fechaInicio = new Date();
 		try {
 			ClienteQuery clienteQuery = new ClienteQuery(null, query);
 			clienteList = daoCliente.getList(clienteQuery);
@@ -381,6 +395,10 @@ public class HojaRutaController extends PaginableController<HojaRuta> {
 					new FacesMessage(FacesMessage.SEVERITY_ERROR,
 							"Error al realizar la operacion", ""));
 		}
+
+		Date fechaFin = new Date();
+		Long millis = fechaFin.getTime() - fechaInicio.getTime();
+		System.out.println("Millis: " + millis);
 		return clienteList;
 	}
 
