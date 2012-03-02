@@ -87,4 +87,21 @@ public class DireccionView implements Serializable {
 		this.codigoPostal = codigoPostal;
 	}
 
+	public String getDireccionCompleta() {
+		StringBuilder sb = new StringBuilder();
+
+		if (calle != null && !"".equals(calle)) {
+			sb.append("Calle: ").append(calle);
+		}
+		if (altura != null && !"".equals(altura)) {
+			sb.append(" Altura: ").append(altura);
+		}
+		if (piso != null && !"".equals(piso)) {
+			sb.append(" Piso: ").append(piso);
+		}
+		if (departamento != null && !"".equals(departamento)) {
+			sb.append(" Departamento: ").append(departamento);
+		}
+		return sb.toString();
+	}
 }
