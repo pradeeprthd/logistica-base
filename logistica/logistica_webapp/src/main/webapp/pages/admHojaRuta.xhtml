@@ -165,7 +165,7 @@
 								forceSelection="true">
 								<p:ajax event="itemSelect"
 									listener="#{hojaRutaController.handleClienteSelect}"
-									update="clienteAC,nombreCliente,deseleccinarClienteLink" />
+									update="clienteAC,nombreCliente,deseleccinarClienteLink,direccionIT,localidadAC,nombre,deseleccinarLink" />
 							</p:autoComplete>
 							<h:panelGroup>
 								<h:outputText id="nombreCliente"
@@ -173,7 +173,7 @@
 								<h:commandLink id="deseleccinarClienteLink"
 									disabled="#{!hojaRutaController.clienteSelected}"
 									actionListener="#{hojaRutaController.deselecionarCliente}"
-									update="clienteAC,nombreCliente,deseleccinarClienteLink"
+									update="clienteAC,nombreCliente,deseleccinarClienteLink,direccionIT,localidadAC,nombre,deseleccinarLink"
 									immediate="true">
 									<h:graphicImage url="/resource/images/delete.gif"
 										title="Deseleccionar" style="border:0px" />
