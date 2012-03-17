@@ -251,7 +251,7 @@ public class HojaRutaController extends PaginableController<HojaRuta> {
 				hojaRuta.setNumero(hojaRuta.getSucursal().getNumeroHojaRuta() + 1);
 				dao.save(hojaRuta);
 
-				// incremento el n�mero de hoja de ruta de la sucursal
+				// incremento el numero de hoja de ruta de la sucursal
 				Sucursal sucursal = hojaRuta.getSucursal();
 				sucursal.setNumeroHojaRuta(hojaRuta.getSucursal()
 						.getNumeroHojaRuta() + 1);
