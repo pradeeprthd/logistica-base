@@ -404,10 +404,10 @@ public class HojaRutaController extends PaginableController<HojaRuta> {
 
 	public void handleClienteSelect(SelectEvent event) {
 		System.out.println("se eligio un cliente");
-		hojaRutaView.setDireccion(hojaRutaView.getCliente().getDireccion()
-				.getDireccionCompleta());
-		hojaRutaView.setLocalidad(hojaRutaView.getCliente().getDireccion()
-				.getLocalidad());
+		Cliente cliente = (Cliente) event.getObject();
+		hojaRutaView
+				.setDireccion(cliente.getDireccion().getDireccionCompleta());
+		hojaRutaView.setLocalidad(cliente.getDireccion().getLocalidad());
 	}
 
 	public boolean isChoferSelected() {
