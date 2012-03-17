@@ -135,7 +135,7 @@ public class MovilController extends PaginableController<Movil> {
 			}
 		} catch (DataIntegrityViolationException e) {
 			JSFUtil.saveMessage(
-					"Error al guardar: La patente y el n�mero de m�vil deben ser �nicos en el sistema.",
+					"Error al guardar: La patente y el numero de movil deben ser unicos en el sistema.",
 					FacesMessage.SEVERITY_ERROR);
 		} catch (Throwable e) {
 			log.error("Error al guardar", e);

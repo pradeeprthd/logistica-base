@@ -146,7 +146,7 @@ public class SucursalCotoController extends PaginableController<SucursalCoto> {
 			}
 		} catch (DataIntegrityViolationException e) {
 			JSFUtil.saveMessage(
-					"Error al guardar: El n�mero de sucursal debe ser �nico en el sistema.",
+					"Error al guardar: El numero de sucursal debe ser unico en el sistema.",
 					FacesMessage.SEVERITY_ERROR);
 		} catch (Throwable e) {
 			log.error("Error al guardar", e);

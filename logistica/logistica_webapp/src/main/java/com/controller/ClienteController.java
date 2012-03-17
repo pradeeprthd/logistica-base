@@ -147,7 +147,7 @@ public class ClienteController extends PaginableController<Cliente> {
 			}
 		} catch (DataIntegrityViolationException e) {
 			JSFUtil.saveMessage(
-					"Error al guardar: El nombre debe ser �nico en el sistema.",
+					"Error al guardar: El nombre debe ser unico en el sistema.",
 					FacesMessage.SEVERITY_ERROR);
 		} catch (Throwable e) {
 			log.error("Error al guardar", e);

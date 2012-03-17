@@ -288,7 +288,7 @@ public class DiagramacionDiariaController extends
 
 		} catch (DataIntegrityViolationException e) {
 			JSFUtil.saveMessage(
-					"Error al guardar: Solo puede existir una diagramaci�n para una fecha.",
+					"Error al guardar: Solo puede existir una diagramacion para una fecha.",
 					FacesMessage.SEVERITY_ERROR);
 		} catch (Throwable e) {
 			log.error("Error al guardar", e);
@@ -444,7 +444,7 @@ public class DiagramacionDiariaController extends
 		diagramacionDiariaView = diagramacionDiariaBuilder
 				.toView(diagramacionDiaria);
 
-		// le pongo la fecha del d�a
+		// le pongo la fecha del dia
 		diagramacionDiariaView.setFecha(DateUtil.getFirstTime(new Date()));
 
 		// limpio los idsy los moviles que estan no operatios para la fecha
