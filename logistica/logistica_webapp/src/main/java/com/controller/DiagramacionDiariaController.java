@@ -283,8 +283,6 @@ public class DiagramacionDiariaController extends
 			// clear();
 			JSFUtil.saveMessage("Elemento guardado con exito",
 					FacesMessage.SEVERITY_INFO);
-			addEdit = false;
-			loadList();
 
 		} catch (DataIntegrityViolationException e) {
 			JSFUtil.saveMessage(
@@ -301,7 +299,8 @@ public class DiagramacionDiariaController extends
 
 	public void cancel(ActionEvent event) {
 		addEdit = false;
-		lazyDM = null;
+		loadList();
+		// lazyDM = null;
 	}
 
 	public void clear() {
@@ -449,6 +448,9 @@ public class DiagramacionDiariaController extends
 
 		// limpio los idsy los moviles que estan no operatios para la fecha
 		diagramacionDiariaView = limpiarIDSMovilesNoOperativosYSeleccionados(diagramacionDiariaView);
+		
+		// limpio el código de coto
+		//diagramacionDiariaView = limpiarCodigoCoto(diagramacionDiariaView);
 
 		// ordeno por sucursal
 		Collections.sort(diagramacionDiariaView.getDetalleSucursalViewList());
@@ -471,6 +473,20 @@ public class DiagramacionDiariaController extends
 					} else {
 						movilSeleccionadoList.add(detalleAsignacion.getMovil());
 					}
+				}
+			}
+		}
+		return diagramacionDiariaView;
+	}
+	
+	private DiagramacionDiariaView limpiarCodigoCoto(
+			DiagramacionDiariaView diagramacionDiariaView) {
+		if (diagramacionDiariaView != null) {
+			for (DetalleSucursalView detalleSucursal : diagramacionDiariaView
+					.getDetalleSucursalViewList()) {
+				for (DetalleAsignacionView detalleAsignacion : detalleSucursal
+						.getDetalleAsignacionViewList()) {
+					detalleAsignacion.setCodigoCoto(null);
 				}
 			}
 		}
