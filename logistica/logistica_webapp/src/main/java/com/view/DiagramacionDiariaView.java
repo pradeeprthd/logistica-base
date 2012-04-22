@@ -65,4 +65,10 @@ public class DiagramacionDiariaView implements Serializable {
 			List<DetalleSucursalView> detalleSucursalViewList) {
 		this.detalleSucursalViewList = detalleSucursalViewList;
 	}
+
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		return new DiagramacionDiariaView(id, fecha, novedades,
+				detalleSucursalViewList);
+	}
 }
