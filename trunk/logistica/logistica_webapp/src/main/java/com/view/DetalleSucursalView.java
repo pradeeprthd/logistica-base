@@ -97,4 +97,9 @@ public class DetalleSucursalView implements Serializable,
 
 		return ret;
 	}
+
+	public Object clone() throws CloneNotSupportedException {
+		return new DetalleSucursalView(id, sucursalCoto, cantidadMoviles,
+				detalleAsignacionViewList);
+	}
 }

@@ -232,6 +232,7 @@ public class DiagramacionDiariaController extends
 
 	public void edit(ActionEvent event) {
 		try {
+			diagramacionDiariaView = new DiagramacionDiariaView();
 			diagramacionDiaria = (DiagramacionDiaria) lazyDM.getRowData();
 			diagramacionDiaria = dao.findFULL(diagramacionDiaria.getID());
 			diagramacionDiariaView = diagramacionDiariaBuilder
@@ -241,6 +242,10 @@ public class DiagramacionDiariaController extends
 
 			novedadDM = new ListDataModel<String>(
 					diagramacionDiaria.getNovedades());
+
+			// ordeno por sucursal
+			Collections.sort(diagramacionDiariaView
+					.getDetalleSucursalViewList());
 			addEdit = true;
 		} catch (Throwable e) {
 			log.error("Error al editar", e);
@@ -300,6 +305,7 @@ public class DiagramacionDiariaController extends
 	public void cancel(ActionEvent event) {
 		addEdit = false;
 		loadList();
+		JSFUtil.reloadPage();
 		// lazyDM = null;
 	}
 
@@ -448,9 +454,9 @@ public class DiagramacionDiariaController extends
 
 		// limpio los idsy los moviles que estan no operatios para la fecha
 		diagramacionDiariaView = limpiarIDSMovilesNoOperativosYSeleccionados(diagramacionDiariaView);
-		
+
 		// limpio el código de coto
-		//diagramacionDiariaView = limpiarCodigoCoto(diagramacionDiariaView);
+		limpiarCodigoCoto(diagramacionDiariaView);
 
 		// ordeno por sucursal
 		Collections.sort(diagramacionDiariaView.getDetalleSucursalViewList());
@@ -458,12 +464,16 @@ public class DiagramacionDiariaController extends
 
 	private DiagramacionDiariaView limpiarIDSMovilesNoOperativosYSeleccionados(
 			DiagramacionDiariaView diagramacionDiariaView) {
+		DiagramacionDiariaView diagramacionDiariaToReturn = new DiagramacionDiariaView();
+		List<DetalleAsignacionView> detalleAsignacionViewListAux = new ArrayList<DetalleAsignacionView>();
+		List<DetalleSucursalView> detalleSucursalViewListAux = new ArrayList<DetalleSucursalView>();
 		movilSeleccionadoList = new ArrayList<Movil>();
 		if (diagramacionDiariaView != null) {
 			diagramacionDiariaView.setId(null);
 			for (DetalleSucursalView detalleSucursal : diagramacionDiariaView
 					.getDetalleSucursalViewList()) {
 				detalleSucursal.setId(null);
+				detalleAsignacionViewListAux = new ArrayList<DetalleAsignacionView>();
 				for (DetalleAsignacionView detalleAsignacion : detalleSucursal
 						.getDetalleAsignacionViewList()) {
 					detalleAsignacion.setId(null);
@@ -473,24 +483,69 @@ public class DiagramacionDiariaController extends
 					} else {
 						movilSeleccionadoList.add(detalleAsignacion.getMovil());
 					}
+					try {
+						detalleAsignacionViewListAux
+								.add((DetalleAsignacionView) detalleAsignacion
+										.clone());
+					} catch (CloneNotSupportedException e) {
+					}
+				}
+				detalleSucursal
+						.setDetalleAsignacionViewList(detalleAsignacionViewListAux);
+				try {
+					detalleSucursalViewListAux
+							.add((DetalleSucursalView) detalleSucursal.clone());
+				} catch (CloneNotSupportedException e) {
+
 				}
 			}
+			diagramacionDiariaView
+					.setDetalleSucursalViewList(detalleSucursalViewListAux);
 		}
-		return diagramacionDiariaView;
+		try {
+			diagramacionDiariaToReturn = (DiagramacionDiariaView) diagramacionDiariaView
+					.clone();
+		} catch (CloneNotSupportedException e) {
+		}
+
+		return diagramacionDiariaToReturn;
 	}
-	
-	private DiagramacionDiariaView limpiarCodigoCoto(
-			DiagramacionDiariaView diagramacionDiariaView) {
-		if (diagramacionDiariaView != null) {
-			for (DetalleSucursalView detalleSucursal : diagramacionDiariaView
+
+	private void limpiarCodigoCoto(
+			DiagramacionDiariaView diagramacionDiariaViewParam) {
+		List<DetalleAsignacionView> detalleAsignacionViewListAux = new ArrayList<DetalleAsignacionView>();
+		List<DetalleSucursalView> detalleSucursalViewListAux = new ArrayList<DetalleSucursalView>();
+		if (diagramacionDiariaViewParam != null) {
+			for (DetalleSucursalView detalleSucursal : diagramacionDiariaViewParam
 					.getDetalleSucursalViewList()) {
+				detalleAsignacionViewListAux = new ArrayList<DetalleAsignacionView>();
 				for (DetalleAsignacionView detalleAsignacion : detalleSucursal
 						.getDetalleAsignacionViewList()) {
 					detalleAsignacion.setCodigoCoto(null);
+					try {
+						detalleAsignacionViewListAux
+								.add((DetalleAsignacionView) detalleAsignacion
+										.clone());
+					} catch (CloneNotSupportedException e) {
+					}
+				}
+				detalleSucursal
+						.setDetalleAsignacionViewList(detalleAsignacionViewListAux);
+				try {
+					detalleSucursalViewListAux
+							.add((DetalleSucursalView) detalleSucursal.clone());
+				} catch (CloneNotSupportedException e) {
+
 				}
 			}
+			diagramacionDiariaViewParam
+					.setDetalleSucursalViewList(detalleSucursalViewListAux);
+			try {
+				diagramacionDiariaView = (DiagramacionDiariaView) diagramacionDiariaViewParam
+						.clone();
+			} catch (CloneNotSupportedException e) {
+			}
 		}
-		return diagramacionDiariaView;
 	}
 
 	private boolean isMovilNoOperativo(Movil movil) {
