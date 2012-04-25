@@ -7,6 +7,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,6 +19,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
 import logistica.common.BaseModel;
+import logistica.type.EstadoHojaRutaEnum;
 
 @SuppressWarnings("serial")
 @Entity
@@ -66,6 +69,9 @@ public class HojaRuta extends BaseModel {
 	@Column(length = 200)
 	private String observaciones;
 
+	@Enumerated(EnumType.STRING)
+	private EstadoHojaRutaEnum estadoHojaRutaEnum;
+
 	@OneToMany(orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "hojaRutaID")
 	private List<DetalleHojaRuta> detalleHojaRutaList;
@@ -74,6 +80,7 @@ public class HojaRuta extends BaseModel {
 			Long prefijo, Long numero, Cliente cliente, Chofer chofer,
 			Movil movil, String numeroRemito, String direccion,
 			Localidad localidad, String observaciones,
+			EstadoHojaRutaEnum estadoHojaRutaEnum,
 			List<DetalleHojaRuta> detalleHojaRutaList) {
 		super();
 		this.id = id;
@@ -88,12 +95,13 @@ public class HojaRuta extends BaseModel {
 		this.direccion = direccion;
 		this.localidad = localidad;
 		this.observaciones = observaciones;
+		this.estadoHojaRutaEnum = estadoHojaRutaEnum;
 		this.detalleHojaRutaList = detalleHojaRutaList;
 	}
 
 	public HojaRuta() {
 		this(null, null, null, null, null, null, null, null, null, null, null,
-				null, null);
+				null, null, null);
 	}
 
 	@Override
@@ -172,6 +180,14 @@ public class HojaRuta extends BaseModel {
 
 	public Localidad getLocalidad() {
 		return localidad;
+	}
+
+	public EstadoHojaRutaEnum getEstadoHojaRutaEnum() {
+		return estadoHojaRutaEnum;
+	}
+
+	public void setEstadoHojaRutaEnum(EstadoHojaRutaEnum estadoHojaRutaEnum) {
+		this.estadoHojaRutaEnum = estadoHojaRutaEnum;
 	}
 
 	public List<DetalleHojaRuta> getDetalleHojaRutaList() {

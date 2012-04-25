@@ -127,6 +127,8 @@ public abstract class BaseHibernateDAO<T extends BaseModel, Q extends BaseQuery>
 					criteria.add(Restrictions.between(entry.getKey(),
 							DateUtil.getFirstTime(fecha),
 							DateUtil.getLastTime(fecha)));
+				} else if (object instanceof Enum) {
+					criteria.add(Restrictions.eq(entry.getKey(), object));
 				}
 			}
 		}
@@ -171,6 +173,8 @@ public abstract class BaseHibernateDAO<T extends BaseModel, Q extends BaseQuery>
 					criteria.add(Restrictions.between(entry.getKey(),
 							DateUtil.getFirstTime(fecha),
 							DateUtil.getLastTime(fecha)));
+				} else if (object instanceof Enum) {
+					criteria.add(Restrictions.eq(entry.getKey(), object));
 				}
 			}
 		}

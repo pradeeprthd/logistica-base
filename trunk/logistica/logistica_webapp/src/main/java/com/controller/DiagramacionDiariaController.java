@@ -762,6 +762,7 @@ public class DiagramacionDiariaController extends
 				.getRowData();
 		diagramcionDiaria = dao.findFULL(diagramcionDiaria.getID());
 		toPDF(diagramcionDiaria);
+		JSFUtil.reloadPage();
 	}
 
 	private List<DiagramacionDiariaReport> getReporte(
