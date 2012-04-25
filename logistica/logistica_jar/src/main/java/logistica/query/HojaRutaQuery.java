@@ -2,21 +2,26 @@ package logistica.query;
 
 import java.util.Date;
 
+import logistica.type.EstadoHojaRutaEnum;
+
 public class HojaRutaQuery extends BaseQuery {
 
 	private Date fechaEmision;
 	private Long prefijo;
 	private Long numero;
+	private EstadoHojaRutaEnum estadoHojaRutaEnum;
 
-	public HojaRutaQuery(Long id, Date fechaEmision, Long prefijo, Long numero) {
+	public HojaRutaQuery(Long id, Date fechaEmision, Long prefijo, Long numero,
+			EstadoHojaRutaEnum estadoHojaRutaEnum) {
 		super(id);
 		this.fechaEmision = fechaEmision;
 		this.prefijo = prefijo;
 		this.numero = numero;
+		this.estadoHojaRutaEnum = estadoHojaRutaEnum;
 	}
 
 	public HojaRutaQuery() {
-		this(null, null, null, null);
+		this(null, null, null, null, null);
 	}
 
 	public Date getFechaEmision() {
@@ -41,5 +46,13 @@ public class HojaRutaQuery extends BaseQuery {
 
 	public void setNumero(Long numero) {
 		this.numero = numero;
+	}
+
+	public EstadoHojaRutaEnum getEstadoHojaRutaEnum() {
+		return estadoHojaRutaEnum;
+	}
+
+	public void setEstadoHojaRutaEnum(EstadoHojaRutaEnum estadoHojaRutaEnum) {
+		this.estadoHojaRutaEnum = estadoHojaRutaEnum;
 	}
 }

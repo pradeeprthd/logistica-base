@@ -35,6 +35,7 @@ import logistica.query.HojaRutaQuery;
 import logistica.query.LocalidadQuery;
 import logistica.query.MovilQuery;
 import logistica.query.SucursalQuery;
+import logistica.type.EstadoHojaRutaEnum;
 import logistica.type.UnidadMedidaEnum;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -75,6 +76,7 @@ public class HojaRutaController extends PaginableController<HojaRuta> {
 	private List<Sucursal> sucursalList;
 	private List<Localidad> localidadList;
 	private String localidadQueryString;
+	private List<EstadoHojaRutaEnum> estadoHojaRutaEnumList;
 
 	@ManagedProperty("#{hojaRutaView}")
 	private HojaRutaView hojaRutaView;
@@ -115,6 +117,7 @@ public class HojaRutaController extends PaginableController<HojaRuta> {
 			unidadMedidaEnumList = Arrays.asList(UnidadMedidaEnum.values());
 			sucursalList = daoSucursal.getList();
 			localidadList = new ArrayList<Localidad>();
+			estadoHojaRutaEnumList = Arrays.asList(EstadoHojaRutaEnum.values());
 			addEdit = false;
 		} catch (Throwable e) {
 			log.error("Error al inicializar la clase HojaRutaController", e);
@@ -182,6 +185,10 @@ public class HojaRutaController extends PaginableController<HojaRuta> {
 		return localidadList;
 	}
 
+	public List<EstadoHojaRutaEnum> getEstadoHojaRutaEnumList() {
+		return estadoHojaRutaEnumList;
+	}
+
 	public String getLocalidadQueryString() {
 		return localidadQueryString;
 	}
@@ -219,6 +226,34 @@ public class HojaRutaController extends PaginableController<HojaRuta> {
 							"Error al realizar la operacion", ""));
 		}
 	}
+	
+	public void toEstadoPendiente(ActionEvent event) {
+		cambiarEstado(EstadoHojaRutaEnum.PENDIENTE);
+	}
+	
+	public void toEstadoFinalizado(ActionEvent event) {
+		cambiarEstado(EstadoHojaRutaEnum.FINALIZADO);
+	}
+	
+	public void toEstadoEnTransito(ActionEvent event) {
+		cambiarEstado(EstadoHojaRutaEnum.EN_TRANSITO);
+	}
+	
+	private void cambiarEstado(EstadoHojaRutaEnum estadoHojaRutaEnum){
+		try {
+			hojaRuta = (HojaRuta) lazyDM.getRowData();
+			hojaRuta = dao.findFULL(hojaRuta.getID());
+			hojaRuta.setEstadoHojaRutaEnum(estadoHojaRutaEnum);
+			dao.edit(hojaRuta);			
+		} catch (Throwable e) {
+			log.error("Error al cambiar de estado a " + estadoHojaRutaEnum, e);
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR,
+							"Error al realizar la operacion", ""));
+		}
+	}
+
 
 	public void delete(ActionEvent event) {
 		try {
@@ -309,6 +344,10 @@ public class HojaRutaController extends PaginableController<HojaRuta> {
 						&& hojaRutaQuery.getNumero() != 0) {
 					filtro.put("numero", hojaRutaQuery.getNumero());
 				}
+				if (hojaRutaQuery.getEstadoHojaRutaEnum() != null) {
+					filtro.put("estadoHojaRutaEnum",
+							hojaRutaQuery.getEstadoHojaRutaEnum());
+				}
 				return dao.getList(first, pageSize, "fechaEmision", false,
 						filtro);
 			}
@@ -325,6 +364,10 @@ public class HojaRutaController extends PaginableController<HojaRuta> {
 		}
 		if (hojaRutaQuery.getNumero() != null && hojaRutaQuery.getNumero() != 0) {
 			filtro.put("numero", hojaRutaQuery.getNumero());
+		}
+		if (hojaRutaQuery.getEstadoHojaRutaEnum() != null) {
+			filtro.put("estadoHojaRutaEnum",
+					hojaRutaQuery.getEstadoHojaRutaEnum());
 		}
 		lazyDM.setRowCount(dao.count(filtro).intValue());
 	}
@@ -565,6 +608,7 @@ public class HojaRutaController extends PaginableController<HojaRuta> {
 		hojaRuta = (HojaRuta) lazyDM.getRowData();
 		hojaRuta = dao.findFULL(hojaRuta.getID());
 		toPDF(hojaRuta);
+		JSFUtil.reloadPage();
 	}
 
 	private List<HojaRutaReport> getReporteHojaRuta(HojaRuta hojaRuta) {

@@ -23,6 +23,7 @@ public class HojaRutaBuilder extends BaseBuilder<HojaRutaView, HojaRuta> {
 				view.getCliente(), view.getChofer(), view.getMovil(),
 				view.getNumeroRemito(), view.getDireccion(),
 				view.getLocalidad(), view.getObservaciones(),
+				view.getEstadoHojaRutaEnum(),
 				detalleHojaRutaBuilder.toDomain(view
 						.getDetalleHojaRutaViewList()));
 	}
@@ -34,6 +35,7 @@ public class HojaRutaBuilder extends BaseBuilder<HojaRutaView, HojaRuta> {
 				model.getCliente(), model.getChofer(), model.getMovil(),
 				model.getNumeroRemito(), model.getDireccion(),
 				model.getLocalidad(), model.getObservaciones(),
+				model.getEstadoHojaRutaEnum(),
 				detalleHojaRutaBuilder.toView(model.getDetalleHojaRutaList()));
 	}
 

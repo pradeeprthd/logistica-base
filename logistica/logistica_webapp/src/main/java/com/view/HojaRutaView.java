@@ -16,6 +16,7 @@ import logistica.model.Cliente;
 import logistica.model.Localidad;
 import logistica.model.Movil;
 import logistica.model.Sucursal;
+import logistica.type.EstadoHojaRutaEnum;
 
 @ManagedBean
 @ViewScoped
@@ -57,6 +58,9 @@ public class HojaRutaView implements Serializable {
 	private Localidad localidad;
 
 	private String observaciones;
+	
+	@NotNull(message = "Valor requerido")
+	private EstadoHojaRutaEnum estadoHojaRutaEnum;
 
 	@NotNull(message = "Valor requerido")
 	@Valid
@@ -65,7 +69,7 @@ public class HojaRutaView implements Serializable {
 	public HojaRutaView(Long id, Sucursal sucursal, Date fechaEmision,
 			Long prefijo, Long numero, Cliente cliente, Chofer chofer,
 			Movil movil, String numeroRemito, String direccion,
-			Localidad localidad, String observaciones,
+			Localidad localidad, String observaciones,EstadoHojaRutaEnum estadoHojaRutaEnum,
 			List<DetalleHojaRutaView> detalleHojaRutaViewList) {
 		super();
 		this.id = id;
@@ -80,11 +84,12 @@ public class HojaRutaView implements Serializable {
 		this.direccion = direccion;
 		this.localidad = localidad;
 		this.observaciones = observaciones;
+		this.estadoHojaRutaEnum = estadoHojaRutaEnum;
 		this.detalleHojaRutaViewList = detalleHojaRutaViewList;
 	}
 
 	public HojaRutaView() {
-		this(null, null, null, null, null, null, null, null, null, null, null,
+		this(null, null, null, null, null, null, null, null, null, null, null, null,
 				null, new ArrayList<DetalleHojaRutaView>());
 	}
 
@@ -186,6 +191,14 @@ public class HojaRutaView implements Serializable {
 
 	public List<DetalleHojaRutaView> getDetalleHojaRutaViewList() {
 		return detalleHojaRutaViewList;
+	}
+
+	public EstadoHojaRutaEnum getEstadoHojaRutaEnum() {
+		return estadoHojaRutaEnum;
+	}
+
+	public void setEstadoHojaRutaEnum(EstadoHojaRutaEnum estadoHojaRutaEnum) {
+		this.estadoHojaRutaEnum = estadoHojaRutaEnum;
 	}
 
 	public void setDetalleHojaRutaViewList(
