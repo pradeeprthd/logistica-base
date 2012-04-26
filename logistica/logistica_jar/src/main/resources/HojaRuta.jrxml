@@ -64,7 +64,11 @@
 		<fieldDescription><![CDATA[unidadMedida]]></fieldDescription>
 	</field>
 	<background>
-		<band splitType="Stretch"/>
+		<band height="802" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="575" height="802"/>
+			</rectangle>
+		</band>
 	</background>
 	<title>
 		<band height="183" splitType="Stretch">
@@ -179,7 +183,7 @@
 				<text><![CDATA[Localidad:]]></text>
 			</staticText>
 			<image>
-				<reportElement x="1" y="0" width="125" height="44"/>
+				<reportElement x="1" y="1" width="125" height="44"/>
 				<imageExpression><![CDATA["logo.jpg"]]></imageExpression>
 			</image>
 		</band>
@@ -187,7 +191,7 @@
 	<columnHeader>
 		<band height="44" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="24" width="183" height="20"/>
+				<reportElement x="1" y="24" width="183" height="20"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
@@ -240,7 +244,7 @@
 	<detail>
 		<band height="31" splitType="Stretch">
 			<textField isBlankWhenNull="true">
-				<reportElement x="0" y="0" width="183" height="31"/>
+				<reportElement x="1" y="0" width="183" height="31"/>
 				<textElement>
 					<font size="11" isBold="false"/>
 				</textElement>
@@ -336,33 +340,39 @@
 	</columnFooter>
 	<pageFooter>
 		<band height="109" splitType="Stretch">
+			<rectangle>
+				<reportElement x="286" y="61" width="289" height="48"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="61" width="286" height="48"/>
+			</rectangle>
 			<textField isBlankWhenNull="true">
-				<reportElement x="31" y="10" width="543" height="19"/>
+				<reportElement x="32" y="10" width="543" height="19"/>
 				<textElement>
 					<font size="12" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{observaciones}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="10" width="31" height="19"/>
+				<reportElement x="1" y="10" width="31" height="19"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Obs.:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="61" width="292" height="33"/>
+				<reportElement x="2" y="61" width="292" height="33"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Firma Aclaración del chofer ......................................................................................................................]]></text>
+				<text><![CDATA[Firma Aclaración del chofer:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="293" y="61" width="282" height="33"/>
+				<reportElement x="288" y="61" width="287" height="33"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Firma Aclaración del supervisor ..........................................................................................................]]></text>
+				<text><![CDATA[Firma Aclaración del supervisor:]]></text>
 			</staticText>
 			<line>
 				<reportElement x="0" y="27" width="574" height="1"/>
