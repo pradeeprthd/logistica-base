@@ -226,25 +226,25 @@ public class HojaRutaController extends PaginableController<HojaRuta> {
 							"Error al realizar la operacion", ""));
 		}
 	}
-	
+
 	public void toEstadoPendiente(ActionEvent event) {
 		cambiarEstado(EstadoHojaRutaEnum.PENDIENTE);
 	}
-	
+
 	public void toEstadoFinalizado(ActionEvent event) {
 		cambiarEstado(EstadoHojaRutaEnum.FINALIZADO);
 	}
-	
+
 	public void toEstadoEnTransito(ActionEvent event) {
 		cambiarEstado(EstadoHojaRutaEnum.EN_TRANSITO);
 	}
-	
-	private void cambiarEstado(EstadoHojaRutaEnum estadoHojaRutaEnum){
+
+	private void cambiarEstado(EstadoHojaRutaEnum estadoHojaRutaEnum) {
 		try {
 			hojaRuta = (HojaRuta) lazyDM.getRowData();
 			hojaRuta = dao.findFULL(hojaRuta.getID());
 			hojaRuta.setEstadoHojaRutaEnum(estadoHojaRutaEnum);
-			dao.edit(hojaRuta);			
+			dao.edit(hojaRuta);
 		} catch (Throwable e) {
 			log.error("Error al cambiar de estado a " + estadoHojaRutaEnum, e);
 			FacesContext.getCurrentInstance().addMessage(
@@ -253,7 +253,6 @@ public class HojaRutaController extends PaginableController<HojaRuta> {
 							"Error al realizar la operacion", ""));
 		}
 	}
-
 
 	public void delete(ActionEvent event) {
 		try {
