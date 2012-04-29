@@ -18,7 +18,8 @@ public class DetalleAsignacionBuilder extends
 		return new DetalleAsignacion(view.getId(), view.getMovil(),
 				view.getDescripcionFlete(), view.getHorarioEntrada(),
 				view.getHorarioSalida(), view.getHorarioPedidoFlete(),
-				view.getNombreAgenciaFlete(), view.getCodigoCoto());
+				view.getNombreAgenciaFlete(), view.getCodigoCoto(),
+				view.getLlegoMovil());
 	}
 
 	@Override
@@ -26,6 +27,7 @@ public class DetalleAsignacionBuilder extends
 		return new DetalleAsignacionView(model.getID(), model.getMovil(),
 				model.getDescripcionFlete(), model.getHorarioEntrada(),
 				model.getHorarioSalida(), model.getHorarioPedidoFlete(),
-				model.getNombreAgenciaFlete(), model.getCodigoCoto());
+				model.getNombreAgenciaFlete(), model.getCodigoCoto(),
+				model.getLlegoMovil());
 	}
 }

@@ -456,7 +456,7 @@ public class DiagramacionDiariaController extends
 		diagramacionDiariaView = limpiarIDSMovilesNoOperativosYSeleccionados(diagramacionDiariaView);
 
 		// limpio el código de coto
-		limpiarCodigoCoto(diagramacionDiariaView);
+		limpiarCodigoCotoYLlegoMovil(diagramacionDiariaView);
 
 		// ordeno por sucursal
 		Collections.sort(diagramacionDiariaView.getDetalleSucursalViewList());
@@ -511,7 +511,7 @@ public class DiagramacionDiariaController extends
 		return diagramacionDiariaToReturn;
 	}
 
-	private void limpiarCodigoCoto(
+	private void limpiarCodigoCotoYLlegoMovil(
 			DiagramacionDiariaView diagramacionDiariaViewParam) {
 		List<DetalleAsignacionView> detalleAsignacionViewListAux = new ArrayList<DetalleAsignacionView>();
 		List<DetalleSucursalView> detalleSucursalViewListAux = new ArrayList<DetalleSucursalView>();
@@ -522,6 +522,7 @@ public class DiagramacionDiariaController extends
 				for (DetalleAsignacionView detalleAsignacion : detalleSucursal
 						.getDetalleAsignacionViewList()) {
 					detalleAsignacion.setCodigoCoto(null);
+					detalleAsignacion.setLlegoMovil(false);
 					try {
 						detalleAsignacionViewListAux
 								.add((DetalleAsignacionView) detalleAsignacion

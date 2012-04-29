@@ -2,6 +2,7 @@ package logistica.model;
 
 import java.util.Date;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -47,10 +48,13 @@ public class DetalleAsignacion extends BaseModel {
 
 	@Column(length = 200)
 	private String codigoCoto;
+	
+	@Basic
+	private Boolean llegoMovil;
 
 	public DetalleAsignacion(Long id, Movil movil, String descripcionFlete,
 			Date horarioEntrada, Date horarioSalida, Date horarioPedidoFlete,
-			String nombreAgenciaFlete, String codigoCoto) {
+			String nombreAgenciaFlete, String codigoCoto, Boolean llegoMovil) {
 		super();
 		this.id = id;
 		this.movil = movil;
@@ -60,10 +64,11 @@ public class DetalleAsignacion extends BaseModel {
 		this.horarioPedidoFlete = horarioPedidoFlete;
 		this.nombreAgenciaFlete = nombreAgenciaFlete;
 		this.codigoCoto = codigoCoto;
+		this.llegoMovil = llegoMovil;
 	}
 
 	public DetalleAsignacion() {
-		this(null, null, null, null, null, null, null, null);
+		this(null, null, null, null, null, null, null, null, null);
 	}
 
 	@Override
@@ -130,5 +135,13 @@ public class DetalleAsignacion extends BaseModel {
 
 	public void setDescripcionFlete(String descripcionFlete) {
 		this.descripcionFlete = descripcionFlete;
+	}
+
+	public Boolean getLlegoMovil() {
+		return llegoMovil;
+	}
+
+	public void setLlegoMovil(Boolean llegoMovil) {
+		this.llegoMovil = llegoMovil;
 	}
 }
