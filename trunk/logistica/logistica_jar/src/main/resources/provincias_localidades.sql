@@ -21705,5 +21705,6 @@ INSERT INTO logistica.localidad(id, provinciaid, descripcion) VALUES
 (21682, 6, 'CHORRILLO'),
 (21683, 5, '1 DE MAYO'),
 (21684, 5, 'EL REMANCE'),
-(21685, 1, 'YRAIZOS');
+(21685, 1, 'YRAIZOS'),
+(21686, 1, 'ESCOBAR');
 
