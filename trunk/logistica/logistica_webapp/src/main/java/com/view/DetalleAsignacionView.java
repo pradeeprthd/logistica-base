@@ -20,10 +20,11 @@ public class DetalleAsignacionView implements Serializable {
 	private Date horarioPedidoFlete;
 	private String nombreAgenciaFlete;
 	private String codigoCoto;
+	private Boolean llegoMovil;
 
 	public DetalleAsignacionView(Long id, Movil movil, String descripcionFlete,
 			Date horarioEntrada, Date horarioSalida, Date horarioPedidoFlete,
-			String nombreAgenciaFlete, String codigoCoto) {
+			String nombreAgenciaFlete, String codigoCoto,Boolean llegoMovil) {
 		super();
 		this.id = id;
 		this.movil = movil;
@@ -33,10 +34,11 @@ public class DetalleAsignacionView implements Serializable {
 		this.horarioPedidoFlete = horarioPedidoFlete;
 		this.nombreAgenciaFlete = nombreAgenciaFlete;
 		this.codigoCoto = codigoCoto;
+		this.llegoMovil = llegoMovil;
 	}
 
 	public DetalleAsignacionView() {
-		this(null, null, null, null, null, null, null, null);
+		this(null, null, null, null, null, null, null, null,null);
 	}
 
 	public Long getId() {
@@ -103,6 +105,14 @@ public class DetalleAsignacionView implements Serializable {
 		this.descripcionFlete = descripcionFlete;
 	}
 
+	public Boolean getLlegoMovil() {
+		return llegoMovil;
+	}
+
+	public void setLlegoMovil(Boolean llegoMovil) {
+		this.llegoMovil = llegoMovil;
+	}
+
 	public String getLabel() {
 		String label = null;
 
@@ -123,7 +133,7 @@ public class DetalleAsignacionView implements Serializable {
 	public Object clone() throws CloneNotSupportedException {
 		return new DetalleAsignacionView(id, movil, descripcionFlete,
 				horarioEntrada, horarioSalida, horarioPedidoFlete,
-				nombreAgenciaFlete, codigoCoto);
+				nombreAgenciaFlete, codigoCoto, llegoMovil);
 	}
 
 	@Override
@@ -196,6 +206,14 @@ public class DetalleAsignacionView implements Serializable {
 		if (codigoCoto != null && detalle.getCodigoCoto() != null) {
 			ret = ret && codigoCoto.equals(detalle.getCodigoCoto());
 		} else if (codigoCoto == null && detalle.getCodigoCoto() == null) {
+			ret = ret && true;
+		} else {
+			ret = false;
+		}
+		
+		if (llegoMovil != null && detalle.getLlegoMovil() != null) {
+			ret = ret && llegoMovil.equals(detalle.getLlegoMovil());
+		} else if (llegoMovil == null && detalle.getLlegoMovil() == null) {
 			ret = ret && true;
 		} else {
 			ret = false;
