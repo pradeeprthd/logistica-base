@@ -112,8 +112,7 @@
 									emptyMessage="Sin detalles" dynamic="true" paginator="true"
 									rows="5"
 									paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-									rowsPerPageTemplate="5,10,15,50"
-									widgetVar="tableWidgetVar">
+									rowsPerPageTemplate="5,10,15,50" widgetVar="tableWidgetVar">
 									<p:column>
 										<f:facet name="header">
 											<h:outputText value="Sucursal" />
@@ -202,12 +201,13 @@
 												</f:facet>
 												<p:inputText value="#{detalleAsignacion.codigoCoto}" />
 											</p:column>
-											
+
 											<p:column>
 												<f:facet name="header">
 													<h:outputText value="LLegó movil" />
 												</f:facet>
-												<p:selectBooleanCheckbox value="#{detalleAsignacion.llegoMovil}" />
+												<p:selectBooleanCheckbox
+													value="#{detalleAsignacion.llegoMovil}" />
 											</p:column>
 										</p:dataTable>
 									</p:column>
@@ -262,6 +262,64 @@
 								</p:column>
 							</p:dataTable>
 						</p:tab>
+
+						<p:tab title="Fletes asignados">
+
+							<h:panelGrid columns="1">
+								<p:dataTable id="dataTableSucursalFlete" var="detalleSucursal"
+									value="#{diagramacionDiariaController.diagramacionDiariaView.detalleSucursalViewList}"
+									emptyMessage="Sin detalles" dynamic="true">
+									<f:facet name="header">
+										<h:outputText value="Número sucursal-Descripción Flete-Agencia Flete-Código Coto" />
+									</f:facet>
+
+									<p:column rendered="#{detalleSucursal.fleteAsignado}">
+										<p:dataTable id="dataTableSucursalASignacionFlete"
+											var="detalleAsignacion"
+											value="#{detalleSucursal.detalleAsignacionViewList}"
+											paginator="false" emptyMessage="Sin detalles" dynamic="true">
+
+											<p:column headerText="Sucursal" footerText="Sucursal"
+												rendered="#{detalleAsignacion.fleteAsignado}">
+
+												<h:outputText id="sucursalOT"
+													value="#{detalleSucursal.sucursalCoto.numeroSucursal}">
+												</h:outputText>
+												<p:tooltip for="sucursalOT" value="Número sucursal" />
+											</p:column>
+
+											<p:column headerText="Descripción flete"
+												footerText="Sucursal"
+												rendered="#{detalleAsignacion.fleteAsignado}">
+
+												<h:outputText id="descripcionFleteOT"
+													value="#{detalleAsignacion.descripcionFlete}" />
+												<p:tooltip for="descripcionFleteOT"
+													value="Descripción flete" />
+											</p:column>
+
+											<p:column headerText="Agencia flete" footerText="Sucursal"
+												rendered="#{detalleAsignacion.fleteAsignado}">
+
+												<h:outputText id="nombreAgenciaOT"
+													value="#{detalleAsignacion.nombreAgenciaFlete}" />
+												<p:tooltip for="nombreAgenciaOT"
+													value="Nombre de agencia del flete" />
+											</p:column>
+
+											<p:column headerText="Código Coto" footerText="Sucursal"
+												rendered="#{detalleAsignacion.fleteAsignado}">
+
+												<h:outputText id="codigoCotoOT"
+													value="#{detalleAsignacion.codigoCoto}" />
+												<p:tooltip for="codigoCotoOT" value="Código Coto" />
+											</p:column>
+										</p:dataTable>
+									</p:column>
+								</p:dataTable>
+							</h:panelGrid>
+						</p:tab>
+
 					</p:tabView>
 
 					<!-- ================================================== -->

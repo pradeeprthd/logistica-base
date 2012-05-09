@@ -221,4 +221,15 @@ public class DetalleAsignacionView implements Serializable {
 
 		return ret;
 	}
+	
+	public boolean isFleteAsignado(){
+		boolean ret = false;
+		
+		if((descripcionFlete != null && !"".equals(descripcionFlete))||
+				(nombreAgenciaFlete != null && !"".equals(nombreAgenciaFlete))){
+			ret = true;
+		}
+		
+		return ret;
+	}
 }

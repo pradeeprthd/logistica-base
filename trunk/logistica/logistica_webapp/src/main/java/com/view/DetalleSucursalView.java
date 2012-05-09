@@ -102,4 +102,17 @@ public class DetalleSucursalView implements Serializable,
 		return new DetalleSucursalView(id, sucursalCoto, cantidadMoviles,
 				detalleAsignacionViewList);
 	}
+	
+	public boolean isFleteAsignado(){
+		boolean ret = false;
+		
+		for(DetalleAsignacionView dav : detalleAsignacionViewList){
+			if(dav.isFleteAsignado()){
+				ret = true;
+				break;
+			}
+		}
+		
+		return ret;
+	}
 }
