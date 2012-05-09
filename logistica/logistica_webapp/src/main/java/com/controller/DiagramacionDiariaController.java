@@ -56,6 +56,7 @@ import com.util.JSFUtil;
 import com.view.DetalleAsignacionView;
 import com.view.DetalleSucursalView;
 import com.view.DiagramacionDiariaView;
+import com.view.FletesSeleccionadosView;
 
 @ManagedBean
 @ViewScoped
@@ -79,6 +80,7 @@ public class DiagramacionDiariaController extends
 	private String novedad;
 	private List<String> novedades;
 	private DataModel<String> novedadDM;
+	private List<FletesSeleccionadosView> fletesSeleccionadosViewList;
 
 	private DetalleSucursalView detalleSucursalView;
 
@@ -117,6 +119,7 @@ public class DiagramacionDiariaController extends
 			movilSeleccionadoList = new ArrayList<Movil>();
 			novedadDM = new ListDataModel<String>();
 			sucursalCotoList = daoSucursalCoto.getList();
+			fletesSeleccionadosViewList = new ArrayList<FletesSeleccionadosView>();
 			addEdit = false;
 		} catch (Throwable e) {
 			log.error(
@@ -212,6 +215,10 @@ public class DiagramacionDiariaController extends
 
 		RequestContext.getCurrentInstance()
 				.addPartialUpdateTarget("form:panel");
+	}
+
+	public List<FletesSeleccionadosView> getFletesSeleccionadosViewList() {
+		return fletesSeleccionadosViewList;
 	}
 
 	public String getNovedad() {
@@ -611,6 +618,24 @@ public class DiagramacionDiariaController extends
 						detalleSucursalAux);
 				diagramacionDiariaView.getDetalleSucursalViewList().add(
 						detalleSucursalAux);
+
+				// veo si es flete y lo agrego
+				if (detalleAsignacionView.getDescripcionFlete() != null
+						&& !"".equals(detalleAsignacionView
+								.getDescripcionFlete())
+						&& detalleAsignacionView.getNombreAgenciaFlete() != null
+						&& !"".equals(detalleAsignacionView
+								.getNombreAgenciaFlete())) {
+					FletesSeleccionadosView fsv = new FletesSeleccionadosView(
+							detalleSucursalAux.getSucursalCoto()
+									.getNumeroSucursal(),
+							detalleAsignacionView.getDescripcionFlete(),
+							detalleAsignacionView.getNombreAgenciaFlete(),
+							detalleAsignacionView.getCodigoCoto());
+					if (!fletesSeleccionadosViewList.contains(fsv)) {
+						fletesSeleccionadosViewList.add(fsv);
+					}
+				}
 			}
 
 			movilSeleccionadoList = new ArrayList<Movil>();
