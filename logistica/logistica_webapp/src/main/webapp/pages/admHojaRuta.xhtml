@@ -12,7 +12,7 @@
 		<u:define name="body">
 			<h:form id="filtroForm">
 				<p:panel id="panelFiltro" rendered="#{!hojaRutaController.addEdit}">
-					<h:panelGrid columns="9">
+					<h:panelGrid columns="10">
 						<h:outputText value="Fecha Emisión" />
 						<p:calendar
 							value="#{hojaRutaController.hojaRutaQuery.fechaEmision}"
@@ -30,19 +30,23 @@
 							value="#{hojaRutaController.hojaRutaQuery.numero}" min="0"
 							stepFactor="1" size="20">
 						</p:spinner>
-						
+
 						<h:outputText value="Estado" />
-								<p:selectOneMenu
-									value="#{hojaRutaController.hojaRutaQuery.estadoHojaRutaEnum}"
-									converter="com.converter.EstadoHojaRutaConverter">
-									<f:selectItem itemLabel="Selecione" itemValue="" />
-									<f:selectItems
-										value="#{hojaRutaController.estadoHojaRutaEnumList}" />
-								</p:selectOneMenu>
+						<p:selectOneMenu
+							value="#{hojaRutaController.hojaRutaQuery.estadoHojaRutaEnum}"
+							converter="com.converter.EstadoHojaRutaConverter">
+							<f:selectItem itemLabel="Selecione" itemValue="" />
+							<f:selectItems
+								value="#{hojaRutaController.estadoHojaRutaEnumList}" />
+						</p:selectOneMenu>
 
 						<p:commandButton value="Consultar"
 							actionListener="#{hojaRutaController.query}" update="form">
 						</p:commandButton>
+						
+						<p:commandButton value="Exportar a EXCEL" ajax="false"
+									actionListener="#{hojaRutaController.principalToExcel}"
+									update="form,filtroForm" />
 					</h:panelGrid>
 				</p:panel>
 			</h:form>
@@ -127,7 +131,7 @@
 						</f:facet>
 						<h:panelGrid columns="6">
 							<p:commandLink actionListener="#{hojaRutaController.edit}"
-								update="form,filtroForm" >
+								update="form,filtroForm">
 								<h:graphicImage url="/resource/images/edit.gif"
 									title="Modificar" style="border:0px" />
 							</p:commandLink>
@@ -141,17 +145,20 @@
 								<h:graphicImage url="/resource/images/delete.gif"
 									title="Eliminar" style="border:0px" />
 							</h:commandLink>
-							<p:commandLink actionListener="#{hojaRutaController.toEstadoPendiente}"
+							<p:commandLink
+								actionListener="#{hojaRutaController.toEstadoPendiente}"
 								update="form,filtroForm">
 								<h:graphicImage url="/resource/images/ButtonYellow.gif"
 									title="Cambiar a pendiente" style="border:0px" />
 							</p:commandLink>
-							<p:commandLink actionListener="#{hojaRutaController.toEstadoEnTransito}"
+							<p:commandLink
+								actionListener="#{hojaRutaController.toEstadoEnTransito}"
 								update="form,filtroForm">
 								<h:graphicImage url="/resource/images/ButtonGreen.gif"
 									title="Cambiar a en transito" style="border:0px" />
 							</p:commandLink>
-							<p:commandLink actionListener="#{hojaRutaController.toEstadoFinalizado}"
+							<p:commandLink
+								actionListener="#{hojaRutaController.toEstadoFinalizado}"
 								update="form,filtroForm">
 								<h:graphicImage url="/resource/images/ButtonRed.gif"
 									title="Cambiar a finalizado" style="border:0px" />
