@@ -26,4 +26,13 @@ public class DateUtil {
 
 		return calendar.getTime();
 	}
+	
+	public static Date getSumarRestarDias(Date fecha,int dias) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(fecha);
+	
+		calendar.add(Calendar.DATE, dias);
+
+		return calendar.getTime();
+	}
 }

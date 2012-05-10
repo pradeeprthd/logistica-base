@@ -3,6 +3,7 @@ package com.controller;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +22,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 
 import logistica.common.dao.BaseModelDAO;
+import logistica.jasper.HojaRutaPrincipalReport;
 import logistica.jasper.HojaRutaReport;
 import logistica.model.Chofer;
 import logistica.model.Cliente;
@@ -43,6 +45,8 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.export.JRXlsExporter;
+import net.sf.jasperreports.engine.export.JRXlsExporterParameter;
 import net.sf.jasperreports.engine.util.JRLoader;
 
 import org.apache.log4j.Logger;
@@ -665,4 +669,86 @@ public class HojaRutaController extends PaginableController<HojaRuta> {
 		}
 		return list;
 	}
+
+	@SuppressWarnings({ "deprecation", "unchecked", "rawtypes" })
+	public void principalToExcel(List<HojaRuta> hojaRutaList) {
+		try {
+
+			HttpServletResponse response = (HttpServletResponse) FacesContext
+					.getCurrentInstance().getExternalContext().getResponse();
+			ServletContext sc = (ServletContext) FacesContext
+					.getCurrentInstance().getExternalContext().getContext();
+
+			String realpath = sc.getRealPath(File.separator
+					+ "resource/jasper/HojaRutaPrincipal.jasper");
+
+			JasperReport jasperReport = (JasperReport) JRLoader
+					.loadObject(realpath);
+
+			JRDataSource datasource = new JRBeanCollectionDataSource(
+					getReportePrincipalHojaRuta(hojaRutaList));
+			JasperPrint print = JasperFillManager.fillReport(jasperReport,
+					new HashMap(), datasource);
+
+			// Exporta el informe a excel
+			JRXlsExporter exporterXLS = new JRXlsExporter();
+			exporterXLS
+					.setParameter(JRXlsExporterParameter.JASPER_PRINT, print);
+			exporterXLS.setParameter(JRXlsExporterParameter.OUTPUT_STREAM,
+					response.getOutputStream());
+			exporterXLS.exportReport();
+
+			response.setContentType("application/vnd.ms-excel");
+			response.addHeader("Content-Disposition",
+					"attachment; filename=HojaRuta.xls");
+
+			/*
+			 * JasperExportManager.exportReportToPdfFile(print, "hojaRuta.pdf");
+			 */
+			
+			 /*response.setContentType("application/pdf");
+				response.addHeader("Content-Disposition",
+						"attachment; filename=HojaRuta.pdf");
+			 JasperExportManager.exportReportToPdfStream(print,
+			 response.getOutputStream());*/
+			 
+			
+			 
+
+			FacesContext.getCurrentInstance().responseComplete();
+		} catch (Throwable e) {
+			log.error("Error al exportar a EXCEL: ", e);
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR,
+							"Error al exportar a EXCEL", ""));
+			System.out.println("error al exportar: " + e.getMessage());
+		}
+	}
+
+	public void principalToExcel(ActionEvent actionEvent) {
+		principalToExcel(dao.getList(hojaRutaQuery));
+		JSFUtil.reloadPage();
+	}
+
+	private Collection<HojaRutaPrincipalReport> getReportePrincipalHojaRuta(
+			List<HojaRuta> hojaRutaList) {
+
+		List<HojaRutaPrincipalReport> list = new ArrayList<HojaRutaPrincipalReport>();
+
+		for (HojaRuta hojaRuta : hojaRutaList) {
+			list.add(new HojaRutaPrincipalReport(hojaRuta.getID().toString(),
+					hojaRuta.getSucursal().getNombre(), hojaRuta
+							.getFechaEmision(), hojaRuta.getPrefijo() + " - "
+							+ hojaRuta.getNumero(), hojaRuta.getCliente()
+							.getNombre(), hojaRuta.getChofer().getNombre(),
+					hojaRuta.getMovil().getNumeroMovil() + " - "
+							+ hojaRuta.getMovil().getPatente(), hojaRuta
+							.getNumeroRemito(), hojaRuta
+							.getEstadoHojaRutaEnum().toString()));
+		}
+
+		return list;
+	}
+
 }
