@@ -26,6 +26,8 @@ public interface BaseModelDAO<T extends BaseModel> {
 	List<T> getList(String query) throws DataAccessException;
 
 	T get(String query) throws DataAccessException;
+	
+	T get(Object query) throws DataAccessException;
 
 	List<T> getList(Object query) throws DataAccessException;
 
