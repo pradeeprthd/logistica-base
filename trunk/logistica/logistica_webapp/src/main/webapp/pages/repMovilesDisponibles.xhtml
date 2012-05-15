@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd ">
+<html xmlns:u="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://com.ss.logistica/jsf"
+	xmlns:p="http://primefaces.org/ui" xmlns="http://www.w3.org/1999/xhtml">
+
+<body>
+	<u:composition template="/pages/layout/pageLayout.xhtml">
+		<u:define name="body">
+			<h:form id="filtroForm">
+				<p:panel id="panelFiltro"
+					rendered="#{!movilDisponibleController.addEdit}">
+					<h:panelGrid columns="5">
+						<h:outputText value="Fecha" />
+						<p:calendar
+							value="#{movilDisponibleController.movilDisponibleQuery.fecha}"
+							mode="popup" showOn="button" locale="es" readOnlyInputText="true"
+							pattern="#{msgs.common_inputDateFormat}" />
+
+						<p:commandButton value="Consultar"
+							actionListener="#{movilDisponibleController.query}" update="form">
+						</p:commandButton>
+					</h:panelGrid>
+				</p:panel>
+			</h:form>
+
+			<h:form id="form">
+				<p:growl id="messages" life="5000" />
+				<p:dataTable id="dataTable" var="movil"
+					value="#{movilDisponibleController.movilDisponibleList}"
+					paginator="true" rows="10"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="10,15,20,50"
+					rendered="#{!movilDisponibleController.addEdit}"
+					emptyMessage="No se encontraron registros" dynamic="true">
+
+					<f:facet name="header">
+						<h:outputText value="#{msgs.repMovilesDisponibles_title}" />
+					</f:facet>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Nro movil" />
+						</f:facet>
+						<h:outputText value="#{movil.numeroMovil}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Patente" />
+						</f:facet>
+						<h:outputText value="#{movil.patente}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Descripción" />
+						</f:facet>
+						<h:outputText value="#{movil.descripcion}" />
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</u:define>
+	</u:composition>
+</body>
+</html>
