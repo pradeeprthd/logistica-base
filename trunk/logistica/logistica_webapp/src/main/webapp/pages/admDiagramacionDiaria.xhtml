@@ -211,6 +211,12 @@
 											</p:column>
 										</p:dataTable>
 									</p:column>
+
+									<f:facet name="footer">
+										<p:commandButton value="Actualizar sucursales"
+											actionListener="#{diagramacionDiariaController.actualizarSucursales}"
+											update="form,filtroForm" oncomplete="tabView.select(0)" />
+									</f:facet>
 								</p:dataTable>
 							</h:panelGrid>
 						</p:tab>
@@ -270,7 +276,8 @@
 									value="#{diagramacionDiariaController.diagramacionDiariaView.detalleSucursalViewList}"
 									emptyMessage="Sin detalles" dynamic="true">
 									<f:facet name="header">
-										<h:outputText value="Número sucursal-Descripción Flete-Agencia Flete-Código Coto" />
+										<h:outputText
+											value="Número sucursal-Descripción Flete-Agencia Flete-Código Coto" />
 									</f:facet>
 
 									<p:column rendered="#{detalleSucursal.fleteAsignado}">

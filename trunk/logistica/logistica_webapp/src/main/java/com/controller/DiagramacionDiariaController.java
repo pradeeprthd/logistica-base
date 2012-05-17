@@ -117,8 +117,7 @@ public class DiagramacionDiariaController extends
 			diagramacionDiariaQuery = new DiagramacionDiariaQuery();
 			detalleAsignacionView = new DetalleAsignacionView();
 			movilSeleccionadoList = new ArrayList<Movil>();
-			novedadDM = new ListDataModel<String>();
-			sucursalCotoList = daoSucursalCoto.getList();
+			novedadDM = new ListDataModel<String>();		
 			fletesSeleccionadosViewList = new ArrayList<FletesSeleccionadosView>();
 			addEdit = false;
 		} catch (Throwable e) {
@@ -428,6 +427,7 @@ public class DiagramacionDiariaController extends
 	private void crearDiagramacionDiariaDesdeCoto() {
 		diagramacionDiaria = new DiagramacionDiaria();
 		diagramacionDiaria.setFecha(new Date());
+		sucursalCotoList = daoSucursalCoto.getList();
 		List<DetalleAsignacion> detalleAsignacionList = new ArrayList<DetalleAsignacion>();
 		List<DetalleSucursal> detalleSucursalList = new ArrayList<DetalleSucursal>();
 		for (SucursalCoto sucursalCoto : sucursalCotoList) {
@@ -832,4 +832,34 @@ public class DiagramacionDiariaController extends
 
 		return diagramacionDiariaList;
 	}
+
+	public void actualizarSucursales(ActionEvent actionEvent) {
+
+		List<DetalleAsignacionView> detalleAsignacionList = null;
+		sucursalCotoList = daoSucursalCoto.getList();
+
+		for (SucursalCoto sucursalCoto : sucursalCotoList) {
+			if (sucursalCoto.getCantidadMoviles() > 0) {
+				detalleAsignacionList = new ArrayList<DetalleAsignacionView>();
+				int contador = 0;
+				while (contador < sucursalCoto.getCantidadMoviles()) {
+					detalleAsignacionList.add(new DetalleAsignacionView());
+					contador++;
+				}
+				DetalleSucursalView dsv = new DetalleSucursalView(null,
+						sucursalCoto, sucursalCoto.getCantidadMoviles(),
+						detalleAsignacionList);
+
+				if (!diagramacionDiariaView.getDetalleSucursalViewList()
+						.contains(dsv)) {
+					diagramacionDiariaView.getDetalleSucursalViewList()
+							.add(dsv);
+				}
+			}
+		}
+
+		// ordeno por sucursal
+		Collections.sort(diagramacionDiariaView.getDetalleSucursalViewList());
+	}
+
 }
