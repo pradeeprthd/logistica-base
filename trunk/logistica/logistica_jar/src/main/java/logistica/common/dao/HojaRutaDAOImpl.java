@@ -50,9 +50,9 @@ public class HojaRutaDAOImpl extends BaseHibernateDAO<HojaRuta, HojaRutaQuery> {
 			criteria.add(Restrictions.eq("estadoHojaRutaEnum",
 					hojaRutaQuery.getEstadoHojaRutaEnum()));
 		}
-		// la idea es que traiga el último mes como mucho
+		// la idea es que traiga la ultima semana
 		criteria.add(Restrictions.gt("fechaEmision",
-				DateUtil.getSumarRestarDias(new Date(), -30)));
+				DateUtil.getSumarRestarDias(new Date(), -7)));
 
 		list = getHibernateTemplate().findByCriteria(criteria);
 

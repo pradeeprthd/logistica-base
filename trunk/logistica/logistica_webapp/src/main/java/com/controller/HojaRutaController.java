@@ -690,6 +690,23 @@ public class HojaRutaController extends PaginableController<HojaRuta> {
 			JasperPrint print = JasperFillManager.fillReport(jasperReport,
 					new HashMap(), datasource);
 
+			// response.setContentType("application/octet-stream");
+			/*
+			 * response.setHeader("Pragma", "public");
+			 * response.setHeader("Expires", "0");
+			 * response.setHeader("Cache-Control",
+			 * "must-revalidate, post-check=0, pre-check=0");
+			 * response.setHeader("Content-Transfer-Encoding", "binary");
+			 * response.setHeader("Content-Encoding", "utf-8");
+			 */
+			// response.setHeader("Content-type", "application-download");
+
+			// IMPORTANTISIMO: antes de exportar hay que setear los headers sino
+			// no funciona bien para archivos grandes
+			response.setContentType("application/vnd.ms-excel");
+			response.setHeader("Content-Disposition",
+					"inline; filename=HojaRuta.xls");
+
 			// Exporta el informe a excel
 			JRXlsExporter exporterXLS = new JRXlsExporter();
 			exporterXLS
@@ -697,23 +714,6 @@ public class HojaRutaController extends PaginableController<HojaRuta> {
 			exporterXLS.setParameter(JRXlsExporterParameter.OUTPUT_STREAM,
 					response.getOutputStream());
 			exporterXLS.exportReport();
-
-			response.setContentType("application/vnd.ms-excel");
-			response.addHeader("Content-Disposition",
-					"attachment; filename=HojaRuta.xls");
-
-			/*
-			 * JasperExportManager.exportReportToPdfFile(print, "hojaRuta.pdf");
-			 */
-			
-			 /*response.setContentType("application/pdf");
-				response.addHeader("Content-Disposition",
-						"attachment; filename=HojaRuta.pdf");
-			 JasperExportManager.exportReportToPdfStream(print,
-			 response.getOutputStream());*/
-			 
-			
-			 
 
 			FacesContext.getCurrentInstance().responseComplete();
 		} catch (Throwable e) {
@@ -728,7 +728,7 @@ public class HojaRutaController extends PaginableController<HojaRuta> {
 
 	public void principalToExcel(ActionEvent actionEvent) {
 		principalToExcel(dao.getList(hojaRutaQuery));
-		JSFUtil.reloadPage();
+		//JSFUtil.reloadPage();
 	}
 
 	private Collection<HojaRutaPrincipalReport> getReportePrincipalHojaRuta(
