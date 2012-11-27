@@ -1,5 +1,7 @@
 package com.controller;
 
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,10 +17,14 @@ import javax.faces.event.ActionEvent;
 import logistica.common.dao.BaseModelDAO;
 import logistica.model.Chofer;
 import logistica.query.ChoferQuery;
+import logistica.type.TipoInscripcionEnum;
 
 import org.apache.log4j.Logger;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
+import org.primefaces.model.StreamedContent;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.jsf.FacesContextUtils;
 
@@ -36,6 +42,8 @@ public class ChoferController extends PaginableController<Chofer> {
 	private BaseModelDAO<Chofer> dao;
 	private Chofer chofer;
 	private ChoferQuery choferQuery;
+	private List<TipoInscripcionEnum> tipoInscripcionEnumList;
+	private StreamedContent imagen;
 
 	@ManagedProperty("#{choferView}")
 	private ChoferView choferView;
@@ -53,6 +61,8 @@ public class ChoferController extends PaginableController<Chofer> {
 					.getWebApplicationContext(FacesContext.getCurrentInstance())
 					.getBean("choferDAO");
 			choferQuery = new ChoferQuery();
+			tipoInscripcionEnumList = Arrays.asList(TipoInscripcionEnum
+					.values());
 			addEdit = false;
 		} catch (Throwable e) {
 			log.error("Error al inicializar la clase ChoferController", e);
@@ -91,6 +101,18 @@ public class ChoferController extends PaginableController<Chofer> {
 		this.direccionBean = direccionBean;
 	}
 
+	public List<TipoInscripcionEnum> getTipoInscripcionEnumList() {
+		return tipoInscripcionEnumList;
+	}
+
+	public StreamedContent getImagen() {
+		return imagen;
+	}
+
+	public void setImagen(StreamedContent imagen) {
+		this.imagen = imagen;
+	}
+
 	public void query(ActionEvent event) {
 		loadList();
 	}
@@ -100,6 +122,7 @@ public class ChoferController extends PaginableController<Chofer> {
 			chofer = (Chofer) lazyDM.getRowData();
 			choferView = choferBuilder.toView(chofer);
 			direccionBean.setDireccionView(choferView.getDireccionView());
+
 			addEdit = true;
 		} catch (Throwable e) {
 			log.error("Error al editar", e);
@@ -191,5 +214,30 @@ public class ChoferController extends PaginableController<Chofer> {
 	@PostConstruct
 	public void init() {
 		direccionBean.init();
+	}
+
+	public void handleFileUpload(FileUploadEvent event) {
+		/*
+		 * FacesMessage msg = new FacesMessage("Mensaje", event.getFile()
+		 * .getFileName() + " cargado correctamente.");
+		 */
+
+		JSFUtil.saveMessage(event.getFile().getFileName()
+				+ " cargado correctamente.", FacesMessage.SEVERITY_INFO);
+		choferView.setImagen(event.getFile());
+
+		try {
+			imagen = new DefaultStreamedContent(event.getFile()
+					.getInputstream(), "image/jpeg");
+		} catch (IOException e) {
+		}
+		// FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+
+	public void upload(FileUploadEvent event) {
+		FacesMessage msg = new FacesMessage("Mensaje", event.getFile()
+				.getFileName() + " cargado correctamente.");
+		choferView.setImagen(event.getFile());
+		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
 }
