@@ -66,6 +66,57 @@
 
 					<p:column>
 						<f:facet name="header">
+							<h:outputText value="Asignado a" />
+						</f:facet>
+						<h:outputText value="#{movil.asignacionMovil}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Estado" />
+						</f:facet>
+						<h:outputText value="#{movil.estado}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Fecha ingreso al sistema" />
+						</f:facet>
+						<h:outputText value="#{movil.fechaIngreso}">
+							<f:convertDateTime pattern="#{msgs.common_inputDateFormat}"
+								timeZone="#{msgs.common_timeZone}" />
+						</h:outputText>
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Fecha salida del sistema" />
+						</f:facet>
+						<h:outputText value="#{movil.fechaEgreso}">
+							<f:convertDateTime pattern="#{msgs.common_inputDateFormat}"
+								timeZone="#{msgs.common_timeZone}" />
+						</h:outputText>
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Controlado" />
+						</f:facet>
+						<p:selectBooleanCheckbox disabled="true"
+							value="#{movil.controlado}" />
+					</p:column>
+
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Comodato" />
+						</f:facet>
+						<p:selectBooleanCheckbox disabled="true"
+							value="#{movil.comodato}" />
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">
 							<h:outputText value="Opciones" />
 						</f:facet>
 						<h:panelGrid columns="3">
@@ -117,6 +168,32 @@
 									<f:validateBean for="descripcionIT" />
 								</p:inputTextarea>
 								<h:message id="dIT" for="descripcionIT" />
+
+								<h:outputText value="Asignado a" />
+								<p:selectOneMenu
+									value="#{movilController.movilView.asignacionMovil}"
+									converter="com.converter.AsignacionMovilConverter">
+									<f:selectItems
+										value="#{movilController.asignacionMovilEnumList}" />
+								</p:selectOneMenu>
+								<h:outputText value="" />
+
+								<h:outputText value="Estado" />
+								<p:selectOneMenu value="#{movilController.movilView.estado}"
+									converter="com.converter.EstadoConverter">
+									<f:selectItems value="#{movilController.estadoEnumList}" />
+								</p:selectOneMenu>
+								<h:outputText value="" />
+
+								<h:outputText value="Controlado" />
+								<p:selectBooleanCheckbox
+									value="#{movilController.movilView.controlado}" />
+								<h:outputText value="" />
+
+								<h:outputText value="Comodato" />
+								<p:selectBooleanCheckbox
+									value="#{movilController.movilView.comodato}" />
+								<h:outputText value="" />
 							</h:panelGrid>
 						</p:tab>
 					</p:tabView>

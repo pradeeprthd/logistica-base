@@ -23,7 +23,7 @@
 				</p:panel>
 			</h:form>
 
-			<h:form id="form">
+			<h:form id="form" enctype="multipart/form-data">
 				<p:growl id="messages" life="5000" />
 				<p:dataTable id="dataTable" var="chofer"
 					value="#{choferController.lazyDM}" paginator="true" rows="10"
@@ -41,6 +41,44 @@
 							<h:outputText value="Nombre" />
 						</f:facet>
 						<h:outputText value="#{chofer.nombre}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="DNI" />
+						</f:facet>
+						<h:outputText value="#{chofer.dni}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Teléfono" />
+						</f:facet>
+						<h:outputText value="#{chofer.telefono}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Observación Teléfono" />
+						</f:facet>
+						<h:outputText value="#{chofer.observacionTelefono}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Fecha Nacimiento" />
+						</f:facet>
+						<h:outputText value="#{chofer.fechaNacimiento}">
+							<f:convertDateTime pattern="#{msgs.common_inputDateFormat}"
+								timeZone="#{msgs.common_timeZone}" />
+						</h:outputText>
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Observaciones" />
+						</f:facet>
+						<h:outputText value="#{chofer.observaciones}" />
 					</p:column>
 
 					<p:column>
@@ -71,21 +109,201 @@
 
 				<h:panelGrid id="panel" columns="1"
 					rendered="#{choferController.addEdit}">
+
 					<p:tabView widgetVar="tabView">
 						<p:tab title="Datos Principales">
 							<p:focus for="nombreIT" />
-							<h:panelGrid columns="3">
+							<h:panelGrid columns="6">
 								<h:outputText value="Nombre" />
-								<p:inputText id="nombreIT"
+								<p:inputText id="nombreIT" maxlength="200"
 									value="#{choferController.choferView.nombre}">
 									<f:validateBean for="nombreIT" />
 								</p:inputText>
 								<h:message id="mnIT" for="nombreIT" />
+
+								<h:outputText value="Fecha Nacimiento" />
+								<p:calendar id="fechaNacimientoC"
+									value="#{choferController.choferView.fechaNacimiento}"
+									mode="popup" showOn="button" locale="es"
+									pattern="#{msgs.common_inputDateFormat}"
+									readOnlyInputText="true">
+								</p:calendar>
+								<h:outputText value="" />
+
+								<h:outputText value="DNI" />
+								<p:inputText id="dniIT" maxlength="30"
+									value="#{choferController.choferView.dni}">
+									<f:validateBean for="dniIT" />
+								</p:inputText>
+								<h:message id="mdniIT" for="dniIT" />
+
+								<h:outputText value="CUIL" />
+								<p:inputText id="cuilIT" maxlength="30"
+									value="#{choferController.choferView.cuil}">
+									<f:validateBean for="cuilIT" />
+								</p:inputText>
+								<h:message id="mcuilIT" for="cuilIT" />
+
+								<h:outputText value="CUIT" />
+								<p:inputText id="cuitIT" maxlength="30"
+									value="#{choferController.choferView.cuit}">
+									<f:validateBean for="cuitIT" />
+								</p:inputText>
+								<h:message id="mcuitIT" for="cuitIT" />
+
+								<h:outputText value="Fecha Libreta Sanitaria" />
+								<p:calendar id="fechaLibretaC"
+									value="#{choferController.choferView.fechaLibretaSanitaria}"
+									mode="popup" showOn="button" locale="es"
+									pattern="#{msgs.common_inputDateFormat}"
+									readOnlyInputText="true">
+								</p:calendar>
+								<h:outputText value="" />
+
+								<h:outputText value="Teléfono" />
+								<p:inputText id="telefonoIT" maxlength="30"
+									value="#{choferController.choferView.telefono}">
+									<f:validateBean for="telefonoIT" />
+								</p:inputText>
+								<h:message id="mtelefonoIT" for="telefonoIT" />
+
+								<h:outputText value="Observación Teléfono" />
+								<p:inputText id="oservacionTelefonoIT" maxlength="50"
+									value="#{choferController.choferView.observacionTelefono}">
+									<f:validateBean for="oservacionTelefonoIT" />
+								</p:inputText>
+								<h:message id="mObservaciontelefonoIT"
+									for="oservacionTelefonoIT" />
+
+								<h:outputText value="Teléfono 2" />
+								<p:inputText id="telefono2IT" maxlength="30"
+									value="#{choferController.choferView.telefono2}">
+									<f:validateBean for="telefono2IT" />
+								</p:inputText>
+								<h:message id="mtelefono2IT" for="telefono2IT" />
+
+								<h:outputText value="Observación Teléfono 2" />
+								<p:inputText id="oservacionTelefono2IT" maxlength="50"
+									value="#{choferController.choferView.observacionTelefono2}">
+									<f:validateBean for="oservacionTelefono2IT" />
+								</p:inputText>
+								<h:message id="mObservaciontelefono2IT"
+									for="oservacionTelefono2IT" />
+
+								<h:outputText value="Teléfono 3" />
+								<p:inputText id="telefono3IT" maxlength="30"
+									value="#{choferController.choferView.telefono3}">
+									<f:validateBean for="telefono3IT" />
+								</p:inputText>
+								<h:message id="mtelefono3IT" for="telefono3IT" />
+
+								<h:outputText value="Observación Teléfono 3" />
+								<p:inputText id="oservacionTelefono3IT" maxlength="50"
+									value="#{choferController.choferView.observacionTelefono3}">
+									<f:validateBean for="oservacionTelefono3IT" />
+								</p:inputText>
+								<h:message id="mObservaciontelefono3IT"
+									for="oservacionTelefono3IT" />
+
+								<h:outputText value="Fecha Vencimiento Registro" />
+								<p:calendar id="fechaVencimientoRegistroC"
+									value="#{choferController.choferView.fechaVencimientoRegistro}"
+									mode="popup" showOn="button" locale="es"
+									pattern="#{msgs.common_inputDateFormat}"
+									readOnlyInputText="true">
+								</p:calendar>
+								<h:outputText value="" />
+
+								<h:outputText value="Autorización de manejo" />
+								<p:selectBooleanCheckbox
+									value="#{choferController.choferView.autorizacionManejo}" />
+								<h:outputText value="" />
+
+								<h:outputText value="Partida Nacimiento" />
+								<p:selectBooleanCheckbox
+									value="#{choferController.choferView.partidaNacimiento}" />
+								<h:outputText value="" />
+
+								<h:outputText value="Seguro Accidente" />
+								<p:selectBooleanCheckbox
+									value="#{choferController.choferView.seguroAccidente}" />
+								<h:outputText value="" />
+
+								<h:outputText value="Antecendentes buena conducta" />
+								<p:selectBooleanCheckbox
+									value="#{choferController.choferView.antecedentesBuenaConducta}" />
+								<h:outputText value="" />
+
+								<h:outputText value="Costancia Registro" />
+								<p:selectBooleanCheckbox
+									value="#{choferController.choferView.constanciaRegistro}" />
+								<h:outputText value="" />
+
+								<h:outputText value="Licencia Nacional Habilitante" />
+								<p:inputText id="lnhIT" maxlength="50"
+									value="#{choferController.choferView.licenciaNacionalHabilitante}">
+									<f:validateBean for="lnhIT" />
+								</p:inputText>
+								<h:message id="mlnhIT" for="lnhIT" />
+
+								<h:outputText value="Fecha Curso" />
+								<p:calendar id="fechaCursoC"
+									value="#{choferController.choferView.fechaCurso}" mode="popup"
+									showOn="button" locale="es"
+									pattern="#{msgs.common_inputDateFormat}"
+									readOnlyInputText="true">
+								</p:calendar>
+								<h:outputText value="" />
+
+								<h:outputText value="Fecha Registro" />
+								<p:calendar id="fechaRegistroC"
+									value="#{choferController.choferView.fechaRegistro}"
+									mode="popup" showOn="button" locale="es"
+									pattern="#{msgs.common_inputDateFormat}"
+									readOnlyInputText="true">
+								</p:calendar>
+								<h:outputText value="" />
+
+								<h:outputText value="Observaciones" />
+								<p:inputTextarea id="observacionesITA" maxlength="150"
+									value="#{choferController.choferView.observaciones}">
+									<f:validateBean for="observacionesITA" />
+								</p:inputTextarea>
+
 							</h:panelGrid>
 						</p:tab>
 						<p:tab title="Dirección">
-							<s:direccion direccionBean="#{clienteController.direccionBean}" />
+							<s:direccion direccionBean="#{choferController.direccionBean}" />
 						</p:tab>
+
+						<p:tab title="Foto">
+
+							<h:panelGrid columns="1">
+
+								<p:fileUpload
+									fileUploadListener="#{choferController.handleFileUpload}"
+									mode="advanced" update="panelImagen" sizeLimit="100000"
+									allowTypes="/(\.|\/)(jpg)$/" auto="true"
+									invalidFileMessage="Tipo de archivo invalido. El archivo debe ser JPG." 
+									invalidSizeMessage="El tamaño del archivo es incorrecto. El tamaño máximo es 100000 bytes. "/>
+
+								<h:graphicImage
+									value="/images/#{choferController.choferView.nombreArchivo}"
+									width="170" height="200" />
+
+								<!-- <p:graphicImage value="#{choferController.imagen}" /> -->
+								<!-- <h:graphicImage value="/images/foto1353938777544.jpg" /> -->
+
+								<!-- <p:fileUpload value="#{choferController.choferView.imagen}"
+									mode="simple" />
+								<p:commandButton value="Submit" ajax="false" /> -->
+
+								<!--  <p:commandButton value="Submit" ajax="false" 
+                            actionListener="#{choferController.upload}"/> -->
+							</h:panelGrid>
+						</p:tab>
+
+
 					</p:tabView>
 
 

@@ -1,5 +1,7 @@
 package com.controller;
 
+import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +16,8 @@ import javax.faces.event.ActionEvent;
 import logistica.common.dao.BaseModelDAO;
 import logistica.model.Movil;
 import logistica.query.MovilQuery;
+import logistica.type.AsignacionMovilEnum;
+import logistica.type.EstadoEnum;
 
 import org.apache.log4j.Logger;
 import org.primefaces.model.LazyDataModel;
@@ -33,6 +37,8 @@ public class MovilController extends PaginableController<Movil> {
 	private BaseModelDAO<Movil> dao;
 	private Movil movil;
 	private MovilQuery movilQuery;
+	private List<AsignacionMovilEnum> asignacionMovilEnumList;
+	private List<EstadoEnum> estadoEnumList;
 
 	@ManagedProperty("#{movilView}")
 	private MovilView movilView;
@@ -47,6 +53,9 @@ public class MovilController extends PaginableController<Movil> {
 					.getWebApplicationContext(FacesContext.getCurrentInstance())
 					.getBean("movilDAO");
 			movilQuery = new MovilQuery();
+			asignacionMovilEnumList = Arrays.asList(AsignacionMovilEnum
+					.values());
+			estadoEnumList = Arrays.asList(EstadoEnum.values());
 			addEdit = false;
 		} catch (Throwable e) {
 			log.error("Error al inicializar la clase MovilController", e);
@@ -81,6 +90,14 @@ public class MovilController extends PaginableController<Movil> {
 		return movilQuery;
 	}
 
+	public List<AsignacionMovilEnum> getAsignacionMovilEnumList() {
+		return asignacionMovilEnumList;
+	}
+
+	public List<EstadoEnum> getEstadoEnumList() {
+		return estadoEnumList;
+	}
+
 	public void query(ActionEvent event) {
 		loadList();
 	}
@@ -102,7 +119,9 @@ public class MovilController extends PaginableController<Movil> {
 	public void delete(ActionEvent event) {
 		try {
 			movil = (Movil) lazyDM.getRowData();
-			dao.delete(movil);
+			movil.setEstado(EstadoEnum.INACTIVO);
+			movil.setFechaEgreso(new Date());
+			dao.edit(movil);
 			loadList();
 		} catch (Throwable e) {
 			log.error("Error al eliminar", e);
@@ -122,9 +141,15 @@ public class MovilController extends PaginableController<Movil> {
 		try {
 			movil = movilBuilder.toDomain(movilView);
 			if (movil.getID() != null) {
+				if (movil.getEstado() == EstadoEnum.INACTIVO) {
+					movil.setFechaEgreso(new Date());
+				} else {
+					movil.setFechaEgreso(null);
+				}
 				dao.edit(movil);
 				addEdit = false;
 			} else {
+				movil.setFechaIngreso(new Date());
 				dao.save(movil);
 			}
 			clear();

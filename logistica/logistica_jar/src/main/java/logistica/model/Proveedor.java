@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 
 import logistica.model.composite.Direccion;
+import logistica.type.TipoInscripcionEnum;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -24,7 +25,7 @@ public class Proveedor extends Sujeto {
 	private Long id;
 
 	public Proveedor(Long id, String nombre, Direccion direccion) {
-		super(nombre, direccion);
+		super(nombre, direccion,null,null, TipoInscripcionEnum.NINGUNO, null, null, null, null, null, null, null, null);
 		this.id = id;
 	}
 
