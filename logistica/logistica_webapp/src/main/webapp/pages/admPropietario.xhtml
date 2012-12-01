@@ -11,13 +11,15 @@
 	<u:composition template="/pages/layout/pageLayout.xhtml">
 		<u:define name="body">
 			<h:form id="filtroForm">
-				<p:panel id="panelFiltro" rendered="#{!choferController.addEdit}">
+				<p:panel id="panelFiltro"
+					rendered="#{!propietarioController.addEdit}">
 					<h:panelGrid columns="5">
 						<h:outputText value="Nombre: " />
-						<p:inputText value="#{choferController.choferQuery.nombre}">
+						<p:inputText
+							value="#{propietarioController.propietarioQuery.nombre}">
 						</p:inputText>
 						<p:commandButton value="Consultar"
-							actionListener="#{choferController.query}" update="form">
+							actionListener="#{propietarioController.query}" update="form">
 						</p:commandButton>
 					</h:panelGrid>
 				</p:panel>
@@ -25,50 +27,50 @@
 
 			<h:form id="form" enctype="multipart/form-data">
 				<p:growl id="messages" life="5000" />
-				<p:dataTable id="dataTable" var="chofer"
-					value="#{choferController.lazyDM}" paginator="true" rows="10"
+				<p:dataTable id="dataTable" var="propietario"
+					value="#{propietarioController.lazyDM}" paginator="true" rows="10"
 					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 					rowsPerPageTemplate="10,15,20"
-					rendered="#{!choferController.addEdit}"
+					rendered="#{!propietarioController.addEdit}"
 					emptyMessage="No se encontraron registros" dynamic="true">
 
 					<f:facet name="header">
-						<h:outputText value="#{msgs.admChofer_title}" />
+						<h:outputText value="#{msgs.admPropietario_title}" />
 					</f:facet>
 
 					<p:column>
 						<f:facet name="header">
 							<h:outputText value="Nombre" />
 						</f:facet>
-						<h:outputText value="#{chofer.nombre}" />
+						<h:outputText value="#{propietario.nombre}" />
 					</p:column>
 
 					<p:column>
 						<f:facet name="header">
 							<h:outputText value="DNI" />
 						</f:facet>
-						<h:outputText value="#{chofer.dni}" />
+						<h:outputText value="#{propietario.dni}" />
 					</p:column>
 
 					<p:column>
 						<f:facet name="header">
 							<h:outputText value="Teléfono" />
 						</f:facet>
-						<h:outputText value="#{chofer.telefono}" />
+						<h:outputText value="#{propietario.telefono}" />
 					</p:column>
 
 					<p:column>
 						<f:facet name="header">
 							<h:outputText value="Observación Teléfono" />
 						</f:facet>
-						<h:outputText value="#{chofer.observacionTelefono}" />
+						<h:outputText value="#{propietario.observacionTelefono}" />
 					</p:column>
 
 					<p:column>
 						<f:facet name="header">
 							<h:outputText value="Fecha Nacimiento" />
 						</f:facet>
-						<h:outputText value="#{chofer.fechaNacimiento}">
+						<h:outputText value="#{propietario.fechaNacimiento}">
 							<f:convertDateTime pattern="#{msgs.common_inputDateFormat}"
 								timeZone="#{msgs.common_timeZone}" />
 						</h:outputText>
@@ -78,7 +80,7 @@
 						<f:facet name="header">
 							<h:outputText value="Observaciones" />
 						</f:facet>
-						<h:outputText value="#{chofer.observaciones}" />
+						<h:outputText value="#{propietario.observaciones}" />
 					</p:column>
 
 					<p:column>
@@ -86,12 +88,12 @@
 							<h:outputText value="Opciones" />
 						</f:facet>
 						<h:panelGrid columns="3">
-							<p:commandLink actionListener="#{choferController.edit}"
+							<p:commandLink actionListener="#{propietarioController.edit}"
 								update="form,filtroForm" oncomplete="tabView.select(0)">
 								<h:graphicImage url="/resource/images/edit.gif"
 									title="Modificar" style="border:0px" />
 							</p:commandLink>
-							<h:commandLink actionListener="#{choferController.delete}"
+							<h:commandLink actionListener="#{propietarioController.delete}"
 								onclick="return confirm('¿Está seguro de eliminar el registro?');">
 								<h:graphicImage url="/resource/images/delete.gif"
 									title="Eliminar" style="border:0px" />
@@ -101,14 +103,14 @@
 
 					<f:facet name="footer">
 						<p:commandButton value="Agregar"
-							actionListener="#{choferController.add}" update="form,filtroForm"
-							oncomplete="tabView.select(0)" />
+							actionListener="#{propietarioController.add}"
+							update="form,filtroForm" oncomplete="tabView.select(0)" />
 					</f:facet>
 				</p:dataTable>
 
 
 				<h:panelGrid id="panel" columns="1"
-					rendered="#{choferController.addEdit}">
+					rendered="#{propietarioController.addEdit}">
 
 					<p:tabView widgetVar="tabView">
 						<p:tab title="Datos Principales">
@@ -116,14 +118,14 @@
 							<h:panelGrid columns="6">
 								<h:outputText value="Nombre" />
 								<p:inputText id="nombreIT" maxlength="200"
-									value="#{choferController.choferView.nombre}">
+									value="#{propietarioController.propietarioView.nombre}">
 									<f:validateBean for="nombreIT" />
 								</p:inputText>
 								<h:message id="mnIT" for="nombreIT" />
 
 								<h:outputText value="Fecha Nacimiento" />
 								<p:calendar id="fechaNacimientoC"
-									value="#{choferController.choferView.fechaNacimiento}"
+									value="#{propietarioController.propietarioView.fechaNacimiento}"
 									mode="popup" showOn="button" locale="es"
 									pattern="#{msgs.common_inputDateFormat}"
 									readOnlyInputText="true">
@@ -132,44 +134,35 @@
 
 								<h:outputText value="DNI" />
 								<p:inputText id="dniIT" maxlength="30"
-									value="#{choferController.choferView.dni}">
+									value="#{propietarioController.propietarioView.dni}">
 									<f:validateBean for="dniIT" />
 								</p:inputText>
 								<h:message id="mdniIT" for="dniIT" />
 
 								<h:outputText value="CUIL" />
 								<p:inputText id="cuilIT" maxlength="30"
-									value="#{choferController.choferView.cuil}">
+									value="#{propietarioController.propietarioView.cuil}">
 									<f:validateBean for="cuilIT" />
 								</p:inputText>
 								<h:message id="mcuilIT" for="cuilIT" />
 
 								<h:outputText value="CUIT" />
 								<p:inputText id="cuitIT" maxlength="30"
-									value="#{choferController.choferView.cuit}">
+									value="#{propietarioController.propietarioView.cuit}">
 									<f:validateBean for="cuitIT" />
 								</p:inputText>
 								<h:message id="mcuitIT" for="cuitIT" />
 
-								<h:outputText value="Fecha Libreta Sanitaria" />
-								<p:calendar id="fechaLibretaC"
-									value="#{choferController.choferView.fechaLibretaSanitaria}"
-									mode="popup" showOn="button" locale="es"
-									pattern="#{msgs.common_inputDateFormat}"
-									readOnlyInputText="true">
-								</p:calendar>
-								<h:outputText value="" />
-
 								<h:outputText value="Teléfono" />
 								<p:inputText id="telefonoIT" maxlength="30"
-									value="#{choferController.choferView.telefono}">
+									value="#{propietarioController.propietarioView.telefono}">
 									<f:validateBean for="telefonoIT" />
 								</p:inputText>
 								<h:message id="mtelefonoIT" for="telefonoIT" />
 
 								<h:outputText value="Observación Teléfono" />
 								<p:inputText id="oservacionTelefonoIT" maxlength="50"
-									value="#{choferController.choferView.observacionTelefono}">
+									value="#{propietarioController.propietarioView.observacionTelefono}">
 									<f:validateBean for="oservacionTelefonoIT" />
 								</p:inputText>
 								<h:message id="mObservaciontelefonoIT"
@@ -177,14 +170,14 @@
 
 								<h:outputText value="Teléfono 2" />
 								<p:inputText id="telefono2IT" maxlength="30"
-									value="#{choferController.choferView.telefono2}">
+									value="#{propietarioController.propietarioView.telefono2}">
 									<f:validateBean for="telefono2IT" />
 								</p:inputText>
 								<h:message id="mtelefono2IT" for="telefono2IT" />
 
 								<h:outputText value="Observación Teléfono 2" />
 								<p:inputText id="oservacionTelefono2IT" maxlength="50"
-									value="#{choferController.choferView.observacionTelefono2}">
+									value="#{propietarioController.propietarioView.observacionTelefono2}">
 									<f:validateBean for="oservacionTelefono2IT" />
 								</p:inputText>
 								<h:message id="mObservaciontelefono2IT"
@@ -192,88 +185,35 @@
 
 								<h:outputText value="Teléfono 3" />
 								<p:inputText id="telefono3IT" maxlength="30"
-									value="#{choferController.choferView.telefono3}">
+									value="#{propietarioController.propietarioView.telefono3}">
 									<f:validateBean for="telefono3IT" />
 								</p:inputText>
 								<h:message id="mtelefono3IT" for="telefono3IT" />
 
 								<h:outputText value="Observación Teléfono 3" />
 								<p:inputText id="oservacionTelefono3IT" maxlength="50"
-									value="#{choferController.choferView.observacionTelefono3}">
+									value="#{propietarioController.propietarioView.observacionTelefono3}">
 									<f:validateBean for="oservacionTelefono3IT" />
 								</p:inputText>
 								<h:message id="mObservaciontelefono3IT"
 									for="oservacionTelefono3IT" />
 
-								<h:outputText value="Fecha Vencimiento Registro" />
-								<p:calendar id="fechaVencimientoRegistroC"
-									value="#{choferController.choferView.fechaVencimientoRegistro}"
-									mode="popup" showOn="button" locale="es"
-									pattern="#{msgs.common_inputDateFormat}"
-									readOnlyInputText="true">
-								</p:calendar>
-								<h:outputText value="" />
-
-								<h:outputText value="Autorización de manejo" />
-								<p:selectBooleanCheckbox
-									value="#{choferController.choferView.autorizacionManejo}" />
-								<h:outputText value="" />
-
 								<h:outputText value="Partida Nacimiento" />
 								<p:selectBooleanCheckbox
-									value="#{choferController.choferView.partidaNacimiento}" />
-								<h:outputText value="" />
-
-								<h:outputText value="Seguro Accidente" />
-								<p:selectBooleanCheckbox
-									value="#{choferController.choferView.seguroAccidente}" />
-								<h:outputText value="" />
-
-								<h:outputText value="Antecendentes buena conducta" />
-								<p:selectBooleanCheckbox
-									value="#{choferController.choferView.antecedentesBuenaConducta}" />
-								<h:outputText value="" />
-
-								<h:outputText value="Costancia Registro" />
-								<p:selectBooleanCheckbox
-									value="#{choferController.choferView.constanciaRegistro}" />
-								<h:outputText value="" />
-
-								<h:outputText value="Licencia Nacional Habilitante" />
-								<p:inputText id="lnhIT" maxlength="50"
-									value="#{choferController.choferView.licenciaNacionalHabilitante}">
-									<f:validateBean for="lnhIT" />
-								</p:inputText>
-								<h:message id="mlnhIT" for="lnhIT" />
-
-								<h:outputText value="Fecha Curso" />
-								<p:calendar id="fechaCursoC"
-									value="#{choferController.choferView.fechaCurso}" mode="popup"
-									showOn="button" locale="es"
-									pattern="#{msgs.common_inputDateFormat}"
-									readOnlyInputText="true">
-								</p:calendar>
-								<h:outputText value="" />
-
-								<h:outputText value="Fecha Registro" />
-								<p:calendar id="fechaRegistroC"
-									value="#{choferController.choferView.fechaRegistro}"
-									mode="popup" showOn="button" locale="es"
-									pattern="#{msgs.common_inputDateFormat}"
-									readOnlyInputText="true">
-								</p:calendar>
+									value="#{propietarioController.propietarioView.partidaNacimiento}" />
 								<h:outputText value="" />
 
 								<h:outputText value="Observaciones" />
 								<p:inputTextarea id="observacionesITA" maxlength="150"
-									value="#{choferController.choferView.observaciones}">
+									value="#{propietarioController.propietarioView.observaciones}">
 									<f:validateBean for="observacionesITA" />
 								</p:inputTextarea>
 
 							</h:panelGrid>
 						</p:tab>
 						<p:tab title="Dirección">
-							<s:direccion direccionBean="#{choferController.direccionBean}" />
+							<s:direccion
+								direccionBean="#{propietarioController.direccionBean}" />
 						</p:tab>
 
 						<p:tab title="Foto">
@@ -281,29 +221,18 @@
 							<h:panelGrid columns="1">
 
 								<p:fileUpload
-									fileUploadListener="#{choferController.handleFileUpload}"
+									fileUploadListener="#{propietarioController.handleFileUpload}"
 									mode="advanced" update="panelImagen" sizeLimit="100000"
-									allowTypes="/(\.|\/)(jpg|JPG)$/" auto="true"
-									label="Elegir"
-									invalidFileMessage="Tipo de archivo invalido. El archivo debe ser JPG." 
-									invalidSizeMessage="El tamaño del archivo es incorrecto. El tamaño máximo es 100000 bytes. "/>
+									allowTypes="/(\.|\/)(jpg|JPG)$/" auto="true" label="Elegir"
+									invalidFileMessage="Tipo de archivo invalido. El archivo debe ser JPG."
+									invalidSizeMessage="El tamaño del archivo es incorrecto. El tamaño máximo es 100000 bytes. " />
 
 								<h:graphicImage
-									value="/images/#{choferController.choferView.nombreArchivo}"
+									value="/images/#{propietarioController.propietarioView.nombreArchivo}"
 									width="170" height="200" />
 
-								<!-- <p:graphicImage value="#{choferController.imagen}" /> -->
-								<!-- <h:graphicImage value="/images/foto1353938777544.jpg" /> -->
-
-								<!-- <p:fileUpload value="#{choferController.choferView.imagen}"
-									mode="simple" />
-								<p:commandButton value="Submit" ajax="false" /> -->
-
-								<!--  <p:commandButton value="Submit" ajax="false" 
-                            actionListener="#{choferController.upload}"/> -->
 							</h:panelGrid>
 						</p:tab>
-
 
 					</p:tabView>
 
@@ -313,11 +242,11 @@
 					<!-- ================================================== -->
 					<h:panelGrid columns="2">
 						<p:commandButton value="Guardar"
-							actionListener="#{choferController.save}"
+							actionListener="#{propietarioController.save}"
 							update="form,filtroForm">
 						</p:commandButton>
 						<p:commandButton value="Volver"
-							actionListener="#{choferController.cancel}" immediate="true"
+							actionListener="#{propietarioController.cancel}" immediate="true"
 							update="form,filtroForm">
 						</p:commandButton>
 					</h:panelGrid>
