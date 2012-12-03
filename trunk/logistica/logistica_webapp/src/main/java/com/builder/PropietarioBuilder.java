@@ -17,6 +17,9 @@ public class PropietarioBuilder extends
 	@ManagedProperty("#{direccionBuilder}")
 	private DireccionBuilder direccionBuilder;
 
+	@ManagedProperty("#{autonomoBuilder}")
+	private AutonomoBuilder autonomoBuilder;
+
 	@Override
 	public Propietario toDomain(PropietarioView view) {
 		return new Propietario(view.getId(), view.getNombre(),
@@ -28,9 +31,9 @@ public class PropietarioBuilder extends
 				view.getTelefono3(), view.getObservacionTelefono3(),
 				view.getPartidaNacimiento(), view.getObservaciones(),
 				view.getImagen() != null ? view.getImagen().getContents()
-						: null, view.getRutaArchivo(),
-				view.getNombreArchivo(), view.getMovilList(),
-				view.getAutonomoList());
+						: null, view.getRutaArchivo(), view.getNombreArchivo(),
+				view.getMovilList(), autonomoBuilder.toDomain(view
+						.getAutonomoViewList()));
 	}
 
 	@Override
@@ -44,7 +47,8 @@ public class PropietarioBuilder extends
 				model.getObservacionTelefono3(), model.getPartidaNacimiento(),
 				model.getObservaciones(), model.getImagen(),
 				model.getRutaArchivo(), model.getNombreArchivo(),
-				model.getMovilList(), model.getAutonomoList());
+				model.getMovilList(), autonomoBuilder.toView(model
+						.getAutonomoList()));
 	}
 
 	public DireccionBuilder getDireccionBuilder() {
@@ -53,5 +57,13 @@ public class PropietarioBuilder extends
 
 	public void setDireccionBuilder(DireccionBuilder direccionBuilder) {
 		this.direccionBuilder = direccionBuilder;
+	}
+
+	public AutonomoBuilder getAutonomoBuilder() {
+		return autonomoBuilder;
+	}
+
+	public void setAutonomoBuilder(AutonomoBuilder autonomoBuilder) {
+		this.autonomoBuilder = autonomoBuilder;
 	}
 }

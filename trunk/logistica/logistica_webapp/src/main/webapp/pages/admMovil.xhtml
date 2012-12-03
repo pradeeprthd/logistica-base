@@ -111,10 +111,9 @@
 						<f:facet name="header">
 							<h:outputText value="Comodato" />
 						</f:facet>
-						<p:selectBooleanCheckbox disabled="true"
-							value="#{movil.comodato}" />
+						<p:selectBooleanCheckbox disabled="true" value="#{movil.comodato}" />
 					</p:column>
-					
+
 					<p:column>
 						<f:facet name="header">
 							<h:outputText value="Opciones" />
@@ -196,6 +195,118 @@
 								<h:outputText value="" />
 							</h:panelGrid>
 						</p:tab>
+
+
+						<p:tab title="Choferes">
+							<p:focus for="choferAC" />
+							<h:panelGrid columns="8">
+								<h:outputText value="Chofer 1" />
+								<p:autoComplete id="choferAC"
+									disabled="#{movilController.chofer1Selected}"
+									value="#{movilController.movilView.chofer1}"
+									completeMethod="#{movilController.completeChofer}" var="chofer"
+									itemLabel="#{chofer.nombre}" itemValue="#{chofer}"
+									converter="com.converter.ChoferConverter" maxResults="10"
+									forceSelection="true">
+									<p:ajax event="itemSelect"
+										listener="#{movilController.handleChoferSelect}"
+										update="choferAC,nombreChofer,deseleccionarChoferLink" />
+								</p:autoComplete>
+								<h:panelGroup>
+									<h:outputText id="nombreChofer"
+										value="#{movilController.movilView.chofer1.nombre}" />
+									<h:commandLink id="deseleccionarChoferLink"
+										disabled="#{!movilController.chofer1Selected}"
+										actionListener="#{movilController.deseleccionarChofer1}"
+										update="choferAC,nombreChofer,deseleccionarChoferLink"
+										immediate="true">
+										<h:graphicImage url="/resource/images/delete.gif"
+											title="Deseleccionar" style="border:0px" />
+									</h:commandLink>
+								</h:panelGroup>
+								<h:message id="mchac" for="choferAC" />
+
+								<h:outputText value="Parentesco" />
+								<p:selectOneMenu
+									value="#{movilController.movilView.parentezcoChofer1}"
+									converter="com.converter.ParentezcoConverter">
+									<f:selectItems value="#{movilController.parentezcoEnumList}" />
+								</p:selectOneMenu>
+								<h:outputText value="" />
+								<h:outputText value="" />
+
+								<h:outputText value="Chofer 2" />
+								<p:autoComplete id="chofer2AC"
+									disabled="#{movilController.chofer2Selected}"
+									value="#{movilController.movilView.chofer2}"
+									completeMethod="#{movilController.completeChofer}" var="chofer"
+									itemLabel="#{chofer.nombre}" itemValue="#{chofer}"
+									converter="com.converter.ChoferConverter" maxResults="10"
+									forceSelection="true">
+									<p:ajax event="itemSelect"
+										listener="#{movilController.handleChoferSelect}"
+										update="chofer2AC,nombreChofer2,deseleccionarChofer2Link" />
+								</p:autoComplete>
+								<h:panelGroup>
+									<h:outputText id="nombreChofer2"
+										value="#{movilController.movilView.chofer2.nombre}" />
+									<h:commandLink id="deseleccionarChofer2Link"
+										disabled="#{!movilController.chofer2Selected}"
+										actionListener="#{movilController.deseleccionarChofer2}"
+										update="chofer2AC,nombreChofer2,deseleccionarChofer2Link"
+										immediate="true">
+										<h:graphicImage url="/resource/images/delete.gif"
+											title="Deseleccionar" style="border:0px" />
+									</h:commandLink>
+								</h:panelGroup>
+								<h:message id="mchac2" for="chofer2AC" />
+
+								<h:outputText value="Parentesco" />
+								<p:selectOneMenu
+									value="#{movilController.movilView.parentezcoChofer2}"
+									converter="com.converter.ParentezcoConverter">
+									<f:selectItems value="#{movilController.parentezcoEnumList}" />
+								</p:selectOneMenu>
+								<h:outputText value="" />
+								<h:outputText value="" />
+
+								<h:outputText value="Chofer 3" />
+								<p:autoComplete id="chofer3AC"
+									disabled="#{movilController.chofer3Selected}"
+									value="#{movilController.movilView.chofer3}"
+									completeMethod="#{movilController.completeChofer}" var="chofer"
+									itemLabel="#{chofer.nombre}" itemValue="#{chofer}"
+									converter="com.converter.ChoferConverter" maxResults="10"
+									forceSelection="true">
+									<p:ajax event="itemSelect"
+										listener="#{movilController.handleChoferSelect}"
+										update="chofer3AC,nombreChofer3,deseleccionarChofer3Link" />
+								</p:autoComplete>
+								<h:panelGroup>
+									<h:outputText id="nombreChofer3"
+										value="#{movilController.movilView.chofer3.nombre}" />
+									<h:commandLink id="deseleccionarChofer3Link"
+										disabled="#{!movilController.chofer3Selected}"
+										actionListener="#{movilController.deseleccionarChofer3}"
+										update="chofer3AC,nombreChofer3,deseleccionarChofer3Link"
+										immediate="true">
+										<h:graphicImage url="/resource/images/delete.gif"
+											title="Deseleccionar" style="border:0px" />
+									</h:commandLink>
+								</h:panelGroup>
+								<h:message id="mchac3" for="chofer3AC" />
+
+								<h:outputText value="Parentesco" />
+								<p:selectOneMenu
+									value="#{movilController.movilView.parentezcoChofer3}"
+									converter="com.converter.ParentezcoConverter">
+									<f:selectItems value="#{movilController.parentezcoEnumList}" />
+								</p:selectOneMenu>
+								<h:outputText value="" />
+								<h:outputText value="" />
+							</h:panelGrid>
+						</p:tab>
+
 					</p:tabView>
 
 					<!-- ================================================== -->

@@ -1,6 +1,7 @@
 package com.view;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,7 +13,6 @@ import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import logistica.model.Autonomo;
 import logistica.model.Movil;
 import logistica.type.TipoInscripcionEnum;
 
@@ -28,7 +28,7 @@ public class PropietarioView implements Serializable {
 	private DireccionView direccionView;
 
 	@NotNull(message = "Valor requerido")
-	@Size(min = 1, max = 200, message = "El nombre del chofer debe tener entre 1 y 200 caracteres.")
+	@Size(min = 1, max = 200, message = "El nombre del propietario debe tener entre 1 y 200 caracteres.")
 	private String nombre;
 
 	@Size(min = 0, max = 30, message = "El DNI debe tener entre 0 y 30 caracteres.")
@@ -69,7 +69,7 @@ public class PropietarioView implements Serializable {
 	@Size(min = 0, max = 150, message = "Las observaciones deben tener entre 0 y 150 caracteres.")
 	private String observaciones;
 
-	private List<Autonomo> autonomoList;
+	private List<AutonomoView> autonomoViewList;
 
 	private List<Movil> movilList;
 
@@ -81,7 +81,7 @@ public class PropietarioView implements Serializable {
 			String observacionTelefono3, Boolean partidaNacimiento,
 			String observaciones, byte[] imagenBytes, String rutaArchivo,
 			String nombreArchivo, List<Movil> movilList,
-			List<Autonomo> autonomoList) {
+			List<AutonomoView> autonomoViewList) {
 		super();
 		this.id = id;
 		this.direccionView = direccionView;
@@ -103,12 +103,13 @@ public class PropietarioView implements Serializable {
 		this.rutaArchivo = rutaArchivo;
 		this.nombreArchivo = nombreArchivo;
 		this.movilList = movilList;
-		this.autonomoList = autonomoList;
+		this.autonomoViewList = autonomoViewList;
 	}
 
 	public PropietarioView() {
 		this(null, null, null, null, null, null, null, null, null, null, null,
-				null, null, null, null, null, null, null, null, null, null);
+				null, null, null, null, null, null, null, null,
+				new ArrayList<Movil>(), new ArrayList<AutonomoView>());
 	}
 
 	public Long getId() {
@@ -279,11 +280,11 @@ public class PropietarioView implements Serializable {
 		this.movilList = movilList;
 	}
 
-	public List<Autonomo> getAutonomoList() {
-		return autonomoList;
+	public List<AutonomoView> getAutonomoViewList() {
+		return autonomoViewList;
 	}
 
-	public void setAutonomoList(List<Autonomo> autonomoList) {
-		this.autonomoList = autonomoList;
+	public void setAutonomoViewList(List<AutonomoView> autonomoViewList) {
+		this.autonomoViewList = autonomoViewList;
 	}
 }

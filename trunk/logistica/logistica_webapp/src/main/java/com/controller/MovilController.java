@@ -14,12 +14,16 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
 import logistica.common.dao.BaseModelDAO;
+import logistica.model.Chofer;
 import logistica.model.Movil;
+import logistica.query.ChoferQuery;
 import logistica.query.MovilQuery;
 import logistica.type.AsignacionMovilEnum;
 import logistica.type.EstadoEnum;
+import logistica.type.ParentezcoEnum;
 
 import org.apache.log4j.Logger;
+import org.primefaces.event.SelectEvent;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -35,9 +39,11 @@ import com.view.MovilView;
 public class MovilController extends PaginableController<Movil> {
 	private Logger log = Logger.getLogger(MovilController.class);
 	private BaseModelDAO<Movil> dao;
+	private BaseModelDAO<Chofer> daoChofer;
 	private Movil movil;
 	private MovilQuery movilQuery;
 	private List<AsignacionMovilEnum> asignacionMovilEnumList;
+	private List<ParentezcoEnum> parentezcoEnumList;
 	private List<EstadoEnum> estadoEnumList;
 
 	@ManagedProperty("#{movilView}")
@@ -52,9 +58,13 @@ public class MovilController extends PaginableController<Movil> {
 			dao = (BaseModelDAO<Movil>) FacesContextUtils
 					.getWebApplicationContext(FacesContext.getCurrentInstance())
 					.getBean("movilDAO");
+			daoChofer = (BaseModelDAO<Chofer>) FacesContextUtils
+					.getWebApplicationContext(FacesContext.getCurrentInstance())
+					.getBean("choferDAO");
 			movilQuery = new MovilQuery();
 			asignacionMovilEnumList = Arrays.asList(AsignacionMovilEnum
 					.values());
+			parentezcoEnumList = Arrays.asList(ParentezcoEnum.values());
 			estadoEnumList = Arrays.asList(EstadoEnum.values());
 			addEdit = false;
 		} catch (Throwable e) {
@@ -92,6 +102,10 @@ public class MovilController extends PaginableController<Movil> {
 
 	public List<AsignacionMovilEnum> getAsignacionMovilEnumList() {
 		return asignacionMovilEnumList;
+	}
+
+	public List<ParentezcoEnum> getParentezcoEnumList() {
+		return parentezcoEnumList;
 	}
 
 	public List<EstadoEnum> getEstadoEnumList() {
@@ -207,5 +221,50 @@ public class MovilController extends PaginableController<Movil> {
 			filtro.put("numeroMovil", movilQuery.getNumeroMovil());
 		}
 		lazyDM.setRowCount(dao.count(filtro).intValue());
+	}
+
+	public boolean isChofer1Selected() {
+		return (movilView.getChofer1() != null);
+	}
+
+	public void deseleccionarChofer1(ActionEvent event) {
+		movilView.setChofer1(null);
+	}
+
+	public boolean isChofer2Selected() {
+		return (movilView.getChofer2() != null);
+	}
+
+	public void deseleccionarChofer2(ActionEvent event) {
+		movilView.setChofer2(null);
+	}
+
+	public boolean isChofer3Selected() {
+		return (movilView.getChofer3() != null);
+	}
+
+	public void deseleccionarChofer3(ActionEvent event) {
+		movilView.setChofer3(null);
+	}
+
+	public List<Chofer> completeChofer(String query) {
+		List<Chofer> choferList = null;
+		try {
+			ChoferQuery choferQuery = new ChoferQuery(null, query);
+			choferList = daoChofer.getList(choferQuery);
+
+		} catch (Throwable e) {
+			log.error("Error en le metodo completeChofer: ", e);
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR,
+							"Error al realizar la operacion", ""));
+		}
+		return choferList;
+	}
+
+	public void handleChoferSelect(SelectEvent event) {
+		System.out.println("se eligio un chofer");
+		// hojaRutaView.setChofer((Chofer) event.getObject());
 	}
 }

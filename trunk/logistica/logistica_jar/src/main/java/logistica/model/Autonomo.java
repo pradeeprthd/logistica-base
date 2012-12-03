@@ -32,13 +32,14 @@ public class Autonomo extends BaseModel {
 	@Basic
 	private Date fechaAutonomo;
 
-	public Autonomo(String numeroAutonomo, Date fechaAutonomo) {
+	public Autonomo(Long id, String numeroAutonomo, Date fechaAutonomo) {
+		this.id = id;
 		this.numeroAutonomo = numeroAutonomo;
 		this.fechaAutonomo = fechaAutonomo;
 	}
 
 	public Autonomo() {
-		this(null, null);
+		this(null, null, new Date());
 	}
 
 	public String getNumeroAutonomo() {

@@ -234,6 +234,146 @@
 							</h:panelGrid>
 						</p:tab>
 
+						<p:tab title="Autonomos">
+							<p:panel header="Agregar autonomo">
+								<h:panelGrid columns="4">
+									<h:outputText value="Número autonomo" />
+									<p:inputMask id="numeroAutonomoIM"
+										value="#{propietarioController.autonomo.numeroAutonomo}"
+										mask="9999/99">
+										<f:ajax execute="@this" />
+									</p:inputMask>
+
+									<h:message for="numeroAutonomoIM" />
+									<h:outputText value="" />
+
+									<h:outputText value="Fecha" />
+									<p:calendar id="fechaAutonomoC"
+										value="#{propietarioController.autonomo.fechaAutonomo}"
+										mode="popup" showOn="button" locale="es"
+										pattern="#{msgs.common_inputDateFormat}" immediate="true"
+										readOnlyInputText="true">
+										<p:ajax event="dateSelect"
+											listener="#{hojaRutaController.handleDateSelect}" />
+									</p:calendar>
+									<h:outputText value="" />
+									<h:outputText value="" />
+
+									<p:commandButton value="Agregar Autonomo"
+										actionListener="#{propietarioController.addAutonomo}"
+										update="detalleListDT" immediate="true" />
+								</h:panelGrid>
+							</p:panel>
+
+							<p:dataTable id="detalleListDT" var="detalle"
+								value="#{propietarioController.autonomoDM}" emptyMessage="">
+
+								<f:facet name="header">
+									<h:outputText value="Detalles" />
+								</f:facet>
+
+								<p:column align="center">
+									<f:facet name="header">
+										<h:outputText value="Número autonomo" />
+									</f:facet>
+									<h:outputText value="#{detalle.numeroAutonomo}" />
+								</p:column>
+
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Fecha" />
+									</f:facet>
+									<h:outputText value="#{detalle.fechaAutonomo}">
+										<f:convertDateTime pattern="#{msgs.common_inputDateFormat}"
+											timeZone="#{msgs.common_timeZone}" />
+									</h:outputText>
+								</p:column>
+
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Opciones" />
+									</f:facet>
+									<h:panelGrid columns="3">
+										<h:commandLink
+											actionListener="#{propietarioController.deleteAutonomo}"
+											immediate="true">
+											<h:graphicImage url="/resource/images/delete.gif"
+												title="Eliminar" style="border:0px" />
+										</h:commandLink>
+									</h:panelGrid>
+								</p:column>
+							</p:dataTable>
+
+						</p:tab>
+
+
+						<p:tab title="Móviles">
+							<p:panel header="Agregar Móvil">
+								<h:panelGrid columns="4">
+									<h:outputText value="Móvil" />
+									<p:autoComplete id="movilAC"
+										disabled="#{propietarioController.movilSelected}"
+										value="#{propietarioController.movil}"
+										completeMethod="#{propietarioController.completeMovil}"
+										var="movil"
+										itemLabel="#{movil.numeroMovil} - #{movil.patente}"
+										itemValue="#{movil}" converter="com.converter.MovilConverter"
+										maxResults="10" queryDelay="300" forceSelection="true">
+										<p:ajax event="itemSelect"
+											listener="#{propietarioController.handleMovilSelect}"
+											update="movilAC,nombreMovil,deseleccionarMovilLink" />
+									</p:autoComplete>
+									<h:panelGroup>
+										<h:outputText id="nombreMovil"
+											value="#{propietarioController.movil.numeroMovil} #{hojaRutaController.hojaRutaView.movil.patente}" />
+										<h:commandLink id="deseleccionarMovilLink"
+											disabled="#{!propietarioController.movilSelected}"
+											actionListener="#{propietarioController.deseleccionarMovil}"
+											update="movilAC,nombreMovil,deseleccionarMovilLink"
+											immediate="true">
+											<h:graphicImage url="/resource/images/delete.gif"
+												title="Deseleccionar" style="border:0px" />
+										</h:commandLink>
+									</h:panelGroup>
+									<h:message id="mmlac" for="movilAC" />
+
+									<p:commandButton value="Agregar Móvil"
+										actionListener="#{propietarioController.addMovil}"
+										update="detalleMovilListDT,movilAC,nombreMovil,deseleccionarMovilLink" immediate="true" />
+								</h:panelGrid>
+							</p:panel>
+
+							<p:dataTable id="detalleMovilListDT" var="movil"
+								value="#{propietarioController.movilDM}" emptyMessage="">
+
+								<f:facet name="header">
+									<h:outputText value="Detalles" />
+								</f:facet>
+
+								<p:column align="center">
+									<f:facet name="header">
+										<h:outputText value="Móvil" />
+									</f:facet>
+									<h:outputText value="#{movil.numeroMovil} - #{movil.patente}" />
+								</p:column>
+
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Opciones" />
+									</f:facet>
+									<h:panelGrid columns="3">
+										<h:commandLink
+											actionListener="#{propietarioController.deleteMovil}"
+											immediate="true">
+											<h:graphicImage url="/resource/images/delete.gif"
+												title="Eliminar" style="border:0px" />
+										</h:commandLink>
+									</h:panelGrid>
+								</p:column>
+							</p:dataTable>
+
+						</p:tab>
+
 					</p:tabView>
 
 

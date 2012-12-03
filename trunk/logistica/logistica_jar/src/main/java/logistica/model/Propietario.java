@@ -21,6 +21,8 @@ import logistica.type.TipoInscripcionEnum;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @SuppressWarnings("serial")
 @Entity
@@ -52,7 +54,8 @@ public class Propietario extends Sujeto {
 	@JoinColumn(name = "propietarioID")
 	private List<Autonomo> autonomoList;
 
-	@OneToMany(orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(orphanRemoval = false, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@Fetch(value = FetchMode.SUBSELECT)
 	@JoinColumn(name = "propietarioID")
 	private List<Movil> movilList;
 
