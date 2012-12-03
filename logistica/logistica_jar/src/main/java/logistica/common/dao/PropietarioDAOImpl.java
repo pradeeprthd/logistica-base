@@ -1,5 +1,6 @@
 package logistica.common.dao;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -111,5 +112,14 @@ public class PropietarioDAOImpl extends
 			}
 		}
 		getHibernateTemplate().delete(object);
+	}
+
+	@Override
+	public List<String> getListNames() {
+		List<String> list = new ArrayList<String>();
+		list.add("autonomoList");
+		//list.add("movilList");
+
+		return list;
 	}
 }

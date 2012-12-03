@@ -8,8 +8,11 @@ import javax.faces.bean.ViewScoped;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import logistica.model.Chofer;
+import logistica.model.Propietario;
 import logistica.type.AsignacionMovilEnum;
 import logistica.type.EstadoEnum;
+import logistica.type.ParentezcoEnum;
 
 @ManagedBean
 @ViewScoped
@@ -41,10 +44,27 @@ public class MovilView implements Serializable {
 
 	private Boolean comodato;
 
+	private Chofer chofer1;
+
+	private ParentezcoEnum parentezcoChofer1;
+
+	private Chofer chofer2;
+
+	private ParentezcoEnum parentezcoChofer2;
+
+	private Chofer chofer3;
+
+	private ParentezcoEnum parentezcoChofer3;
+
+	private Propietario propietario;
+
 	public MovilView(Long id, Long numeroMovil, String patente,
 			String descripcion, AsignacionMovilEnum asignacionMovil,
 			EstadoEnum estado, Date fechaIngreso, Date fechaEgreso,
-			Boolean controlado, Boolean comodato) {
+			Boolean controlado, Boolean comodato, Chofer chofer1,
+			ParentezcoEnum parentezcoChofer1, Chofer chofer2,
+			ParentezcoEnum parentezcoChofer2, Chofer chofer3,
+			ParentezcoEnum parentezcoChofer3, Propietario propietario) {
 		super();
 		this.id = id;
 		this.patente = patente;
@@ -56,10 +76,18 @@ public class MovilView implements Serializable {
 		this.fechaEgreso = fechaEgreso;
 		this.controlado = controlado;
 		this.comodato = comodato;
+		this.chofer1 = chofer1;
+		this.chofer2 = chofer2;
+		this.chofer3 = chofer3;
+		this.propietario = propietario;
+		this.parentezcoChofer1 = parentezcoChofer1;
+		this.parentezcoChofer2 = parentezcoChofer2;
+		this.parentezcoChofer3 = parentezcoChofer3;
 	}
 
 	public MovilView() {
-		this(null, null, null, null, null, null, null, null, null, null);
+		this(null, null, null, null, null, null, null, null, null, null, null,
+				null, null, null, null, null, null);
 	}
 
 	public Long getId() {
@@ -141,4 +169,61 @@ public class MovilView implements Serializable {
 	public void setComodato(Boolean comodato) {
 		this.comodato = comodato;
 	}
+
+	public Chofer getChofer1() {
+		return chofer1;
+	}
+
+	public void setChofer1(Chofer chofer1) {
+		this.chofer1 = chofer1;
+	}
+
+	public ParentezcoEnum getParentezcoChofer1() {
+		return parentezcoChofer1;
+	}
+
+	public void setParentezcoChofer1(ParentezcoEnum parentezcoChofer1) {
+		this.parentezcoChofer1 = parentezcoChofer1;
+	}
+
+	public Chofer getChofer2() {
+		return chofer2;
+	}
+
+	public void setChofer2(Chofer chofer2) {
+		this.chofer2 = chofer2;
+	}
+
+	public ParentezcoEnum getParentezcoChofer2() {
+		return parentezcoChofer2;
+	}
+
+	public void setParentezcoChofer2(ParentezcoEnum parentezcoChofer2) {
+		this.parentezcoChofer2 = parentezcoChofer2;
+	}
+
+	public Chofer getChofer3() {
+		return chofer3;
+	}
+
+	public void setChofer3(Chofer chofer3) {
+		this.chofer3 = chofer3;
+	}
+
+	public ParentezcoEnum getParentezcoChofer3() {
+		return parentezcoChofer3;
+	}
+
+	public void setParentezcoChofer3(ParentezcoEnum parentezcoChofer3) {
+		this.parentezcoChofer3 = parentezcoChofer3;
+	}
+
+	public Propietario getPropietario() {
+		return propietario;
+	}
+
+	public void setPropietario(Propietario propietario) {
+		this.propietario = propietario;
+	}
+
 }
