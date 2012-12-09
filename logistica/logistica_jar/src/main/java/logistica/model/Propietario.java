@@ -57,7 +57,7 @@ public class Propietario extends Sujeto {
 	@OneToMany(orphanRemoval = false, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@Fetch(value = FetchMode.SUBSELECT)
 	@JoinColumn(name = "propietarioID")
-	private List<Movil> movilList;
+	private List<MovilPropietarioDetalle> movilPropietarioDetalleList;
 
 	public Propietario(Long id, String nombre, Direccion direccion, String dni,
 			Date fechaNacimiento, TipoInscripcionEnum tipoInscripcion,
@@ -66,7 +66,8 @@ public class Propietario extends Sujeto {
 			String observacionTelefono2, String telefono3,
 			String observacionTelefono3, Boolean partidaNacimiento,
 			String observaciones, byte[] imagen, String rutaArchivo,
-			String nombreArchivo, List<Movil> movilList,
+			String nombreArchivo,
+			List<MovilPropietarioDetalle> movilPropietarioDetalleList,
 			List<Autonomo> autonomoList) {
 		super(nombre, direccion, dni, fechaNacimiento, tipoInscripcion, cuil,
 				cuit, telefono, observacionTelefono, telefono2,
@@ -78,7 +79,7 @@ public class Propietario extends Sujeto {
 		this.rutaArchivo = rutaArchivo;
 		this.nombreArchivo = nombreArchivo;
 		this.autonomoList = autonomoList;
-		this.movilList = movilList;
+		this.movilPropietarioDetalleList = movilPropietarioDetalleList;
 	}
 
 	public Propietario() {
@@ -144,11 +145,13 @@ public class Propietario extends Sujeto {
 		this.autonomoList = autonomoList;
 	}
 
-	public List<Movil> getMovilList() {
-		return movilList;
+	public List<MovilPropietarioDetalle> getMovilPropietarioDetalleList() {
+		return movilPropietarioDetalleList;
 	}
 
-	public void setMovilList(List<Movil> movilList) {
-		this.movilList = movilList;
+	public void setMovilPropietarioDetalleList(
+			List<MovilPropietarioDetalle> movilPropietarioDetalleList) {
+		this.movilPropietarioDetalleList = movilPropietarioDetalleList;
 	}
+
 }

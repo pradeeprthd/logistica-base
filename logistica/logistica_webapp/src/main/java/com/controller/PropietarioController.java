@@ -25,6 +25,7 @@ import logistica.query.PropietarioQuery;
 import logistica.type.TipoInscripcionEnum;
 
 import org.apache.log4j.Logger;
+import org.primefaces.event.DateSelectEvent;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultStreamedContent;
@@ -35,10 +36,12 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.jsf.FacesContextUtils;
 
 import com.builder.AutonomoBuilder;
+import com.builder.MovilPropietarioDetalleBuilder;
 import com.builder.PropietarioBuilder;
 import com.controller.common.DireccionBean;
 import com.util.JSFUtil;
 import com.view.AutonomoView;
+import com.view.MovilPropietarioDetalleView;
 import com.view.PropietarioView;
 
 @ManagedBean
@@ -54,9 +57,9 @@ public class PropietarioController extends PaginableController<Propietario> {
 	private List<TipoInscripcionEnum> tipoInscripcionEnumList;
 	private StreamedContent imagen;
 	private DataModel<AutonomoView> autonomoDM;
-	private DataModel<Movil> movilDM;
+	private DataModel<MovilPropietarioDetalleView> movilDM;
 	private Autonomo autonomo;
-	private Movil movil;
+	private MovilPropietarioDetalleView movilPropietarioDetalle;
 
 	@ManagedProperty("#{propietarioView}")
 	private PropietarioView propietarioView;
@@ -69,6 +72,9 @@ public class PropietarioController extends PaginableController<Propietario> {
 
 	@ManagedProperty("#{autonomoBuilder}")
 	private AutonomoBuilder autonomoBuilder;
+
+	@ManagedProperty("#{movilPropietarioDetalleBuilder}")
+	private MovilPropietarioDetalleBuilder movilPropietarioDetalleBuilder;
 
 	@SuppressWarnings("unchecked")
 	public PropietarioController() {
@@ -84,8 +90,8 @@ public class PropietarioController extends PaginableController<Propietario> {
 					.values());
 			autonomoDM = new ListDataModel<AutonomoView>();
 			autonomo = new Autonomo();
-			movil = null;
-			movilDM = new ListDataModel<Movil>();
+			movilPropietarioDetalle = new MovilPropietarioDetalleView();
+			movilDM = new ListDataModel<MovilPropietarioDetalleView>();
 			addEdit = false;
 		} catch (Throwable e) {
 			log.error("Error al inicializar la clase PropietarioController", e);
@@ -152,16 +158,26 @@ public class PropietarioController extends PaginableController<Propietario> {
 		this.autonomoBuilder = autonomoBuilder;
 	}
 
-	public Movil getMovil() {
-		return movil;
+	public MovilPropietarioDetalleView getMovilPropietarioDetalle() {
+		return movilPropietarioDetalle;
 	}
 
-	public void setMovil(Movil movil) {
-		this.movil = movil;
+	public void setMovilPropietarioDetalle(
+			MovilPropietarioDetalleView movilPropietarioDetalle) {
+		this.movilPropietarioDetalle = movilPropietarioDetalle;
 	}
 
-	public DataModel<Movil> getMovilDM() {
+	public DataModel<MovilPropietarioDetalleView> getMovilDM() {
 		return movilDM;
+	}
+
+	public MovilPropietarioDetalleBuilder getMovilPropietarioDetalleBuilder() {
+		return movilPropietarioDetalleBuilder;
+	}
+
+	public void setMovilPropietarioDetalleBuilder(
+			MovilPropietarioDetalleBuilder movilPropietarioDetalleBuilder) {
+		this.movilPropietarioDetalleBuilder = movilPropietarioDetalleBuilder;
 	}
 
 	public void query(ActionEvent event) {
@@ -174,7 +190,9 @@ public class PropietarioController extends PaginableController<Propietario> {
 			propietario = dao.findFULL(propietario.getID());
 			autonomoDM = new ListDataModel<AutonomoView>(
 					autonomoBuilder.toView(propietario.getAutonomoList()));
-			movilDM = new ListDataModel<Movil>(propietario.getMovilList());
+			movilDM = new ListDataModel<MovilPropietarioDetalleView>(
+					movilPropietarioDetalleBuilder.toView(propietario
+							.getMovilPropietarioDetalleList()));
 			propietarioView = propietarioBuilder.toView(propietario);
 			direccionBean.setDireccionView(propietarioView.getDireccionView());
 
@@ -244,7 +262,7 @@ public class PropietarioController extends PaginableController<Propietario> {
 	public void clear() {
 		propietario = new Propietario();
 		autonomo = new Autonomo();
-		movil = null;
+		movilPropietarioDetalle = new MovilPropietarioDetalleView();
 		propietarioView = new PropietarioView();
 		direccionBean.clear();
 	}
@@ -318,11 +336,12 @@ public class PropietarioController extends PaginableController<Propietario> {
 	}
 
 	public boolean isMovilSelected() {
-		return (movil != null);
+		return (movilPropietarioDetalle != null && movilPropietarioDetalle
+				.getMovil() != null);
 	}
 
 	public void deseleccionarMovil(ActionEvent event) {
-		setMovil(null);
+		movilPropietarioDetalle.setMovil(null);
 	}
 
 	public List<Movil> completeMovil(String query) {
@@ -354,17 +373,44 @@ public class PropietarioController extends PaginableController<Propietario> {
 	}
 
 	public void addMovil(ActionEvent event) {
-		if (movil != null && !propietarioView.getMovilList().contains(movil)) {
-			propietarioView.getMovilList().add(movil);
-			movilDM = new ListDataModel<Movil>(propietarioView.getMovilList());
-			setMovil(null);
+		if (movilPropietarioDetalle != null
+				&& !propietarioView.getMovilPropietarioDetalleList().contains(
+						movilPropietarioDetalle)) {
+
+			if (!isDetalleVacio(movilPropietarioDetalle)) {
+				try {
+					propietarioView
+							.getMovilPropietarioDetalleList()
+							.add((MovilPropietarioDetalleView) movilPropietarioDetalle
+									.clone());
+				} catch (CloneNotSupportedException e) {
+				}
+				movilDM = new ListDataModel<MovilPropietarioDetalleView>(
+						propietarioView.getMovilPropietarioDetalleList());
+				movilPropietarioDetalle.setMovil(null);
+			}
 		}
 	}
 
 	public void deleteMovil(ActionEvent event) {
-		Movil detalle = movilDM.getRowData();
-		propietarioView.getMovilList().remove(detalle);
-		movilDM = new ListDataModel<Movil>(propietarioView.getMovilList());
+		MovilPropietarioDetalleView detalle = movilDM.getRowData();
+		propietarioView.getMovilPropietarioDetalleList().remove(detalle);
+		movilDM = new ListDataModel<MovilPropietarioDetalleView>(
+				propietarioView.getMovilPropietarioDetalleList());
 	}
 
+	private boolean isDetalleVacio(
+			MovilPropietarioDetalleView movilPropietarioDetalle) {
+		boolean ret = false;
+
+		ret = movilPropietarioDetalle.getMovil() == null
+				|| movilPropietarioDetalle.getFechaTitularDesde() == null
+				|| movilPropietarioDetalle.getFechaCedulaVerde() == null
+				|| movilPropietarioDetalle.getNumeroCedulaVerde() == null
+				|| movilPropietarioDetalle.getNumeroTitulo() == null;
+		return ret;
+	}
+
+	public void handleDateSelect(DateSelectEvent event) {
+	}
 }

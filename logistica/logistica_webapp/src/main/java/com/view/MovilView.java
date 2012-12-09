@@ -58,17 +58,54 @@ public class MovilView implements Serializable {
 
 	private Propietario propietario;
 
+	private String marca;
+
+	private String modelo;
+
+	private Integer anio;
+
+	private String tipo;
+
+	private String motor;
+
+	private String numeroMotor;
+
+	private String potencia;
+
+	private String chasis;
+
+	private String numeroChasis;
+
+	private Integer cantidadEjes;
+
+	private Integer tara;
+
+	private Integer capacidadCarga;
+
+	private Boolean prenda;
+
+	private Date fechaPrenda;
+
+	private String acreedor;
+
+	private Boolean informeDominio;
+
 	public MovilView(Long id, Long numeroMovil, String patente,
 			String descripcion, AsignacionMovilEnum asignacionMovil,
 			EstadoEnum estado, Date fechaIngreso, Date fechaEgreso,
 			Boolean controlado, Boolean comodato, Chofer chofer1,
 			ParentezcoEnum parentezcoChofer1, Chofer chofer2,
 			ParentezcoEnum parentezcoChofer2, Chofer chofer3,
-			ParentezcoEnum parentezcoChofer3, Propietario propietario) {
+			ParentezcoEnum parentezcoChofer3, Propietario propietario,
+			String marca, String modelo, Integer anio, String tipo,
+			String motor, String numeroMotor, String potencia, String chasis,
+			String numeroChasis, Integer cantidadEjes, Integer tara,
+			Integer capacidadCarga, Boolean prenda, Date fechaPrenda,
+			String acreedor, Boolean informeDominio) {
 		super();
 		this.id = id;
-		this.patente = patente;
 		this.numeroMovil = numeroMovil;
+		this.patente = patente;
 		this.descripcion = descripcion;
 		this.asignacionMovil = asignacionMovil;
 		this.estado = estado;
@@ -77,17 +114,35 @@ public class MovilView implements Serializable {
 		this.controlado = controlado;
 		this.comodato = comodato;
 		this.chofer1 = chofer1;
-		this.chofer2 = chofer2;
-		this.chofer3 = chofer3;
-		this.propietario = propietario;
 		this.parentezcoChofer1 = parentezcoChofer1;
+		this.chofer2 = chofer2;
 		this.parentezcoChofer2 = parentezcoChofer2;
+		this.chofer3 = chofer3;
 		this.parentezcoChofer3 = parentezcoChofer3;
+		this.propietario = propietario;
+		this.marca = marca;
+		this.modelo = modelo;
+		this.anio = anio;
+		this.tipo = tipo;
+		this.motor = motor;
+		this.numeroMotor = numeroMotor;
+		this.potencia = potencia;
+		this.chasis = chasis;
+		this.numeroChasis = numeroChasis;
+		this.cantidadEjes = cantidadEjes;
+		this.tara = tara;
+		this.capacidadCarga = capacidadCarga;
+		this.prenda = prenda;
+		this.fechaPrenda = fechaPrenda;
+		this.acreedor = acreedor;
+		this.informeDominio = informeDominio;
 	}
 
 	public MovilView() {
 		this(null, null, null, null, null, null, null, null, null, null, null,
-				null, null, null, null, null, null);
+				null, null, null, null, null, null, null, null, null, null,
+				null, null, null, null, null, null, null, null, null, null,
+				null, null);
 	}
 
 	public Long getId() {
@@ -224,6 +279,134 @@ public class MovilView implements Serializable {
 
 	public void setPropietario(Propietario propietario) {
 		this.propietario = propietario;
+	}
+
+	public String getMarca() {
+		return marca;
+	}
+
+	public void setMarca(String marca) {
+		this.marca = marca;
+	}
+
+	public String getModelo() {
+		return modelo;
+	}
+
+	public void setModelo(String modelo) {
+		this.modelo = modelo;
+	}
+
+	public Integer getAnio() {
+		return anio;
+	}
+
+	public void setAnio(Integer anio) {
+		this.anio = anio;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
+	public String getMotor() {
+		return motor;
+	}
+
+	public void setMotor(String motor) {
+		this.motor = motor;
+	}
+
+	public String getNumeroMotor() {
+		return numeroMotor;
+	}
+
+	public void setNumeroMotor(String numeroMotor) {
+		this.numeroMotor = numeroMotor;
+	}
+
+	public String getPotencia() {
+		return potencia;
+	}
+
+	public void setPotencia(String potencia) {
+		this.potencia = potencia;
+	}
+
+	public String getChasis() {
+		return chasis;
+	}
+
+	public void setChasis(String chasis) {
+		this.chasis = chasis;
+	}
+
+	public String getNumeroChasis() {
+		return numeroChasis;
+	}
+
+	public void setNumeroChasis(String numeroChasis) {
+		this.numeroChasis = numeroChasis;
+	}
+
+	public Integer getCantidadEjes() {
+		return cantidadEjes;
+	}
+
+	public void setCantidadEjes(Integer cantidadEjes) {
+		this.cantidadEjes = cantidadEjes;
+	}
+
+	public Integer getTara() {
+		return tara;
+	}
+
+	public void setTara(Integer tara) {
+		this.tara = tara;
+	}
+
+	public Integer getCapacidadCarga() {
+		return capacidadCarga;
+	}
+
+	public void setCapacidadCarga(Integer capacidadCarga) {
+		this.capacidadCarga = capacidadCarga;
+	}
+
+	public Boolean getPrenda() {
+		return prenda;
+	}
+
+	public void setPrenda(Boolean prenda) {
+		this.prenda = prenda;
+	}
+
+	public Date getFechaPrenda() {
+		return fechaPrenda;
+	}
+
+	public void setFechaPrenda(Date fechaPrenda) {
+		this.fechaPrenda = fechaPrenda;
+	}
+
+	public String getAcreedor() {
+		return acreedor;
+	}
+
+	public void setAcreedor(String acreedor) {
+		this.acreedor = acreedor;
+	}
+
+	public Boolean getInformeDominio() {
+		return informeDominio;
+	}
+
+	public void setInformeDominio(Boolean informeDominio) {
+		this.informeDominio = informeDominio;
 	}
 
 }
