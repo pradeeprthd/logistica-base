@@ -13,7 +13,6 @@ import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import logistica.model.Movil;
 import logistica.type.TipoInscripcionEnum;
 
 import org.primefaces.model.UploadedFile;
@@ -71,7 +70,7 @@ public class PropietarioView implements Serializable {
 
 	private List<AutonomoView> autonomoViewList;
 
-	private List<Movil> movilList;
+	private List<MovilPropietarioDetalleView> movilPropietarioDetalleList;
 
 	public PropietarioView(Long id, String nombre, DireccionView direccionView,
 			String dni, Date fechaNacimiento,
@@ -80,7 +79,8 @@ public class PropietarioView implements Serializable {
 			String observacionTelefono2, String telefono3,
 			String observacionTelefono3, Boolean partidaNacimiento,
 			String observaciones, byte[] imagenBytes, String rutaArchivo,
-			String nombreArchivo, List<Movil> movilList,
+			String nombreArchivo,
+			List<MovilPropietarioDetalleView> movilPropietarioDetalleList,
 			List<AutonomoView> autonomoViewList) {
 		super();
 		this.id = id;
@@ -102,14 +102,15 @@ public class PropietarioView implements Serializable {
 		this.imagenBytes = imagenBytes;
 		this.rutaArchivo = rutaArchivo;
 		this.nombreArchivo = nombreArchivo;
-		this.movilList = movilList;
+		this.movilPropietarioDetalleList = movilPropietarioDetalleList;
 		this.autonomoViewList = autonomoViewList;
 	}
 
 	public PropietarioView() {
 		this(null, null, null, null, null, null, null, null, null, null, null,
 				null, null, null, null, null, null, null, null,
-				new ArrayList<Movil>(), new ArrayList<AutonomoView>());
+				new ArrayList<MovilPropietarioDetalleView>(),
+				new ArrayList<AutonomoView>());
 	}
 
 	public Long getId() {
@@ -272,12 +273,13 @@ public class PropietarioView implements Serializable {
 		this.nombreArchivo = nombreArchivo;
 	}
 
-	public List<Movil> getMovilList() {
-		return movilList;
+	public List<MovilPropietarioDetalleView> getMovilPropietarioDetalleList() {
+		return movilPropietarioDetalleList;
 	}
 
-	public void setMovilList(List<Movil> movilList) {
-		this.movilList = movilList;
+	public void setMovilPropietarioDetalleList(
+			List<MovilPropietarioDetalleView> movilPropietarioDetalleList) {
+		this.movilPropietarioDetalleList = movilPropietarioDetalleList;
 	}
 
 	public List<AutonomoView> getAutonomoViewList() {

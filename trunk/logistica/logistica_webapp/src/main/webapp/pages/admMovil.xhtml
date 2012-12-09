@@ -210,7 +210,7 @@
 									forceSelection="true">
 									<p:ajax event="itemSelect"
 										listener="#{movilController.handleChoferSelect}"
-										update="choferAC,nombreChofer,deseleccionarChoferLink" />
+										update="choferAC,nombreChofer,deseleccionarChoferLink,fotoChofer1GI" />
 								</p:autoComplete>
 								<h:panelGroup>
 									<h:outputText id="nombreChofer"
@@ -218,13 +218,17 @@
 									<h:commandLink id="deseleccionarChoferLink"
 										disabled="#{!movilController.chofer1Selected}"
 										actionListener="#{movilController.deseleccionarChofer1}"
-										update="choferAC,nombreChofer,deseleccionarChoferLink"
+										update="choferAC,nombreChofer,deseleccionarChoferLink,fotoChofer1GI"
 										immediate="true">
 										<h:graphicImage url="/resource/images/delete.gif"
 											title="Deseleccionar" style="border:0px" />
 									</h:commandLink>
 								</h:panelGroup>
 								<h:message id="mchac" for="choferAC" />
+
+								<h:graphicImage id="fotoChofer1GI"
+									value="/images/#{movilController.movilView.chofer1.nombreArchivo}"
+									width="70" height="100" />
 
 								<h:outputText value="Parentesco" />
 								<p:selectOneMenu
@@ -233,7 +237,7 @@
 									<f:selectItems value="#{movilController.parentezcoEnumList}" />
 								</p:selectOneMenu>
 								<h:outputText value="" />
-								<h:outputText value="" />
+
 
 								<h:outputText value="Chofer 2" />
 								<p:autoComplete id="chofer2AC"
@@ -245,7 +249,7 @@
 									forceSelection="true">
 									<p:ajax event="itemSelect"
 										listener="#{movilController.handleChoferSelect}"
-										update="chofer2AC,nombreChofer2,deseleccionarChofer2Link" />
+										update="chofer2AC,nombreChofer2,deseleccionarChofer2Link,fotoChofer2GI" />
 								</p:autoComplete>
 								<h:panelGroup>
 									<h:outputText id="nombreChofer2"
@@ -253,13 +257,17 @@
 									<h:commandLink id="deseleccionarChofer2Link"
 										disabled="#{!movilController.chofer2Selected}"
 										actionListener="#{movilController.deseleccionarChofer2}"
-										update="chofer2AC,nombreChofer2,deseleccionarChofer2Link"
+										update="chofer2AC,nombreChofer2,deseleccionarChofer2Link,fotoChofer2GI"
 										immediate="true">
 										<h:graphicImage url="/resource/images/delete.gif"
 											title="Deseleccionar" style="border:0px" />
 									</h:commandLink>
 								</h:panelGroup>
 								<h:message id="mchac2" for="chofer2AC" />
+
+								<h:graphicImage id="fotoChofer2GI"
+									value="/images/#{movilController.movilView.chofer2.nombreArchivo}"
+									width="70" height="100" />
 
 								<h:outputText value="Parentesco" />
 								<p:selectOneMenu
@@ -268,7 +276,7 @@
 									<f:selectItems value="#{movilController.parentezcoEnumList}" />
 								</p:selectOneMenu>
 								<h:outputText value="" />
-								<h:outputText value="" />
+
 
 								<h:outputText value="Chofer 3" />
 								<p:autoComplete id="chofer3AC"
@@ -280,7 +288,7 @@
 									forceSelection="true">
 									<p:ajax event="itemSelect"
 										listener="#{movilController.handleChoferSelect}"
-										update="chofer3AC,nombreChofer3,deseleccionarChofer3Link" />
+										update="chofer3AC,nombreChofer3,deseleccionarChofer3Link,fotoChofer3GI" />
 								</p:autoComplete>
 								<h:panelGroup>
 									<h:outputText id="nombreChofer3"
@@ -288,13 +296,17 @@
 									<h:commandLink id="deseleccionarChofer3Link"
 										disabled="#{!movilController.chofer3Selected}"
 										actionListener="#{movilController.deseleccionarChofer3}"
-										update="chofer3AC,nombreChofer3,deseleccionarChofer3Link"
+										update="chofer3AC,nombreChofer3,deseleccionarChofer3Link,fotoChofer3GI"
 										immediate="true">
 										<h:graphicImage url="/resource/images/delete.gif"
 											title="Deseleccionar" style="border:0px" />
 									</h:commandLink>
 								</h:panelGroup>
 								<h:message id="mchac3" for="chofer3AC" />
+
+								<h:graphicImage id="fotoChofer3GI"
+									value="/images/#{movilController.movilView.chofer3.nombreArchivo}"
+									width="70" height="100" />
 
 								<h:outputText value="Parentesco" />
 								<p:selectOneMenu
@@ -303,7 +315,103 @@
 									<f:selectItems value="#{movilController.parentezcoEnumList}" />
 								</p:selectOneMenu>
 								<h:outputText value="" />
+
+							</h:panelGrid>
+						</p:tab>
+
+						<p:tab title="Caracteristicas">
+							<p:focus for="numeroM" />
+							<h:panelGrid columns="6">
+
+								<h:outputText value="Marca" />
+								<p:inputText id="marcaIT"
+									value="#{movilController.movilView.marca}">
+									<f:validateBean for="marcaIT" />
+								</p:inputText>
+								<h:message id="mmarcaIT" for="marcaIT" />
+
+								<h:outputText value="Modelo" />
+								<p:inputText id="modeloIT"
+									value="#{movilController.movilView.modelo}">
+									<f:validateBean for="modeloIT" />
+								</p:inputText>
+								<h:message id="mmodeloIT" for="modeloIT" />
+
+								<h:outputText value="Año" />
+								<p:inputMask id="anioIM"
+									value="#{movilController.movilView.anio}" mask="9999">
+									<f:validateBean for="anioIM" />
+								</p:inputMask>
+								<h:message id="manioIT" for="anioIT" />
+
+								<h:outputText value="Tipo" />
+								<p:inputText id="tipoIT"
+									value="#{movilController.movilView.tipo}">
+									<f:validateBean for="tipoIT" />
+								</p:inputText>
+								<h:message id="mtipoIT" for="tipoIT" />
+
+								<h:outputText value="Motor" />
+								<p:inputText id="motorIT"
+									value="#{movilController.movilView.motor}">
+									<f:validateBean for="motorIT" />
+								</p:inputText>
+								<h:message id="mmotorIT" for="motorIT" />
+
+								<h:outputText value="Número motor" />
+								<p:inputText id="numeroMotorIT"
+									value="#{movilController.movilView.numeroMotor}">
+									<f:validateBean for="numeroMotorIT" />
+								</p:inputText>
+								<h:message id="mnumeroMotorIT" for="numeroMotorIT" />
+
+								<h:outputText value="Potencia" />
+								<p:inputText id="potenciaIT"
+									value="#{movilController.movilView.potencia}">
+									<f:validateBean for="potenciaIT" />
+								</p:inputText>
+								<h:message id="mpotenciaIT" for="potenciaIT" />
+
+								<h:outputText value="Chasis" />
+								<p:inputText id="chasisIT"
+									value="#{movilController.movilView.chasis}">
+									<f:validateBean for="chasisIT" />
+								</p:inputText>
+								<h:message id="mchasisIT" for="chasisIT" />
+
+								<h:outputText value="Número chasis" />
+								<p:inputText id="numeroChasisIT"
+									value="#{movilController.movilView.numeroChasis}">
+									<f:validateBean for="numeroChasisIT" />
+								</p:inputText>
+								<h:message id="mnumeroChasisIT" for="numeroChasisIT" />
+
+								<h:outputText value="Prenda" />
+								<p:selectBooleanCheckbox
+									value="#{movilController.movilView.prenda}" />
 								<h:outputText value="" />
+
+								<h:outputText value="Fecha prenda" />
+								<p:calendar id="fechaPrendaC"
+									value="#{movilController.movilView.fechaPrenda}" mode="popup"
+									showOn="button" locale="es"
+									pattern="#{msgs.common_inputDateFormat}" immediate="true"
+									readOnlyInputText="true">
+								</p:calendar>
+								<h:outputText value="" />
+
+								<h:outputText value="Acreedor" />
+								<p:inputText id="acreedorIT"
+									value="#{movilController.movilView.acreedor}">
+									<f:validateBean for="acreedorIT" />
+								</p:inputText>
+								<h:message id="macreedorIT" for="acreedorIT" />
+
+								<h:outputText value="Informe dominio" />
+								<p:selectBooleanCheckbox
+									value="#{movilController.movilView.informeDominio}" />
+								<h:outputText value="" />
+
 							</h:panelGrid>
 						</p:tab>
 

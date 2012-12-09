@@ -86,12 +86,65 @@ public class Movil extends BaseModel {
 	@JoinColumn(name = "propietarioID")
 	private Propietario propietario;
 
+	@Column(length = 200)
+	private String marca;
+
+	@Column(length = 200)
+	private String modelo;
+
+	@Basic
+	private Integer anio;
+
+	@Column(length = 200)
+	private String tipo;
+
+	@Column(length = 200)
+	private String motor;
+
+	@Column(length = 200)
+	private String numeroMotor;
+
+	@Column(length = 200)
+	private String potencia;
+
+	@Column(length = 200)
+	private String chasis;
+
+	@Column(length = 200)
+	private String numeroChasis;
+
+	@Basic
+	private Integer cantidadEjes;
+
+	@Basic
+	private Integer tara;
+
+	@Basic
+	private Integer capacidadCarga;
+
+	@Basic
+	private Boolean prenda;
+
+	@Basic
+	private Date fechaPrenda;
+
+	@Column(length = 200)
+	private String acreedor;
+
+	@Basic
+	private Boolean informeDominio;
+
 	public Movil(Long id, Long numeroMovil, String patente, String descripcion,
 			AsignacionMovilEnum asignacionMovil, EstadoEnum estado,
 			Date fechaIngreso, Date fechaEgreso, Boolean controlado,
 			Boolean comodato, Chofer chofer1, ParentezcoEnum parentezcoChofer1,
 			Chofer chofer2, ParentezcoEnum parentezcoChofer2, Chofer chofer3,
-			ParentezcoEnum parentezcoChofer3, Propietario propietario) {
+			ParentezcoEnum parentezcoChofer3, Propietario propietario,
+			String marca, String modelo, Integer anio, String tipo,
+			String motor, String numeroMotor, String potencia, String chasis,
+			String numeroChasis, Integer cantidadEjes, Integer tara,
+			Integer capacidadCarga, Boolean prenda, Date fechaPrenda,
+			String acreedor, Boolean informeDominio) {
 		super();
 		this.id = id;
 		this.numeroMovil = numeroMovil;
@@ -104,17 +157,35 @@ public class Movil extends BaseModel {
 		this.controlado = controlado;
 		this.comodato = comodato;
 		this.chofer1 = chofer1;
-		this.chofer2 = chofer2;
-		this.chofer3 = chofer3;
-		this.propietario = propietario;
 		this.parentezcoChofer1 = parentezcoChofer1;
+		this.chofer2 = chofer2;
 		this.parentezcoChofer2 = parentezcoChofer2;
+		this.chofer3 = chofer3;
 		this.parentezcoChofer3 = parentezcoChofer3;
+		this.propietario = propietario;
+		this.marca = marca;
+		this.modelo = modelo;
+		this.anio = anio;
+		this.tipo = tipo;
+		this.motor = motor;
+		this.numeroMotor = numeroMotor;
+		this.potencia = potencia;
+		this.chasis = chasis;
+		this.numeroChasis = numeroChasis;
+		this.cantidadEjes = cantidadEjes;
+		this.tara = tara;
+		this.capacidadCarga = capacidadCarga;
+		this.prenda = prenda;
+		this.fechaPrenda = fechaPrenda;
+		this.acreedor = acreedor;
+		this.informeDominio = informeDominio;
 	}
 
 	public Movil() {
 		this(null, null, null, null, null, null, null, null, null, null, null,
-				null, null, null, null, null, null);
+				null, null, null, null, null, null, null, null, null, null,
+				null, null, null, null, null, null, null, null, null, null,
+				null, null);
 	}
 
 	@Override
@@ -253,6 +324,134 @@ public class Movil extends BaseModel {
 
 	public void setParentezcoChofer3(ParentezcoEnum parentezcoChofer3) {
 		this.parentezcoChofer3 = parentezcoChofer3;
+	}
+
+	public String getMarca() {
+		return marca;
+	}
+
+	public void setMarca(String marca) {
+		this.marca = marca;
+	}
+
+	public String getModelo() {
+		return modelo;
+	}
+
+	public void setModelo(String modelo) {
+		this.modelo = modelo;
+	}
+
+	public Integer getAnio() {
+		return anio;
+	}
+
+	public void setAnio(Integer anio) {
+		this.anio = anio;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
+	public String getMotor() {
+		return motor;
+	}
+
+	public void setMotor(String motor) {
+		this.motor = motor;
+	}
+
+	public String getNumeroMotor() {
+		return numeroMotor;
+	}
+
+	public void setNumeroMotor(String numeroMotor) {
+		this.numeroMotor = numeroMotor;
+	}
+
+	public String getPotencia() {
+		return potencia;
+	}
+
+	public void setPotencia(String potencia) {
+		this.potencia = potencia;
+	}
+
+	public String getChasis() {
+		return chasis;
+	}
+
+	public void setChasis(String chasis) {
+		this.chasis = chasis;
+	}
+
+	public String getNumeroChasis() {
+		return numeroChasis;
+	}
+
+	public void setNumeroChasis(String numeroChasis) {
+		this.numeroChasis = numeroChasis;
+	}
+
+	public Integer getCantidadEjes() {
+		return cantidadEjes;
+	}
+
+	public void setCantidadEjes(Integer cantidadEjes) {
+		this.cantidadEjes = cantidadEjes;
+	}
+
+	public Integer getTara() {
+		return tara;
+	}
+
+	public void setTara(Integer tara) {
+		this.tara = tara;
+	}
+
+	public Integer getCapacidadCarga() {
+		return capacidadCarga;
+	}
+
+	public void setCapacidadCarga(Integer capacidadCarga) {
+		this.capacidadCarga = capacidadCarga;
+	}
+
+	public Boolean getPrenda() {
+		return prenda;
+	}
+
+	public void setPrenda(Boolean prenda) {
+		this.prenda = prenda;
+	}
+
+	public Date getFechaPrenda() {
+		return fechaPrenda;
+	}
+
+	public void setFechaPrenda(Date fechaPrenda) {
+		this.fechaPrenda = fechaPrenda;
+	}
+
+	public String getAcreedor() {
+		return acreedor;
+	}
+
+	public void setAcreedor(String acreedor) {
+		this.acreedor = acreedor;
+	}
+
+	public Boolean getInformeDominio() {
+		return informeDominio;
+	}
+
+	public void setInformeDominio(Boolean informeDominio) {
+		this.informeDominio = informeDominio;
 	}
 
 	@Override
