@@ -1,7 +1,9 @@
 package com.view;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -13,6 +15,7 @@ import logistica.model.Propietario;
 import logistica.type.AsignacionMovilEnum;
 import logistica.type.EstadoEnum;
 import logistica.type.ParentezcoEnum;
+import logistica.type.TipoCombustibleEnum;
 
 @ManagedBean
 @ViewScoped
@@ -90,6 +93,60 @@ public class MovilView implements Serializable {
 
 	private Boolean informeDominio;
 
+	private Date fechaVerificacionTecnica;
+
+	private String numeroVerificacionTecnica;
+
+	private Date fechaSenasa;
+
+	private String numeroSenasa;
+
+	private Date fechaOtraHabilitacion1;
+
+	private String numeroOtraHabilitacion1;
+
+	private Date fechaOtraHabilitacion2;
+
+	private String numeroOtraHabilitacion2;
+
+	private Date fechaOtraHabilitacion3;
+
+	private String numeroOtraHabilitacion3;
+
+	private Date fechaOtraHabilitacion4;
+
+	private String numeroOtraHabilitacion4;
+
+	private Boolean capital;
+
+	private Date fechaVencimientoCapital;
+
+	private String numeroHabilitacionCapital;
+
+	private String libreDeudaInfracciones;
+
+	private String libreDeudaPatentes;
+
+	private Boolean impuestoDocente;
+
+	private Boolean contratoFirmado;
+
+	private String accidente;
+
+	private List<AutonomoView> patcomList;
+
+	private TipoCombustibleEnum tipoCombustible;
+
+	private String comunicacion;
+
+	private String observacionesComunicacion;
+
+	private Double altura;
+
+	private Double ancho;
+
+	private Double largo;
+
 	public MovilView(Long id, Long numeroMovil, String patente,
 			String descripcion, AsignacionMovilEnum asignacionMovil,
 			EstadoEnum estado, Date fechaIngreso, Date fechaEgreso,
@@ -101,7 +158,19 @@ public class MovilView implements Serializable {
 			String motor, String numeroMotor, String potencia, String chasis,
 			String numeroChasis, Integer cantidadEjes, Integer tara,
 			Integer capacidadCarga, Boolean prenda, Date fechaPrenda,
-			String acreedor, Boolean informeDominio) {
+			String acreedor, Boolean informeDominio,
+			Date fechaVerificacionTecnica, String numeroVerificacionTecnica,
+			Date fechaSenasa, String numeroSenasa, Date fechaOtraHabilitacion1,
+			String numeroOtraHabilitacion1, Date fechaOtraHabilitacion2,
+			String numeroOtraHabilitacion2, Date fechaOtraHabilitacion3,
+			String numeroOtraHabilitacion3, Date fechaOtraHabilitacion4,
+			String numeroOtraHabilitacion4, Boolean capital,
+			Date fechaVencimientoCapital, String numeroHabilitacionCapital,
+			String libreDeudaInfracciones, String libreDeudaPatentes,
+			Boolean impuestoDocente, Boolean contratoFirmado, String accidente,
+			List<AutonomoView> patcomList, TipoCombustibleEnum tipoCombustible,
+			String comunicacion, String observacionesComunicacion,
+			Double altura, Double ancho, Double largo) {
 		super();
 		this.id = id;
 		this.numeroMovil = numeroMovil;
@@ -136,13 +205,42 @@ public class MovilView implements Serializable {
 		this.fechaPrenda = fechaPrenda;
 		this.acreedor = acreedor;
 		this.informeDominio = informeDominio;
+		this.fechaVerificacionTecnica = fechaVerificacionTecnica;
+		this.numeroVerificacionTecnica = numeroVerificacionTecnica;
+		this.fechaSenasa = fechaSenasa;
+		this.numeroSenasa = numeroSenasa;
+		this.fechaOtraHabilitacion1 = fechaOtraHabilitacion1;
+		this.numeroOtraHabilitacion1 = numeroOtraHabilitacion1;
+		this.fechaOtraHabilitacion2 = fechaOtraHabilitacion2;
+		this.numeroOtraHabilitacion2 = numeroOtraHabilitacion2;
+		this.fechaOtraHabilitacion3 = fechaOtraHabilitacion3;
+		this.numeroOtraHabilitacion3 = numeroOtraHabilitacion3;
+		this.fechaOtraHabilitacion4 = fechaOtraHabilitacion4;
+		this.numeroOtraHabilitacion4 = numeroOtraHabilitacion4;
+		this.capital = capital;
+		this.fechaVencimientoCapital = fechaVencimientoCapital;
+		this.numeroHabilitacionCapital = numeroHabilitacionCapital;
+		this.libreDeudaInfracciones = libreDeudaInfracciones;
+		this.libreDeudaPatentes = libreDeudaPatentes;
+		this.impuestoDocente = impuestoDocente;
+		this.contratoFirmado = contratoFirmado;
+		this.accidente = accidente;
+		this.patcomList = patcomList;
+		this.tipoCombustible = tipoCombustible;
+		this.comunicacion = comunicacion;
+		this.observacionesComunicacion = observacionesComunicacion;
+		this.altura = altura;
+		this.ancho = ancho;
+		this.largo = largo;
 	}
 
 	public MovilView() {
 		this(null, null, null, null, null, null, null, null, null, null, null,
 				null, null, null, null, null, null, null, null, null, null,
 				null, null, null, null, null, null, null, null, null, null,
-				null, null);
+				null, null, null, null, null, null, null, null, null, null,
+				null, null, null, null, null, null, null, null, null, null,
+				null, null, null, null, null, null, null, null, null);
 	}
 
 	public Long getId() {
@@ -407,6 +505,238 @@ public class MovilView implements Serializable {
 
 	public void setInformeDominio(Boolean informeDominio) {
 		this.informeDominio = informeDominio;
+	}
+
+	public Date getFechaVerificacionTecnica() {
+		return fechaVerificacionTecnica;
+	}
+
+	public void setFechaVerificacionTecnica(Date fechaVerificacionTecnica) {
+		this.fechaVerificacionTecnica = fechaVerificacionTecnica;
+	}
+
+	public String getNumeroVerificacionTecnica() {
+		return numeroVerificacionTecnica;
+	}
+
+	public void setNumeroVerificacionTecnica(String numeroVerificacionTecnica) {
+		this.numeroVerificacionTecnica = numeroVerificacionTecnica;
+	}
+
+	public Date getFechaSenasa() {
+		return fechaSenasa;
+	}
+
+	public void setFechaSenasa(Date fechaSenasa) {
+		this.fechaSenasa = fechaSenasa;
+	}
+
+	public String getNumeroSenasa() {
+		return numeroSenasa;
+	}
+
+	public void setNumeroSenasa(String numeroSenasa) {
+		this.numeroSenasa = numeroSenasa;
+	}
+
+	public Date getFechaOtraHabilitacion1() {
+		return fechaOtraHabilitacion1;
+	}
+
+	public void setFechaOtraHabilitacion1(Date fechaOtraHabilitacion1) {
+		this.fechaOtraHabilitacion1 = fechaOtraHabilitacion1;
+	}
+
+	public String getNumeroOtraHabilitacion1() {
+		return numeroOtraHabilitacion1;
+	}
+
+	public void setNumeroOtraHabilitacion1(String numeroOtraHabilitacion1) {
+		this.numeroOtraHabilitacion1 = numeroOtraHabilitacion1;
+	}
+
+	public Date getFechaOtraHabilitacion2() {
+		return fechaOtraHabilitacion2;
+	}
+
+	public void setFechaOtraHabilitacion2(Date fechaOtraHabilitacion2) {
+		this.fechaOtraHabilitacion2 = fechaOtraHabilitacion2;
+	}
+
+	public String getNumeroOtraHabilitacion2() {
+		return numeroOtraHabilitacion2;
+	}
+
+	public void setNumeroOtraHabilitacion2(String numeroOtraHabilitacion2) {
+		this.numeroOtraHabilitacion2 = numeroOtraHabilitacion2;
+	}
+
+	public Date getFechaOtraHabilitacion3() {
+		return fechaOtraHabilitacion3;
+	}
+
+	public void setFechaOtraHabilitacion3(Date fechaOtraHabilitacion3) {
+		this.fechaOtraHabilitacion3 = fechaOtraHabilitacion3;
+	}
+
+	public String getNumeroOtraHabilitacion3() {
+		return numeroOtraHabilitacion3;
+	}
+
+	public void setNumeroOtraHabilitacion3(String numeroOtraHabilitacion3) {
+		this.numeroOtraHabilitacion3 = numeroOtraHabilitacion3;
+	}
+
+	public Date getFechaOtraHabilitacion4() {
+		return fechaOtraHabilitacion4;
+	}
+
+	public void setFechaOtraHabilitacion4(Date fechaOtraHabilitacion4) {
+		this.fechaOtraHabilitacion4 = fechaOtraHabilitacion4;
+	}
+
+	public String getNumeroOtraHabilitacion4() {
+		return numeroOtraHabilitacion4;
+	}
+
+	public void setNumeroOtraHabilitacion4(String numeroOtraHabilitacion4) {
+		this.numeroOtraHabilitacion4 = numeroOtraHabilitacion4;
+	}
+
+	public Boolean getCapital() {
+		return capital;
+	}
+
+	public void setCapital(Boolean capital) {
+		this.capital = capital;
+	}
+
+	public Date getFechaVencimientoCapital() {
+		return fechaVencimientoCapital;
+	}
+
+	public void setFechaVencimientoCapital(Date fechaVencimientoCapital) {
+		this.fechaVencimientoCapital = fechaVencimientoCapital;
+	}
+
+	public String getNumeroHabilitacionCapital() {
+		return numeroHabilitacionCapital;
+	}
+
+	public void setNumeroHabilitacionCapital(String numeroHabilitacionCapital) {
+		this.numeroHabilitacionCapital = numeroHabilitacionCapital;
+	}
+
+	public String getLibreDeudaInfracciones() {
+		return libreDeudaInfracciones;
+	}
+
+	public void setLibreDeudaInfracciones(String libreDeudaInfracciones) {
+		this.libreDeudaInfracciones = libreDeudaInfracciones;
+	}
+
+	public String getLibreDeudaPatentes() {
+		return libreDeudaPatentes;
+	}
+
+	public void setLibreDeudaPatentes(String libreDeudaPatentes) {
+		this.libreDeudaPatentes = libreDeudaPatentes;
+	}
+
+	public Boolean getImpuestoDocente() {
+		return impuestoDocente;
+	}
+
+	public void setImpuestoDocente(Boolean impuestoDocente) {
+		this.impuestoDocente = impuestoDocente;
+	}
+
+	public Boolean getContratoFirmado() {
+		return contratoFirmado;
+	}
+
+	public void setContratoFirmado(Boolean contratoFirmado) {
+		this.contratoFirmado = contratoFirmado;
+	}
+
+	public String getAccidente() {
+		return accidente;
+	}
+
+	public void setAccidente(String accidente) {
+		this.accidente = accidente;
+	}
+
+	public List<AutonomoView> getPatcomList() {
+		return patcomList;
+	}
+
+	public void setPatcomList(List<AutonomoView> patcomList) {
+		this.patcomList = patcomList;
+	}
+
+	public TipoCombustibleEnum getTipoCombustible() {
+		return tipoCombustible;
+	}
+
+	public void setTipoCombustible(TipoCombustibleEnum tipoCombustible) {
+		this.tipoCombustible = tipoCombustible;
+	}
+
+	public String getComunicacion() {
+		return comunicacion;
+	}
+
+	public void setComunicacion(String comunicacion) {
+		this.comunicacion = comunicacion;
+	}
+
+	public String getObservacionesComunicacion() {
+		return observacionesComunicacion;
+	}
+
+	public void setObservacionesComunicacion(String observacionesComunicacion) {
+		this.observacionesComunicacion = observacionesComunicacion;
+	}
+
+	public Double getAltura() {
+		return altura;
+	}
+
+	public void setAltura(Double altura) {
+		this.altura = altura;
+	}
+
+	public Double getAncho() {
+		return ancho;
+	}
+
+	public void setAncho(Double ancho) {
+		this.ancho = ancho;
+	}
+
+	public Double getLargo() {
+		return largo;
+	}
+
+	public void setLargo(Double largo) {
+		this.largo = largo;
+	}
+
+	public Double getMetrosCubicos() {
+
+		Double metrosCubicos = null;
+		if (altura != null && ancho != null && largo != null) {
+			metrosCubicos = altura * ancho * largo;
+		}
+
+		if (metrosCubicos == null) {
+			metrosCubicos = 0.0;
+		}
+
+		BigDecimal bd = new BigDecimal(Double.toString(metrosCubicos));
+		bd = bd.setScale(2, BigDecimal.ROUND_HALF_UP);
+		return bd.doubleValue();
 	}
 
 }
