@@ -1,6 +1,7 @@
 package com.builder;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 import logistica.model.Movil;
@@ -11,6 +12,9 @@ import com.view.MovilView;
 @ManagedBean
 @ViewScoped
 public class MovilBuilder extends BaseBuilder<MovilView, Movil> {
+
+	@ManagedProperty("#{autonomoBuilder}")
+	private AutonomoBuilder autonomoBuilder;
 
 	public Movil toDomain(MovilView view) {
 		return new Movil(view.getId(), view.getNumeroMovil(),
@@ -27,7 +31,25 @@ public class MovilBuilder extends BaseBuilder<MovilView, Movil> {
 				view.getCantidadEjes(), view.getTara(),
 				view.getCapacidadCarga(), view.getPrenda(),
 				view.getFechaPrenda(), view.getAcreedor(),
-				view.getInformeDominio());
+				view.getInformeDominio(), view.getFechaVerificacionTecnica(),
+				view.getNumeroVerificacionTecnica(), view.getFechaSenasa(),
+				view.getNumeroSenasa(), view.getFechaOtraHabilitacion1(),
+				view.getNumeroOtraHabilitacion1(),
+				view.getFechaOtraHabilitacion2(),
+				view.getNumeroOtraHabilitacion2(),
+				view.getFechaOtraHabilitacion3(),
+				view.getNumeroOtraHabilitacion3(),
+				view.getFechaOtraHabilitacion4(),
+				view.getNumeroOtraHabilitacion4(), view.getCapital(),
+				view.getFechaVencimientoCapital(),
+				view.getNumeroHabilitacionCapital(),
+				view.getLibreDeudaInfracciones(), view.getLibreDeudaPatentes(),
+				view.getImpuestoDocente(), view.getContratoFirmado(),
+				view.getAccidente(),
+				view.getPatcomList() != null ? autonomoBuilder.toDomain(view
+						.getPatcomList()) : null, view.getTipoCombustible(),
+				view.getComunicacion(), view.getObservacionesComunicacion(),
+				view.getAltura(), view.getAncho(), view.getLargo());
 	}
 
 	public MovilView toView(Movil model) {
@@ -41,10 +63,36 @@ public class MovilBuilder extends BaseBuilder<MovilView, Movil> {
 				model.getParentezcoChofer3(), model.getPropietario(),
 				model.getMarca(), model.getModelo(), model.getAnio(),
 				model.getTipo(), model.getMotor(), model.getNumeroMotor(),
-				model.getPotencia(), model.getChasis(), model.getNumeroChasis(),
-				model.getCantidadEjes(), model.getTara(),
-				model.getCapacidadCarga(), model.getPrenda(),
+				model.getPotencia(), model.getChasis(),
+				model.getNumeroChasis(), model.getCantidadEjes(),
+				model.getTara(), model.getCapacidadCarga(), model.getPrenda(),
 				model.getFechaPrenda(), model.getAcreedor(),
-				model.getInformeDominio());
+				model.getInformeDominio(), model.getFechaVerificacionTecnica(),
+				model.getNumeroVerificacionTecnica(), model.getFechaSenasa(),
+				model.getNumeroSenasa(), model.getFechaOtraHabilitacion1(),
+				model.getNumeroOtraHabilitacion1(),
+				model.getFechaOtraHabilitacion2(),
+				model.getNumeroOtraHabilitacion2(),
+				model.getFechaOtraHabilitacion3(),
+				model.getNumeroOtraHabilitacion3(),
+				model.getFechaOtraHabilitacion4(),
+				model.getNumeroOtraHabilitacion4(), model.getCapital(),
+				model.getFechaVencimientoCapital(),
+				model.getNumeroHabilitacionCapital(),
+				model.getLibreDeudaInfracciones(),
+				model.getLibreDeudaPatentes(), model.getImpuestoDocente(),
+				model.getContratoFirmado(), model.getAccidente(),
+				model.getPatcomList() != null ? autonomoBuilder.toView(model
+						.getPatcomList()) : null, model.getTipoCombustible(),
+				model.getComunicacion(), model.getObservacionesComunicacion(),
+				model.getAltura(), model.getAncho(), model.getLargo());
+	}
+
+	public AutonomoBuilder getAutonomoBuilder() {
+		return autonomoBuilder;
+	}
+
+	public void setAutonomoBuilder(AutonomoBuilder autonomoBuilder) {
+		this.autonomoBuilder = autonomoBuilder;
 	}
 }

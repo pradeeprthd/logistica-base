@@ -415,6 +415,306 @@
 							</h:panelGrid>
 						</p:tab>
 
+						<p:tab title="Estado">
+							<p:panel>
+								<h:panelGrid columns="6">
+
+									<h:outputText value="Fecha verificación técnica" />
+									<p:calendar id="fechaVerificacionTecnicaC"
+										value="#{movilController.movilView.fechaVerificacionTecnica}"
+										mode="popup" showOn="button" locale="es"
+										pattern="#{msgs.common_inputDateFormat}" immediate="true"
+										readOnlyInputText="true">
+									</p:calendar>
+									<h:outputText value="" />
+
+									<h:outputText value="Número verificación técnica" />
+									<p:inputText id="numeroVerificacionTecnicaIT"
+										value="#{movilController.movilView.numeroVerificacionTecnica}">
+										<f:validateBean for="numeroVerificacionTecnicaIT" />
+									</p:inputText>
+									<h:message id="mnumeroVerificacionTecnicaIT"
+										for="numeroVerificacionTecnicaIT" />
+
+									<h:outputText value="Fecha SENASA" />
+									<p:calendar id="fechaSenasaC"
+										value="#{movilController.movilView.fechaSenasa}" mode="popup"
+										showOn="button" locale="es"
+										pattern="#{msgs.common_inputDateFormat}" immediate="true"
+										readOnlyInputText="true">
+									</p:calendar>
+									<h:outputText value="" />
+
+									<h:outputText value="Número SENASA" />
+									<p:inputText id="numeroSenasaIT"
+										value="#{movilController.movilView.numeroSenasa}">
+										<f:validateBean for="numeroSenasaIT" />
+									</p:inputText>
+									<h:message id="msenasaIT" for="numeroSenasaIT" />
+
+									<h:outputText value="Fecha otra habilitación" />
+									<p:calendar id="fechaOtraHabilitacion1C"
+										value="#{movilController.movilView.fechaOtraHabilitacion1}"
+										mode="popup" showOn="button" locale="es"
+										pattern="#{msgs.common_inputDateFormat}" immediate="true"
+										readOnlyInputText="true">
+									</p:calendar>
+									<h:outputText value="" />
+
+									<h:outputText value="Número otra habilitación" />
+									<p:inputText id="numeroOtraHabilitacion1IT"
+										value="#{movilController.movilView.numeroOtraHabilitacion1}">
+										<f:validateBean for="numeroOtraHabilitacion1IT" />
+									</p:inputText>
+									<h:message id="mnumeroOtraHabilitacion1IT"
+										for="numeroOtraHabilitacion1IT" />
+
+									<h:outputText value="Fecha otra habilitación" />
+									<p:calendar id="fechaOtraHabilitacion2C"
+										value="#{movilController.movilView.fechaOtraHabilitacion2}"
+										mode="popup" showOn="button" locale="es"
+										pattern="#{msgs.common_inputDateFormat}" immediate="true"
+										readOnlyInputText="true">
+									</p:calendar>
+									<h:outputText value="" />
+
+									<h:outputText value="Número otra habilitación" />
+									<p:inputText id="numeroOtraHabilitacion2IT"
+										value="#{movilController.movilView.numeroOtraHabilitacion2}">
+										<f:validateBean for="numeroOtraHabilitacion2IT" />
+									</p:inputText>
+									<h:message id="mnumeroOtraHabilitacion2IT"
+										for="numeroOtraHabilitacion2IT" />
+
+									<h:outputText value="Fecha otra habilitación" />
+									<p:calendar id="fechaOtraHabilitacion3C"
+										value="#{movilController.movilView.fechaOtraHabilitacion3}"
+										mode="popup" showOn="button" locale="es"
+										pattern="#{msgs.common_inputDateFormat}" immediate="true"
+										readOnlyInputText="true">
+									</p:calendar>
+									<h:outputText value="" />
+
+									<h:outputText value="Número otra habilitación" />
+									<p:inputText id="numeroOtraHabilitacion3IT"
+										value="#{movilController.movilView.numeroOtraHabilitacion3}">
+										<f:validateBean for="numeroOtraHabilitacion3IT" />
+									</p:inputText>
+									<h:message id="mnumeroOtraHabilitacion3IT"
+										for="numeroOtraHabilitacion3IT" />
+
+									<h:outputText value="Fecha otra habilitación" />
+									<p:calendar id="fechaOtraHabilitacion4C"
+										value="#{movilController.movilView.fechaOtraHabilitacion4}"
+										mode="popup" showOn="button" locale="es"
+										pattern="#{msgs.common_inputDateFormat}" immediate="true"
+										readOnlyInputText="true">
+									</p:calendar>
+									<h:outputText value="" />
+
+									<h:outputText value="Número otra habilitación" />
+									<p:inputText id="numeroOtraHabilitacion4IT"
+										value="#{movilController.movilView.numeroOtraHabilitacion4}">
+										<f:validateBean for="numeroOtraHabilitacion4IT" />
+									</p:inputText>
+									<h:message id="mnumeroOtraHabilitacion4IT"
+										for="numeroOtraHabilitacion4IT" />
+
+									<h:outputText value="Libre deuda infracciones" />
+									<p:inputMask id="libreDeudaInfraccionesIM"
+										value="#{movilController.movilView.libreDeudaInfracciones}"
+										mask="99/9999">
+										<f:validateBean for="libreDeudaInfraccionesIM" />
+									</p:inputMask>
+									<h:message id="mlibreDeudaInfraccionesIM"
+										for="libreDeudaInfraccionesIM" />
+
+									<h:outputText value="Libre deuda patentes" />
+									<p:inputMask id="libreDeudaPatentesIM"
+										value="#{movilController.movilView.libreDeudaPatentes}"
+										mask="99/9999">
+										<f:validateBean for="libreDeudaPatentesIM" />
+									</p:inputMask>
+									<h:message id="mlibreDeudaPatentesIM"
+										for="libreDeudaPatentesIM" />
+
+									<h:outputText value="Capital" />
+									<p:selectBooleanCheckbox
+										value="#{movilController.movilView.capital}" />
+									<h:outputText value="" />
+
+									<h:outputText value="Fecha vencimiento capital" />
+									<p:calendar id="fechaVencimientoCapitalC"
+										value="#{movilController.movilView.fechaVencimientoCapital}"
+										mode="popup" showOn="button" locale="es"
+										pattern="#{msgs.common_inputDateFormat}" immediate="true"
+										readOnlyInputText="true">
+									</p:calendar>
+									<h:outputText value="" />
+
+									<h:outputText value="Número habilitación capital" />
+									<p:inputText id="numeroHabilitacionCapitalIT"
+										value="#{movilController.movilView.numeroHabilitacionCapital}">
+										<f:validateBean for="numeroHabilitacionCapitalIT" />
+									</p:inputText>
+									<h:message id="mnumeroHabilitacionCapitalIT"
+										for="numeroHabilitacionCapitalIT" />
+
+									<h:outputText value="Acc." />
+									<p:inputText id="accidenteIT"
+										value="#{movilController.movilView.accidente}">
+										<f:validateBean for="accidenteIT" />
+									</p:inputText>
+									<h:message id="maccidenteIT" for="accidenteIT" />
+
+									<h:outputText value="Impuesto docente" />
+									<p:selectBooleanCheckbox
+										value="#{movilController.movilView.impuestoDocente}" />
+									<h:outputText value="" />
+
+									<h:outputText value="Contrato firmado" />
+									<p:selectBooleanCheckbox
+										value="#{movilController.movilView.contratoFirmado}" />
+									<h:outputText value="" />
+
+								</h:panelGrid>
+							</p:panel>
+
+							<p:panel>
+								<h:panelGrid columns="4">
+									<h:outputText value="Número patcom" />
+									<p:inputMask id="patcomIM"
+										value="#{movilController.patcom.numeroAutonomo}"
+										mask="9999/99">
+										<f:ajax execute="@this" />
+									</p:inputMask>
+
+									<h:message for="patcomIM" />
+									<h:outputText value="" />
+
+									<h:outputText value="Fecha" />
+									<p:calendar id="fechaPatcomC"
+										value="#{movilController.patcom.fechaAutonomo}" mode="popup"
+										showOn="button" locale="es"
+										pattern="#{msgs.common_inputDateFormat}" immediate="true"
+										readOnlyInputText="true">
+										<p:ajax event="dateSelect"
+											listener="#{movilController.handleDateSelect}" />
+									</p:calendar>
+									<h:outputText value="" />
+									<h:outputText value="" />
+
+									<p:commandButton value="Agregar Patcom"
+										actionListener="#{movilController.addPatcom}"
+										update="detalleListDT" immediate="true" />
+								</h:panelGrid>
+
+
+								<p:dataTable id="detalleListDT" var="detalle"
+									value="#{movilController.patcomDM}" emptyMessage="">
+
+									<f:facet name="header">
+										<h:outputText value="Detalles" />
+									</f:facet>
+
+									<p:column align="center">
+										<f:facet name="header">
+											<h:outputText value="Número patcom" />
+										</f:facet>
+										<h:outputText value="#{detalle.numeroAutonomo}" />
+									</p:column>
+
+									<p:column>
+										<f:facet name="header">
+											<h:outputText value="Fecha" />
+										</f:facet>
+										<h:outputText value="#{detalle.fechaAutonomo}">
+											<f:convertDateTime pattern="#{msgs.common_inputDateFormat}"
+												timeZone="#{msgs.common_timeZone}" />
+										</h:outputText>
+									</p:column>
+
+									<p:column>
+										<f:facet name="header">
+											<h:outputText value="Opciones" />
+										</f:facet>
+										<h:panelGrid columns="3">
+											<h:commandLink
+												actionListener="#{movilController.deletePatcom}"
+												immediate="true">
+												<h:graphicImage url="/resource/images/delete.gif"
+													title="Eliminar" style="border:0px" />
+											</h:commandLink>
+										</h:panelGrid>
+									</p:column>
+								</p:dataTable>
+							</p:panel>
+						</p:tab>
+
+						<p:tab title="Equipamento">
+							<p:focus for="numeroM" />
+							<h:panelGrid columns="3">
+
+								<h:outputText value="Tipo combustible" />
+								<p:selectOneMenu
+									value="#{movilController.movilView.tipoCombustible}"
+									converter="com.converter.TipoCombustibleConverter">
+									<f:selectItems
+										value="#{movilController.tipoCombustibleEnumList}" />
+								</p:selectOneMenu>
+								<h:outputText value="" />
+
+								<h:outputText value="Comunicación" />
+								<p:inputText id="comunicacionIT"
+									value="#{movilController.movilView.comunicacion}">
+									<f:validateBean for="comunicacionIT" />
+								</p:inputText>
+								<h:message id="pcomunicacionIT" for="comunicacionIT" />
+
+								<h:outputText value="Observaciones comunicación" />
+								<p:inputTextarea id="observacionesComunicacionIT"
+									maxLength="300"
+									value="#{movilController.movilView.observacionesComunicacion}">
+									<f:validateBean for="observacionesComunicacionIT" />
+								</p:inputTextarea>
+								<h:message id="dobservacionesComunicacionIT"
+									for="observacionesComunicacionIT" />
+
+								<h:outputText value="Altura" />
+								<p:spinner id="alturaS"
+									value="#{movilController.movilView.altura}" min="0"
+									stepFactor="0.25" size="30">
+									<p:ajax update="metrosCubicos" process="@this" /> 
+									<f:validateBean for="alturaS" />
+								</p:spinner>
+								<h:message id="malturaS" for="alturaS" />
+
+								<h:outputText value="Ancho" />
+								<p:spinner id="anchoS"
+									value="#{movilController.movilView.ancho}" min="0"
+									stepFactor="0.25" size="30">
+									<p:ajax update="metrosCubicos" process="@this" /> 
+									<f:validateBean for="anchoS" />
+								</p:spinner>
+								<h:message id="manchoS" for="anchoS" />
+
+								<h:outputText value="Largo" />
+								<p:spinner id="largoS"
+									value="#{movilController.movilView.largo}" min="0"
+									stepFactor="0.25" size="30">
+									<p:ajax update="metrosCubicos" process="@this" /> 
+									<f:validateBean for="largoS" />
+								</p:spinner>
+								<h:message id="mlargoS" for="largoS" />
+
+								<h:outputText value="Metros cúbicos" />
+								<h:outputText id="metrosCubicos"
+									value="#{movilController.movilView.metrosCubicos}" />
+								<h:outputText value="" />
+
+							</h:panelGrid>
+						</p:tab>
+
 					</p:tabView>
 
 					<!-- ================================================== -->

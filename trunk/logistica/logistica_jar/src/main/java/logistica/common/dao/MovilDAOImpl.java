@@ -1,5 +1,6 @@
 package logistica.common.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import logistica.model.Movil;
@@ -57,6 +58,15 @@ public class MovilDAOImpl extends BaseHibernateDAO<Movil, MovilQuery> {
 		}
 
 		list = getHibernateTemplate().findByCriteria(criteria);
+		return list;
+	}
+	
+	@Override
+	public List<String> getListNames() {
+		List<String> list = new ArrayList<String>();
+		list.add("patcomList");
+		//list.add("movilList");
+
 		return list;
 	}
 }

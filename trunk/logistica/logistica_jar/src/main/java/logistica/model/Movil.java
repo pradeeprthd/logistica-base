@@ -1,8 +1,10 @@
 package logistica.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -13,12 +15,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
 import logistica.common.BaseModel;
 import logistica.type.AsignacionMovilEnum;
 import logistica.type.EstadoEnum;
 import logistica.type.ParentezcoEnum;
+import logistica.type.TipoCombustibleEnum;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -134,6 +138,88 @@ public class Movil extends BaseModel {
 	@Basic
 	private Boolean informeDominio;
 
+	@Basic
+	private Date fechaVerificacionTecnica;
+
+	@Column(length = 200)
+	private String numeroVerificacionTecnica;
+
+	@Basic
+	private Date fechaSenasa;
+
+	@Column(length = 200)
+	private String numeroSenasa;
+
+	@Basic
+	private Date fechaOtraHabilitacion1;
+
+	@Column(length = 200)
+	private String numeroOtraHabilitacion1;
+
+	@Basic
+	private Date fechaOtraHabilitacion2;
+
+	@Column(length = 200)
+	private String numeroOtraHabilitacion2;
+
+	@Basic
+	private Date fechaOtraHabilitacion3;
+
+	@Column(length = 200)
+	private String numeroOtraHabilitacion3;
+
+	@Basic
+	private Date fechaOtraHabilitacion4;
+
+	@Column(length = 200)
+	private String numeroOtraHabilitacion4;
+
+	@Basic
+	private Boolean capital;
+
+	@Basic
+	private Date fechaVencimientoCapital;
+
+	@Column(length = 200)
+	private String numeroHabilitacionCapital;
+
+	@Column(length = 10)
+	private String libreDeudaInfracciones;
+
+	@Column(length = 10)
+	private String libreDeudaPatentes;
+
+	@Basic
+	private Boolean impuestoDocente;
+
+	@Basic
+	private Boolean contratoFirmado;
+
+	@Column(length = 200)
+	private String accidente;
+
+	@OneToMany(orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "movilID")
+	private List<Autonomo> patcomList;
+
+	@Enumerated(EnumType.STRING)
+	private TipoCombustibleEnum tipoCombustible;
+
+	@Column(length = 200)
+	private String comunicacion;
+
+	@Column(length = 300)
+	private String observacionesComunicacion;
+
+	@Basic
+	private Double altura;
+
+	@Basic
+	private Double ancho;
+
+	@Basic
+	private Double largo;
+
 	public Movil(Long id, Long numeroMovil, String patente, String descripcion,
 			AsignacionMovilEnum asignacionMovil, EstadoEnum estado,
 			Date fechaIngreso, Date fechaEgreso, Boolean controlado,
@@ -144,7 +230,19 @@ public class Movil extends BaseModel {
 			String motor, String numeroMotor, String potencia, String chasis,
 			String numeroChasis, Integer cantidadEjes, Integer tara,
 			Integer capacidadCarga, Boolean prenda, Date fechaPrenda,
-			String acreedor, Boolean informeDominio) {
+			String acreedor, Boolean informeDominio,
+			Date fechaVerificacionTecnica, String numeroVerificacionTecnica,
+			Date fechaSenasa, String numeroSenasa, Date fechaOtraHabilitacion1,
+			String numeroOtraHabilitacion1, Date fechaOtraHabilitacion2,
+			String numeroOtraHabilitacion2, Date fechaOtraHabilitacion3,
+			String numeroOtraHabilitacion3, Date fechaOtraHabilitacion4,
+			String numeroOtraHabilitacion4, Boolean capital,
+			Date fechaVencimientoCapital, String numeroHabilitacionCapital,
+			String libreDeudaInfracciones, String libreDeudaPatentes,
+			Boolean impuestoDocente, Boolean contratoFirmado, String accidente,
+			List<Autonomo> patcomList, TipoCombustibleEnum tipoCombustible,
+			String comunicacion, String observacionesComunicacion,
+			Double altura, Double ancho, Double largo) {
 		super();
 		this.id = id;
 		this.numeroMovil = numeroMovil;
@@ -179,13 +277,42 @@ public class Movil extends BaseModel {
 		this.fechaPrenda = fechaPrenda;
 		this.acreedor = acreedor;
 		this.informeDominio = informeDominio;
+		this.fechaVerificacionTecnica = fechaVerificacionTecnica;
+		this.numeroVerificacionTecnica = numeroVerificacionTecnica;
+		this.fechaSenasa = fechaSenasa;
+		this.numeroSenasa = numeroSenasa;
+		this.fechaOtraHabilitacion1 = fechaOtraHabilitacion1;
+		this.numeroOtraHabilitacion1 = numeroOtraHabilitacion1;
+		this.fechaOtraHabilitacion2 = fechaOtraHabilitacion2;
+		this.numeroOtraHabilitacion2 = numeroOtraHabilitacion2;
+		this.fechaOtraHabilitacion3 = fechaOtraHabilitacion3;
+		this.numeroOtraHabilitacion3 = numeroOtraHabilitacion3;
+		this.fechaOtraHabilitacion4 = fechaOtraHabilitacion4;
+		this.numeroOtraHabilitacion4 = numeroOtraHabilitacion4;
+		this.capital = capital;
+		this.fechaVencimientoCapital = fechaVencimientoCapital;
+		this.numeroHabilitacionCapital = numeroHabilitacionCapital;
+		this.libreDeudaInfracciones = libreDeudaInfracciones;
+		this.libreDeudaPatentes = libreDeudaPatentes;
+		this.impuestoDocente = impuestoDocente;
+		this.contratoFirmado = contratoFirmado;
+		this.accidente = accidente;
+		this.patcomList = patcomList;
+		this.tipoCombustible = tipoCombustible;
+		this.comunicacion = comunicacion;
+		this.observacionesComunicacion = observacionesComunicacion;
+		this.altura = altura;
+		this.ancho = ancho;
+		this.largo = largo;
 	}
 
 	public Movil() {
 		this(null, null, null, null, null, null, null, null, null, null, null,
 				null, null, null, null, null, null, null, null, null, null,
 				null, null, null, null, null, null, null, null, null, null,
-				null, null);
+				null, null, null, null, null, null, null, null, null, null,
+				null, null, null, null, null, null, null, null, null, null,
+				null, null, null, null, null, null, null, null, null);
 	}
 
 	@Override
@@ -452,6 +579,222 @@ public class Movil extends BaseModel {
 
 	public void setInformeDominio(Boolean informeDominio) {
 		this.informeDominio = informeDominio;
+	}
+
+	public Date getFechaVerificacionTecnica() {
+		return fechaVerificacionTecnica;
+	}
+
+	public void setFechaVerificacionTecnica(Date fechaVerificacionTecnica) {
+		this.fechaVerificacionTecnica = fechaVerificacionTecnica;
+	}
+
+	public String getNumeroVerificacionTecnica() {
+		return numeroVerificacionTecnica;
+	}
+
+	public void setNumeroVerificacionTecnica(String numeroVerificacionTecnica) {
+		this.numeroVerificacionTecnica = numeroVerificacionTecnica;
+	}
+
+	public Date getFechaSenasa() {
+		return fechaSenasa;
+	}
+
+	public void setFechaSenasa(Date fechaSenasa) {
+		this.fechaSenasa = fechaSenasa;
+	}
+
+	public String getNumeroSenasa() {
+		return numeroSenasa;
+	}
+
+	public void setNumeroSenasa(String numeroSenasa) {
+		this.numeroSenasa = numeroSenasa;
+	}
+
+	public Date getFechaOtraHabilitacion1() {
+		return fechaOtraHabilitacion1;
+	}
+
+	public void setFechaOtraHabilitacion1(Date fechaOtraHabilitacion1) {
+		this.fechaOtraHabilitacion1 = fechaOtraHabilitacion1;
+	}
+
+	public String getNumeroOtraHabilitacion1() {
+		return numeroOtraHabilitacion1;
+	}
+
+	public void setNumeroOtraHabilitacion1(String numeroOtraHabilitacion1) {
+		this.numeroOtraHabilitacion1 = numeroOtraHabilitacion1;
+	}
+
+	public Date getFechaOtraHabilitacion2() {
+		return fechaOtraHabilitacion2;
+	}
+
+	public void setFechaOtraHabilitacion2(Date fechaOtraHabilitacion2) {
+		this.fechaOtraHabilitacion2 = fechaOtraHabilitacion2;
+	}
+
+	public String getNumeroOtraHabilitacion2() {
+		return numeroOtraHabilitacion2;
+	}
+
+	public void setNumeroOtraHabilitacion2(String numeroOtraHabilitacion2) {
+		this.numeroOtraHabilitacion2 = numeroOtraHabilitacion2;
+	}
+
+	public Date getFechaOtraHabilitacion3() {
+		return fechaOtraHabilitacion3;
+	}
+
+	public void setFechaOtraHabilitacion3(Date fechaOtraHabilitacion3) {
+		this.fechaOtraHabilitacion3 = fechaOtraHabilitacion3;
+	}
+
+	public String getNumeroOtraHabilitacion3() {
+		return numeroOtraHabilitacion3;
+	}
+
+	public void setNumeroOtraHabilitacion3(String numeroOtraHabilitacion3) {
+		this.numeroOtraHabilitacion3 = numeroOtraHabilitacion3;
+	}
+
+	public Date getFechaOtraHabilitacion4() {
+		return fechaOtraHabilitacion4;
+	}
+
+	public void setFechaOtraHabilitacion4(Date fechaOtraHabilitacion4) {
+		this.fechaOtraHabilitacion4 = fechaOtraHabilitacion4;
+	}
+
+	public String getNumeroOtraHabilitacion4() {
+		return numeroOtraHabilitacion4;
+	}
+
+	public void setNumeroOtraHabilitacion4(String numeroOtraHabilitacion4) {
+		this.numeroOtraHabilitacion4 = numeroOtraHabilitacion4;
+	}
+
+	public Boolean getCapital() {
+		return capital;
+	}
+
+	public void setCapital(Boolean capital) {
+		this.capital = capital;
+	}
+
+	public Date getFechaVencimientoCapital() {
+		return fechaVencimientoCapital;
+	}
+
+	public void setFechaVencimientoCapital(Date fechaVencimientoCapital) {
+		this.fechaVencimientoCapital = fechaVencimientoCapital;
+	}
+
+	public String getNumeroHabilitacionCapital() {
+		return numeroHabilitacionCapital;
+	}
+
+	public void setNumeroHabilitacionCapital(String numeroHabilitacionCapital) {
+		this.numeroHabilitacionCapital = numeroHabilitacionCapital;
+	}
+
+	public String getLibreDeudaInfracciones() {
+		return libreDeudaInfracciones;
+	}
+
+	public void setLibreDeudaInfracciones(String libreDeudaInfracciones) {
+		this.libreDeudaInfracciones = libreDeudaInfracciones;
+	}
+
+	public String getLibreDeudaPatentes() {
+		return libreDeudaPatentes;
+	}
+
+	public void setLibreDeudaPatentes(String libreDeudaPatentes) {
+		this.libreDeudaPatentes = libreDeudaPatentes;
+	}
+
+	public Boolean getImpuestoDocente() {
+		return impuestoDocente;
+	}
+
+	public void setImpuestoDocente(Boolean impuestoDocente) {
+		this.impuestoDocente = impuestoDocente;
+	}
+
+	public Boolean getContratoFirmado() {
+		return contratoFirmado;
+	}
+
+	public void setContratoFirmado(Boolean contratoFirmado) {
+		this.contratoFirmado = contratoFirmado;
+	}
+
+	public String getAccidente() {
+		return accidente;
+	}
+
+	public void setAccidente(String accidente) {
+		this.accidente = accidente;
+	}
+
+	public List<Autonomo> getPatcomList() {
+		return patcomList;
+	}
+
+	public void setPatcomList(List<Autonomo> patcomList) {
+		this.patcomList = patcomList;
+	}
+
+	public TipoCombustibleEnum getTipoCombustible() {
+		return tipoCombustible;
+	}
+
+	public void setTipoCombustible(TipoCombustibleEnum tipoCombustible) {
+		this.tipoCombustible = tipoCombustible;
+	}
+
+	public String getComunicacion() {
+		return comunicacion;
+	}
+
+	public void setComunicacion(String comunicacion) {
+		this.comunicacion = comunicacion;
+	}
+
+	public String getObservacionesComunicacion() {
+		return observacionesComunicacion;
+	}
+
+	public void setObservacionesComunicacion(String observacionesComunicacion) {
+		this.observacionesComunicacion = observacionesComunicacion;
+	}
+
+	public Double getAltura() {
+		return altura;
+	}
+
+	public void setAltura(Double altura) {
+		this.altura = altura;
+	}
+
+	public Double getAncho() {
+		return ancho;
+	}
+
+	public void setAncho(Double ancho) {
+		this.ancho = ancho;
+	}
+
+	public Double getLargo() {
+		return largo;
+	}
+
+	public void setLargo(Double largo) {
+		this.largo = largo;
 	}
 
 	@Override

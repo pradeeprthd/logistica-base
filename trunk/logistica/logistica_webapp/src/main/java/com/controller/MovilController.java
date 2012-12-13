@@ -12,8 +12,11 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.model.DataModel;
+import javax.faces.model.ListDataModel;
 
 import logistica.common.dao.BaseModelDAO;
+import logistica.model.Autonomo;
 import logistica.model.Chofer;
 import logistica.model.Movil;
 import logistica.query.ChoferQuery;
@@ -21,6 +24,7 @@ import logistica.query.MovilQuery;
 import logistica.type.AsignacionMovilEnum;
 import logistica.type.EstadoEnum;
 import logistica.type.ParentezcoEnum;
+import logistica.type.TipoCombustibleEnum;
 
 import org.apache.log4j.Logger;
 import org.primefaces.event.SelectEvent;
@@ -29,8 +33,10 @@ import org.primefaces.model.SortOrder;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.jsf.FacesContextUtils;
 
+import com.builder.AutonomoBuilder;
 import com.builder.MovilBuilder;
 import com.util.JSFUtil;
+import com.view.AutonomoView;
 import com.view.MovilView;
 
 @ManagedBean
@@ -43,8 +49,14 @@ public class MovilController extends PaginableController<Movil> {
 	private Movil movil;
 	private MovilQuery movilQuery;
 	private List<AsignacionMovilEnum> asignacionMovilEnumList;
+	private List<TipoCombustibleEnum> tipoCombustibleEnumList;
 	private List<ParentezcoEnum> parentezcoEnumList;
 	private List<EstadoEnum> estadoEnumList;
+	private Autonomo patcom;
+	private DataModel<AutonomoView> patcomDM;
+
+	@ManagedProperty("#{autonomoBuilder}")
+	private AutonomoBuilder autonomoBuilder;
 
 	@ManagedProperty("#{movilView}")
 	private MovilView movilView;
@@ -64,8 +76,12 @@ public class MovilController extends PaginableController<Movil> {
 			movilQuery = new MovilQuery();
 			asignacionMovilEnumList = Arrays.asList(AsignacionMovilEnum
 					.values());
+			tipoCombustibleEnumList = Arrays.asList(TipoCombustibleEnum
+					.values());
 			parentezcoEnumList = Arrays.asList(ParentezcoEnum.values());
 			estadoEnumList = Arrays.asList(EstadoEnum.values());
+			patcomDM = new ListDataModel<AutonomoView>();
+			patcom = new Autonomo();
 			addEdit = false;
 		} catch (Throwable e) {
 			log.error("Error al inicializar la clase MovilController", e);
@@ -112,6 +128,26 @@ public class MovilController extends PaginableController<Movil> {
 		return estadoEnumList;
 	}
 
+	public Autonomo getPatcom() {
+		return patcom;
+	}
+
+	public DataModel<AutonomoView> getPatcomDM() {
+		return patcomDM;
+	}
+
+	public AutonomoBuilder getAutonomoBuilder() {
+		return autonomoBuilder;
+	}
+
+	public void setAutonomoBuilder(AutonomoBuilder autonomoBuilder) {
+		this.autonomoBuilder = autonomoBuilder;
+	}
+
+	public List<TipoCombustibleEnum> getTipoCombustibleEnumList() {
+		return tipoCombustibleEnumList;
+	}
+
 	public void query(ActionEvent event) {
 		loadList();
 	}
@@ -119,6 +155,9 @@ public class MovilController extends PaginableController<Movil> {
 	public void edit(ActionEvent event) {
 		try {
 			movil = (Movil) lazyDM.getRowData();
+			movil = dao.findFULL(movil.getID());
+			patcomDM = new ListDataModel<AutonomoView>(
+					autonomoBuilder.toView(movil.getPatcomList()));
 			movilView = movilBuilder.toView(movil);
 			addEdit = true;
 		} catch (Throwable e) {
@@ -266,5 +305,17 @@ public class MovilController extends PaginableController<Movil> {
 	public void handleChoferSelect(SelectEvent event) {
 		System.out.println("se eligio un chofer");
 		// hojaRutaView.setChofer((Chofer) event.getObject());
+	}
+
+	public void addPatcom(ActionEvent event) {
+		movilView.getPatcomList().add(
+				(AutonomoView) autonomoBuilder.toView(patcom));
+		patcomDM = new ListDataModel<AutonomoView>(movilView.getPatcomList());
+	}
+
+	public void deletePatcom(ActionEvent event) {
+		AutonomoView detalle = patcomDM.getRowData();
+		movilView.getPatcomList().remove(detalle);
+		patcomDM = new ListDataModel<AutonomoView>(movilView.getPatcomList());
 	}
 }
