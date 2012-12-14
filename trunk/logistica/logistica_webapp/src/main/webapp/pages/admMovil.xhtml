@@ -684,7 +684,7 @@
 								<p:spinner id="alturaS"
 									value="#{movilController.movilView.altura}" min="0"
 									stepFactor="0.25" size="30">
-									<p:ajax update="metrosCubicos" process="@this" /> 
+									<p:ajax update="metrosCubicos" process="@this" />
 									<f:validateBean for="alturaS" />
 								</p:spinner>
 								<h:message id="malturaS" for="alturaS" />
@@ -693,7 +693,7 @@
 								<p:spinner id="anchoS"
 									value="#{movilController.movilView.ancho}" min="0"
 									stepFactor="0.25" size="30">
-									<p:ajax update="metrosCubicos" process="@this" /> 
+									<p:ajax update="metrosCubicos" process="@this" />
 									<f:validateBean for="anchoS" />
 								</p:spinner>
 								<h:message id="manchoS" for="anchoS" />
@@ -702,7 +702,7 @@
 								<p:spinner id="largoS"
 									value="#{movilController.movilView.largo}" min="0"
 									stepFactor="0.25" size="30">
-									<p:ajax update="metrosCubicos" process="@this" /> 
+									<p:ajax update="metrosCubicos" process="@this" />
 									<f:validateBean for="largoS" />
 								</p:spinner>
 								<h:message id="mlargoS" for="largoS" />
@@ -713,6 +713,162 @@
 								<h:outputText value="" />
 
 							</h:panelGrid>
+						</p:tab>
+
+						<p:tab title="Seguro">
+							<p:focus for="numeroM" />
+
+							<p:panel>
+								<h:panelGrid columns="6">
+
+									<h:outputText value="Asegurado en" />
+									<p:inputText id="aseguradoEnIT"
+										value="#{movilController.movilView.aseguradoEn}">
+										<f:validateBean for="aseguradoEnIT" />
+									</p:inputText>
+									<h:message id="maseguradoEnIT" for="aseguradoEnIT" />
+
+									<h:outputText value="Comprobante" />
+									<p:inputText id="comprobanteIT"
+										value="#{movilController.movilView.comprobante}">
+										<f:validateBean for="comprobanteIT" />
+									</p:inputText>
+									<h:message id="mcomprobanteIT" for="comprobanteIT" />
+
+									<h:outputText value="Tipo" />
+									<p:selectOneMenu value="#{movilController.movilView.tipoUso}"
+										converter="com.converter.TipoUsoConverter">
+										<f:selectItems value="#{movilController.tipoUsoEnumList}" />
+									</p:selectOneMenu>
+									<h:outputText value="" />
+
+									<h:outputText value="Fecha desde" />
+									<p:calendar id="fechaSeguroDesdeC"
+										value="#{movilController.movilView.fechaSeguroDesde}"
+										mode="popup" showOn="button" locale="es"
+										pattern="#{msgs.common_inputDateFormat}" immediate="true"
+										readOnlyInputText="true">
+									</p:calendar>
+									<h:outputText value="" />
+
+									<h:outputText value="Fecha hasta" />
+									<p:calendar id="fechaSeguroHastaC"
+										value="#{movilController.movilView.fechaSeguroHasta}"
+										mode="popup" showOn="button" locale="es"
+										pattern="#{msgs.common_inputDateFormat}" immediate="true"
+										readOnlyInputText="true">
+									</p:calendar>
+									<h:outputText value="" />
+
+									<h:outputText value="Recibo vencimiento" />
+									<p:calendar id="fechaReciboVencimientoC"
+										value="#{movilController.movilView.fechaReciboVencimiento}"
+										mode="popup" showOn="button" locale="es"
+										pattern="#{msgs.common_inputDateFormat}" immediate="true"
+										readOnlyInputText="true">
+									</p:calendar>
+									<h:outputText value="" />
+
+									<h:outputText value="Comprobante 2" />
+									<p:inputText id="comprobante2IT"
+										value="#{movilController.movilView.comprobante2}">
+										<f:validateBean for="comprobante2IT" />
+									</p:inputText>
+									<h:message id="mcomprobante2IT" for="comprobante2IT" />
+
+									<h:outputText value="Número cuenta" />
+									<p:inputText id="numeroCuentaIT"
+										value="#{movilController.movilView.numeroCuenta}">
+										<f:validateBean for="numeroCuentaIT" />
+									</p:inputText>
+									<h:message id="mnumeroCuentaIT" for="numeroCuentaIT" />
+
+									<h:outputText value="Número poliza" />
+									<p:inputText id="numeroPolizaIT"
+										value="#{movilController.movilView.numeroPoliza}">
+										<f:validateBean for="numeroPolizaIT" />
+									</p:inputText>
+									<h:message id="mnumeroPolizaIT" for="numeroPolizaIT" />
+
+									<h:outputText value="Número cuota" />
+									<p:inputMask id="numeroCuotaIM"
+										value="#{movilController.movilView.numeroCuota}" mask="99/99">
+										<f:validateBean for="numeroCuotaIM" />
+									</p:inputMask>
+									<h:message id="mnumeroCuotaIM" for="numeroCuotaIM" />
+
+									<h:outputText value="Número socio" />
+									<p:spinner id="numeroSocioS"
+										value="#{movilController.movilView.numeroSocio}" min="0"
+										stepFactor="1" size="30">
+										<f:validateBean for="numeroSocioS" />
+									</p:spinner>
+									<h:message id="mnumeroSocioS" for="numeroSocioS" />
+
+									<h:outputText value="Número LOJACK" />
+									<p:inputText id="numeroLoJackIT"
+										value="#{movilController.movilView.numeroLoJack}">
+										<f:validateBean for="numeroLoJackIT" />
+									</p:inputText>
+									<h:message id="mnumeroLoJackIT" for="numeroLoJackIT" />
+
+									<h:outputText value="Observaciones" />
+									<p:inputTextarea id="observacionesSeguroIT"
+										value="#{movilController.movilView.observacionesSeguro}">
+										<f:validateBean for="observacionesSeguroIT" />
+									</p:inputTextarea>
+									<h:message id="mobservacionesSeguroIT"
+										for="observacionesSeguroIT" />
+
+								</h:panelGrid>
+							</p:panel>
+
+							<p:panel>
+								<h:panelGrid columns="6">
+
+									<h:outputText value="Valor del móvil" />
+									<p:spinner id="valorMovilS"
+										value="#{movilController.movilView.valorMovil}" min="0"
+										stepFactor="0.50" size="30">
+										<f:validateBean for="valorMovilS" />
+									</p:spinner>
+									<h:message id="mvalorMovilS" for="valorMovilS" />
+
+									<h:outputText value="Costo LOJACK" />
+									<p:spinner id="valorLOJACKS"
+										value="#{movilController.movilView.valorLoJack}" min="0"
+										stepFactor="0.50" size="30">
+										<f:validateBean for="valorLOJACKS" />
+									</p:spinner>
+									<h:message id="mvalorLOJACKS" for="valorLOJACKS" />
+
+									<h:outputText value="Valor accesorios" />
+									<p:spinner id="valorAccesoriosS"
+										value="#{movilController.movilView.valorAccesorios}" min="0"
+										stepFactor="0.50" size="30">
+										<f:validateBean for="valorAccesoriosS" />
+									</p:spinner>
+									<h:message id="mvalorAccesoriosS" for="valorAccesoriosS" />
+
+									<h:outputText value="Tipo accesorios" />
+									<p:selectOneMenu
+										value="#{movilController.movilView.coberturaAdicional}"
+										converter="com.converter.CoberturaAdicionalConverter">
+										<f:selectItems
+											value="#{movilController.coberturaAdicionalEnumList}" />
+									</p:selectOneMenu>
+									<h:outputText value="" />
+
+									<h:outputText value="Valor total asegurado" />
+									<p:spinner id="valorTotalAseguradoS"
+										value="#{movilController.movilView.valorTotalAsegurado}"
+										min="0" stepFactor="0.50" size="30">
+										<f:validateBean for="valorTotalAseguradoS" />
+									</p:spinner>
+									<h:message id="mvalorTotalAseguradoS"
+										for="valorTotalAseguradoS" />
+								</h:panelGrid>
+							</p:panel>
 						</p:tab>
 
 					</p:tabView>

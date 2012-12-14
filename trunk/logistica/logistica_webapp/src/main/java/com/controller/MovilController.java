@@ -22,9 +22,11 @@ import logistica.model.Movil;
 import logistica.query.ChoferQuery;
 import logistica.query.MovilQuery;
 import logistica.type.AsignacionMovilEnum;
+import logistica.type.CoberturaAdicionalEnum;
 import logistica.type.EstadoEnum;
 import logistica.type.ParentezcoEnum;
 import logistica.type.TipoCombustibleEnum;
+import logistica.type.TipoUsoEnum;
 
 import org.apache.log4j.Logger;
 import org.primefaces.event.SelectEvent;
@@ -52,6 +54,8 @@ public class MovilController extends PaginableController<Movil> {
 	private List<TipoCombustibleEnum> tipoCombustibleEnumList;
 	private List<ParentezcoEnum> parentezcoEnumList;
 	private List<EstadoEnum> estadoEnumList;
+	private List<TipoUsoEnum> tipoUsoEnumList;
+	private List<CoberturaAdicionalEnum> coberturaAdicionalEnumList;
 	private Autonomo patcom;
 	private DataModel<AutonomoView> patcomDM;
 
@@ -77,6 +81,9 @@ public class MovilController extends PaginableController<Movil> {
 			asignacionMovilEnumList = Arrays.asList(AsignacionMovilEnum
 					.values());
 			tipoCombustibleEnumList = Arrays.asList(TipoCombustibleEnum
+					.values());
+			tipoUsoEnumList = Arrays.asList(TipoUsoEnum.values());
+			coberturaAdicionalEnumList = Arrays.asList(CoberturaAdicionalEnum
 					.values());
 			parentezcoEnumList = Arrays.asList(ParentezcoEnum.values());
 			estadoEnumList = Arrays.asList(EstadoEnum.values());
@@ -146,6 +153,14 @@ public class MovilController extends PaginableController<Movil> {
 
 	public List<TipoCombustibleEnum> getTipoCombustibleEnumList() {
 		return tipoCombustibleEnumList;
+	}
+
+	public List<TipoUsoEnum> getTipoUsoEnumList() {
+		return tipoUsoEnumList;
+	}
+
+	public List<CoberturaAdicionalEnum> getCoberturaAdicionalEnumList() {
+		return coberturaAdicionalEnumList;
 	}
 
 	public void query(ActionEvent event) {

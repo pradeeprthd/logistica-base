@@ -49,7 +49,16 @@ public class MovilBuilder extends BaseBuilder<MovilView, Movil> {
 				view.getPatcomList() != null ? autonomoBuilder.toDomain(view
 						.getPatcomList()) : null, view.getTipoCombustible(),
 				view.getComunicacion(), view.getObservacionesComunicacion(),
-				view.getAltura(), view.getAncho(), view.getLargo());
+				view.getAltura(), view.getAncho(), view.getLargo(),
+				view.getAseguradoEn(), view.getComprobante(),
+				view.getTipoUso(), view.getFechaSeguroDesde(),
+				view.getFechaSeguroHasta(), view.getFechaReciboVencimiento(),
+				view.getComprobante2(), view.getNumeroCuenta(),
+				view.getNumeroPoliza(), view.getNumeroCuota(),
+				view.getNumeroSocio(), view.getNumeroLoJack(),
+				view.getObservacionesSeguro(), view.getValorMovil(),
+				view.getValorAccesorios(), view.getValorTotalAsegurado(),
+				view.getValorLoJack(), view.getCoberturaAdicional());
 	}
 
 	public MovilView toView(Movil model) {
@@ -85,7 +94,16 @@ public class MovilBuilder extends BaseBuilder<MovilView, Movil> {
 				model.getPatcomList() != null ? autonomoBuilder.toView(model
 						.getPatcomList()) : null, model.getTipoCombustible(),
 				model.getComunicacion(), model.getObservacionesComunicacion(),
-				model.getAltura(), model.getAncho(), model.getLargo());
+				model.getAltura(), model.getAncho(), model.getLargo(),
+				model.getAseguradoEn(), model.getComprobante(),
+				model.getTipoUso(), model.getFechaSeguroDesde(),
+				model.getFechaSeguroHasta(), model.getFechaReciboVencimiento(),
+				model.getComprobante2(), model.getNumeroCuenta(),
+				model.getNumeroPoliza(), model.getNumeroCuota(),
+				model.getNumeroSocio(), model.getNumeroLoJack(),
+				model.getObservacionesSeguro(), model.getValorMovil(),
+				model.getValorAccesorios(), model.getValorTotalAsegurado(),
+				model.getValorLoJack(), model.getCoberturaAdicional());
 	}
 
 	public AutonomoBuilder getAutonomoBuilder() {
