@@ -1,5 +1,6 @@
 package logistica.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -20,9 +21,11 @@ import javax.persistence.SequenceGenerator;
 
 import logistica.common.BaseModel;
 import logistica.type.AsignacionMovilEnum;
+import logistica.type.CoberturaAdicionalEnum;
 import logistica.type.EstadoEnum;
 import logistica.type.ParentezcoEnum;
 import logistica.type.TipoCombustibleEnum;
+import logistica.type.TipoUsoEnum;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -220,6 +223,60 @@ public class Movil extends BaseModel {
 	@Basic
 	private Double largo;
 
+	@Column(length = 200)
+	private String aseguradoEn;
+
+	@Column(length = 200)
+	private String comprobante;
+
+	@Enumerated(EnumType.STRING)
+	private TipoUsoEnum tipoUso;
+
+	@Basic
+	private Date fechaSeguroDesde;
+
+	@Basic
+	private Date fechaSeguroHasta;
+
+	@Basic
+	private Date fechaReciboVencimiento;
+
+	@Column(length = 200)
+	private String comprobante2;
+
+	@Column(length = 200)
+	private String numeroCuenta;
+
+	@Column(length = 200)
+	private String numeroPoliza;
+
+	@Column(length = 200)
+	private String numeroCuota;
+
+	@Basic
+	private Integer numeroSocio;
+
+	@Column(length = 200)
+	private String numeroLoJack;
+
+	@Column(length = 500)
+	private String observacionesSeguro;
+
+	@Column(precision = 20, scale = 2)
+	private BigDecimal valorMovil;
+
+	@Column(precision = 20, scale = 2)
+	private BigDecimal valorAccesorios;
+
+	@Column(precision = 20, scale = 2)
+	private BigDecimal valorTotalAsegurado;
+
+	@Column(precision = 20, scale = 2)
+	private BigDecimal valorLoJack;
+
+	@Enumerated(EnumType.STRING)
+	private CoberturaAdicionalEnum coberturaAdicional;
+
 	public Movil(Long id, Long numeroMovil, String patente, String descripcion,
 			AsignacionMovilEnum asignacionMovil, EstadoEnum estado,
 			Date fechaIngreso, Date fechaEgreso, Boolean controlado,
@@ -242,7 +299,14 @@ public class Movil extends BaseModel {
 			Boolean impuestoDocente, Boolean contratoFirmado, String accidente,
 			List<Autonomo> patcomList, TipoCombustibleEnum tipoCombustible,
 			String comunicacion, String observacionesComunicacion,
-			Double altura, Double ancho, Double largo) {
+			Double altura, Double ancho, Double largo, String aseguradoEn,
+			String comprobante, TipoUsoEnum tipoUso, Date fechaSeguroDesde,
+			Date fechaSeguroHasta, Date fechaReciboVencimiento,
+			String comprobante2, String numeroCuenta, String numeroPoliza,
+			String numeroCuota, Integer numeroSocio, String numeroLoJack,
+			String observacionesSeguro, BigDecimal valorMovil,
+			BigDecimal valorAccesorios, BigDecimal valorTotalAsegurado,
+			BigDecimal valorLoJack, CoberturaAdicionalEnum coberturaAdicional) {
 		super();
 		this.id = id;
 		this.numeroMovil = numeroMovil;
@@ -304,6 +368,24 @@ public class Movil extends BaseModel {
 		this.altura = altura;
 		this.ancho = ancho;
 		this.largo = largo;
+		this.aseguradoEn = aseguradoEn;
+		this.comprobante = comprobante;
+		this.tipoUso = tipoUso;
+		this.fechaSeguroDesde = fechaSeguroDesde;
+		this.fechaSeguroHasta = fechaSeguroHasta;
+		this.fechaReciboVencimiento = fechaReciboVencimiento;
+		this.comprobante2 = comprobante2;
+		this.numeroCuenta = numeroCuenta;
+		this.numeroPoliza = numeroPoliza;
+		this.numeroCuota = numeroCuota;
+		this.numeroSocio = numeroSocio;
+		this.numeroLoJack = numeroLoJack;
+		this.observacionesSeguro = observacionesSeguro;
+		this.valorMovil = valorMovil;
+		this.valorAccesorios = valorAccesorios;
+		this.valorTotalAsegurado = valorTotalAsegurado;
+		this.valorLoJack = valorLoJack;
+		this.coberturaAdicional = coberturaAdicional;
 	}
 
 	public Movil() {
@@ -312,7 +394,9 @@ public class Movil extends BaseModel {
 				null, null, null, null, null, null, null, null, null, null,
 				null, null, null, null, null, null, null, null, null, null,
 				null, null, null, null, null, null, null, null, null, null,
-				null, null, null, null, null, null, null, null, null);
+				null, null, null, null, null, null, null, null, null, null,
+				null, null, null, null, null, null, null, null, null, null,
+				null, null, null, null, null, null, null);
 	}
 
 	@Override
@@ -795,6 +879,150 @@ public class Movil extends BaseModel {
 
 	public void setLargo(Double largo) {
 		this.largo = largo;
+	}
+
+	public String getAseguradoEn() {
+		return aseguradoEn;
+	}
+
+	public void setAseguradoEn(String aseguradoEn) {
+		this.aseguradoEn = aseguradoEn;
+	}
+
+	public String getComprobante() {
+		return comprobante;
+	}
+
+	public void setComprobante(String comprobante) {
+		this.comprobante = comprobante;
+	}
+
+	public TipoUsoEnum getTipoUso() {
+		return tipoUso;
+	}
+
+	public void setTipoUso(TipoUsoEnum tipoUso) {
+		this.tipoUso = tipoUso;
+	}
+
+	public Date getFechaSeguroDesde() {
+		return fechaSeguroDesde;
+	}
+
+	public void setFechaSeguroDesde(Date fechaSeguroDesde) {
+		this.fechaSeguroDesde = fechaSeguroDesde;
+	}
+
+	public Date getFechaSeguroHasta() {
+		return fechaSeguroHasta;
+	}
+
+	public void setFechaSeguroHasta(Date fechaSeguroHasta) {
+		this.fechaSeguroHasta = fechaSeguroHasta;
+	}
+
+	public Date getFechaReciboVencimiento() {
+		return fechaReciboVencimiento;
+	}
+
+	public void setFechaReciboVencimiento(Date fechaReciboVencimiento) {
+		this.fechaReciboVencimiento = fechaReciboVencimiento;
+	}
+
+	public String getComprobante2() {
+		return comprobante2;
+	}
+
+	public void setComprobante2(String comprobante2) {
+		this.comprobante2 = comprobante2;
+	}
+
+	public String getNumeroCuenta() {
+		return numeroCuenta;
+	}
+
+	public void setNumeroCuenta(String numeroCuenta) {
+		this.numeroCuenta = numeroCuenta;
+	}
+
+	public String getNumeroPoliza() {
+		return numeroPoliza;
+	}
+
+	public void setNumeroPoliza(String numeroPoliza) {
+		this.numeroPoliza = numeroPoliza;
+	}
+
+	public String getNumeroCuota() {
+		return numeroCuota;
+	}
+
+	public void setNumeroCuota(String numeroCuota) {
+		this.numeroCuota = numeroCuota;
+	}
+
+	public Integer getNumeroSocio() {
+		return numeroSocio;
+	}
+
+	public void setNumeroSocio(Integer numeroSocio) {
+		this.numeroSocio = numeroSocio;
+	}
+
+	public String getNumeroLoJack() {
+		return numeroLoJack;
+	}
+
+	public void setNumeroLoJack(String numeroLoJack) {
+		this.numeroLoJack = numeroLoJack;
+	}
+
+	public String getObservacionesSeguro() {
+		return observacionesSeguro;
+	}
+
+	public void setObservacionesSeguro(String observacionesSeguro) {
+		this.observacionesSeguro = observacionesSeguro;
+	}
+
+	public BigDecimal getValorMovil() {
+		return valorMovil;
+	}
+
+	public void setValorMovil(BigDecimal valorMovil) {
+		this.valorMovil = valorMovil;
+	}
+
+	public BigDecimal getValorAccesorios() {
+		return valorAccesorios;
+	}
+
+	public void setValorAccesorios(BigDecimal valorAccesorios) {
+		this.valorAccesorios = valorAccesorios;
+	}
+
+	public BigDecimal getValorTotalAsegurado() {
+		return valorTotalAsegurado;
+	}
+
+	public void setValorTotalAsegurado(BigDecimal valorTotalAsegurado) {
+		this.valorTotalAsegurado = valorTotalAsegurado;
+	}
+
+	public BigDecimal getValorLoJack() {
+		return valorLoJack;
+	}
+
+	public void setValorLoJack(BigDecimal valorLoJack) {
+		this.valorLoJack = valorLoJack;
+	}
+
+	public CoberturaAdicionalEnum getCoberturaAdicional() {
+		return coberturaAdicional;
+	}
+
+	public void setCoberturaAdicional(CoberturaAdicionalEnum coberturaAdicional) {
+		this.coberturaAdicional = coberturaAdicional;
 	}
 
 	@Override

@@ -13,9 +13,11 @@ import javax.validation.constraints.Size;
 import logistica.model.Chofer;
 import logistica.model.Propietario;
 import logistica.type.AsignacionMovilEnum;
+import logistica.type.CoberturaAdicionalEnum;
 import logistica.type.EstadoEnum;
 import logistica.type.ParentezcoEnum;
 import logistica.type.TipoCombustibleEnum;
+import logistica.type.TipoUsoEnum;
 
 @ManagedBean
 @ViewScoped
@@ -147,6 +149,42 @@ public class MovilView implements Serializable {
 
 	private Double largo;
 
+	private String aseguradoEn;
+
+	private String comprobante;
+
+	private TipoUsoEnum tipoUso;
+
+	private Date fechaSeguroDesde;
+
+	private Date fechaSeguroHasta;
+
+	private Date fechaReciboVencimiento;
+
+	private String comprobante2;
+
+	private String numeroCuenta;
+
+	private String numeroPoliza;
+
+	private String numeroCuota;
+
+	private Integer numeroSocio;
+
+	private String numeroLoJack;
+
+	private String observacionesSeguro;
+
+	private BigDecimal valorMovil;
+
+	private BigDecimal valorAccesorios;
+
+	private BigDecimal valorTotalAsegurado;
+
+	private BigDecimal valorLoJack;
+
+	private CoberturaAdicionalEnum coberturaAdicional;
+
 	public MovilView(Long id, Long numeroMovil, String patente,
 			String descripcion, AsignacionMovilEnum asignacionMovil,
 			EstadoEnum estado, Date fechaIngreso, Date fechaEgreso,
@@ -170,7 +208,14 @@ public class MovilView implements Serializable {
 			Boolean impuestoDocente, Boolean contratoFirmado, String accidente,
 			List<AutonomoView> patcomList, TipoCombustibleEnum tipoCombustible,
 			String comunicacion, String observacionesComunicacion,
-			Double altura, Double ancho, Double largo) {
+			Double altura, Double ancho, Double largo, String aseguradoEn,
+			String comprobante, TipoUsoEnum tipoUso, Date fechaSeguroDesde,
+			Date fechaSeguroHasta, Date fechaReciboVencimiento,
+			String comprobante2, String numeroCuenta, String numeroPoliza,
+			String numeroCuota, Integer numeroSocio, String numeroLoJack,
+			String observacionesSeguro, BigDecimal valorMovil,
+			BigDecimal valorAccesorios, BigDecimal valorTotalAsegurado,
+			BigDecimal valorLoJack, CoberturaAdicionalEnum coberturaAdicional) {
 		super();
 		this.id = id;
 		this.numeroMovil = numeroMovil;
@@ -232,6 +277,24 @@ public class MovilView implements Serializable {
 		this.altura = altura;
 		this.ancho = ancho;
 		this.largo = largo;
+		this.aseguradoEn = aseguradoEn;
+		this.comprobante = comprobante;
+		this.tipoUso = tipoUso;
+		this.fechaSeguroDesde = fechaSeguroDesde;
+		this.fechaSeguroHasta = fechaSeguroHasta;
+		this.fechaReciboVencimiento = fechaReciboVencimiento;
+		this.comprobante2 = comprobante2;
+		this.numeroCuenta = numeroCuenta;
+		this.numeroPoliza = numeroPoliza;
+		this.numeroCuota = numeroCuota;
+		this.numeroSocio = numeroSocio;
+		this.numeroLoJack = numeroLoJack;
+		this.observacionesSeguro = observacionesSeguro;
+		this.valorMovil = valorMovil;
+		this.valorAccesorios = valorAccesorios;
+		this.valorTotalAsegurado = valorTotalAsegurado;
+		this.valorLoJack = valorLoJack;
+		this.coberturaAdicional = coberturaAdicional;
 	}
 
 	public MovilView() {
@@ -240,7 +303,9 @@ public class MovilView implements Serializable {
 				null, null, null, null, null, null, null, null, null, null,
 				null, null, null, null, null, null, null, null, null, null,
 				null, null, null, null, null, null, null, null, null, null,
-				null, null, null, null, null, null, null, null, null);
+				null, null, null, null, null, null, null, null, null, null,
+				null, null, null, null, null, null, null, null, null, null,
+				null, null, null, null, null, null, null);
 	}
 
 	public Long getId() {
@@ -737,6 +802,150 @@ public class MovilView implements Serializable {
 		BigDecimal bd = new BigDecimal(Double.toString(metrosCubicos));
 		bd = bd.setScale(2, BigDecimal.ROUND_HALF_UP);
 		return bd.doubleValue();
+	}
+
+	public String getAseguradoEn() {
+		return aseguradoEn;
+	}
+
+	public void setAseguradoEn(String aseguradoEn) {
+		this.aseguradoEn = aseguradoEn;
+	}
+
+	public String getComprobante() {
+		return comprobante;
+	}
+
+	public void setComprobante(String comprobante) {
+		this.comprobante = comprobante;
+	}
+
+	public TipoUsoEnum getTipoUso() {
+		return tipoUso;
+	}
+
+	public void setTipoUso(TipoUsoEnum tipoUso) {
+		this.tipoUso = tipoUso;
+	}
+
+	public Date getFechaSeguroDesde() {
+		return fechaSeguroDesde;
+	}
+
+	public void setFechaSeguroDesde(Date fechaSeguroDesde) {
+		this.fechaSeguroDesde = fechaSeguroDesde;
+	}
+
+	public Date getFechaSeguroHasta() {
+		return fechaSeguroHasta;
+	}
+
+	public void setFechaSeguroHasta(Date fechaSeguroHasta) {
+		this.fechaSeguroHasta = fechaSeguroHasta;
+	}
+
+	public Date getFechaReciboVencimiento() {
+		return fechaReciboVencimiento;
+	}
+
+	public void setFechaReciboVencimiento(Date fechaReciboVencimiento) {
+		this.fechaReciboVencimiento = fechaReciboVencimiento;
+	}
+
+	public String getComprobante2() {
+		return comprobante2;
+	}
+
+	public void setComprobante2(String comprobante2) {
+		this.comprobante2 = comprobante2;
+	}
+
+	public String getNumeroCuenta() {
+		return numeroCuenta;
+	}
+
+	public void setNumeroCuenta(String numeroCuenta) {
+		this.numeroCuenta = numeroCuenta;
+	}
+
+	public String getNumeroPoliza() {
+		return numeroPoliza;
+	}
+
+	public void setNumeroPoliza(String numeroPoliza) {
+		this.numeroPoliza = numeroPoliza;
+	}
+
+	public String getNumeroCuota() {
+		return numeroCuota;
+	}
+
+	public void setNumeroCuota(String numeroCuota) {
+		this.numeroCuota = numeroCuota;
+	}
+
+	public Integer getNumeroSocio() {
+		return numeroSocio;
+	}
+
+	public void setNumeroSocio(Integer numeroSocio) {
+		this.numeroSocio = numeroSocio;
+	}
+
+	public String getNumeroLoJack() {
+		return numeroLoJack;
+	}
+
+	public void setNumeroLoJack(String numeroLoJack) {
+		this.numeroLoJack = numeroLoJack;
+	}
+
+	public String getObservacionesSeguro() {
+		return observacionesSeguro;
+	}
+
+	public void setObservacionesSeguro(String observacionesSeguro) {
+		this.observacionesSeguro = observacionesSeguro;
+	}
+
+	public BigDecimal getValorMovil() {
+		return valorMovil;
+	}
+
+	public void setValorMovil(BigDecimal valorMovil) {
+		this.valorMovil = valorMovil;
+	}
+
+	public BigDecimal getValorAccesorios() {
+		return valorAccesorios;
+	}
+
+	public void setValorAccesorios(BigDecimal valorAccesorios) {
+		this.valorAccesorios = valorAccesorios;
+	}
+
+	public BigDecimal getValorTotalAsegurado() {
+		return valorTotalAsegurado;
+	}
+
+	public void setValorTotalAsegurado(BigDecimal valorTotalAsegurado) {
+		this.valorTotalAsegurado = valorTotalAsegurado;
+	}
+
+	public BigDecimal getValorLoJack() {
+		return valorLoJack;
+	}
+
+	public void setValorLoJack(BigDecimal valorLoJack) {
+		this.valorLoJack = valorLoJack;
+	}
+
+	public CoberturaAdicionalEnum getCoberturaAdicional() {
+		return coberturaAdicional;
+	}
+
+	public void setCoberturaAdicional(CoberturaAdicionalEnum coberturaAdicional) {
+		this.coberturaAdicional = coberturaAdicional;
 	}
 
 }
