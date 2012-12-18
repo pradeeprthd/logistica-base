@@ -1,5 +1,6 @@
 package com.controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
@@ -58,6 +59,12 @@ public class MovilController extends PaginableController<Movil> {
 	private List<CoberturaAdicionalEnum> coberturaAdicionalEnumList;
 	private Autonomo patcom;
 	private DataModel<AutonomoView> patcomDM;
+	private String nota;
+	private List<String> notas;
+	private DataModel<String> notasDM;
+	private String notaControl;
+	private List<String> notasControl;
+	private DataModel<String> notasControlDM;
 
 	@ManagedProperty("#{autonomoBuilder}")
 	private AutonomoBuilder autonomoBuilder;
@@ -89,6 +96,8 @@ public class MovilController extends PaginableController<Movil> {
 			estadoEnumList = Arrays.asList(EstadoEnum.values());
 			patcomDM = new ListDataModel<AutonomoView>();
 			patcom = new Autonomo();
+			notasDM = new ListDataModel<String>();
+			notasControlDM = new ListDataModel<String>();
 			addEdit = false;
 		} catch (Throwable e) {
 			log.error("Error al inicializar la clase MovilController", e);
@@ -163,6 +172,54 @@ public class MovilController extends PaginableController<Movil> {
 		return coberturaAdicionalEnumList;
 	}
 
+	public String getNota() {
+		return nota;
+	}
+
+	public void setNota(String nota) {
+		this.nota = nota;
+	}
+
+	public List<String> getNotas() {
+		return notas;
+	}
+
+	public void setNotas(List<String> notas) {
+		this.notas = notas;
+	}
+
+	public DataModel<String> getNotasDM() {
+		return notasDM;
+	}
+
+	public void setNotasDM(DataModel<String> notasDM) {
+		this.notasDM = notasDM;
+	}
+
+	public String getNotaControl() {
+		return notaControl;
+	}
+
+	public void setNotaControl(String notaControl) {
+		this.notaControl = notaControl;
+	}
+
+	public List<String> getNotasControl() {
+		return notasControl;
+	}
+
+	public void setNotasControl(List<String> notasControl) {
+		this.notasControl = notasControl;
+	}
+
+	public DataModel<String> getNotasControlDM() {
+		return notasControlDM;
+	}
+
+	public void setNotasControlDM(DataModel<String> notasControlDM) {
+		this.notasControlDM = notasControlDM;
+	}
+
 	public void query(ActionEvent event) {
 		loadList();
 	}
@@ -174,6 +231,10 @@ public class MovilController extends PaginableController<Movil> {
 			patcomDM = new ListDataModel<AutonomoView>(
 					autonomoBuilder.toView(movil.getPatcomList()));
 			movilView = movilBuilder.toView(movil);
+			notas = movil.getNotas();
+			notasDM = new ListDataModel<String>(notas);
+			notasControl = movil.getNotasControl();
+			notasControlDM = new ListDataModel<String>(notasControl);
 			addEdit = true;
 		} catch (Throwable e) {
 			log.error("Error al editar", e);
@@ -208,6 +269,8 @@ public class MovilController extends PaginableController<Movil> {
 	public void save(ActionEvent event) {
 		try {
 			movil = movilBuilder.toDomain(movilView);
+			movil.setNotas(notas);
+			movil.setNotasControl(notasControl);
 			if (movil.getID() != null) {
 				if (movil.getEstado() == EstadoEnum.INACTIVO) {
 					movil.setFechaEgreso(new Date());
@@ -332,5 +395,39 @@ public class MovilController extends PaginableController<Movil> {
 		AutonomoView detalle = patcomDM.getRowData();
 		movilView.getPatcomList().remove(detalle);
 		patcomDM = new ListDataModel<AutonomoView>(movilView.getPatcomList());
+	}
+
+	public void addNota(ActionEvent event) {
+		if (notas == null) {
+			notas = new ArrayList<String>();
+		}
+
+		if (nota != null && nota.length() < 256) {
+			notas.add(nota);
+			notasDM = new ListDataModel<String>(notas);
+		}
+	}
+
+	public void deleteNota(ActionEvent event) {
+		String detalle = notasDM.getRowData();
+		notas.remove(detalle);
+		notasDM = new ListDataModel<String>(notas);
+	}
+
+	public void addNotaControl(ActionEvent event) {
+		if (notasControl == null) {
+			notasControl = new ArrayList<String>();
+		}
+
+		if (notaControl != null && notaControl.length() < 256) {
+			notasControl.add(notaControl);
+			notasControlDM = new ListDataModel<String>(notasControl);
+		}
+	}
+
+	public void deleteNotaControl(ActionEvent event) {
+		String detalle = notasControlDM.getRowData();
+		notasControl.remove(detalle);
+		notasControlDM = new ListDataModel<String>(notasControl);
 	}
 }

@@ -73,7 +73,7 @@ where r.usuario_id=u.id and u.usuario =?" />
 			<ref local="sessionFactory" />
 		</property>
 	</bean>
-	
+
 	<bean id="propietarioDAOImpl" class="logistica.common.dao.PropietarioDAOImpl">
 		<property name="sessionFactory">
 			<ref local="sessionFactory" />
@@ -178,6 +178,7 @@ where r.usuario_id=u.id and u.usuario =?" />
 				<value>logistica.model.Propietario</value>
 				<value>logistica.model.MovilPropietarioDetalle</value>
 				<value>logistica.model.Autonomo</value>
+				<value>logistica.model.Recibo</value>
 				<value>logistica.model.Provincia</value>
 				<value>logistica.model.Localidad</value>
 				<value>logistica.model.Sucursal</value>
@@ -268,7 +269,7 @@ where r.usuario_id=u.id and u.usuario =?" />
 			</props>
 		</property>
 	</bean>
-	
+
 	<bean id="propietarioDAO"
 		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
 		<property name="transactionManager">

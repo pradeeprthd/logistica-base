@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -15,6 +16,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -29,6 +31,10 @@ import logistica.type.TipoUsoEnum;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 @SuppressWarnings("serial")
 @Entity
@@ -277,6 +283,78 @@ public class Movil extends BaseModel {
 	@Enumerated(EnumType.STRING)
 	private CoberturaAdicionalEnum coberturaAdicional;
 
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@ElementCollection()
+	@JoinTable(name = "movilNotas")
+	@JoinColumn(name = "movilID")
+	private List<String> notas;
+
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@ElementCollection()
+	@JoinTable(name = "movilNotasControl")
+	@JoinColumn(name = "movilID")
+	private List<String> notasControl;
+
+	@OneToMany(orphanRemoval = false, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@Fetch(value = FetchMode.SUBSELECT)
+	@JoinColumn(name = "movilID")
+	private List<Autonomo> form817List;
+
+	@OneToMany(orphanRemoval = false, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@Fetch(value = FetchMode.SUBSELECT)
+	@JoinColumn(name = "movilID")
+	private List<Autonomo> form170List;
+
+	@OneToMany(orphanRemoval = false, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@Fetch(value = FetchMode.SUBSELECT)
+	@JoinColumn(name = "movilID")
+	private List<Recibo> reciboList;
+
+	@OneToMany(orphanRemoval = false, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@Fetch(value = FetchMode.SUBSELECT)
+	@JoinColumn(name = "movilID")
+	private List<Recibo> nominaList;
+
+	@Column(length = 200)
+	private String categoria;
+
+	@Column(precision = 20, scale = 2)
+	private BigDecimal reciboSueldo;
+
+	@Column(length = 200)
+	private String observacionBlanqueo;
+
+	@Column(length = 200)
+	private String nominaEmpleado;
+
+	@Column(length = 200)
+	private String seguroVida;
+
+	@Basic
+	private Boolean altaEmpleador;
+
+	@Basic
+	private Integer altaTemprana;
+
+	@Column(length = 200)
+	private String obraSocial;
+
+	@Column(length = 200)
+	private String sindicato;
+
+	public Movil() {
+		this(null, null, null, null, null, null, null, null, null, null, null,
+				null, null, null, null, null, null, null, null, null, null,
+				null, null, null, null, null, null, null, null, null, null,
+				null, null, null, null, null, null, null, null, null, null,
+				null, null, null, null, null, null, null, null, null, null,
+				null, null, null, null, null, null, null, null, null, null,
+				null, null, null, null, null, null, null, null, null, null,
+				null, null, null, null, null, null, null, null, null, null,
+				null, null, null, null, null, null, null, null, null, null,
+				null, null);
+	}
+
 	public Movil(Long id, Long numeroMovil, String patente, String descripcion,
 			AsignacionMovilEnum asignacionMovil, EstadoEnum estado,
 			Date fechaIngreso, Date fechaEgreso, Boolean controlado,
@@ -306,7 +384,13 @@ public class Movil extends BaseModel {
 			String numeroCuota, Integer numeroSocio, String numeroLoJack,
 			String observacionesSeguro, BigDecimal valorMovil,
 			BigDecimal valorAccesorios, BigDecimal valorTotalAsegurado,
-			BigDecimal valorLoJack, CoberturaAdicionalEnum coberturaAdicional) {
+			BigDecimal valorLoJack, CoberturaAdicionalEnum coberturaAdicional,
+			List<String> notas, List<String> notasControl,
+			List<Autonomo> form817List, List<Autonomo> form170List,
+			List<Recibo> reciboList, List<Recibo> nominaList, String categoria,
+			BigDecimal reciboSueldo, String observacionBlanqueo,
+			String nominaEmpleado, String seguroVida, Boolean altaEmpleador,
+			Integer altaTemprana, String obraSocial, String sindicato) {
 		super();
 		this.id = id;
 		this.numeroMovil = numeroMovil;
@@ -386,17 +470,21 @@ public class Movil extends BaseModel {
 		this.valorTotalAsegurado = valorTotalAsegurado;
 		this.valorLoJack = valorLoJack;
 		this.coberturaAdicional = coberturaAdicional;
-	}
-
-	public Movil() {
-		this(null, null, null, null, null, null, null, null, null, null, null,
-				null, null, null, null, null, null, null, null, null, null,
-				null, null, null, null, null, null, null, null, null, null,
-				null, null, null, null, null, null, null, null, null, null,
-				null, null, null, null, null, null, null, null, null, null,
-				null, null, null, null, null, null, null, null, null, null,
-				null, null, null, null, null, null, null, null, null, null,
-				null, null, null, null, null, null, null);
+		this.notas = notas;
+		this.notasControl = notasControl;
+		this.form817List = form817List;
+		this.form170List = form170List;
+		this.reciboList = reciboList;
+		this.nominaList = nominaList;
+		this.categoria = categoria;
+		this.reciboSueldo = reciboSueldo;
+		this.observacionBlanqueo = observacionBlanqueo;
+		this.nominaEmpleado = nominaEmpleado;
+		this.seguroVida = seguroVida;
+		this.altaEmpleador = altaEmpleador;
+		this.altaTemprana = altaTemprana;
+		this.obraSocial = obraSocial;
+		this.sindicato = sindicato;
 	}
 
 	@Override
@@ -1023,6 +1111,126 @@ public class Movil extends BaseModel {
 
 	public void setCoberturaAdicional(CoberturaAdicionalEnum coberturaAdicional) {
 		this.coberturaAdicional = coberturaAdicional;
+	}
+
+	public List<String> getNotas() {
+		return notas;
+	}
+
+	public void setNotas(List<String> notas) {
+		this.notas = notas;
+	}
+
+	public List<String> getNotasControl() {
+		return notasControl;
+	}
+
+	public void setNotasControl(List<String> notasControl) {
+		this.notasControl = notasControl;
+	}
+
+	public List<Autonomo> getForm817List() {
+		return form817List;
+	}
+
+	public void setForm817List(List<Autonomo> form817List) {
+		this.form817List = form817List;
+	}
+
+	public List<Autonomo> getForm170List() {
+		return form170List;
+	}
+
+	public void setForm170List(List<Autonomo> form170List) {
+		this.form170List = form170List;
+	}
+
+	public List<Recibo> getReciboList() {
+		return reciboList;
+	}
+
+	public void setReciboList(List<Recibo> reciboList) {
+		this.reciboList = reciboList;
+	}
+
+	public List<Recibo> getNominaList() {
+		return nominaList;
+	}
+
+	public void setNominaList(List<Recibo> nominaList) {
+		this.nominaList = nominaList;
+	}
+
+	public String getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(String categoria) {
+		this.categoria = categoria;
+	}
+
+	public BigDecimal getReciboSueldo() {
+		return reciboSueldo;
+	}
+
+	public void setReciboSueldo(BigDecimal reciboSueldo) {
+		this.reciboSueldo = reciboSueldo;
+	}
+
+	public String getObservacionBlanqueo() {
+		return observacionBlanqueo;
+	}
+
+	public void setObservacionBlanqueo(String observacionBlanqueo) {
+		this.observacionBlanqueo = observacionBlanqueo;
+	}
+
+	public String getNominaEmpleado() {
+		return nominaEmpleado;
+	}
+
+	public void setNominaEmpleado(String nominaEmpleado) {
+		this.nominaEmpleado = nominaEmpleado;
+	}
+
+	public String getSeguroVida() {
+		return seguroVida;
+	}
+
+	public void setSeguroVida(String seguroVida) {
+		this.seguroVida = seguroVida;
+	}
+
+	public Boolean getAltaEmpleador() {
+		return altaEmpleador;
+	}
+
+	public void setAltaEmpleador(Boolean altaEmpleador) {
+		this.altaEmpleador = altaEmpleador;
+	}
+
+	public Integer getAltaTemprana() {
+		return altaTemprana;
+	}
+
+	public void setAltaTemprana(Integer altaTemprana) {
+		this.altaTemprana = altaTemprana;
+	}
+
+	public String getObraSocial() {
+		return obraSocial;
+	}
+
+	public void setObraSocial(String obraSocial) {
+		this.obraSocial = obraSocial;
+	}
+
+	public String getSindicato() {
+		return sindicato;
+	}
+
+	public void setSindicato(String sindicato) {
+		this.sindicato = sindicato;
 	}
 
 	@Override

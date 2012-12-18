@@ -16,6 +16,9 @@ public class MovilBuilder extends BaseBuilder<MovilView, Movil> {
 	@ManagedProperty("#{autonomoBuilder}")
 	private AutonomoBuilder autonomoBuilder;
 
+	@ManagedProperty("#{reciboBuilder}")
+	private ReciboBuilder reciboBuilder;
+
 	public Movil toDomain(MovilView view) {
 		return new Movil(view.getId(), view.getNumeroMovil(),
 				view.getPatente(), view.getDescripcion(),
@@ -58,7 +61,20 @@ public class MovilBuilder extends BaseBuilder<MovilView, Movil> {
 				view.getNumeroSocio(), view.getNumeroLoJack(),
 				view.getObservacionesSeguro(), view.getValorMovil(),
 				view.getValorAccesorios(), view.getValorTotalAsegurado(),
-				view.getValorLoJack(), view.getCoberturaAdicional());
+				view.getValorLoJack(), view.getCoberturaAdicional(),
+				view.getNotas(), view.getNotasControl(),
+				view.getForm817List() != null ? autonomoBuilder.toDomain(view
+						.getForm817List()) : null,
+				view.getForm170List() != null ? autonomoBuilder.toDomain(view
+						.getForm170List()) : null,
+				view.getReciboList() != null ? reciboBuilder.toDomain(view
+						.getReciboList()) : null,
+				view.getNominaList() != null ? reciboBuilder.toDomain(view
+						.getNominaList()) : null, view.getCategoria(),
+				view.getReciboSueldo(), view.getObservacionBlanqueo(),
+				view.getNominaEmpleado(), view.getSeguroVida(),
+				view.getAltaEmpleador(), view.getAltaTemprana(),
+				view.getObraSocial(), view.getSindicato());
 	}
 
 	public MovilView toView(Movil model) {
@@ -103,7 +119,20 @@ public class MovilBuilder extends BaseBuilder<MovilView, Movil> {
 				model.getNumeroSocio(), model.getNumeroLoJack(),
 				model.getObservacionesSeguro(), model.getValorMovil(),
 				model.getValorAccesorios(), model.getValorTotalAsegurado(),
-				model.getValorLoJack(), model.getCoberturaAdicional());
+				model.getValorLoJack(), model.getCoberturaAdicional(),
+				model.getNotas(), model.getNotasControl(),
+				model.getForm817List() != null ? autonomoBuilder.toView(model
+						.getForm817List()) : null,
+				model.getForm170List() != null ? autonomoBuilder.toView(model
+						.getForm170List()) : null,
+				model.getReciboList() != null ? reciboBuilder.toView(model
+						.getReciboList()) : null,
+				model.getNominaList() != null ? reciboBuilder.toView(model
+						.getNominaList()) : null, model.getCategoria(),
+				model.getReciboSueldo(), model.getObservacionBlanqueo(),
+				model.getNominaEmpleado(), model.getSeguroVida(),
+				model.getAltaEmpleador(), model.getAltaTemprana(),
+				model.getObraSocial(), model.getSindicato());
 	}
 
 	public AutonomoBuilder getAutonomoBuilder() {
@@ -113,4 +142,13 @@ public class MovilBuilder extends BaseBuilder<MovilView, Movil> {
 	public void setAutonomoBuilder(AutonomoBuilder autonomoBuilder) {
 		this.autonomoBuilder = autonomoBuilder;
 	}
+
+	public ReciboBuilder getReciboBuilder() {
+		return reciboBuilder;
+	}
+
+	public void setReciboBuilder(ReciboBuilder reciboBuilder) {
+		this.reciboBuilder = reciboBuilder;
+	}
+
 }
