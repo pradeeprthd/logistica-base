@@ -185,6 +185,36 @@ public class MovilView implements Serializable {
 
 	private CoberturaAdicionalEnum coberturaAdicional;
 
+	private List<String> notas;
+
+	private List<String> notasControl;
+
+	private List<AutonomoView> form817List;
+
+	private List<AutonomoView> form170List;
+
+	private List<ReciboView> reciboList;
+
+	private List<ReciboView> nominaList;
+
+	private String categoria;
+
+	private BigDecimal reciboSueldo;
+
+	private String observacionBlanqueo;
+
+	private String nominaEmpleado;
+
+	private String seguroVida;
+
+	private Boolean altaEmpleador;
+
+	private Integer altaTemprana;
+
+	private String obraSocial;
+
+	private String sindicato;
+
 	public MovilView(Long id, Long numeroMovil, String patente,
 			String descripcion, AsignacionMovilEnum asignacionMovil,
 			EstadoEnum estado, Date fechaIngreso, Date fechaEgreso,
@@ -215,7 +245,14 @@ public class MovilView implements Serializable {
 			String numeroCuota, Integer numeroSocio, String numeroLoJack,
 			String observacionesSeguro, BigDecimal valorMovil,
 			BigDecimal valorAccesorios, BigDecimal valorTotalAsegurado,
-			BigDecimal valorLoJack, CoberturaAdicionalEnum coberturaAdicional) {
+			BigDecimal valorLoJack, CoberturaAdicionalEnum coberturaAdicional,
+			List<String> notas, List<String> notasControl,
+			List<AutonomoView> form817List, List<AutonomoView> form170List,
+			List<ReciboView> reciboList, List<ReciboView> nominaList,
+			String categoria, BigDecimal reciboSueldo,
+			String observacionBlanqueo, String nominaEmpleado,
+			String seguroVida, Boolean altaEmpleador, Integer altaTemprana,
+			String obraSocial, String sindicato) {
 		super();
 		this.id = id;
 		this.numeroMovil = numeroMovil;
@@ -295,6 +332,21 @@ public class MovilView implements Serializable {
 		this.valorTotalAsegurado = valorTotalAsegurado;
 		this.valorLoJack = valorLoJack;
 		this.coberturaAdicional = coberturaAdicional;
+		this.notas = notas;
+		this.notasControl = notasControl;
+		this.form817List = form817List;
+		this.form170List = form170List;
+		this.reciboList = reciboList;
+		this.nominaList = nominaList;
+		this.categoria = categoria;
+		this.reciboSueldo = reciboSueldo;
+		this.observacionBlanqueo = observacionBlanqueo;
+		this.nominaEmpleado = nominaEmpleado;
+		this.seguroVida = seguroVida;
+		this.altaEmpleador = altaEmpleador;
+		this.altaTemprana = altaTemprana;
+		this.obraSocial = obraSocial;
+		this.sindicato = sindicato;
 	}
 
 	public MovilView() {
@@ -305,7 +357,9 @@ public class MovilView implements Serializable {
 				null, null, null, null, null, null, null, null, null, null,
 				null, null, null, null, null, null, null, null, null, null,
 				null, null, null, null, null, null, null, null, null, null,
-				null, null, null, null, null, null, null);
+				null, null, null, null, null, null, null, null, null, null,
+				null, null, null, null, null, null, null, null, null, null,
+				null, null);
 	}
 
 	public Long getId() {
@@ -948,4 +1002,123 @@ public class MovilView implements Serializable {
 		this.coberturaAdicional = coberturaAdicional;
 	}
 
+	public List<String> getNotas() {
+		return notas;
+	}
+
+	public void setNotas(List<String> notas) {
+		this.notas = notas;
+	}
+
+	public List<String> getNotasControl() {
+		return notasControl;
+	}
+
+	public void setNotasControl(List<String> notasControl) {
+		this.notasControl = notasControl;
+	}
+
+	public List<AutonomoView> getForm817List() {
+		return form817List;
+	}
+
+	public void setForm817List(List<AutonomoView> form817List) {
+		this.form817List = form817List;
+	}
+
+	public List<AutonomoView> getForm170List() {
+		return form170List;
+	}
+
+	public void setForm170List(List<AutonomoView> form170List) {
+		this.form170List = form170List;
+	}
+
+	public List<ReciboView> getReciboList() {
+		return reciboList;
+	}
+
+	public void setReciboList(List<ReciboView> reciboList) {
+		this.reciboList = reciboList;
+	}
+
+	public List<ReciboView> getNominaList() {
+		return nominaList;
+	}
+
+	public void setNominaList(List<ReciboView> nominaList) {
+		this.nominaList = nominaList;
+	}
+
+	public String getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(String categoria) {
+		this.categoria = categoria;
+	}
+
+	public BigDecimal getReciboSueldo() {
+		return reciboSueldo;
+	}
+
+	public void setReciboSueldo(BigDecimal reciboSueldo) {
+		this.reciboSueldo = reciboSueldo;
+	}
+
+	public String getObservacionBlanqueo() {
+		return observacionBlanqueo;
+	}
+
+	public void setObservacionBlanqueo(String observacionBlanqueo) {
+		this.observacionBlanqueo = observacionBlanqueo;
+	}
+
+	public String getNominaEmpleado() {
+		return nominaEmpleado;
+	}
+
+	public void setNominaEmpleado(String nominaEmpleado) {
+		this.nominaEmpleado = nominaEmpleado;
+	}
+
+	public String getSeguroVida() {
+		return seguroVida;
+	}
+
+	public void setSeguroVida(String seguroVida) {
+		this.seguroVida = seguroVida;
+	}
+
+	public Boolean getAltaEmpleador() {
+		return altaEmpleador;
+	}
+
+	public void setAltaEmpleador(Boolean altaEmpleador) {
+		this.altaEmpleador = altaEmpleador;
+	}
+
+	public Integer getAltaTemprana() {
+		return altaTemprana;
+	}
+
+	public void setAltaTemprana(Integer altaTemprana) {
+		this.altaTemprana = altaTemprana;
+	}
+
+	public String getObraSocial() {
+		return obraSocial;
+	}
+
+	public void setObraSocial(String obraSocial) {
+		this.obraSocial = obraSocial;
+	}
+
+	public String getSindicato() {
+		return sindicato;
+	}
+
+	public void setSindicato(String sindicato) {
+		this.sindicato = sindicato;
+	}
 }

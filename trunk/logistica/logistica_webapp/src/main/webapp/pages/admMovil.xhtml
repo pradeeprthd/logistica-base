@@ -7,6 +7,7 @@
 	xmlns:s="http://com.ss.logistica/jsf"
 	xmlns:p="http://primefaces.org/ui" xmlns="http://www.w3.org/1999/xhtml">
 
+
 <body>
 	<u:composition template="/pages/layout/pageLayout.xhtml">
 		<u:define name="body">
@@ -142,7 +143,7 @@
 
 				<h:panelGrid id="panel" columns="1"
 					rendered="#{movilController.addEdit}">
-					<p:tabView widgetVar="tabView">
+					<p:tabView id="tabView" widgetVar="tabView">
 						<p:tab title="Datos Principales">
 							<p:focus for="numeroM" />
 							<h:panelGrid columns="3">
@@ -869,6 +870,96 @@
 										for="valorTotalAseguradoS" />
 								</h:panelGrid>
 							</p:panel>
+						</p:tab>
+
+						<p:tab title="Notas">
+							<p:panel header="Agregar nota">
+								<h:panelGrid columns="2">
+									<h:outputText value="Nota" />
+									<p:inputTextarea id="notaITA" style="width:200px;height:100px;"
+										value="#{movilController.nota}" immediate="true"
+										maxLength="250">
+										<f:ajax execute="@this" />
+									</p:inputTextarea>
+
+									<p:commandButton value="Agregar nota"
+										actionListener="#{movilController.addNota}"
+										update="detalleNotaListDT" immediate="true" />
+								</h:panelGrid>
+							</p:panel>
+
+							<p:dataTable id="detalleNotaListDT" var="nota"
+								value="#{movilController.notasDM}" emptyMessage="">
+
+								<f:facet name="header">
+									<h:outputText value="Notas" />
+								</f:facet>
+
+								<p:column align="center">
+									<f:facet name="header">
+										<h:outputText value="Nota" />
+									</f:facet>
+									<h:outputText value="#{nota}" />
+								</p:column>
+
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Opciones" />
+									</f:facet>
+									<h:panelGrid columns="3">
+										<h:commandLink actionListener="#{movilController.deleteNota}"
+											immediate="true">
+											<h:graphicImage url="/resource/images/delete.gif"
+												title="Eliminar" style="border:0px" />
+										</h:commandLink>
+									</h:panelGrid>
+								</p:column>
+							</p:dataTable>
+						</p:tab>
+						
+						<p:tab title="Control">
+							<p:panel header="Agregar Observación">
+								<h:panelGrid columns="2">
+									<h:outputText value="Observación" />
+									<p:inputTextarea id="notaControlITA" style="width:200px;height:100px;"
+										value="#{movilController.notaControl}" immediate="true"
+										maxLength="250">
+										<f:ajax execute="@this" />
+									</p:inputTextarea>
+
+									<p:commandButton value="Agregar observación"
+										actionListener="#{movilController.addNotaControl}"
+										update="detalleNotaControlListDT" immediate="true" />
+								</h:panelGrid>
+							</p:panel>
+
+							<p:dataTable id="detalleNotaControlListDT" var="nota"
+								value="#{movilController.notasControlDM}" emptyMessage="">
+
+								<f:facet name="header">
+									<h:outputText value="Observaciones" />
+								</f:facet>
+
+								<p:column align="center">
+									<f:facet name="header">
+										<h:outputText value="Observación" />
+									</f:facet>
+									<h:outputText value="#{nota}" />
+								</p:column>
+
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Opciones" />
+									</f:facet>
+									<h:panelGrid columns="3">
+										<h:commandLink actionListener="#{movilController.deleteNotaControl}"
+											immediate="true">
+											<h:graphicImage url="/resource/images/delete.gif"
+												title="Eliminar" style="border:0px" />
+										</h:commandLink>
+									</h:panelGrid>
+								</p:column>
+							</p:dataTable>
 						</p:tab>
 
 					</p:tabView>
