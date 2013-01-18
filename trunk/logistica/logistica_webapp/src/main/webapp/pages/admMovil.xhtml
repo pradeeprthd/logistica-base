@@ -119,7 +119,13 @@
 						<f:facet name="header">
 							<h:outputText value="Opciones" />
 						</f:facet>
-						<h:panelGrid columns="3">
+						<h:panelGrid columns="4">
+
+							<p:commandLink actionListener="#{movilController.caratulaToPDF}"
+								ajax="false">
+								<h:graphicImage url="/resource/images/pdf.gif"
+									title="Caratula a PDF" style="border:0px" />
+							</p:commandLink>
 							<p:commandLink actionListener="#{movilController.edit}"
 								update="form,filtroForm" oncomplete="tabView.select(0)">
 								<h:graphicImage url="/resource/images/edit.gif"
@@ -134,9 +140,24 @@
 					</p:column>
 
 					<f:facet name="footer">
-						<p:commandButton value="Agregar"
-							actionListener="#{movilController.add}" update="form,filtroForm"
-							oncomplete="tabView.select(0)" />
+						<h:panelGrid columns="4">
+							<p:commandButton value="Agregar"
+								actionListener="#{movilController.add}" update="form,filtroForm"
+								oncomplete="tabView.select(0)" />
+
+							<p:commandButton value="Resumen general a PDF"
+								actionListener="#{movilController.resumenGeneralToPDF}"
+								ajax="false" />
+
+							<p:commandButton value="Resumen detallado a PDF"
+								actionListener="#{movilController.resumenDetalladoToPDF}"
+								ajax="false" />
+
+							<p:commandButton value="Listado común a PDF"
+								actionListener="#{movilController.listadoComunToPDF}"
+								ajax="false" />
+						</h:panelGrid>
+
 					</f:facet>
 				</p:dataTable>
 
@@ -916,12 +937,390 @@
 								</p:column>
 							</p:dataTable>
 						</p:tab>
-						
+
+						<p:tab title="Blanqueo">
+							<p:panel>
+								<h:panelGrid columns="6">
+									<h:outputText value="Categoria" />
+									<p:inputText id="categoriaIT"
+										value="#{movilController.movilView.categoria}">
+										<f:validateBean for="categoriaIT" />
+									</p:inputText>
+									<h:message id="mcategoriaIT" for="categoriaIT" />
+
+									<h:outputText value="Recibo sueldo" />
+									<p:spinner id="reciboSueldoS"
+										value="#{movilController.movilView.reciboSueldo}" min="0"
+										stepFactor="0.5" size="30">
+										<f:validateBean for="reciboSueldoS" />
+									</p:spinner>
+									<h:message id="mreciboSueldoS" for="reciboSueldoS" />
+
+									<h:outputText value="Observacion Blanqueo" />
+									<p:inputText id="observacionBlanqueoIT"
+										value="#{movilController.movilView.observacionBlanqueo}">
+										<f:validateBean for="observacionBlanqueoIT" />
+									</p:inputText>
+									<h:message id="mobservacionBlanqueoIT"
+										for="observacionBlanqueoIT" />
+
+									<h:outputText value="Nomina empleado" />
+									<p:inputText id="nominaEmpleadoIT"
+										value="#{movilController.movilView.nominaEmpleado}">
+										<f:validateBean for="nominaEmpleadoIT" />
+									</p:inputText>
+									<h:message id="mnominaEmpleadoIT" for="nominaEmpleadoIT" />
+
+									<h:outputText value="Seguro vida" />
+									<p:inputText id="seguroVidaIT"
+										value="#{movilController.movilView.seguroVida}">
+										<f:validateBean for="seguroVidaIT" />
+									</p:inputText>
+									<h:message id="mseguroVidaIT" for="seguroVidaIT" />
+
+									<h:outputText value="Alta empleador" />
+									<p:selectBooleanCheckbox
+										value="#{movilController.movilView.altaEmpleador}" />
+									<h:outputText value="" />
+
+									<h:outputText value="Alta temprana" />
+									<p:spinner id="altaTempranaS"
+										value="#{movilController.movilView.altaTemprana}" min="0"
+										stepFactor="1" size="30">
+										<f:validateBean for="altaTempranaS" />
+									</p:spinner>
+									<h:message id="maltaTempranaS" for="altaTempranaS" />
+
+									<h:outputText value="Obra social" />
+									<p:inputText id="obraSocialIT"
+										value="#{movilController.movilView.obraSocial}">
+										<f:validateBean for="obraSocialIT" />
+									</p:inputText>
+									<h:message id="mobraSocialIT" for="obraSocialIT" />
+
+									<h:outputText value="Sindicato" />
+									<p:inputText id="sindicatoIT"
+										value="#{movilController.movilView.sindicato}">
+										<f:validateBean for="sindicatoIT" />
+									</p:inputText>
+									<h:message id="msindicatoIT" for="sindicatoIT" />
+
+								</h:panelGrid>
+							</p:panel>
+
+							<p:panel header="Form 817">
+								<h:panelGrid columns="4">
+									<h:outputText value="Número form 817" />
+									<p:inputMask id="form817IM"
+										value="#{movilController.form817.numero}" mask="9999/99">
+										<f:ajax execute="@this" />
+									</p:inputMask>
+
+									<h:message for="form817IM" />
+									<h:outputText value="" />
+
+									<h:outputText value="Fecha" />
+									<p:calendar id="fechaForm817C"
+										value="#{movilController.form817.fecha}" mode="popup"
+										showOn="button" locale="es"
+										pattern="#{msgs.common_inputDateFormat}" immediate="true"
+										readOnlyInputText="true">
+										<p:ajax event="dateSelect"
+											listener="#{movilController.handleDateSelect}" />
+									</p:calendar>
+									<h:outputText value="" />
+									<h:outputText value="" />
+
+									<p:commandButton value="Agregar Form 817"
+										actionListener="#{movilController.addForm817}"
+										update="detalleListForm817DT" immediate="true" />
+								</h:panelGrid>
+
+
+								<p:dataTable id="detalleListForm817DT" var="detalle"
+									value="#{movilController.form817DM}" emptyMessage="">
+
+									<f:facet name="header">
+										<h:outputText value="Detalles" />
+									</f:facet>
+
+									<p:column align="center">
+										<f:facet name="header">
+											<h:outputText value="Número form 817" />
+										</f:facet>
+										<h:outputText value="#{detalle.numero}" />
+									</p:column>
+
+									<p:column>
+										<f:facet name="header">
+											<h:outputText value="Fecha" />
+										</f:facet>
+										<h:outputText value="#{detalle.fecha}">
+											<f:convertDateTime pattern="#{msgs.common_inputDateFormat}"
+												timeZone="#{msgs.common_timeZone}" />
+										</h:outputText>
+									</p:column>
+
+									<p:column>
+										<f:facet name="header">
+											<h:outputText value="Opciones" />
+										</f:facet>
+										<h:panelGrid columns="3">
+											<h:commandLink
+												actionListener="#{movilController.deleteForm817}"
+												immediate="true">
+												<h:graphicImage url="/resource/images/delete.gif"
+													title="Eliminar" style="border:0px" />
+											</h:commandLink>
+										</h:panelGrid>
+									</p:column>
+								</p:dataTable>
+							</p:panel>
+							<p:panel header="Form 170">
+								<h:panelGrid columns="4">
+									<h:outputText value="Número form 170" />
+									<p:inputMask id="fomr170IM"
+										value="#{movilController.form170.numero}" mask="9999/99">
+										<f:ajax execute="@this" />
+									</p:inputMask>
+
+									<h:message for="fomr170IM" />
+									<h:outputText value="" />
+
+									<h:outputText value="Fecha" />
+									<p:calendar id="fechaForm170C"
+										value="#{movilController.form170.fecha}" mode="popup"
+										showOn="button" locale="es"
+										pattern="#{msgs.common_inputDateFormat}" immediate="true"
+										readOnlyInputText="true">
+										<p:ajax event="dateSelect"
+											listener="#{movilController.handleDateSelect}" />
+									</p:calendar>
+									<h:outputText value="" />
+									<h:outputText value="" />
+
+									<p:commandButton value="Agregar Form 170"
+										actionListener="#{movilController.addForm170}"
+										update="detalleListForm170DT" immediate="true" />
+								</h:panelGrid>
+
+
+								<p:dataTable id="detalleListForm170DT" var="detalle"
+									value="#{movilController.form170DM}" emptyMessage="">
+
+									<f:facet name="header">
+										<h:outputText value="Detalles" />
+									</f:facet>
+
+									<p:column align="center">
+										<f:facet name="header">
+											<h:outputText value="Número form 170" />
+										</f:facet>
+										<h:outputText value="#{detalle.numero}" />
+									</p:column>
+
+									<p:column>
+										<f:facet name="header">
+											<h:outputText value="Fecha" />
+										</f:facet>
+										<h:outputText value="#{detalle.fecha}">
+											<f:convertDateTime pattern="#{msgs.common_inputDateFormat}"
+												timeZone="#{msgs.common_timeZone}" />
+										</h:outputText>
+									</p:column>
+
+									<p:column>
+										<f:facet name="header">
+											<h:outputText value="Opciones" />
+										</f:facet>
+										<h:panelGrid columns="3">
+											<h:commandLink
+												actionListener="#{movilController.deleteForm170}"
+												immediate="true">
+												<h:graphicImage url="/resource/images/delete.gif"
+													title="Eliminar" style="border:0px" />
+											</h:commandLink>
+										</h:panelGrid>
+									</p:column>
+								</p:dataTable>
+							</p:panel>
+
+							<p:panel header="Recibo">
+								<h:panelGrid columns="4">
+									<h:outputText value="Número Recibo" />
+									<p:inputMask id="reciboIM"
+										value="#{movilController.recibo.numero}" mask="9999/99">
+										<f:ajax execute="@this" />
+									</p:inputMask>
+
+									<h:message for="reciboIMm" />
+									<h:outputText value="" />
+
+									<h:outputText value="Fecha" />
+									<p:calendar id="fechaReciboC"
+										value="#{movilController.recibo.fecha}" mode="popup"
+										showOn="button" locale="es"
+										pattern="#{msgs.common_inputDateFormat}" immediate="true"
+										readOnlyInputText="true">
+										<p:ajax event="dateSelect"
+											listener="#{movilController.handleDateSelect}" />
+									</p:calendar>
+									<h:outputText value="" />
+									<h:outputText value="" />
+
+									<h:outputText value="Observacion" />
+									<p:inputText id="observacionrIT"
+										value="#{movilController.recibo.observacion}">
+										<f:ajax execute="@this" />
+										<f:validateBean for="observacionrIT" />
+									</p:inputText>
+									<h:message id="mobservacionrIT" for="observacionrIT" />
+
+									<p:commandButton value="Agregar recibo"
+										actionListener="#{movilController.addRecibo}"
+										update="detalleListReciboDT" immediate="true" />
+								</h:panelGrid>
+
+
+								<p:dataTable id="detalleListReciboDT" var="detalle"
+									value="#{movilController.reciboDM}" emptyMessage="">
+
+									<f:facet name="header">
+										<h:outputText value="Detalles" />
+									</f:facet>
+
+									<p:column align="center">
+										<f:facet name="header">
+											<h:outputText value="Número recibo" />
+										</f:facet>
+										<h:outputText value="#{detalle.numero}" />
+									</p:column>
+
+									<p:column>
+										<f:facet name="header">
+											<h:outputText value="Fecha" />
+										</f:facet>
+										<h:outputText value="#{detalle.fecha}">
+											<f:convertDateTime pattern="#{msgs.common_inputDateFormat}"
+												timeZone="#{msgs.common_timeZone}" />
+										</h:outputText>
+									</p:column>
+
+									<p:column align="center">
+										<f:facet name="header">
+											<h:outputText value="Observación" />
+										</f:facet>
+										<h:outputText value="#{detalle.observacion}" />
+									</p:column>
+
+									<p:column>
+										<f:facet name="header">
+											<h:outputText value="Opciones" />
+										</f:facet>
+										<h:panelGrid columns="3">
+											<h:commandLink
+												actionListener="#{movilController.deleteRecibo}"
+												immediate="true">
+												<h:graphicImage url="/resource/images/delete.gif"
+													title="Eliminar" style="border:0px" />
+											</h:commandLink>
+										</h:panelGrid>
+									</p:column>
+								</p:dataTable>
+							</p:panel>
+
+							<p:panel header="Nomina">
+								<h:panelGrid columns="4">
+									<h:outputText value="Número nomina" />
+									<p:inputMask id="nominaIM"
+										value="#{movilController.nomina.numero}" mask="9999/99">
+										<f:ajax execute="@this" />
+									</p:inputMask>
+
+									<h:message for="nominaIMm" />
+									<h:outputText value="" />
+
+									<h:outputText value="Fecha" />
+									<p:calendar id="fechaNominaC"
+										value="#{movilController.nomina.fecha}" mode="popup"
+										showOn="button" locale="es"
+										pattern="#{msgs.common_inputDateFormat}" immediate="true"
+										readOnlyInputText="true">
+										<p:ajax event="dateSelect"
+											listener="#{movilController.handleDateSelect}" />
+									</p:calendar>
+									<h:outputText value="" />
+									<h:outputText value="" />
+
+									<h:outputText value="Observacion" />
+									<p:inputText id="observacionnIT"
+										value="#{movilController.nomina.observacion}">
+										<f:ajax execute="@this" />
+										<f:validateBean for="observacionnIT" />
+									</p:inputText>
+									<h:message id="mobservacionnIT" for="observacionnIT" />
+
+									<p:commandButton value="Agregar nomina"
+										actionListener="#{movilController.addNomina}"
+										update="detalleListNominaDT" immediate="true" />
+								</h:panelGrid>
+
+
+								<p:dataTable id="detalleListNominaDT" var="detalle"
+									value="#{movilController.nominaDM}" emptyMessage="">
+
+									<f:facet name="header">
+										<h:outputText value="Detalles" />
+									</f:facet>
+
+									<p:column align="center">
+										<f:facet name="header">
+											<h:outputText value="Número nomina" />
+										</f:facet>
+										<h:outputText value="#{detalle.numero}" />
+									</p:column>
+
+									<p:column>
+										<f:facet name="header">
+											<h:outputText value="Fecha" />
+										</f:facet>
+										<h:outputText value="#{detalle.fecha}">
+											<f:convertDateTime pattern="#{msgs.common_inputDateFormat}"
+												timeZone="#{msgs.common_timeZone}" />
+										</h:outputText>
+									</p:column>
+
+									<p:column align="center">
+										<f:facet name="header">
+											<h:outputText value="Observación" />
+										</f:facet>
+										<h:outputText value="#{detalle.observacion}" />
+									</p:column>
+
+									<p:column>
+										<f:facet name="header">
+											<h:outputText value="Opciones" />
+										</f:facet>
+										<h:panelGrid columns="3">
+											<h:commandLink
+												actionListener="#{movilController.deleteNomina}"
+												immediate="true">
+												<h:graphicImage url="/resource/images/delete.gif"
+													title="Eliminar" style="border:0px" />
+											</h:commandLink>
+										</h:panelGrid>
+									</p:column>
+								</p:dataTable>
+							</p:panel>
+						</p:tab>
+
+
 						<p:tab title="Control">
 							<p:panel header="Agregar Observación">
 								<h:panelGrid columns="2">
 									<h:outputText value="Observación" />
-									<p:inputTextarea id="notaControlITA" style="width:200px;height:100px;"
+									<p:inputTextarea id="notaControlITA"
+										style="width:200px;height:100px;"
 										value="#{movilController.notaControl}" immediate="true"
 										maxLength="250">
 										<f:ajax execute="@this" />
@@ -952,7 +1351,8 @@
 										<h:outputText value="Opciones" />
 									</f:facet>
 									<h:panelGrid columns="3">
-										<h:commandLink actionListener="#{movilController.deleteNotaControl}"
+										<h:commandLink
+											actionListener="#{movilController.deleteNotaControl}"
 											immediate="true">
 											<h:graphicImage url="/resource/images/delete.gif"
 												title="Eliminar" style="border:0px" />

@@ -189,13 +189,13 @@ public class MovilView implements Serializable {
 
 	private List<String> notasControl;
 
-	private List<AutonomoView> form817List;
+	private List<Form817View> form817List;
 
-	private List<AutonomoView> form170List;
+	private List<Form170View> form170List;
 
 	private List<ReciboView> reciboList;
 
-	private List<ReciboView> nominaList;
+	private List<NominaView> nominaList;
 
 	private String categoria;
 
@@ -247,8 +247,8 @@ public class MovilView implements Serializable {
 			BigDecimal valorAccesorios, BigDecimal valorTotalAsegurado,
 			BigDecimal valorLoJack, CoberturaAdicionalEnum coberturaAdicional,
 			List<String> notas, List<String> notasControl,
-			List<AutonomoView> form817List, List<AutonomoView> form170List,
-			List<ReciboView> reciboList, List<ReciboView> nominaList,
+			List<Form817View> form817List, List<Form170View> form170List,
+			List<ReciboView> reciboList, List<NominaView> nominaList,
 			String categoria, BigDecimal reciboSueldo,
 			String observacionBlanqueo, String nominaEmpleado,
 			String seguroVida, Boolean altaEmpleador, Integer altaTemprana,
@@ -1018,22 +1018,6 @@ public class MovilView implements Serializable {
 		this.notasControl = notasControl;
 	}
 
-	public List<AutonomoView> getForm817List() {
-		return form817List;
-	}
-
-	public void setForm817List(List<AutonomoView> form817List) {
-		this.form817List = form817List;
-	}
-
-	public List<AutonomoView> getForm170List() {
-		return form170List;
-	}
-
-	public void setForm170List(List<AutonomoView> form170List) {
-		this.form170List = form170List;
-	}
-
 	public List<ReciboView> getReciboList() {
 		return reciboList;
 	}
@@ -1042,11 +1026,27 @@ public class MovilView implements Serializable {
 		this.reciboList = reciboList;
 	}
 
-	public List<ReciboView> getNominaList() {
+	public List<Form817View> getForm817List() {
+		return form817List;
+	}
+
+	public void setForm817List(List<Form817View> form817List) {
+		this.form817List = form817List;
+	}
+
+	public List<Form170View> getForm170List() {
+		return form170List;
+	}
+
+	public void setForm170List(List<Form170View> form170List) {
+		this.form170List = form170List;
+	}
+
+	public List<NominaView> getNominaList() {
 		return nominaList;
 	}
 
-	public void setNominaList(List<ReciboView> nominaList) {
+	public void setNominaList(List<NominaView> nominaList) {
 		this.nominaList = nominaList;
 	}
 

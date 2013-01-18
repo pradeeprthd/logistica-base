@@ -8,6 +8,7 @@ import logistica.model.Propietario;
 import logistica.query.PropietarioQuery;
 import logistica.util.FilesystemUtil;
 
+import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
@@ -118,8 +119,26 @@ public class PropietarioDAOImpl extends
 	public List<String> getListNames() {
 		List<String> list = new ArrayList<String>();
 		list.add("autonomoList");
-		//list.add("movilList");
+		// list.add("movilList");
 
+		return list;
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<Propietario> getList(Object query, Object query2)
+			throws DataAccessException {
+		List<Propietario> list = null;
+
+		DetachedCriteria criteria = DetachedCriteria
+				.forClass(Propietario.class);
+		//criteria.createAlias("movilPropietarioDetalleList", "detalle", CriteriaSpecification.INNER_JOIN);  
+		criteria.createAlias("movilPropietarioDetalleList", "detalle");  
+		criteria.createAlias("detalle.movil", "movil");  
+		criteria.add(Restrictions.eq("movil.id",
+				(Long) query));
+
+		list = getHibernateTemplate().findByCriteria(criteria);
 		return list;
 	}
 }

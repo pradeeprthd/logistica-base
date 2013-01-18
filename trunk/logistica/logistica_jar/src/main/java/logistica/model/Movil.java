@@ -298,12 +298,12 @@ public class Movil extends BaseModel {
 	@OneToMany(orphanRemoval = false, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@Fetch(value = FetchMode.SUBSELECT)
 	@JoinColumn(name = "movilID")
-	private List<Autonomo> form817List;
+	private List<Form817> form817List;
 
 	@OneToMany(orphanRemoval = false, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@Fetch(value = FetchMode.SUBSELECT)
 	@JoinColumn(name = "movilID")
-	private List<Autonomo> form170List;
+	private List<Form170> form170List;
 
 	@OneToMany(orphanRemoval = false, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@Fetch(value = FetchMode.SUBSELECT)
@@ -313,7 +313,7 @@ public class Movil extends BaseModel {
 	@OneToMany(orphanRemoval = false, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@Fetch(value = FetchMode.SUBSELECT)
 	@JoinColumn(name = "movilID")
-	private List<Recibo> nominaList;
+	private List<Nomina> nominaList;
 
 	@Column(length = 200)
 	private String categoria;
@@ -386,8 +386,8 @@ public class Movil extends BaseModel {
 			BigDecimal valorAccesorios, BigDecimal valorTotalAsegurado,
 			BigDecimal valorLoJack, CoberturaAdicionalEnum coberturaAdicional,
 			List<String> notas, List<String> notasControl,
-			List<Autonomo> form817List, List<Autonomo> form170List,
-			List<Recibo> reciboList, List<Recibo> nominaList, String categoria,
+			List<Form817> form817List, List<Form170> form170List,
+			List<Recibo> reciboList, List<Nomina> nominaList, String categoria,
 			BigDecimal reciboSueldo, String observacionBlanqueo,
 			String nominaEmpleado, String seguroVida, Boolean altaEmpleador,
 			Integer altaTemprana, String obraSocial, String sindicato) {
@@ -1129,20 +1129,28 @@ public class Movil extends BaseModel {
 		this.notasControl = notasControl;
 	}
 
-	public List<Autonomo> getForm817List() {
+	public List<Form817> getForm817List() {
 		return form817List;
 	}
 
-	public void setForm817List(List<Autonomo> form817List) {
+	public void setForm817List(List<Form817> form817List) {
 		this.form817List = form817List;
 	}
 
-	public List<Autonomo> getForm170List() {
+	public List<Form170> getForm170List() {
 		return form170List;
 	}
 
-	public void setForm170List(List<Autonomo> form170List) {
+	public void setForm170List(List<Form170> form170List) {
 		this.form170List = form170List;
+	}
+
+	public List<Nomina> getNominaList() {
+		return nominaList;
+	}
+
+	public void setNominaList(List<Nomina> nominaList) {
+		this.nominaList = nominaList;
 	}
 
 	public List<Recibo> getReciboList() {
@@ -1151,14 +1159,6 @@ public class Movil extends BaseModel {
 
 	public void setReciboList(List<Recibo> reciboList) {
 		this.reciboList = reciboList;
-	}
-
-	public List<Recibo> getNominaList() {
-		return nominaList;
-	}
-
-	public void setNominaList(List<Recibo> nominaList) {
-		this.nominaList = nominaList;
 	}
 
 	public String getCategoria() {

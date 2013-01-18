@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ListadoComun" pageWidth="595" pageHeight="842" columnWidth="585" leftMargin="5" rightMargin="5" topMargin="10" bottomMargin="10">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="direccionFotoChofer1" class="java.lang.String">
+		<fieldDescription><![CDATA[direccionFotoChofer1]]></fieldDescription>
+	</field>
+	<field name="tipoInscripcionChofer2" class="java.lang.String">
+		<fieldDescription><![CDATA[tipoInscripcionChofer2]]></fieldDescription>
+	</field>
+	<field name="parentescoChofer3" class="java.lang.String">
+		<fieldDescription><![CDATA[parentescoChofer3]]></fieldDescription>
+	</field>
+	<field name="nombrePropietario" class="java.lang.String">
+		<fieldDescription><![CDATA[nombrePropietario]]></fieldDescription>
+	</field>
+	<field name="tipo" class="java.lang.String">
+		<fieldDescription><![CDATA[tipo]]></fieldDescription>
+	</field>
+	<field name="dniChofer2" class="java.lang.String">
+		<fieldDescription><![CDATA[dniChofer2]]></fieldDescription>
+	</field>
+	<field name="observacionTelefonoChofer3" class="java.lang.String">
+		<fieldDescription><![CDATA[observacionTelefonoChofer3]]></fieldDescription>
+	</field>
+	<field name="direccionFotoChofer2" class="java.lang.String">
+		<fieldDescription><![CDATA[direccionFotoChofer2]]></fieldDescription>
+	</field>
+	<field name="telefonoPropietario" class="java.lang.String">
+		<fieldDescription><![CDATA[telefonoPropietario]]></fieldDescription>
+	</field>
+	<field name="observacionTelefonoPropietario" class="java.lang.String">
+		<fieldDescription><![CDATA[observacionTelefonoPropietario]]></fieldDescription>
+	</field>
+	<field name="marca" class="java.lang.String">
+		<fieldDescription><![CDATA[marca]]></fieldDescription>
+	</field>
+	<field name="nombreChofer3" class="java.lang.String">
+		<fieldDescription><![CDATA[nombreChofer3]]></fieldDescription>
+	</field>
+	<field name="fechaEgreso" class="java.util.Date">
+		<fieldDescription><![CDATA[fechaEgreso]]></fieldDescription>
+	</field>
+	<field name="localidadChofer3" class="java.lang.String">
+		<fieldDescription><![CDATA[localidadChofer3]]></fieldDescription>
+	</field>
+	<field name="cuitChofer2" class="java.lang.String">
+		<fieldDescription><![CDATA[cuitChofer2]]></fieldDescription>
+	</field>
+	<field name="parentescoChofer2" class="java.lang.String">
+		<fieldDescription><![CDATA[parentescoChofer2]]></fieldDescription>
+	</field>
+	<field name="localidadChofer2" class="java.lang.String">
+		<fieldDescription><![CDATA[localidadChofer2]]></fieldDescription>
+	</field>
+	<field name="cuilChofer2" class="java.lang.String">
+		<fieldDescription><![CDATA[cuilChofer2]]></fieldDescription>
+	</field>
+	<field name="cuitChofer3" class="java.lang.String">
+		<fieldDescription><![CDATA[cuitChofer3]]></fieldDescription>
+	</field>
+	<field name="localidadChofer1" class="java.lang.String">
+		<fieldDescription><![CDATA[localidadChofer1]]></fieldDescription>
+	</field>
+	<field name="comunicacion" class="java.lang.String">
+		<fieldDescription><![CDATA[comunicacion]]></fieldDescription>
+	</field>
+	<field name="parentescoChofer1" class="java.lang.String">
+		<fieldDescription><![CDATA[parentescoChofer1]]></fieldDescription>
+	</field>
+	<field name="direccionFotoChofer3" class="java.lang.String">
+		<fieldDescription><![CDATA[direccionFotoChofer3]]></fieldDescription>
+	</field>
+	<field name="direccionFotoPropietario" class="java.lang.String">
+		<fieldDescription><![CDATA[direccionFotoPropietario]]></fieldDescription>
+	</field>
+	<field name="cuitPropietario" class="java.lang.String">
+		<fieldDescription><![CDATA[cuitPropietario]]></fieldDescription>
+	</field>
+	<field name="direccionChofer3" class="java.lang.String">
+		<fieldDescription><![CDATA[direccionChofer3]]></fieldDescription>
+	</field>
+	<field name="direccionChofer2" class="java.lang.String">
+		<fieldDescription><![CDATA[direccionChofer2]]></fieldDescription>
+	</field>
+	<field name="dniChofer1" class="java.lang.String">
+		<fieldDescription><![CDATA[dniChofer1]]></fieldDescription>
+	</field>
+	<field name="fechaIngreso" class="java.util.Date">
+		<fieldDescription><![CDATA[fechaIngreso]]></fieldDescription>
+	</field>
+	<field name="nombreChofer2" class="java.lang.String">
+		<fieldDescription><![CDATA[nombreChofer2]]></fieldDescription>
+	</field>
+	<field name="direccionChofer1" class="java.lang.String">
+		<fieldDescription><![CDATA[direccionChofer1]]></fieldDescription>
+	</field>
+	<field name="observacionTelefonoChofer2" class="java.lang.String">
+		<fieldDescription><![CDATA[observacionTelefonoChofer2]]></fieldDescription>
+	</field>
+	<field name="dniPropietario" class="java.lang.String">
+		<fieldDescription><![CDATA[dniPropietario]]></fieldDescription>
+	</field>
+	<field name="telefonoChofer2" class="java.lang.String">
+		<fieldDescription><![CDATA[telefonoChofer2]]></fieldDescription>
+	</field>
+	<field name="cuilChofer3" class="java.lang.String">
+		<fieldDescription><![CDATA[cuilChofer3]]></fieldDescription>
+	</field>
+	<field name="tipoInscripcionPropietario" class="java.lang.String">
+		<fieldDescription><![CDATA[tipoInscripcionPropietario]]></fieldDescription>
+	</field>
+	<field name="telefonoChofer3" class="java.lang.String">
+		<fieldDescription><![CDATA[telefonoChofer3]]></fieldDescription>
+	</field>
+	<field name="numeroMovil" class="java.lang.Long">
+		<fieldDescription><![CDATA[numeroMovil]]></fieldDescription>
+	</field>
+	<field name="telefonoChofer1" class="java.lang.String">
+		<fieldDescription><![CDATA[telefonoChofer1]]></fieldDescription>
+	</field>
+	<field name="modelo" class="java.lang.String">
+		<fieldDescription><![CDATA[modelo]]></fieldDescription>
+	</field>
+	<field name="dniChofer3" class="java.lang.String">
+		<fieldDescription><![CDATA[dniChofer3]]></fieldDescription>
+	</field>
+	<field name="tipoInscripcionChofer3" class="java.lang.String">
+		<fieldDescription><![CDATA[tipoInscripcionChofer3]]></fieldDescription>
+	</field>
+	<field name="localidadPropietario" class="java.lang.String">
+		<fieldDescription><![CDATA[localidadPropietario]]></fieldDescription>
+	</field>
+	<field name="tipoInscripcionChofer1" class="java.lang.String">
+		<fieldDescription><![CDATA[tipoInscripcionChofer1]]></fieldDescription>
+	</field>
+	<field name="cuitChofer1" class="java.lang.String">
+		<fieldDescription><![CDATA[cuitChofer1]]></fieldDescription>
+	</field>
+	<field name="anio" class="java.lang.Integer">
+		<fieldDescription><![CDATA[anio]]></fieldDescription>
+	</field>
+	<field name="aseguradoEn" class="java.lang.String">
+		<fieldDescription><![CDATA[aseguradoEn]]></fieldDescription>
+	</field>
+	<field name="direccionPropietario" class="java.lang.String">
+		<fieldDescription><![CDATA[direccionPropietario]]></fieldDescription>
+	</field>
+	<field name="nombreChofer1" class="java.lang.String">
+		<fieldDescription><![CDATA[nombreChofer1]]></fieldDescription>
+	</field>
+	<field name="patente" class="java.lang.String">
+		<fieldDescription><![CDATA[patente]]></fieldDescription>
+	</field>
+	<field name="observacionTelefonoChofer1" class="java.lang.String">
+		<fieldDescription><![CDATA[observacionTelefonoChofer1]]></fieldDescription>
+	</field>
+	<field name="cuilChofer1" class="java.lang.String">
+		<fieldDescription><![CDATA[cuilChofer1]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="48" splitType="Stretch">
+			<staticText>
+				<reportElement x="60" y="14" width="178" height="31"/>
+				<textElement>
+					<font size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Listado común al:]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="238" y="14" width="337" height="31"/>
+				<textElement>
+					<font size="20" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="21">
+			<staticText>
+				<reportElement x="0" y="0" width="49" height="20"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Movil nro.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="49" y="0" width="77" height="20"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Comunicación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="126" y="0" width="74" height="20"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Patente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="0" width="153" height="20"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Propietario]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="353" y="0" width="152" height="20"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Chofer1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="505" y="0" width="80" height="20"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Teléfono Prop.]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="20" width="585" height="1"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="49" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{numeroMovil}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="49" y="0" width="77" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{comunicacion}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="126" y="0" width="74" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{patente}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="200" y="0" width="153" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{nombrePropietario}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="353" y="0" width="152" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{nombreChofer1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="505" y="0" width="80" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{telefonoPropietario}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="19" width="585" height="1"/>
+			</line>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="37" splitType="Stretch">
+			<textField evaluationTime="Report">
+				<reportElement x="512" y="14" width="40" height="20" forecolor="#000099"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="402" y="14" width="110" height="20" forecolor="#000099"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="28" y="14" width="196" height="20" forecolor="#000099"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="13" width="585" height="1"/>
+			</line>
+		</band>
+	</pageFooter>
+</jasperReport>

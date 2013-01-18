@@ -1,0 +1,620 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="caratula" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="comunicacion" class="java.lang.String">
+		<fieldDescription><![CDATA[comunicacion]]></fieldDescription>
+	</field>
+	<field name="direccionFotoChofer2" class="java.lang.String">
+		<fieldDescription><![CDATA[direccionFotoChofer2]]></fieldDescription>
+	</field>
+	<field name="direccionFotoChofer1" class="java.lang.String">
+		<fieldDescription><![CDATA[direccionFotoChofer1]]></fieldDescription>
+	</field>
+	<field name="telefonoChofer1" class="java.lang.String">
+		<fieldDescription><![CDATA[telefonoChofer1]]></fieldDescription>
+	</field>
+	<field name="cuitChofer1" class="java.lang.String">
+		<fieldDescription><![CDATA[cuitChofer1]]></fieldDescription>
+	</field>
+	<field name="dniPropietario" class="java.lang.String">
+		<fieldDescription><![CDATA[dniPropietario]]></fieldDescription>
+	</field>
+	<field name="tipoInscripcionPropietario" class="java.lang.String">
+		<fieldDescription><![CDATA[tipoInscripcionPropietario]]></fieldDescription>
+	</field>
+	<field name="cuilChofer1" class="java.lang.String">
+		<fieldDescription><![CDATA[cuilChofer1]]></fieldDescription>
+	</field>
+	<field name="observacionTelefonoChofer1" class="java.lang.String">
+		<fieldDescription><![CDATA[observacionTelefonoChofer1]]></fieldDescription>
+	</field>
+	<field name="modelo" class="java.lang.String">
+		<fieldDescription><![CDATA[modelo]]></fieldDescription>
+	</field>
+	<field name="marca" class="java.lang.String">
+		<fieldDescription><![CDATA[marca]]></fieldDescription>
+	</field>
+	<field name="cuitChofer3" class="java.lang.String">
+		<fieldDescription><![CDATA[cuitChofer3]]></fieldDescription>
+	</field>
+	<field name="numeroMovil" class="java.lang.Long">
+		<fieldDescription><![CDATA[numeroMovil]]></fieldDescription>
+	</field>
+	<field name="localidadPropietario" class="java.lang.String">
+		<fieldDescription><![CDATA[localidadPropietario]]></fieldDescription>
+	</field>
+	<field name="observacionTelefonoPropietario" class="java.lang.String">
+		<fieldDescription><![CDATA[observacionTelefonoPropietario]]></fieldDescription>
+	</field>
+	<field name="tipo" class="java.lang.String">
+		<fieldDescription><![CDATA[tipo]]></fieldDescription>
+	</field>
+	<field name="patente" class="java.lang.String">
+		<fieldDescription><![CDATA[patente]]></fieldDescription>
+	</field>
+	<field name="nombreChofer1" class="java.lang.String">
+		<fieldDescription><![CDATA[nombreChofer1]]></fieldDescription>
+	</field>
+	<field name="localidadChofer2" class="java.lang.String">
+		<fieldDescription><![CDATA[localidadChofer2]]></fieldDescription>
+	</field>
+	<field name="telefonoChofer2" class="java.lang.String">
+		<fieldDescription><![CDATA[telefonoChofer2]]></fieldDescription>
+	</field>
+	<field name="dniChofer3" class="java.lang.String">
+		<fieldDescription><![CDATA[dniChofer3]]></fieldDescription>
+	</field>
+	<field name="cuilChofer3" class="java.lang.String">
+		<fieldDescription><![CDATA[cuilChofer3]]></fieldDescription>
+	</field>
+	<field name="localidadChofer3" class="java.lang.String">
+		<fieldDescription><![CDATA[localidadChofer3]]></fieldDescription>
+	</field>
+	<field name="direccionChofer1" class="java.lang.String">
+		<fieldDescription><![CDATA[direccionChofer1]]></fieldDescription>
+	</field>
+	<field name="direccionChofer3" class="java.lang.String">
+		<fieldDescription><![CDATA[direccionChofer3]]></fieldDescription>
+	</field>
+	<field name="dniChofer2" class="java.lang.String">
+		<fieldDescription><![CDATA[dniChofer2]]></fieldDescription>
+	</field>
+	<field name="tipoInscripcionChofer2" class="java.lang.String">
+		<fieldDescription><![CDATA[tipoInscripcionChofer2]]></fieldDescription>
+	</field>
+	<field name="nombrePropietario" class="java.lang.String">
+		<fieldDescription><![CDATA[nombrePropietario]]></fieldDescription>
+	</field>
+	<field name="tipoInscripcionChofer1" class="java.lang.String">
+		<fieldDescription><![CDATA[tipoInscripcionChofer1]]></fieldDescription>
+	</field>
+	<field name="localidadChofer1" class="java.lang.String">
+		<fieldDescription><![CDATA[localidadChofer1]]></fieldDescription>
+	</field>
+	<field name="aseguradoEn" class="java.lang.String">
+		<fieldDescription><![CDATA[aseguradoEn]]></fieldDescription>
+	</field>
+	<field name="direccionFotoPropietario" class="java.lang.String">
+		<fieldDescription><![CDATA[direccionFotoPropietario]]></fieldDescription>
+	</field>
+	<field name="cuilChofer2" class="java.lang.String">
+		<fieldDescription><![CDATA[cuilChofer2]]></fieldDescription>
+	</field>
+	<field name="telefonoPropietario" class="java.lang.String">
+		<fieldDescription><![CDATA[telefonoPropietario]]></fieldDescription>
+	</field>
+	<field name="anio" class="java.lang.Integer">
+		<fieldDescription><![CDATA[anio]]></fieldDescription>
+	</field>
+	<field name="tipoInscripcionChofer3" class="java.lang.String">
+		<fieldDescription><![CDATA[tipoInscripcionChofer3]]></fieldDescription>
+	</field>
+	<field name="nombreChofer2" class="java.lang.String">
+		<fieldDescription><![CDATA[nombreChofer2]]></fieldDescription>
+	</field>
+	<field name="dniChofer1" class="java.lang.String">
+		<fieldDescription><![CDATA[dniChofer1]]></fieldDescription>
+	</field>
+	<field name="cuitChofer2" class="java.lang.String">
+		<fieldDescription><![CDATA[cuitChofer2]]></fieldDescription>
+	</field>
+	<field name="telefonoChofer3" class="java.lang.String">
+		<fieldDescription><![CDATA[telefonoChofer3]]></fieldDescription>
+	</field>
+	<field name="direccionChofer2" class="java.lang.String">
+		<fieldDescription><![CDATA[direccionChofer2]]></fieldDescription>
+	</field>
+	<field name="fechaEgreso" class="java.util.Date">
+		<fieldDescription><![CDATA[fechaEgreso]]></fieldDescription>
+	</field>
+	<field name="cuitPropietario" class="java.lang.String">
+		<fieldDescription><![CDATA[cuitPropietario]]></fieldDescription>
+	</field>
+	<field name="direccionFotoChofer3" class="java.lang.String">
+		<fieldDescription><![CDATA[direccionFotoChofer3]]></fieldDescription>
+	</field>
+	<field name="observacionTelefonoChofer2" class="java.lang.String">
+		<fieldDescription><![CDATA[observacionTelefonoChofer2]]></fieldDescription>
+	</field>
+	<field name="fechaIngreso" class="java.util.Date">
+		<fieldDescription><![CDATA[fechaIngreso]]></fieldDescription>
+	</field>
+	<field name="observacionTelefonoChofer3" class="java.lang.String">
+		<fieldDescription><![CDATA[observacionTelefonoChofer3]]></fieldDescription>
+	</field>
+	<field name="direccionPropietario" class="java.lang.String">
+		<fieldDescription><![CDATA[direccionPropietario]]></fieldDescription>
+	</field>
+	<field name="nombreChofer3" class="java.lang.String">
+		<fieldDescription><![CDATA[nombreChofer3]]></fieldDescription>
+	</field>
+	<field name="parentescoChofer1" class="java.lang.String">
+		<fieldDescription><![CDATA[parentescoChofer1]]></fieldDescription>
+	</field>
+	<field name="parentescoChofer2" class="java.lang.String">
+		<fieldDescription><![CDATA[parentescoChofer2]]></fieldDescription>
+	</field>
+	<field name="parentescoChofer3" class="java.lang.String">
+		<fieldDescription><![CDATA[parentescoChofer3]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="193" y="0" width="65" height="19"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Móvil Nro:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="258" y="3" width="100" height="20"/>
+				<textElement verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA[$F{numeroMovil}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="20" width="65" height="19"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PATENTE:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="65" y="23" width="100" height="20"/>
+				<textElement verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA[$F{patente}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="124" y="40" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Comunicacion:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="224" y="40" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{comunicacion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="324" y="20" width="131" height="20"/>
+				<textElement/>
+				<text><![CDATA[Fecha ingreso al sisitema:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="324" y="40" width="131" height="20"/>
+				<textElement/>
+				<text><![CDATA[Fecha ingreso al sisitema:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy HH:mm" isBlankWhenNull="true">
+				<reportElement x="455" y="40" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{fechaEgreso}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy HH:mm" isBlankWhenNull="true">
+				<reportElement x="455" y="20" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{fechaIngreso}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="667" splitType="Stretch">
+			<staticText>
+				<reportElement x="148" y="0" width="267" height="20" forecolor="#0000CC"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DATOS DEL PROPIETARIO Y CHOFERES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="99" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Propietario:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="119" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Telefono:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="139" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Dirección:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="159" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Localidad:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="179" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[DNI:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="199" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Tipo inscripción:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="219" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[CUIT:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="124" y="99" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{nombrePropietario}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="124" y="119" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{telefonoPropietario}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="124" y="139" width="134" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{direccionPropietario}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="124" y="159" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{localidadPropietario}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="124" y="179" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{dniPropietario}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="124" y="199" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{tipoInscripcionPropietario}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="124" y="219" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{cuitPropietario}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="24" y="30" width="100" height="69"/>
+				<imageExpression><![CDATA[$F{direccionFotoPropietario}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="279" y="99" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Chofer:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="279" y="119" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Parentesco:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="279" y="139" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Teléfono:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="279" y="159" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Dirección:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="279" y="179" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Localidad:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="279" y="199" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[DNI:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="279" y="219" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Tipo inscripción:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="279" y="239" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[CUIT:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="379" y="199" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{dniChofer1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="379" y="179" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{localidadChofer1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="379" y="219" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{tipoInscripcionChofer1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="379" y="159" width="150" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{direccionChofer1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="379" y="99" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{nombreChofer1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="379" y="239" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{cuitChofer1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="379" y="139" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{telefonoChofer1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="379" y="119" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{parentescoChofer1}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="279" y="30" width="100" height="69"/>
+				<imageExpression><![CDATA[$F{direccionFotoChofer1}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="24" y="354" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Chofer:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="374" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Parentesco:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="394" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Teléfono:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="414" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Direccion:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="434" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Localiad:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="454" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[DNI:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="474" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Tipo inscripción:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="494" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[CUIT:]]></text>
+			</staticText>
+			<image>
+				<reportElement x="24" y="276" width="100" height="78"/>
+				<imageExpression><![CDATA[$F{direccionFotoChofer2}]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement x="124" y="434" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{localidadChofer2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="124" y="374" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{parentescoChofer2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="124" y="414" width="134" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{direccionChofer2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="124" y="494" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{cuitChofer2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="124" y="354" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{nombreChofer2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="124" y="454" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{dniChofer2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="124" y="474" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{tipoInscripcionChofer2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="124" y="394" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{telefonoChofer2}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="279" y="354" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Chofer:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="279" y="374" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Parentesco:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="279" y="394" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Teléfono:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="279" y="414" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Direccion:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="279" y="434" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Localiad:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="279" y="454" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[DNI:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="279" y="474" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Tipo inscripción:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="279" y="494" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[CUIT:]]></text>
+			</staticText>
+			<image>
+				<reportElement x="279" y="276" width="100" height="78"/>
+				<imageExpression><![CDATA[$F{direccionFotoChofer3}]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement x="379" y="494" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{cuitChofer3}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="379" y="454" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{dniChofer3}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="379" y="414" width="150" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{direccionChofer3}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="379" y="434" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{localidadChofer3}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="379" y="394" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{telefonoChofer3}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="379" y="474" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{tipoInscripcionChofer3}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="379" y="374" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{parentescoChofer3}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="379" y="354" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{nombreChofer3}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="165" y="524" width="179" height="20" forecolor="#0000CC"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DATOS BASICOS DEL MOVIL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="556" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[MARCA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="576" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[MODELO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="596" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[AÑO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="616" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[TIPO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="636" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[ASEGURADO EN:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="124" y="556" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{marca}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="124" y="576" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{modelo}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="124" y="616" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{tipo}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="124" y="596" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{anio}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="124" y="636" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{aseguradoEn}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+</jasperReport>

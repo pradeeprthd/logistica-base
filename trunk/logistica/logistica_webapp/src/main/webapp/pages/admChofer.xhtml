@@ -269,6 +269,16 @@
 									value="#{choferController.choferView.observaciones}">
 									<f:validateBean for="observacionesITA" />
 								</p:inputTextarea>
+								<h:outputText value="" />
+
+								<h:outputText value="Tipo inscripción" />
+								<p:selectOneMenu
+									value="#{choferController.choferView.tipoInscripcion}"
+									converter="com.converter.TipoInscripcionConverter">
+									<f:selectItems
+										value="#{choferController.tipoInscripcionEnumList}" />
+								</p:selectOneMenu>
+								<h:outputText value="" />
 
 							</h:panelGrid>
 						</p:tab>
@@ -283,10 +293,9 @@
 								<p:fileUpload
 									fileUploadListener="#{choferController.handleFileUpload}"
 									mode="advanced" update="panelImagen" sizeLimit="100000"
-									allowTypes="/(\.|\/)(jpg|JPG)$/" auto="true"
-									label="Elegir"
-									invalidFileMessage="Tipo de archivo invalido. El archivo debe ser JPG." 
-									invalidSizeMessage="El tamaño del archivo es incorrecto. El tamaño máximo es 100000 bytes. "/>
+									allowTypes="/(\.|\/)(jpg|JPG)$/" auto="true" label="Elegir"
+									invalidFileMessage="Tipo de archivo invalido. El archivo debe ser JPG."
+									invalidSizeMessage="El tamaño del archivo es incorrecto. El tamaño máximo es 100000 bytes. " />
 
 								<h:graphicImage
 									value="/images/#{choferController.choferView.nombreArchivo}"
