@@ -1,5 +1,6 @@
 package logistica.common.dao;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -197,7 +198,7 @@ public abstract class BaseHibernateDAO<T extends BaseModel, Q extends BaseQuery>
 		// TODO implementar donde sea necesario
 		return null;
 	}
-	
+
 	public T get(Object query) throws DataAccessException {
 		// TODO implementar donde sea necesario
 		return null;
@@ -211,4 +212,21 @@ public abstract class BaseHibernateDAO<T extends BaseModel, Q extends BaseQuery>
 		// TODO implementar donde sea necesario
 		return null;
 	}
+
+	public List<T> getList(Object query, Object query2)
+			throws DataAccessException {
+		// TODO implementar donde sea necesario
+		return null;
+	}
+
+	public List<Object[]> getListQuery(Object query) throws DataAccessException {
+		// TODO implementar donde sea necesario
+		return null;
+	}
+	
+	public List<Object[]> getList2Query(Object query) throws DataAccessException {
+		// TODO implementar donde sea necesario
+		return null;
+	}
+
 }

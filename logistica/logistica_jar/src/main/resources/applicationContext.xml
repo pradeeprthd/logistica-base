@@ -178,6 +178,9 @@ where r.usuario_id=u.id and u.usuario =?" />
 				<value>logistica.model.Propietario</value>
 				<value>logistica.model.MovilPropietarioDetalle</value>
 				<value>logistica.model.Autonomo</value>
+				<value>logistica.model.Form817</value>
+				<value>logistica.model.Form170</value>
+				<value>logistica.model.Nomina</value>
 				<value>logistica.model.Recibo</value>
 				<value>logistica.model.Provincia</value>
 				<value>logistica.model.Localidad</value>

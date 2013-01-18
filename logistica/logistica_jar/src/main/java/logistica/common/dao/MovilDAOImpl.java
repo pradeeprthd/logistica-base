@@ -60,13 +60,38 @@ public class MovilDAOImpl extends BaseHibernateDAO<Movil, MovilQuery> {
 		list = getHibernateTemplate().findByCriteria(criteria);
 		return list;
 	}
-	
+
 	@Override
 	public List<String> getListNames() {
 		List<String> list = new ArrayList<String>();
 		list.add("patcomList");
-		//list.add("movilList");
+		// list.add("movilList");
 
 		return list;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Object[]> getListQuery(Object query) throws DataAccessException {
+		List<Object[]> resumenReport = new ArrayList<Object[]>();
+		// List<ResumenGeneralReport> list = new
+		// ArrayList<ResumenGeneralReport>();
+		String queryString = "select m.asignacionMovil, count(*) from logistica.model.Movil m group by m.asignacionMovil";
+		resumenReport = getHibernateTemplate().find(queryString);
+		return resumenReport;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Object[]> getList2Query(Object query)
+			throws DataAccessException {
+		List<Object[]> resumenReport = new ArrayList<Object[]>();
+		// List<ResumenGeneralReport> list = new
+		// ArrayList<ResumenGeneralReport>();
+		String queryString = "select m.asignacionMovil , m.numeroMovil, m.patente, coalesce(c1.nombre,'') , coalesce(c1.dni,'') , coalesce(c2.nombre,'') , coalesce(c2.dni,'') , m.comunicacion "
+				+ " from logistica.model.Movil m  left join m.chofer1 as c1 left join m.chofer2 as c2"
+				//+ " group by  m.asignacionMovil, m.numeroMovil, m.patente, m.chofer1.nombre, m.chofer1.dni, m.chofer2.nombre, m.chofer2.dni, m.comunicacion  "
+				+ " group by  m.asignacionMovil, m.numeroMovil, m.patente, coalesce(c1.nombre,'') , coalesce(c1.dni,'') , coalesce(c2.nombre,'') , coalesce(c2.dni,'') , m.comunicacion "
+				+ " order by m.asignacionMovil";
+		resumenReport = getHibernateTemplate().find(queryString);
+		return resumenReport;
 	}
 }

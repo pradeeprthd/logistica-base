@@ -41,9 +41,9 @@ public class MovilPropietarioDetalle extends BaseModel {
 	@Basic
 	private Integer numeroTitulo;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER )
 	@JoinColumn(name = "movilID")
-	private Movil movil;
+	private Movil movil;	
 
 	public MovilPropietarioDetalle(Long id, Date fechaTitularDesde,
 			Date fechaCedulaVerde, Integer numeroCedulaVerde,

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="resumenDetalladoSubReporte" pageWidth="595" pageHeight="842" columnWidth="590" leftMargin="0" rightMargin="5" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="comuncacion" class="java.lang.String">
+		<fieldDescription><![CDATA[comuncacion]]></fieldDescription>
+	</field>
+	<field name="dniChofer1" class="java.lang.String">
+		<fieldDescription><![CDATA[dniChofer1]]></fieldDescription>
+	</field>
+	<field name="dniChofer2" class="java.lang.String">
+		<fieldDescription><![CDATA[dniChofer2]]></fieldDescription>
+	</field>
+	<field name="nombreChofer1" class="java.lang.String">
+		<fieldDescription><![CDATA[nombreChofer1]]></fieldDescription>
+	</field>
+	<field name="nombreChofer2" class="java.lang.String">
+		<fieldDescription><![CDATA[nombreChofer2]]></fieldDescription>
+	</field>
+	<field name="numeroMovil" class="java.lang.Long">
+		<fieldDescription><![CDATA[numeroMovil]]></fieldDescription>
+	</field>
+	<field name="patente" class="java.lang.String">
+		<fieldDescription><![CDATA[patente]]></fieldDescription>
+	</field>
+	<field name="total" class="java.lang.Integer">
+		<fieldDescription><![CDATA[total]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="21">
+			<staticText>
+				<reportElement x="0" y="0" width="63" height="20" forecolor="#000099"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Móvil Nro.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="63" y="0" width="57" height="20" forecolor="#000099"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Patente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="120" y="0" width="115" height="20" forecolor="#000099"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Chofer 1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="235" y="0" width="69" height="20" forecolor="#000099"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DNI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="304" y="0" width="112" height="20" forecolor="#000099"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Chofer 2]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="416" y="0" width="69" height="20" forecolor="#000099"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DNI 2]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="485" y="0" width="100" height="20" forecolor="#000099"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Comunicación]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="20" width="585" height="1" forecolor="#000099"/>
+				<graphicElement>
+					<pen lineWidth="2.25"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="63" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{numeroMovil}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="63" y="0" width="57" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{patente}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="120" y="0" width="115" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{nombreChofer1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="235" y="0" width="69" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{dniChofer1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="304" y="0" width="112" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{nombreChofer2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="416" y="0" width="69" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{dniChofer2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="485" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{comuncacion}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="20" width="585" height="1" forecolor="#000099"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="32">
+			<staticText>
+				<reportElement x="409" y="12" width="100" height="20" forecolor="#000099"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total asignado:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="509" y="12" width="76" height="20" forecolor="#000099"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="11" width="585" height="1" forecolor="#000099"/>
+				<graphicElement>
+					<pen lineWidth="2.25"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+</jasperReport>

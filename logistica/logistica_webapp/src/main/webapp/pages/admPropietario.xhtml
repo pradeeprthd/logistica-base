@@ -208,6 +208,16 @@
 									value="#{propietarioController.propietarioView.observaciones}">
 									<f:validateBean for="observacionesITA" />
 								</p:inputTextarea>
+								<h:outputText value="" />
+								
+								<h:outputText value="Tipo inscripción" />
+								<p:selectOneMenu
+									value="#{propietarioController.propietarioView.tipoInscripcion}"
+									converter="com.converter.TipoInscripcionConverter">
+									<f:selectItems
+										value="#{propietarioController.tipoInscripcionEnumList}" />
+								</p:selectOneMenu>
+								<h:outputText value="" />
 
 							</h:panelGrid>
 						</p:tab>
