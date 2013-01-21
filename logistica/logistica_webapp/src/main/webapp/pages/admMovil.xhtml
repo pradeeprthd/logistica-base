@@ -126,6 +126,11 @@
 								<h:graphicImage url="/resource/images/pdf.gif"
 									title="Caratula a PDF" style="border:0px" />
 							</p:commandLink>
+							<p:commandLink actionListener="#{movilController.historialChoferesToPDF}"
+								ajax="false">
+								<h:graphicImage url="/resource/images/pdf.gif"
+									title="Historial de choferes a PDF" style="border:0px" />
+							</p:commandLink>
 							<p:commandLink actionListener="#{movilController.edit}"
 								update="form,filtroForm" oncomplete="tabView.select(0)">
 								<h:graphicImage url="/resource/images/edit.gif"
