@@ -168,7 +168,7 @@
 	<title>
 		<band height="48" splitType="Stretch">
 			<staticText>
-				<reportElement x="60" y="14" width="178" height="31"/>
+				<reportElement x="63" y="14" width="175" height="31"/>
 				<textElement>
 					<font size="20" isBold="true"/>
 				</textElement>
