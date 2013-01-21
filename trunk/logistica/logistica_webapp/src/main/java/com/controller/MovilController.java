@@ -20,6 +20,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 
 import logistica.common.dao.BaseModelDAO;
+import logistica.jasper.HistorialMovilChoferReport;
 import logistica.jasper.MovilReport;
 import logistica.jasper.ResumenDetalladoDetalleReport;
 import logistica.jasper.ResumenDetalladoReport;
@@ -28,6 +29,7 @@ import logistica.model.Autonomo;
 import logistica.model.Chofer;
 import logistica.model.Form170;
 import logistica.model.Form817;
+import logistica.model.HistorialMovilChofer;
 import logistica.model.Movil;
 import logistica.model.Nomina;
 import logistica.model.Propietario;
@@ -78,7 +80,9 @@ public class MovilController extends PaginableController<Movil> {
 	private BaseModelDAO<Movil> dao;
 	private BaseModelDAO<Chofer> daoChofer;
 	private BaseModelDAO<Propietario> daoPropietario;
+	private BaseModelDAO<HistorialMovilChofer> daoHistorialMovilChofer;
 	private Movil movil;
+	private Movil movilOriginal;
 	private Movil movilReport;
 	private MovilQuery movilQuery;
 	private List<AsignacionMovilEnum> asignacionMovilEnumList;
@@ -87,6 +91,7 @@ public class MovilController extends PaginableController<Movil> {
 	private List<EstadoEnum> estadoEnumList;
 	private List<TipoUsoEnum> tipoUsoEnumList;
 	private List<CoberturaAdicionalEnum> coberturaAdicionalEnumList;
+	private List<HistorialMovilChofer> historialMovilChoferList;
 	private Autonomo patcom;
 	private DataModel<AutonomoView> patcomDM;
 	private Form817 form817;
@@ -140,6 +145,10 @@ public class MovilController extends PaginableController<Movil> {
 			daoPropietario = (BaseModelDAO<Propietario>) FacesContextUtils
 					.getWebApplicationContext(FacesContext.getCurrentInstance())
 					.getBean("propietarioDAO");
+			daoHistorialMovilChofer = (BaseModelDAO<HistorialMovilChofer>) FacesContextUtils
+					.getWebApplicationContext(FacesContext.getCurrentInstance())
+					.getBean("historialMovilChoferDAO");
+
 			movilQuery = new MovilQuery();
 			asignacionMovilEnumList = Arrays.asList(AsignacionMovilEnum
 					.values());
@@ -363,6 +372,7 @@ public class MovilController extends PaginableController<Movil> {
 	public void edit(ActionEvent event) {
 		try {
 			movil = (Movil) lazyDM.getRowData();
+			movilOriginal = (Movil) lazyDM.getRowData();
 			movil = dao.findFULL(movil.getID());
 			patcomDM = new ListDataModel<AutonomoView>(
 					autonomoBuilder.toView(movil.getPatcomList()));
@@ -415,6 +425,7 @@ public class MovilController extends PaginableController<Movil> {
 			movil = movilBuilder.toDomain(movilView);
 			movil.setNotas(notas);
 			movil.setNotasControl(notasControl);
+
 			if (movil.getID() != null) {
 				if (movil.getEstado() == EstadoEnum.INACTIVO) {
 					movil.setFechaEgreso(new Date());
@@ -423,9 +434,110 @@ public class MovilController extends PaginableController<Movil> {
 				}
 				dao.edit(movil);
 				addEdit = false;
+
+				// historialMovilChoferList =
+				// daoHistorialMovilChofer.getList(movil);
+				if (movil.getChofer1() != null
+						&& movilOriginal.getChofer1() != null
+						&& movil.getChofer1().getID().intValue() != movilOriginal
+								.getChofer1().getID().intValue()) {
+					daoHistorialMovilChofer.save(new HistorialMovilChofer(null,
+							movilOriginal, movilOriginal.getChofer1(),
+							EstadoEnum.INACTIVO, new Date()));
+
+					daoHistorialMovilChofer.save(new HistorialMovilChofer(null,
+							movil, movil.getChofer1(), EstadoEnum.ACTIVO,
+							new Date()));
+				} else if (movilOriginal.getChofer1() == null
+						&& movil.getChofer1() != null) {
+					daoHistorialMovilChofer.save(new HistorialMovilChofer(null,
+							movil, movil.getChofer1(), EstadoEnum.ACTIVO,
+							new Date()));
+				} else if (movilOriginal.getChofer1() != null
+						&& movil.getChofer1() == null) {
+					daoHistorialMovilChofer.save(new HistorialMovilChofer(null,
+							movilOriginal, movilOriginal.getChofer1(),
+							EstadoEnum.INACTIVO, new Date()));
+				}
+
+				/*
+				 * for(HistorialMovilChofer hmc : historialMovilChoferList){
+				 * if(hmc.getChofer().getID().intValue() ==
+				 * movil.getChofer1().getID().intValue() ){
+				 * if(!hmc.getEstado().equals(EstadoEnum.ACTIVO)){
+				 * daoHistorialMovilChofer.save(new HistorialMovilChofer(null,
+				 * movil, movil.getChofer1(), EstadoEnum.ACTIVO, new Date())); }
+				 * } }
+				 */
+
+				// chofer 2
+
+				if (movil.getChofer2() != null
+						&& movilOriginal.getChofer2() != null
+						&& movil.getChofer2().getID().intValue() != movilOriginal
+								.getChofer2().getID().intValue()) {
+					daoHistorialMovilChofer.save(new HistorialMovilChofer(null,
+							movilOriginal, movilOriginal.getChofer2(),
+							EstadoEnum.INACTIVO, new Date()));
+
+					daoHistorialMovilChofer.save(new HistorialMovilChofer(null,
+							movil, movil.getChofer2(), EstadoEnum.ACTIVO,
+							new Date()));
+				} else if (movilOriginal.getChofer2() == null
+						&& movil.getChofer2() != null) {
+					daoHistorialMovilChofer.save(new HistorialMovilChofer(null,
+							movil, movil.getChofer2(), EstadoEnum.ACTIVO,
+							new Date()));
+				} else if (movilOriginal.getChofer2() != null
+						&& movil.getChofer2() == null) {
+					daoHistorialMovilChofer.save(new HistorialMovilChofer(null,
+							movilOriginal, movilOriginal.getChofer2(),
+							EstadoEnum.INACTIVO, new Date()));
+				}
+
+				// chofer 3
+				if (movil.getChofer3() != null
+						&& movilOriginal.getChofer3() != null
+						&& movil.getChofer3().getID().intValue() != movilOriginal
+								.getChofer3().getID().intValue()) {
+					daoHistorialMovilChofer.save(new HistorialMovilChofer(null,
+							movilOriginal, movilOriginal.getChofer3(),
+							EstadoEnum.INACTIVO, new Date()));
+
+					daoHistorialMovilChofer.save(new HistorialMovilChofer(null,
+							movil, movil.getChofer3(), EstadoEnum.ACTIVO,
+							new Date()));
+				} else if (movilOriginal.getChofer3() == null
+						&& movil.getChofer3() != null) {
+					daoHistorialMovilChofer.save(new HistorialMovilChofer(null,
+							movil, movil.getChofer3(), EstadoEnum.ACTIVO,
+							new Date()));
+				} else if (movilOriginal.getChofer3() != null
+						&& movil.getChofer3() == null) {
+					daoHistorialMovilChofer.save(new HistorialMovilChofer(null,
+							movilOriginal, movilOriginal.getChofer3(),
+							EstadoEnum.INACTIVO, new Date()));
+				}
+
 			} else {
 				movil.setFechaIngreso(new Date());
 				dao.save(movil);
+
+				if (movil.getChofer1() != null) {
+					daoHistorialMovilChofer.save(new HistorialMovilChofer(null,
+							movil, movil.getChofer1(), EstadoEnum.ACTIVO,
+							new Date()));
+				}
+				if (movil.getChofer2() != null) {
+					daoHistorialMovilChofer.save(new HistorialMovilChofer(null,
+							movil, movil.getChofer2(), EstadoEnum.ACTIVO,
+							new Date()));
+				}
+				if (movil.getChofer3() != null) {
+					daoHistorialMovilChofer.save(new HistorialMovilChofer(null,
+							movil, movil.getChofer3(), EstadoEnum.ACTIVO,
+							new Date()));
+				}
 			}
 			clear();
 			JSFUtil.saveMessage("Elemento guardado con exito",
@@ -923,6 +1035,69 @@ public class MovilController extends PaginableController<Movil> {
 
 	public void listadoComunToPDF(ActionEvent actionEvent) {
 		listadoComunToPDF();
+		JSFUtil.reloadPage();
+	}
+
+	@SuppressWarnings({ "deprecation", "unchecked", "rawtypes" })
+	public void historialChoferesToPDF(Movil movil) {
+		try {
+
+			HttpServletResponse response = (HttpServletResponse) FacesContext
+					.getCurrentInstance().getExternalContext().getResponse();
+			ServletContext sc = (ServletContext) FacesContext
+					.getCurrentInstance().getExternalContext().getContext();
+
+			String realpath = sc.getRealPath(File.separator
+					+ "resource/jasper/historialMovilChofer.jasper");
+
+			JasperReport jasperReport = (JasperReport) JRLoader
+					.loadObject(realpath);
+
+			JRDataSource datasource = new JRBeanCollectionDataSource(
+					getReporteMovilChofer(movil));
+			JasperPrint print = JasperFillManager.fillReport(jasperReport,
+					new HashMap(), datasource);
+
+			response.setContentType("application/pdf");
+			response.addHeader("Content-Disposition",
+					"attachment; filename=HistorialMovilChofer.pdf");
+
+			/* JasperExportManager.exportReportToPdfFile(print, "hojaRuta.pdf"); */
+
+			JasperExportManager.exportReportToPdfStream(print,
+					response.getOutputStream());
+
+			// FacesContext.getCurrentInstance().responseComplete();
+		} catch (Throwable e) {
+			log.error("Error al exportar a PDF: ", e);
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR,
+							"Error al exportar a PDF", ""));
+			System.out.println("error al exportar: " + e.getMessage());
+		}
+	}
+
+	private List<HistorialMovilChoferReport> getReporteMovilChofer(Movil movil) {
+		List<HistorialMovilChoferReport> list = new ArrayList<HistorialMovilChoferReport>();
+
+		List<HistorialMovilChofer> listModel = daoHistorialMovilChofer
+				.getList(movil);
+		for (HistorialMovilChofer hmc : listModel) {
+			list.add(new HistorialMovilChoferReport(hmc.getMovil()
+					.getNumeroMovil(), hmc.getMovil().getPatente(), hmc
+					.getFecha(), hmc.getEstado().toString(), hmc.getChofer()
+					.getNombre(), hmc.getChofer().getDni()));
+		}
+
+		return list;
+	}
+
+	public void historialChoferesToPDF(ActionEvent actionEvent) {
+		movilReport = (Movil) lazyDM.getRowData();
+		movilReport = dao.findFULL(movilReport.getID());
+
+		historialChoferesToPDF(movilReport);
 		JSFUtil.reloadPage();
 	}
 }
