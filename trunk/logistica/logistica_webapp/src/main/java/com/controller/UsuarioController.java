@@ -191,6 +191,7 @@ public class UsuarioController extends PaginableController<Usuario> {
 		target.clear();
 		source.add(RolEnum.ROLE_USER);
 		source.add(RolEnum.ROLE_ADMIN);
+		source.add(RolEnum.ROLE_MOBILE_CONTROL);
 		rolList = new DualListModel<RolEnum>(source, target);
 	}
 

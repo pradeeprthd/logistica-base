@@ -1,7 +1,7 @@
 package logistica.type;
 
 public enum RolEnum implements Labeled {
-	ROLE_USER("Usuario"), ROLE_ADMIN("Administrador");
+	ROLE_USER("Usuario"), ROLE_ADMIN("Administrador"), ROLE_MOBILE_CONTROL("Control de moviles");
 
 	private String label;
 
