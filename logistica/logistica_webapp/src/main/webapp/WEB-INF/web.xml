@@ -85,7 +85,7 @@
 		<filter-name>springSecurityFilterChain</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	
+
 	<!-- primefaces cargador de imagenes -->
 	<filter>
 		<filter-name>PrimeFaces FileUpload Filter</filter-name>
@@ -96,14 +96,14 @@
 		<filter-name>PrimeFaces FileUpload Filter</filter-name>
 		<servlet-name>FacesServlet</servlet-name>
 	</filter-mapping>
-	
+
 	<servlet>
-    <servlet-name>imageServlet</servlet-name>
-    <servlet-class>com.servlet.ImageServlet</servlet-class>
-</servlet>
-<servlet-mapping>
-    <servlet-name>imageServlet</servlet-name>
-    <url-pattern>/images/*</url-pattern>
-</servlet-mapping>
+		<servlet-name>imageServlet</servlet-name>
+		<servlet-class>com.servlet.ImageServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>imageServlet</servlet-name>
+		<url-pattern>/images/*</url-pattern>
+	</servlet-mapping>
 
 </web-app>
