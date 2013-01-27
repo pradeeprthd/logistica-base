@@ -519,10 +519,9 @@ where r.usuario_id=u.id and u.usuario =?" />
 	<bean id="mailVencimientoBean" class="logistica.cron.MovilVencimiento">
 		<property name="mailService" ref="mailService" />
 		<property name="dao" ref="movilDAO" />
-		
+		<property name="daoPropietario" ref="propietarioDAO" />
+		<property name="daoChofer" ref="choferDAO" />
 	</bean>
-
-
 
 	<bean id="unaTarea"
 		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
@@ -533,7 +532,7 @@ where r.usuario_id=u.id and u.usuario =?" />
 
 	<bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
 		<property name="jobDetail" ref="unaTarea" />
-		<property name="cronExpression" value="0 0/5 22 * * ?" />
+		<property name="cronExpression" value="0 0 2 * * ?" />
 	</bean>
 
 	<bean id="schedulerFactoryBean"
