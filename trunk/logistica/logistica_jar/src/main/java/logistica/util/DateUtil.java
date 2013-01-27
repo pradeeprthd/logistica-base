@@ -1,5 +1,6 @@
 package logistica.util;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -40,11 +41,16 @@ public class DateUtil {
 		Boolean ret = false;
 		Date fechaActual = new Date();
 		if (fecha != null) {
-			if (fecha.compareTo(fechaActual) > 0) {
+			if (fecha.compareTo(fechaActual) < 0) {
 				ret = true;
 			}
 		}
 
 		return ret;
+	}
+
+	public static String dateToString(Date fecha, String format) {
+		SimpleDateFormat sdf = new SimpleDateFormat(format);
+		return sdf.format(fecha);
 	}
 }
