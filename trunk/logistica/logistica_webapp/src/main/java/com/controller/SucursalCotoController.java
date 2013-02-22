@@ -185,7 +185,7 @@ public class SucursalCotoController extends PaginableController<SucursalCoto> {
 							sucursalCotoQuery.getNumeroSucursal());
 				}
 				return dao.getList(first, pageSize, "numeroSucursal", true,
-						filtro);
+						filtro, true);
 			}
 
 		};
@@ -195,7 +195,7 @@ public class SucursalCotoController extends PaginableController<SucursalCoto> {
 				&& sucursalCotoQuery.getNumeroSucursal() != 0) {
 			filtro.put("numeroSucursal", sucursalCotoQuery.getNumeroSucursal());
 		}
-		lazyDM.setRowCount(dao.count(filtro).intValue());
+		lazyDM.setRowCount(dao.count(filtro,true).intValue());
 	}
 
 	@PostConstruct

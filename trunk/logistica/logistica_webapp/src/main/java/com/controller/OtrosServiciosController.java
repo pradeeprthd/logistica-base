@@ -190,7 +190,7 @@ public class OtrosServiciosController extends
 							otrosServiciosQuery.getNumeroMovil());
 				}
 				return dao.getList(first, pageSize, "movil.numeroMovil", true,
-						filtro);
+						filtro, true);
 			}
 
 		};
@@ -203,7 +203,7 @@ public class OtrosServiciosController extends
 			filtro.put("movil.numeroMovil",
 					otrosServiciosQuery.getNumeroMovil());
 		}
-		lazyDM.setRowCount(dao.count(filtro).intValue());
+		lazyDM.setRowCount(dao.count(filtro,true).intValue());
 	}
 
 	public boolean isMovilSelected() {

@@ -124,11 +124,21 @@
 								<h:message id="mnIT" for="nombreIT" />
 
 								<h:outputText value="Fecha Nacimiento" />
-								<p:calendar id="fechaNacimientoC"
+								<!-- <p:calendar id="fechaNacimientoC"
 									value="#{propietarioController.propietarioView.fechaNacimiento}"
 									mode="popup" showOn="button" locale="es"
 									pattern="#{msgs.common_inputDateFormat}"
 									readOnlyInputText="true">
+								</p:calendar> -->
+								
+								<p:calendar id="fechaNacimientoC"
+									value="#{propietarioController.propietarioView.fechaNacimiento}"
+									mode="popup" showOn="button" locale="es"
+									pattern="#{msgs.common_inputDateFormat}"
+									readOnlyInputText="false"
+									navigator="true"
+									yearRange="c-100:c+50"
+									converterMessage="El formato de la fecha es incorrecto">
 								</p:calendar>
 								<h:outputText value="" />
 
@@ -258,13 +268,24 @@
 									<h:outputText value="" />
 
 									<h:outputText value="Fecha" />
-									<p:calendar id="fechaAutonomoC"
+									<!-- <p:calendar id="fechaAutonomoC"
 										value="#{propietarioController.autonomo.fechaAutonomo}"
 										mode="popup" showOn="button" locale="es"
 										pattern="#{msgs.common_inputDateFormat}" immediate="true"
 										readOnlyInputText="true">
 										<p:ajax event="dateSelect"
 											listener="#{propietarioController.handleDateSelect}" />
+									</p:calendar> -->
+									<p:calendar id="fechaAutonomoC"
+										value="#{propietarioController.autonomo.fechaAutonomo}"
+										mode="popup" showOn="button" locale="es"
+										pattern="#{msgs.common_inputDateFormat}" immediate="true"
+										readOnlyInputText="true"
+										navigator="true"
+										yearRange="c-100:c+50"
+										converterMessage="El formato de la fecha es incorrecto">
+										<p:ajax event="dateSelect"
+												listener="#{propietarioController.handleDateSelect}" />
 									</p:calendar>
 									<h:outputText value="" />
 									<h:outputText value="" />
@@ -348,11 +369,23 @@
 									<h:message id="mmlac" for="movilAC" />
 
 									<h:outputText value="Fecha titular desde" />
-									<p:calendar id="fechaTitularDesdeC"
+									<!-- <p:calendar id="fechaTitularDesdeC"
 										value="#{propietarioController.movilPropietarioDetalle.fechaTitularDesde}"
 										mode="popup" showOn="button" locale="es"
 										pattern="#{msgs.common_inputDateFormat}"
 										readOnlyInputText="true">
+										<p:ajax event="dateSelect"
+											listener="#{propietarioController.handleDateSelect}" />
+									</p:calendar> -->
+									
+									<p:calendar id="fechaTitularDesdeC"
+										value="#{propietarioController.movilPropietarioDetalle.fechaTitularDesde}"
+										mode="popup" showOn="button" locale="es"
+										pattern="#{msgs.common_inputDateFormat}" immediate="true"
+										readOnlyInputText="true"
+										navigator="true"
+										yearRange="c-100:c+50"
+										converterMessage="El formato de la fecha es incorrecto">
 										<p:ajax event="dateSelect"
 											listener="#{propietarioController.handleDateSelect}" />
 									</p:calendar>
@@ -360,11 +393,23 @@
 									<h:outputText value="" />
 
 									<h:outputText value="Fecha cédula verde" />
-									<p:calendar id="fechaCedulaVerdeC"
+									<!-- <p:calendar id="fechaCedulaVerdeC"
 										value="#{propietarioController.movilPropietarioDetalle.fechaCedulaVerde}"
 										mode="popup" showOn="button" locale="es"
 										pattern="#{msgs.common_inputDateFormat}"
 										readOnlyInputText="true">
+										<p:ajax event="dateSelect"
+											listener="#{propietarioController.handleDateSelect}" />
+									</p:calendar> -->
+									
+									<p:calendar id="fechaCedulaVerdeC"
+										value="#{propietarioController.movilPropietarioDetalle.fechaCedulaVerde}"
+										mode="popup" showOn="button" locale="es"
+										pattern="#{msgs.common_inputDateFormat}" immediate="true"
+										readOnlyInputText="true"
+										navigator="true"
+										yearRange="c-100:c+50"
+										converterMessage="El formato de la fecha es incorrecto">
 										<p:ajax event="dateSelect"
 											listener="#{propietarioController.handleDateSelect}" />
 									</p:calendar>

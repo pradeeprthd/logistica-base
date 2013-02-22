@@ -190,7 +190,7 @@ public class MovilNoOperativoController extends
 							movilNoOperativoQuery.getNumeroMovil());
 				}
 				return dao.getList(first, pageSize, "movil.numeroMovil", true,
-						filtro);
+						filtro, true);
 			}
 
 		};
@@ -201,7 +201,7 @@ public class MovilNoOperativoController extends
 			filtro.put("movil.numeroMovil",
 					movilNoOperativoQuery.getNumeroMovil());
 		}
-		lazyDM.setRowCount(dao.count(filtro).intValue());
+		lazyDM.setRowCount(dao.count(filtro,true).intValue());
 	}
 
 	public boolean isMovilSelected() {

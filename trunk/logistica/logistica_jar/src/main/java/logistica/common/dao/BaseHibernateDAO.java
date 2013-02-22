@@ -84,7 +84,7 @@ public abstract class BaseHibernateDAO<T extends BaseModel, Q extends BaseQuery>
 
 	@SuppressWarnings("unchecked")
 	public List<T> getList(int first, int pageSize, String sortField,
-			boolean sortOrder, Map<String, Object> filters)
+			boolean sortOrder, Map<String, Object> filters, Boolean startMode)
 			throws DataAccessException {
 		List<T> objectList = null;
 
@@ -121,8 +121,14 @@ public abstract class BaseHibernateDAO<T extends BaseModel, Q extends BaseQuery>
 					} catch (NumberFormatException e) {
 					}
 				} else if (object instanceof String) {
-					criteria.add(Restrictions.ilike(entry.getKey(),
-							object.toString(), MatchMode.START));
+					if(startMode){
+						criteria.add(Restrictions.ilike(entry.getKey(),
+								object.toString(), MatchMode.START));
+					} else {
+						criteria.add(Restrictions.ilike(entry.getKey(),
+								object.toString(), MatchMode.ANYWHERE));
+					}
+					
 				} else if (object instanceof Date) {
 					Date fecha = (Date) object;
 					criteria.add(Restrictions.between(entry.getKey(),
@@ -140,7 +146,7 @@ public abstract class BaseHibernateDAO<T extends BaseModel, Q extends BaseQuery>
 		return objectList;
 	}
 
-	public Long count(Map<String, Object> filters) throws DataAccessException {
+	public Long count(Map<String, Object> filters, Boolean startMode) throws DataAccessException {
 		Long count = 0l;
 
 		DetachedCriteria criteria = DetachedCriteria.forClass(getModelClass());
@@ -167,8 +173,13 @@ public abstract class BaseHibernateDAO<T extends BaseModel, Q extends BaseQuery>
 					} catch (NumberFormatException e) {
 					}
 				} else if (object instanceof String) {
-					criteria.add(Restrictions.ilike(entry.getKey(),
-							object.toString(), MatchMode.START));
+					if(startMode){
+						criteria.add(Restrictions.ilike(entry.getKey(),
+								object.toString(), MatchMode.START));
+					} else {
+						criteria.add(Restrictions.ilike(entry.getKey(),
+								object.toString(), MatchMode.ANYWHERE));
+					}
 				} else if (object instanceof Date) {
 					Date fecha = (Date) object;
 					criteria.add(Restrictions.between(entry.getKey(),

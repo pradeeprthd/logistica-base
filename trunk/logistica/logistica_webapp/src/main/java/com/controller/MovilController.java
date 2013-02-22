@@ -3,6 +3,7 @@ package com.controller;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -374,6 +375,12 @@ public class MovilController extends PaginableController<Movil> {
 			movil = (Movil) lazyDM.getRowData();
 			movilOriginal = (Movil) lazyDM.getRowData();
 			movil = dao.findFULL(movil.getID());
+			// cargo el propietario
+			List<Propietario> propietarioList = daoPropietario.getList(
+					movil.getID(), 0l);
+			if (propietarioList != null && propietarioList.size() > 0) {
+				movil.setPropietario(propietarioList.get(0));
+			}
 			patcomDM = new ListDataModel<AutonomoView>(
 					autonomoBuilder.toView(movil.getPatcomList()));
 			form817DM = new ListDataModel<Form817View>(
@@ -582,8 +589,8 @@ public class MovilController extends PaginableController<Movil> {
 						&& movilQuery.getNumeroMovil() != 0) {
 					filtro.put("numeroMovil", movilQuery.getNumeroMovil());
 				}
-				return dao
-						.getList(first, pageSize, "numeroMovil", true, filtro);
+				return dao.getList(first, pageSize, "numeroMovil", true,
+						filtro, false);
 			}
 
 		};
@@ -593,7 +600,7 @@ public class MovilController extends PaginableController<Movil> {
 				&& movilQuery.getNumeroMovil() != 0) {
 			filtro.put("numeroMovil", movilQuery.getNumeroMovil());
 		}
-		lazyDM.setRowCount(dao.count(filtro).intValue());
+		lazyDM.setRowCount(dao.count(filtro, false).intValue());
 	}
 
 	public boolean isChofer1Selected() {
@@ -708,6 +715,7 @@ public class MovilController extends PaginableController<Movil> {
 
 		if (nota != null && nota.length() < 256) {
 			notas.add(nota);
+			Collections.reverse(notas);
 			notasDM = new ListDataModel<String>(notas);
 		}
 	}
@@ -725,6 +733,7 @@ public class MovilController extends PaginableController<Movil> {
 
 		if (notaControl != null && notaControl.length() < 256) {
 			notasControl.add(notaControl);
+			Collections.reverse(notasControl);
 			notasControlDM = new ListDataModel<String>(notasControl);
 		}
 	}

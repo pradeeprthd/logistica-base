@@ -336,7 +336,7 @@ public class DiagramacionDiariaController extends
 				if (diagramacionDiariaQuery.getFecha() != null) {
 					filtro.put("fecha", diagramacionDiariaQuery.getFecha());
 				}
-				return dao.getList(first, pageSize, "fecha", false, filtro);
+				return dao.getList(first, pageSize, "fecha", false, filtro, true);
 			}
 
 		};
@@ -345,7 +345,7 @@ public class DiagramacionDiariaController extends
 		if (diagramacionDiariaQuery.getFecha() != null) {
 			filtro.put("fecha", diagramacionDiariaQuery.getFecha());
 		}
-		lazyDM.setRowCount(dao.count(filtro).intValue());
+		lazyDM.setRowCount(dao.count(filtro,true).intValue());
 	}
 
 	public boolean isMovilSelected() {

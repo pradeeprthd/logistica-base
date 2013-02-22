@@ -149,21 +149,37 @@
 								<h:message id="mmlac" for="movilAC" />
 
 								<h:outputText value="Fecha Desde" />
-								<p:calendar id="fechaDesdeC"
+								<!-- <p:calendar id="fechaDesdeC"
 									value="#{movilNoOperativoController.movilNoOperativoView.fechaDesde}"
 									mode="popup" showOn="button" locale="es"
 									pattern="#{msgs.common_inputDateFormat}" 
 									readOnlyInputText="true">
+								</p:calendar> -->
+								<p:calendar id="fechaDesdeC"
+									value="#{movilNoOperativoController.movilNoOperativoView.fechaDesde}" mode="popup"
+									showOn="button" locale="es"
+									pattern="#{msgs.common_inputDateFormat}" 
+									readOnlyInputText="false" navigator="true"
+									yearRange="c-100:c+50"
+									converterMessage="El formato de la fecha es incorrecto">
 								</p:calendar>
 								<h:message  for="fechaDesdeC" />
 								<h:outputText value="" />
 
 								<h:outputText value="Fecha Hasta" />
-								<p:calendar id="fechaHastaC"
+								<!-- <p:calendar id="fechaHastaC"
 									value="#{movilNoOperativoController.movilNoOperativoView.fechaHasta}"
 									mode="popup" showOn="button" locale="es"
 									pattern="#{msgs.common_inputDateFormat}" 
 									readOnlyInputText="true">
+								</p:calendar> -->
+								<p:calendar id="fechaHastaC"
+									value="#{movilNoOperativoController.movilNoOperativoView.fechaHasta}" mode="popup"
+									showOn="button" locale="es"
+									pattern="#{msgs.common_inputDateFormat}" 
+									readOnlyInputText="false" navigator="true"
+									yearRange="c-100:c+50"
+									converterMessage="El formato de la fecha es incorrecto">
 								</p:calendar>
 								<h:message  for="fechaHastaC" />
 								<h:outputText value="" />

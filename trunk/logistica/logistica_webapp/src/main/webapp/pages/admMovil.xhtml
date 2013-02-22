@@ -126,7 +126,8 @@
 								<h:graphicImage url="/resource/images/pdf.gif"
 									title="Caratula a PDF" style="border:0px" />
 							</p:commandLink>
-							<p:commandLink actionListener="#{movilController.historialChoferesToPDF}"
+							<p:commandLink
+								actionListener="#{movilController.historialChoferesToPDF}"
 								ajax="false">
 								<h:graphicImage url="/resource/images/pdf.gif"
 									title="Historial de choferes a PDF" style="border:0px" />
@@ -346,6 +347,43 @@
 							</h:panelGrid>
 						</p:tab>
 
+						<p:tab title="Propietario" rendered="#{movilController.movilView.propietario != null}">
+							<h:panelGrid columns="6">
+								<h:outputText value="Nombre" />
+								<p:inputText id="propietarioNombreIT"
+									value="#{movilController.movilView.propietario.nombre}"
+									disabled="true">
+								</p:inputText>
+
+								<h:outputText value="DNI" />
+								<p:inputText id="propietarioDNIIT"
+									value="#{movilController.movilView.propietario.dni}"
+									disabled="true">
+								</p:inputText>
+
+								<h:outputText value="Foto" />
+								<h:graphicImage id="fotoPropietarioGI"
+									value="/images/#{movilController.movilView.propietario.nombreArchivo}"
+									width="70" height="100" />
+								
+								<h:outputText value="Teléfono" />
+								<p:inputText id="telefonoPropietarioIT" maxlength="30" disabled="true"
+									value="#{movilController.movilView.propietario.telefono}">
+								</p:inputText>
+
+								<h:outputText value="Teléfono 2" />
+								<p:inputText id="telefono2PropietarioIT" maxlength="30" disabled="true"
+									value="#{movilController.movilView.propietario.telefono2}">
+								</p:inputText>
+
+								<h:outputText value="Teléfono 3" />
+								<p:inputText id="telefono3PropietarioIT" maxlength="30" disabled="true"
+									value="#{movilController.movilView.propietario.telefono3}">
+								</p:inputText>
+
+							</h:panelGrid>
+						</p:tab>
+
 						<p:tab title="Caracteristicas">
 							<p:focus for="numeroM" />
 							<h:panelGrid columns="6">
@@ -419,11 +457,19 @@
 								<h:outputText value="" />
 
 								<h:outputText value="Fecha prenda" />
-								<p:calendar id="fechaPrendaC"
+								<!-- <p:calendar id="fechaPrendaC"
 									value="#{movilController.movilView.fechaPrenda}" mode="popup"
 									showOn="button" locale="es"
 									pattern="#{msgs.common_inputDateFormat}" immediate="true"
 									readOnlyInputText="true">
+								</p:calendar> -->
+								<p:calendar id="fechaPrendaC"
+									value="#{movilController.movilView.fechaPrenda}" mode="popup"
+									showOn="button" locale="es"
+									pattern="#{msgs.common_inputDateFormat}" immediate="true"
+									readOnlyInputText="false" navigator="true"
+									yearRange="c-100:c+50"
+									converterMessage="El formato de la fecha es incorrecto">
 								</p:calendar>
 								<h:outputText value="" />
 
@@ -447,11 +493,19 @@
 								<h:panelGrid columns="6">
 
 									<h:outputText value="Fecha verificación técnica" />
-									<p:calendar id="fechaVerificacionTecnicaC"
+									<!-- <p:calendar id="fechaVerificacionTecnicaC"
 										value="#{movilController.movilView.fechaVerificacionTecnica}"
 										mode="popup" showOn="button" locale="es"
 										pattern="#{msgs.common_inputDateFormat}" immediate="true"
 										readOnlyInputText="true">
+									</p:calendar> -->
+									<p:calendar id="fechaVerificacionTecnicaC"
+										value="#{movilController.movilView.fechaVerificacionTecnica}"
+										mode="popup" showOn="button" locale="es"
+										pattern="#{msgs.common_inputDateFormat}" immediate="true"
+										readOnlyInputText="false" navigator="true"
+										yearRange="c-100:c+50"
+										converterMessage="El formato de la fecha es incorrecto">
 									</p:calendar>
 									<h:outputText value="" />
 
@@ -464,11 +518,19 @@
 										for="numeroVerificacionTecnicaIT" />
 
 									<h:outputText value="Fecha SENASA" />
-									<p:calendar id="fechaSenasaC"
+									<!-- <p:calendar id="fechaSenasaC"
 										value="#{movilController.movilView.fechaSenasa}" mode="popup"
 										showOn="button" locale="es"
 										pattern="#{msgs.common_inputDateFormat}" immediate="true"
 										readOnlyInputText="true">
+									</p:calendar> -->
+									<p:calendar id="fechaSenasaC"
+										value="#{movilController.movilView.fechaSenasa}" mode="popup"
+										showOn="button" locale="es"
+										pattern="#{msgs.common_inputDateFormat}" immediate="true"
+										readOnlyInputText="false" navigator="true"
+										yearRange="c-100:c+50"
+										converterMessage="El formato de la fecha es incorrecto">
 									</p:calendar>
 									<h:outputText value="" />
 
@@ -480,11 +542,19 @@
 									<h:message id="msenasaIT" for="numeroSenasaIT" />
 
 									<h:outputText value="Fecha otra habilitación" />
-									<p:calendar id="fechaOtraHabilitacion1C"
+									<!-- <p:calendar id="fechaOtraHabilitacion1C"
 										value="#{movilController.movilView.fechaOtraHabilitacion1}"
 										mode="popup" showOn="button" locale="es"
 										pattern="#{msgs.common_inputDateFormat}" immediate="true"
 										readOnlyInputText="true">
+									</p:calendar> -->
+									<p:calendar id="fechaOtraHabilitacion1C"
+										value="#{movilController.movilView.fechaOtraHabilitacion1}"
+										mode="popup" showOn="button" locale="es"
+										pattern="#{msgs.common_inputDateFormat}" immediate="true"
+										readOnlyInputText="false" navigator="true"
+										yearRange="c-100:c+50"
+										converterMessage="El formato de la fecha es incorrecto">
 									</p:calendar>
 									<h:outputText value="" />
 
@@ -497,11 +567,19 @@
 										for="numeroOtraHabilitacion1IT" />
 
 									<h:outputText value="Fecha otra habilitación" />
-									<p:calendar id="fechaOtraHabilitacion2C"
+									<!-- <p:calendar id="fechaOtraHabilitacion2C"
 										value="#{movilController.movilView.fechaOtraHabilitacion2}"
 										mode="popup" showOn="button" locale="es"
 										pattern="#{msgs.common_inputDateFormat}" immediate="true"
 										readOnlyInputText="true">
+									</p:calendar> -->
+									<p:calendar id="fechaOtraHabilitacion2C"
+										value="#{movilController.movilView.fechaOtraHabilitacion2}"
+										mode="popup" showOn="button" locale="es"
+										pattern="#{msgs.common_inputDateFormat}" immediate="true"
+										readOnlyInputText="false" navigator="true"
+										yearRange="c-100:c+50"
+										converterMessage="El formato de la fecha es incorrecto">
 									</p:calendar>
 									<h:outputText value="" />
 
@@ -514,11 +592,19 @@
 										for="numeroOtraHabilitacion2IT" />
 
 									<h:outputText value="Fecha otra habilitación" />
-									<p:calendar id="fechaOtraHabilitacion3C"
+									<!-- <p:calendar id="fechaOtraHabilitacion3C"
 										value="#{movilController.movilView.fechaOtraHabilitacion3}"
 										mode="popup" showOn="button" locale="es"
 										pattern="#{msgs.common_inputDateFormat}" immediate="true"
 										readOnlyInputText="true">
+									</p:calendar> -->
+									<p:calendar id="fechaOtraHabilitacion3C"
+										value="#{movilController.movilView.fechaOtraHabilitacion3}"
+										mode="popup" showOn="button" locale="es"
+										pattern="#{msgs.common_inputDateFormat}" immediate="true"
+										readOnlyInputText="false" navigator="true"
+										yearRange="c-100:c+50"
+										converterMessage="El formato de la fecha es incorrecto">
 									</p:calendar>
 									<h:outputText value="" />
 
@@ -531,11 +617,20 @@
 										for="numeroOtraHabilitacion3IT" />
 
 									<h:outputText value="Fecha otra habilitación" />
-									<p:calendar id="fechaOtraHabilitacion4C"
+									<!-- <p:calendar id="fechaOtraHabilitacion4C"
 										value="#{movilController.movilView.fechaOtraHabilitacion4}"
 										mode="popup" showOn="button" locale="es"
 										pattern="#{msgs.common_inputDateFormat}" immediate="true"
 										readOnlyInputText="true">
+									</p:calendar> -->
+
+									<p:calendar id="fechaOtraHabilitacion4C"
+										value="#{movilController.movilView.fechaOtraHabilitacion4}"
+										mode="popup" showOn="button" locale="es"
+										pattern="#{msgs.common_inputDateFormat}" immediate="true"
+										readOnlyInputText="false" navigator="true"
+										yearRange="c-100:c+50"
+										converterMessage="El formato de la fecha es incorrecto">
 									</p:calendar>
 									<h:outputText value="" />
 
@@ -571,11 +666,19 @@
 									<h:outputText value="" />
 
 									<h:outputText value="Fecha vencimiento capital" />
-									<p:calendar id="fechaVencimientoCapitalC"
+									<!-- <p:calendar id="fechaVencimientoCapitalC"
 										value="#{movilController.movilView.fechaVencimientoCapital}"
 										mode="popup" showOn="button" locale="es"
 										pattern="#{msgs.common_inputDateFormat}" immediate="true"
 										readOnlyInputText="true">
+									</p:calendar> -->
+									<p:calendar id="fechaVencimientoCapitalC"
+										value="#{movilController.movilView.fechaVencimientoCapital}"
+										mode="popup" showOn="button" locale="es"
+										pattern="#{msgs.common_inputDateFormat}" immediate="true"
+										readOnlyInputText="false" navigator="true"
+										yearRange="c-100:c+50"
+										converterMessage="El formato de la fecha es incorrecto">
 									</p:calendar>
 									<h:outputText value="" />
 
@@ -620,11 +723,22 @@
 									<h:outputText value="" />
 
 									<h:outputText value="Fecha" />
-									<p:calendar id="fechaPatcomC"
+									<!-- <p:calendar id="fechaPatcomC"
 										value="#{movilController.patcom.fechaAutonomo}" mode="popup"
 										showOn="button" locale="es"
 										pattern="#{msgs.common_inputDateFormat}" immediate="true"
 										readOnlyInputText="true">
+										<p:ajax event="dateSelect"
+											listener="#{movilController.handleDateSelect}" />
+									</p:calendar> -->
+
+									<p:calendar id="fechaPatcomC"
+										value="#{movilController.patcom.fechaAutonomo}" mode="popup"
+										showOn="button" locale="es"
+										pattern="#{msgs.common_inputDateFormat}" immediate="true"
+										readOnlyInputText="true" navigator="true"
+										yearRange="c-100:c+50"
+										converterMessage="El formato de la fecha es incorrecto">
 										<p:ajax event="dateSelect"
 											listener="#{movilController.handleDateSelect}" />
 									</p:calendar>
@@ -770,29 +884,53 @@
 									<h:outputText value="" />
 
 									<h:outputText value="Fecha desde" />
-									<p:calendar id="fechaSeguroDesdeC"
+									<!-- <p:calendar id="fechaSeguroDesdeC"
 										value="#{movilController.movilView.fechaSeguroDesde}"
 										mode="popup" showOn="button" locale="es"
 										pattern="#{msgs.common_inputDateFormat}" immediate="true"
 										readOnlyInputText="true">
+									</p:calendar> -->
+									<p:calendar id="fechaSeguroDesdeC"
+										value="#{movilController.movilView.fechaSeguroDesde}"
+										mode="popup" showOn="button" locale="es"
+										pattern="#{msgs.common_inputDateFormat}" immediate="true"
+										readOnlyInputText="false" navigator="true"
+										yearRange="c-100:c+50"
+										converterMessage="El formato de la fecha es incorrecto">
 									</p:calendar>
 									<h:outputText value="" />
 
 									<h:outputText value="Fecha hasta" />
-									<p:calendar id="fechaSeguroHastaC"
+									<!-- <p:calendar id="fechaSeguroHastaC"
 										value="#{movilController.movilView.fechaSeguroHasta}"
 										mode="popup" showOn="button" locale="es"
 										pattern="#{msgs.common_inputDateFormat}" immediate="true"
 										readOnlyInputText="true">
+									</p:calendar> -->
+									<p:calendar id="fechaSeguroHastaC"
+										value="#{movilController.movilView.fechaSeguroHasta}"
+										mode="popup" showOn="button" locale="es"
+										pattern="#{msgs.common_inputDateFormat}" immediate="true"
+										readOnlyInputText="false" navigator="true"
+										yearRange="c-100:c+50"
+										converterMessage="El formato de la fecha es incorrecto">
 									</p:calendar>
 									<h:outputText value="" />
 
 									<h:outputText value="Recibo vencimiento" />
-									<p:calendar id="fechaReciboVencimientoC"
+									<!-- <p:calendar id="fechaReciboVencimientoC"
 										value="#{movilController.movilView.fechaReciboVencimiento}"
 										mode="popup" showOn="button" locale="es"
 										pattern="#{msgs.common_inputDateFormat}" immediate="true"
 										readOnlyInputText="true">
+									</p:calendar> -->
+									<p:calendar id="fechaReciboVencimientoC"
+										value="#{movilController.movilView.fechaReciboVencimiento}"
+										mode="popup" showOn="button" locale="es"
+										pattern="#{msgs.common_inputDateFormat}" immediate="true"
+										readOnlyInputText="false" navigator="true"
+										yearRange="c-100:c+50"
+										converterMessage="El formato de la fecha es incorrecto">
 									</p:calendar>
 									<h:outputText value="" />
 
@@ -1025,11 +1163,21 @@
 									<h:outputText value="" />
 
 									<h:outputText value="Fecha" />
-									<p:calendar id="fechaForm817C"
+									<!-- <p:calendar id="fechaForm817C"
 										value="#{movilController.form817.fecha}" mode="popup"
 										showOn="button" locale="es"
 										pattern="#{msgs.common_inputDateFormat}" immediate="true"
 										readOnlyInputText="true">
+										<p:ajax event="dateSelect"
+											listener="#{movilController.handleDateSelect}" />
+									</p:calendar> -->
+									<p:calendar id="fechaForm817C"
+										value="#{movilController.form817.fecha}" mode="popup"
+										showOn="button" locale="es"
+										pattern="#{msgs.common_inputDateFormat}" immediate="true"
+										readOnlyInputText="true" navigator="true"
+										yearRange="c-100:c+50"
+										converterMessage="El formato de la fecha es incorrecto">
 										<p:ajax event="dateSelect"
 											listener="#{movilController.handleDateSelect}" />
 									</p:calendar>
@@ -1093,11 +1241,21 @@
 									<h:outputText value="" />
 
 									<h:outputText value="Fecha" />
-									<p:calendar id="fechaForm170C"
+									<!-- <p:calendar id="fechaForm170C"
 										value="#{movilController.form170.fecha}" mode="popup"
 										showOn="button" locale="es"
 										pattern="#{msgs.common_inputDateFormat}" immediate="true"
 										readOnlyInputText="true">
+										<p:ajax event="dateSelect"
+											listener="#{movilController.handleDateSelect}" />
+									</p:calendar> -->
+									<p:calendar id="fechaForm170C"
+										value="#{movilController.form170.fecha}" mode="popup"
+										showOn="button" locale="es"
+										pattern="#{msgs.common_inputDateFormat}" immediate="true"
+										readOnlyInputText="true" navigator="true"
+										yearRange="c-100:c+50"
+										converterMessage="El formato de la fecha es incorrecto">
 										<p:ajax event="dateSelect"
 											listener="#{movilController.handleDateSelect}" />
 									</p:calendar>
@@ -1162,11 +1320,21 @@
 									<h:outputText value="" />
 
 									<h:outputText value="Fecha" />
-									<p:calendar id="fechaReciboC"
+									<!-- <p:calendar id="fechaReciboC"
 										value="#{movilController.recibo.fecha}" mode="popup"
 										showOn="button" locale="es"
 										pattern="#{msgs.common_inputDateFormat}" immediate="true"
 										readOnlyInputText="true">
+										<p:ajax event="dateSelect"
+											listener="#{movilController.handleDateSelect}" />
+									</p:calendar> -->
+									<p:calendar id="fechaReciboC"
+										value="#{movilController.recibo.fecha}" mode="popup"
+										showOn="button" locale="es"
+										pattern="#{msgs.common_inputDateFormat}" immediate="true"
+										readOnlyInputText="true" navigator="true"
+										yearRange="c-100:c+50"
+										converterMessage="El formato de la fecha es incorrecto">
 										<p:ajax event="dateSelect"
 											listener="#{movilController.handleDateSelect}" />
 									</p:calendar>
@@ -1246,11 +1414,21 @@
 									<h:outputText value="" />
 
 									<h:outputText value="Fecha" />
-									<p:calendar id="fechaNominaC"
+									<!-- <p:calendar id="fechaNominaC"
 										value="#{movilController.nomina.fecha}" mode="popup"
 										showOn="button" locale="es"
 										pattern="#{msgs.common_inputDateFormat}" immediate="true"
 										readOnlyInputText="true">
+										<p:ajax event="dateSelect"
+											listener="#{movilController.handleDateSelect}" />
+									</p:calendar> -->
+									<p:calendar id="fechaNominaC"
+										value="#{movilController.nomina.fecha}" mode="popup"
+										showOn="button" locale="es"
+										pattern="#{msgs.common_inputDateFormat}" immediate="true"
+										readOnlyInputText="true" navigator="true"
+										yearRange="c-100:c+50"
+										converterMessage="El formato de la fecha es incorrecto">
 										<p:ajax event="dateSelect"
 											listener="#{movilController.handleDateSelect}" />
 									</p:calendar>

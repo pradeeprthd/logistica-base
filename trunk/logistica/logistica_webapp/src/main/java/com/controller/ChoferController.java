@@ -119,6 +119,7 @@ public class ChoferController extends PaginableController<Chofer> {
 
 	public void edit(ActionEvent event) {
 		try {
+			choferView = new ChoferView();
 			chofer = (Chofer) lazyDM.getRowData();
 			choferView = choferBuilder.toView(chofer);
 			direccionBean.setDireccionView(choferView.getDireccionView());
@@ -202,13 +203,14 @@ public class ChoferController extends PaginableController<Chofer> {
 
 				Map<String, Object> filtro = new HashMap<String, Object>();
 				filtro.put("nombre", choferQuery.getNombre());
-				return dao.getList(first, pageSize, "nombre", true, filtro);
+				return dao.getList(first, pageSize, "nombre", true, filtro,
+						true);
 			}
 		};
 
 		Map<String, Object> filtro = new HashMap<String, Object>();
 		filtro.put("nombre", choferQuery.getNombre());
-		lazyDM.setRowCount(dao.count(filtro).intValue());
+		lazyDM.setRowCount(dao.count(filtro,true).intValue());
 	}
 
 	@PostConstruct

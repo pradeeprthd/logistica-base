@@ -278,13 +278,13 @@ public class PropietarioController extends PaginableController<Propietario> {
 
 				Map<String, Object> filtro = new HashMap<String, Object>();
 				filtro.put("nombre", propietarioQuery.getNombre());
-				return dao.getList(first, pageSize, "nombre", true, filtro);
+				return dao.getList(first, pageSize, "nombre", true, filtro, true);
 			}
 		};
 
 		Map<String, Object> filtro = new HashMap<String, Object>();
 		filtro.put("nombre", propietarioQuery.getNombre());
-		lazyDM.setRowCount(dao.count(filtro).intValue());
+		lazyDM.setRowCount(dao.count(filtro,true).intValue());
 	}
 
 	@PostConstruct
