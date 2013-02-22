@@ -352,7 +352,7 @@ public class HojaRutaController extends PaginableController<HojaRuta> {
 							hojaRutaQuery.getEstadoHojaRutaEnum());
 				}
 				return dao.getList(first, pageSize, "fechaEmision", false,
-						filtro);
+						filtro, true);
 			}
 
 		};
@@ -372,7 +372,7 @@ public class HojaRutaController extends PaginableController<HojaRuta> {
 			filtro.put("estadoHojaRutaEnum",
 					hojaRutaQuery.getEstadoHojaRutaEnum());
 		}
-		lazyDM.setRowCount(dao.count(filtro).intValue());
+		lazyDM.setRowCount(dao.count(filtro,true).intValue());
 	}
 
 	public void addDetalle(ActionEvent event) {

@@ -206,13 +206,14 @@ public class UsuarioController extends PaginableController<Usuario> {
 
 				Map<String, Object> filtro = new HashMap<String, Object>();
 				filtro.put("usuario", usuarioQuery.getUsuario());
-				return dao.getList(first, pageSize, "usuario", true, filtro);
+				return dao.getList(first, pageSize, "usuario", true, filtro,
+						true);
 			}
 		};
 
 		Map<String, Object> filtro = new HashMap<String, Object>();
 		filtro.put("usuario", usuarioQuery.getUsuario());
-		lazyDM.setRowCount(dao.count(filtro).intValue());
+		lazyDM.setRowCount(dao.count(filtro, true).intValue());
 	}
 
 	private void getRoles() {

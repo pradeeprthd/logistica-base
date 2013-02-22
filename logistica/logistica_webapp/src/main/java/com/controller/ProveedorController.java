@@ -159,12 +159,12 @@ public class ProveedorController extends PaginableController<Proveedor> {
 
 				Map<String, Object> filtro = new HashMap<String, Object>();
 				filtro.put("nombre", proveedorQuery.getNombre());
-				return dao.getList(first, pageSize, "nombre", true, filtro);
+				return dao.getList(first, pageSize, "nombre", true, filtro, true);
 			}
 		};
 
 		Map<String, Object> filtro = new HashMap<String, Object>();
 		filtro.put("nombre", proveedorQuery.getNombre());
-		lazyDM.setRowCount(dao.count(filtro).intValue());
+		lazyDM.setRowCount(dao.count(filtro,true).intValue());
 	}
 }
