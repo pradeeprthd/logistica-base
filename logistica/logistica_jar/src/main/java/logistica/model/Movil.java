@@ -22,8 +22,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
 import logistica.common.BaseModel;
-import logistica.type.AsignacionMovilEnum;
-import logistica.type.CoberturaAdicionalEnum;
 import logistica.type.EstadoEnum;
 import logistica.type.ParentezcoEnum;
 import logistica.type.TipoCombustibleEnum;
@@ -56,8 +54,8 @@ public class Movil extends BaseModel {
 	@Column(length = 200)
 	private String descripcion;
 
-	@Enumerated(EnumType.STRING)
-	private AsignacionMovilEnum asignacionMovil;
+	@Column(length = 200)
+	private String asignacionMovil;
 
 	@Enumerated(EnumType.STRING)
 	private EstadoEnum estado;
@@ -280,8 +278,8 @@ public class Movil extends BaseModel {
 	@Column(precision = 20, scale = 2)
 	private BigDecimal valorLoJack;
 
-	@Enumerated(EnumType.STRING)
-	private CoberturaAdicionalEnum coberturaAdicional;
+	@Column(length = 200)
+	private String coberturaAdicional;
 
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@ElementCollection()
@@ -356,10 +354,10 @@ public class Movil extends BaseModel {
 	}
 
 	public Movil(Long id, Long numeroMovil, String patente, String descripcion,
-			AsignacionMovilEnum asignacionMovil, EstadoEnum estado,
-			Date fechaIngreso, Date fechaEgreso, Boolean controlado,
-			Boolean comodato, Chofer chofer1, ParentezcoEnum parentezcoChofer1,
-			Chofer chofer2, ParentezcoEnum parentezcoChofer2, Chofer chofer3,
+			String asignacionMovil, EstadoEnum estado, Date fechaIngreso,
+			Date fechaEgreso, Boolean controlado, Boolean comodato,
+			Chofer chofer1, ParentezcoEnum parentezcoChofer1, Chofer chofer2,
+			ParentezcoEnum parentezcoChofer2, Chofer chofer3,
 			ParentezcoEnum parentezcoChofer3, Propietario propietario,
 			String marca, String modelo, Integer anio, String tipo,
 			String motor, String numeroMotor, String potencia, String chasis,
@@ -384,7 +382,7 @@ public class Movil extends BaseModel {
 			String numeroCuota, Integer numeroSocio, String numeroLoJack,
 			String observacionesSeguro, BigDecimal valorMovil,
 			BigDecimal valorAccesorios, BigDecimal valorTotalAsegurado,
-			BigDecimal valorLoJack, CoberturaAdicionalEnum coberturaAdicional,
+			BigDecimal valorLoJack, String coberturaAdicional,
 			List<String> notas, List<String> notasControl,
 			List<Form817> form817List, List<Form170> form170List,
 			List<Recibo> reciboList, List<Nomina> nominaList, String categoria,
@@ -521,11 +519,11 @@ public class Movil extends BaseModel {
 		this.descripcion = descripcion;
 	}
 
-	public AsignacionMovilEnum getAsignacionMovil() {
+	public String getAsignacionMovil() {
 		return asignacionMovil;
 	}
 
-	public void setAsignacionMovil(AsignacionMovilEnum asignacionMovil) {
+	public void setAsignacionMovil(String asignacionMovil) {
 		this.asignacionMovil = asignacionMovil;
 	}
 
@@ -1105,11 +1103,11 @@ public class Movil extends BaseModel {
 		this.valorLoJack = valorLoJack;
 	}
 
-	public CoberturaAdicionalEnum getCoberturaAdicional() {
+	public String getCoberturaAdicional() {
 		return coberturaAdicional;
 	}
 
-	public void setCoberturaAdicional(CoberturaAdicionalEnum coberturaAdicional) {
+	public void setCoberturaAdicional(String coberturaAdicional) {
 		this.coberturaAdicional = coberturaAdicional;
 	}
 

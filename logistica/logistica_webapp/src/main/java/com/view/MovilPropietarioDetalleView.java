@@ -25,9 +25,11 @@ public class MovilPropietarioDetalleView implements Serializable {
 
 	private Movil movil;
 
+	private String titularRegistral;
+
 	public MovilPropietarioDetalleView(Long id, Date fechaTitularDesde,
 			Date fechaCedulaVerde, Integer numeroCedulaVerde,
-			Integer numeroTitulo, Movil movil) {
+			Integer numeroTitulo, Movil movil, String titularRegistral) {
 		super();
 		this.id = id;
 		this.fechaTitularDesde = fechaTitularDesde;
@@ -35,10 +37,11 @@ public class MovilPropietarioDetalleView implements Serializable {
 		this.numeroCedulaVerde = numeroCedulaVerde;
 		this.numeroTitulo = numeroTitulo;
 		this.movil = movil;
+		this.titularRegistral = titularRegistral;
 	}
 
 	public MovilPropietarioDetalleView() {
-		this(null, null, null, null, null, null);
+		this(null, null, null, null, null, null, null);
 	}
 
 	public Long getId() {
@@ -89,12 +92,19 @@ public class MovilPropietarioDetalleView implements Serializable {
 		this.movil = movil;
 	}
 
+	public String getTitularRegistral() {
+		return titularRegistral;
+	}
+
+	public void setTitularRegistral(String titularRegistral) {
+		this.titularRegistral = titularRegistral;
+	}
+
 	@Override
 	public boolean equals(Object detalleHojaRuta) {
 		boolean ret = true;
 		MovilPropietarioDetalleView detalle2 = (MovilPropietarioDetalleView) detalleHojaRuta;
-		
-		
+
 		if (movil != null && detalle2.getMovil() != null) {
 			return movil.equals(detalle2.getMovil());
 		} else if (movil == null && detalle2.getMovil() == null) {
@@ -102,7 +112,7 @@ public class MovilPropietarioDetalleView implements Serializable {
 		} else {
 			ret = false;
 		}
-		
+
 		if (numeroCedulaVerde != null
 				&& detalle2.getNumeroCedulaVerde() != null) {
 			ret = numeroCedulaVerde.intValue() == detalle2
@@ -126,7 +136,14 @@ public class MovilPropietarioDetalleView implements Serializable {
 		ret = ret && fechaTitularDesde == detalle2.getFechaTitularDesde();
 		ret = ret && fechaCedulaVerde == detalle2.getFechaCedulaVerde();
 
-		
+		if (titularRegistral != null && detalle2.getTitularRegistral() != null) {
+			ret = titularRegistral.equals(detalle2.getTitularRegistral());
+		} else if (titularRegistral == null
+				&& detalle2.getTitularRegistral() == null) {
+			ret = true;
+		} else {
+			ret = false;
+		}
 
 		return ret;
 	}
@@ -135,7 +152,7 @@ public class MovilPropietarioDetalleView implements Serializable {
 	public Object clone() throws CloneNotSupportedException {
 		MovilPropietarioDetalleView detalle = new MovilPropietarioDetalleView(
 				id, fechaTitularDesde, fechaCedulaVerde, numeroCedulaVerde,
-				numeroTitulo, movil);
+				numeroTitulo, movil, titularRegistral);
 		return detalle;
 	}
 }

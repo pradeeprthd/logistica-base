@@ -18,7 +18,7 @@ public class MovilPropietarioDetalleBuilder extends
 		return new MovilPropietarioDetalle(view.getId(),
 				view.getFechaTitularDesde(), view.getFechaCedulaVerde(),
 				view.getNumeroCedulaVerde(), view.getNumeroTitulo(),
-				view.getMovil());
+				view.getMovil(), view.getTitularRegistral());
 	}
 
 	@Override
@@ -26,6 +26,6 @@ public class MovilPropietarioDetalleBuilder extends
 		return new MovilPropietarioDetalleView(model.getID(),
 				model.getFechaTitularDesde(), model.getFechaCedulaVerde(),
 				model.getNumeroCedulaVerde(), model.getNumeroTitulo(),
-				model.getMovil());
+				model.getMovil(), model.getTitularRegistral());
 	}
 }

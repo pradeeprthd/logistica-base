@@ -41,13 +41,16 @@ public class MovilPropietarioDetalle extends BaseModel {
 	@Basic
 	private Integer numeroTitulo;
 
-	@ManyToOne(fetch = FetchType.EAGER )
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "movilID")
-	private Movil movil;	
+	private Movil movil;
+
+	@Column(length = 200)
+	private String titularRegistral;
 
 	public MovilPropietarioDetalle(Long id, Date fechaTitularDesde,
 			Date fechaCedulaVerde, Integer numeroCedulaVerde,
-			Integer numeroTitulo, Movil movil) {
+			Integer numeroTitulo, Movil movil, String titularRegistral) {
 		super();
 		this.id = id;
 		this.fechaTitularDesde = fechaTitularDesde;
@@ -55,10 +58,11 @@ public class MovilPropietarioDetalle extends BaseModel {
 		this.numeroCedulaVerde = numeroCedulaVerde;
 		this.numeroTitulo = numeroTitulo;
 		this.movil = movil;
+		this.titularRegistral = titularRegistral;
 	}
 
 	public MovilPropietarioDetalle() {
-		this(null, null, null, null, null, new Movil());
+		this(null, null, null, null, null, new Movil(), null);
 	}
 
 	public Date getFechaTitularDesde() {
@@ -110,4 +114,13 @@ public class MovilPropietarioDetalle extends BaseModel {
 	public void setMovil(Movil movil) {
 		this.movil = movil;
 	}
+
+	public String getTitularRegistral() {
+		return titularRegistral;
+	}
+
+	public void setTitularRegistral(String titularRegistral) {
+		this.titularRegistral = titularRegistral;
+	}
+
 }
