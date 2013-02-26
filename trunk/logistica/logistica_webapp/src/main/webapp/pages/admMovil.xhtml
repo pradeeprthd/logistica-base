@@ -178,6 +178,9 @@
 								<p:spinner id="numeroM"
 									value="#{movilController.movilView.numeroMovil}" min="1"
 									stepFactor="1" size="30">
+									<p:ajax
+										update="numeroMovilChoferesID,numeroMovilCaracteristicasID,numeroMovilEstadoID,numeroMovilEquipamientoID,numeroMovilSeguroID,numeroMovilNotasID,numeroMovilBlanqueoID,numeroMovilControlID"
+										process="@this" />
 									<f:validateBean for="numeroM" />
 								</p:spinner>
 								<h:message id="mns" for="numeroM" />
@@ -197,13 +200,11 @@
 								<h:message id="dIT" for="descripcionIT" />
 
 								<h:outputText value="Asignado a" />
-								<p:selectOneMenu
-									value="#{movilController.movilView.asignacionMovil}"
-									converter="com.converter.AsignacionMovilConverter">
-									<f:selectItems
-										value="#{movilController.asignacionMovilEnumList}" />
-								</p:selectOneMenu>
-								<h:outputText value="" />
+								<p:inputText id="asignadoIT"
+									value="#{movilController.movilView.asignacionMovil}">
+									<f:validateBean for="asignadoIT" />
+								</p:inputText>
+								<h:message id="MasignadoIT" for="asignadoIT" />
 
 								<h:outputText value="Estado" />
 								<p:selectOneMenu value="#{movilController.movilView.estado}"
@@ -226,6 +227,13 @@
 
 
 						<p:tab title="Choferes">
+
+							<h:panelGrid columns="2">
+								<h:outputText value="Número de móvil" />
+								<h:outputText id="numeroMovilChoferesID"
+									value="#{movilController.movilView.numeroMovil}" />
+							</h:panelGrid>
+
 							<p:focus for="choferAC" />
 							<h:panelGrid columns="8">
 								<h:outputText value="Chofer 1" />
@@ -347,7 +355,15 @@
 							</h:panelGrid>
 						</p:tab>
 
-						<p:tab title="Propietario" rendered="#{movilController.movilView.propietario != null}">
+						<p:tab title="Propietario"
+							rendered="#{movilController.movilView.propietario != null}">
+
+							<h:panelGrid columns="2">
+								<h:outputText value="Número de móvil" />
+								<h:outputText id="numeroMovilPropietarioID"
+									value="#{movilController.movilView.numeroMovil}" />
+							</h:panelGrid>
+
 							<h:panelGrid columns="6">
 								<h:outputText value="Nombre" />
 								<p:inputText id="propietarioNombreIT"
@@ -365,19 +381,22 @@
 								<h:graphicImage id="fotoPropietarioGI"
 									value="/images/#{movilController.movilView.propietario.nombreArchivo}"
 									width="70" height="100" />
-								
+
 								<h:outputText value="Teléfono" />
-								<p:inputText id="telefonoPropietarioIT" maxlength="30" disabled="true"
+								<p:inputText id="telefonoPropietarioIT" maxlength="30"
+									disabled="true"
 									value="#{movilController.movilView.propietario.telefono}">
 								</p:inputText>
 
 								<h:outputText value="Teléfono 2" />
-								<p:inputText id="telefono2PropietarioIT" maxlength="30" disabled="true"
+								<p:inputText id="telefono2PropietarioIT" maxlength="30"
+									disabled="true"
 									value="#{movilController.movilView.propietario.telefono2}">
 								</p:inputText>
 
 								<h:outputText value="Teléfono 3" />
-								<p:inputText id="telefono3PropietarioIT" maxlength="30" disabled="true"
+								<p:inputText id="telefono3PropietarioIT" maxlength="30"
+									disabled="true"
 									value="#{movilController.movilView.propietario.telefono3}">
 								</p:inputText>
 
@@ -385,6 +404,13 @@
 						</p:tab>
 
 						<p:tab title="Caracteristicas">
+
+							<h:panelGrid columns="2">
+								<h:outputText value="Número de móvil" />
+								<h:outputText id="numeroMovilCaracteristicasID"
+									value="#{movilController.movilView.numeroMovil}" />
+							</h:panelGrid>
+
 							<p:focus for="numeroM" />
 							<h:panelGrid columns="6">
 
@@ -489,6 +515,13 @@
 						</p:tab>
 
 						<p:tab title="Estado">
+
+							<h:panelGrid columns="2">
+								<h:outputText value="Número de móvil" />
+								<h:outputText id="numeroMovilEstadoID"
+									value="#{movilController.movilView.numeroMovil}" />
+							</h:panelGrid>
+
 							<p:panel>
 								<h:panelGrid columns="6">
 
@@ -793,6 +826,13 @@
 						</p:tab>
 
 						<p:tab title="Equipamento">
+
+							<h:panelGrid columns="2">
+								<h:outputText value="Número de móvil" />
+								<h:outputText id="numeroMovilEquipamientoID"
+									value="#{movilController.movilView.numeroMovil}" />
+							</h:panelGrid>
+
 							<p:focus for="numeroM" />
 							<h:panelGrid columns="3">
 
@@ -858,6 +898,12 @@
 
 						<p:tab title="Seguro">
 							<p:focus for="numeroM" />
+							<h:panelGrid columns="2">
+								<h:outputText value="Número de móvil" />
+								<h:outputText id="numeroMovilSeguroID"
+									value="#{movilController.movilView.numeroMovil}" />
+							</h:panelGrid>
+
 
 							<p:panel>
 								<h:panelGrid columns="6">
@@ -1016,13 +1062,12 @@
 									<h:message id="mvalorAccesoriosS" for="valorAccesoriosS" />
 
 									<h:outputText value="Tipo accesorios" />
-									<p:selectOneMenu
-										value="#{movilController.movilView.coberturaAdicional}"
-										converter="com.converter.CoberturaAdicionalConverter">
-										<f:selectItems
-											value="#{movilController.coberturaAdicionalEnumList}" />
-									</p:selectOneMenu>
-									<h:outputText value="" />
+									<p:inputText id="coberturaAdicionalIT"
+										value="#{movilController.movilView.coberturaAdicional}">
+										<f:validateBean for="coberturaAdicionalIT" />
+									</p:inputText>
+									<h:message id="McoberturaAdicionalIT"
+										for="coberturaAdicionalIT" />
 
 									<h:outputText value="Valor total asegurado" />
 									<p:spinner id="valorTotalAseguradoS"
@@ -1037,6 +1082,12 @@
 						</p:tab>
 
 						<p:tab title="Notas">
+							<h:panelGrid columns="2">
+								<h:outputText value="Número de móvil" />
+								<h:outputText id="numeroMovilNotasID"
+									value="#{movilController.movilView.numeroMovil}" />
+							</h:panelGrid>
+
 							<p:panel header="Agregar nota">
 								<h:panelGrid columns="2">
 									<h:outputText value="Nota" />
@@ -1082,6 +1133,13 @@
 						</p:tab>
 
 						<p:tab title="Blanqueo">
+
+							<h:panelGrid columns="2">
+								<h:outputText value="Número de móvil" />
+								<h:outputText id="numeroMovilBlanqueoID"
+									value="#{movilController.movilView.numeroMovil}" />
+							</h:panelGrid>
+
 							<p:panel>
 								<h:panelGrid columns="6">
 									<h:outputText value="Categoria" />
@@ -1499,6 +1557,13 @@
 
 
 						<p:tab title="Control">
+
+							<h:panelGrid columns="2">
+								<h:outputText value="Número de móvil" />
+								<h:outputText id="numeroMovilControlID"
+									value="#{movilController.movilView.numeroMovil}" />
+							</h:panelGrid>
+
 							<p:panel header="Agregar Observación">
 								<h:panelGrid columns="2">
 									<h:outputText value="Observación" />
@@ -1546,6 +1611,7 @@
 						</p:tab>
 
 					</p:tabView>
+
 
 					<!-- ================================================== -->
 					<!-- Opciones											-->

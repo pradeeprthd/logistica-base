@@ -12,8 +12,6 @@ import javax.validation.constraints.Size;
 
 import logistica.model.Chofer;
 import logistica.model.Propietario;
-import logistica.type.AsignacionMovilEnum;
-import logistica.type.CoberturaAdicionalEnum;
 import logistica.type.EstadoEnum;
 import logistica.type.ParentezcoEnum;
 import logistica.type.TipoCombustibleEnum;
@@ -35,7 +33,7 @@ public class MovilView implements Serializable {
 	private String descripcion;
 
 	@NotNull(message = "Valor requerido")
-	private AsignacionMovilEnum asignacionMovil;
+	private String asignacionMovil;
 
 	@NotNull(message = "Valor requerido")
 	private EstadoEnum estado;
@@ -183,7 +181,7 @@ public class MovilView implements Serializable {
 
 	private BigDecimal valorLoJack;
 
-	private CoberturaAdicionalEnum coberturaAdicional;
+	private String coberturaAdicional;
 
 	private List<String> notas;
 
@@ -216,11 +214,10 @@ public class MovilView implements Serializable {
 	private String sindicato;
 
 	public MovilView(Long id, Long numeroMovil, String patente,
-			String descripcion, AsignacionMovilEnum asignacionMovil,
-			EstadoEnum estado, Date fechaIngreso, Date fechaEgreso,
-			Boolean controlado, Boolean comodato, Chofer chofer1,
-			ParentezcoEnum parentezcoChofer1, Chofer chofer2,
-			ParentezcoEnum parentezcoChofer2, Chofer chofer3,
+			String descripcion, String asignacionMovil, EstadoEnum estado,
+			Date fechaIngreso, Date fechaEgreso, Boolean controlado,
+			Boolean comodato, Chofer chofer1, ParentezcoEnum parentezcoChofer1,
+			Chofer chofer2, ParentezcoEnum parentezcoChofer2, Chofer chofer3,
 			ParentezcoEnum parentezcoChofer3, Propietario propietario,
 			String marca, String modelo, Integer anio, String tipo,
 			String motor, String numeroMotor, String potencia, String chasis,
@@ -245,7 +242,7 @@ public class MovilView implements Serializable {
 			String numeroCuota, Integer numeroSocio, String numeroLoJack,
 			String observacionesSeguro, BigDecimal valorMovil,
 			BigDecimal valorAccesorios, BigDecimal valorTotalAsegurado,
-			BigDecimal valorLoJack, CoberturaAdicionalEnum coberturaAdicional,
+			BigDecimal valorLoJack, String coberturaAdicional,
 			List<String> notas, List<String> notasControl,
 			List<Form817View> form817List, List<Form170View> form170List,
 			List<ReciboView> reciboList, List<NominaView> nominaList,
@@ -394,11 +391,11 @@ public class MovilView implements Serializable {
 		this.descripcion = descripcion;
 	}
 
-	public AsignacionMovilEnum getAsignacionMovil() {
+	public String getAsignacionMovil() {
 		return asignacionMovil;
 	}
 
-	public void setAsignacionMovil(AsignacionMovilEnum asignacionMovil) {
+	public void setAsignacionMovil(String asignacionMovil) {
 		this.asignacionMovil = asignacionMovil;
 	}
 
@@ -994,11 +991,11 @@ public class MovilView implements Serializable {
 		this.valorLoJack = valorLoJack;
 	}
 
-	public CoberturaAdicionalEnum getCoberturaAdicional() {
+	public String getCoberturaAdicional() {
 		return coberturaAdicional;
 	}
 
-	public void setCoberturaAdicional(CoberturaAdicionalEnum coberturaAdicional) {
+	public void setCoberturaAdicional(String coberturaAdicional) {
 		this.coberturaAdicional = coberturaAdicional;
 	}
 

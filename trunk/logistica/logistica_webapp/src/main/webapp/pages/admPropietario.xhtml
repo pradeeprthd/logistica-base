@@ -130,13 +130,12 @@
 									pattern="#{msgs.common_inputDateFormat}"
 									readOnlyInputText="true">
 								</p:calendar> -->
-								
+
 								<p:calendar id="fechaNacimientoC"
 									value="#{propietarioController.propietarioView.fechaNacimiento}"
 									mode="popup" showOn="button" locale="es"
 									pattern="#{msgs.common_inputDateFormat}"
-									readOnlyInputText="false"
-									navigator="true"
+									readOnlyInputText="false" navigator="true"
 									yearRange="c-100:c+50"
 									converterMessage="El formato de la fecha es incorrecto">
 								</p:calendar>
@@ -219,7 +218,7 @@
 									<f:validateBean for="observacionesITA" />
 								</p:inputTextarea>
 								<h:outputText value="" />
-								
+
 								<h:outputText value="Tipo inscripción" />
 								<p:selectOneMenu
 									value="#{propietarioController.propietarioView.tipoInscripcion}"
@@ -280,12 +279,11 @@
 										value="#{propietarioController.autonomo.fechaAutonomo}"
 										mode="popup" showOn="button" locale="es"
 										pattern="#{msgs.common_inputDateFormat}" immediate="true"
-										readOnlyInputText="true"
-										navigator="true"
+										readOnlyInputText="true" navigator="true"
 										yearRange="c-100:c+50"
 										converterMessage="El formato de la fecha es incorrecto">
 										<p:ajax event="dateSelect"
-												listener="#{propietarioController.handleDateSelect}" />
+											listener="#{propietarioController.handleDateSelect}" />
 									</p:calendar>
 									<h:outputText value="" />
 									<h:outputText value="" />
@@ -377,13 +375,12 @@
 										<p:ajax event="dateSelect"
 											listener="#{propietarioController.handleDateSelect}" />
 									</p:calendar> -->
-									
+
 									<p:calendar id="fechaTitularDesdeC"
 										value="#{propietarioController.movilPropietarioDetalle.fechaTitularDesde}"
 										mode="popup" showOn="button" locale="es"
 										pattern="#{msgs.common_inputDateFormat}" immediate="true"
-										readOnlyInputText="true"
-										navigator="true"
+										readOnlyInputText="true" navigator="true"
 										yearRange="c-100:c+50"
 										converterMessage="El formato de la fecha es incorrecto">
 										<p:ajax event="dateSelect"
@@ -401,13 +398,12 @@
 										<p:ajax event="dateSelect"
 											listener="#{propietarioController.handleDateSelect}" />
 									</p:calendar> -->
-									
+
 									<p:calendar id="fechaCedulaVerdeC"
 										value="#{propietarioController.movilPropietarioDetalle.fechaCedulaVerde}"
 										mode="popup" showOn="button" locale="es"
 										pattern="#{msgs.common_inputDateFormat}" immediate="true"
-										readOnlyInputText="true"
-										navigator="true"
+										readOnlyInputText="true" navigator="true"
 										yearRange="c-100:c+50"
 										converterMessage="El formato de la fecha es incorrecto">
 										<p:ajax event="dateSelect"
@@ -432,6 +428,15 @@
 										<f:ajax execute="@this" />
 									</p:spinner>
 									<h:message id="mmnts" for="numeroTituloS" />
+									<h:outputText value="" />
+
+
+									<h:outputText value="Titular registral" />
+									<p:inputText id="titularRegistralIT"
+										value="#{propietarioController.movilPropietarioDetalle.titularRegistral}">
+										<f:ajax execute="@this" />
+									</p:inputText>
+									<h:message id="MtitularRegistralIT" for="titularRegistralIT" />
 									<h:outputText value="" />
 
 									<p:commandButton value="Agregar"
@@ -488,6 +493,13 @@
 										<h:outputText value="Número de título" />
 									</f:facet>
 									<h:outputText value="#{movilPropietario.numeroTitulo}" />
+								</p:column>
+
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Titular registral" />
+									</f:facet>
+									<h:outputText value="#{movilPropietario.titularRegistral}" />
 								</p:column>
 
 								<p:column>
