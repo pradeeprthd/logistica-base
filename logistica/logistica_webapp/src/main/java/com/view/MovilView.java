@@ -2,6 +2,7 @@ package com.view;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -352,11 +353,13 @@ public class MovilView implements Serializable {
 				null, null, null, null, null, null, null, null, null, null,
 				null, null, null, null, null, null, null, null, null, null,
 				null, null, null, null, null, null, null, null, null, null,
+				null, null, new ArrayList<AutonomoView>(), null, null, null,
 				null, null, null, null, null, null, null, null, null, null,
 				null, null, null, null, null, null, null, null, null, null,
-				null, null, null, null, null, null, null, null, null, null,
-				null, null, null, null, null, null, null, null, null, null,
-				null, null);
+				null, null, null, new ArrayList<Form817View>(),
+				new ArrayList<Form170View>(), new ArrayList<ReciboView>(),
+				new ArrayList<NominaView>(), null, null, null, null, null,
+				null, null, null, null);
 	}
 
 	public Long getId() {
