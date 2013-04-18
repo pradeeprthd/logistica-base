@@ -203,14 +203,16 @@ public class ChoferController extends PaginableController<Chofer> {
 
 				Map<String, Object> filtro = new HashMap<String, Object>();
 				filtro.put("nombre", choferQuery.getNombre());
+				filtro.put("dni", choferQuery.getDni());
 				return dao.getList(first, pageSize, "nombre", true, filtro,
-						true);
+						false);
 			}
 		};
 
 		Map<String, Object> filtro = new HashMap<String, Object>();
 		filtro.put("nombre", choferQuery.getNombre());
-		lazyDM.setRowCount(dao.count(filtro,true).intValue());
+		filtro.put("dni", choferQuery.getDni());
+		lazyDM.setRowCount(dao.count(filtro, false).intValue());
 	}
 
 	@PostConstruct

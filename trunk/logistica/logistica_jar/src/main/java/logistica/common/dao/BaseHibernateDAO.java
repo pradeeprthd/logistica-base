@@ -1,6 +1,5 @@
 package logistica.common.dao;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -121,14 +120,14 @@ public abstract class BaseHibernateDAO<T extends BaseModel, Q extends BaseQuery>
 					} catch (NumberFormatException e) {
 					}
 				} else if (object instanceof String) {
-					if(startMode){
+					if (startMode) {
 						criteria.add(Restrictions.ilike(entry.getKey(),
 								object.toString(), MatchMode.START));
 					} else {
 						criteria.add(Restrictions.ilike(entry.getKey(),
 								object.toString(), MatchMode.ANYWHERE));
 					}
-					
+
 				} else if (object instanceof Date) {
 					Date fecha = (Date) object;
 					criteria.add(Restrictions.between(entry.getKey(),
@@ -146,7 +145,8 @@ public abstract class BaseHibernateDAO<T extends BaseModel, Q extends BaseQuery>
 		return objectList;
 	}
 
-	public Long count(Map<String, Object> filters, Boolean startMode) throws DataAccessException {
+	public Long count(Map<String, Object> filters, Boolean startMode)
+			throws DataAccessException {
 		Long count = 0l;
 
 		DetachedCriteria criteria = DetachedCriteria.forClass(getModelClass());
@@ -173,7 +173,7 @@ public abstract class BaseHibernateDAO<T extends BaseModel, Q extends BaseQuery>
 					} catch (NumberFormatException e) {
 					}
 				} else if (object instanceof String) {
-					if(startMode){
+					if (startMode) {
 						criteria.add(Restrictions.ilike(entry.getKey(),
 								object.toString(), MatchMode.START));
 					} else {
@@ -234,8 +234,9 @@ public abstract class BaseHibernateDAO<T extends BaseModel, Q extends BaseQuery>
 		// TODO implementar donde sea necesario
 		return null;
 	}
-	
-	public List<Object[]> getList2Query(Object query) throws DataAccessException {
+
+	public List<Object[]> getList2Query(Object query)
+			throws DataAccessException {
 		// TODO implementar donde sea necesario
 		return null;
 	}

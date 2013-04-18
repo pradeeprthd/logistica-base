@@ -589,6 +589,9 @@ public class MovilController extends PaginableController<Movil> {
 						&& movilQuery.getNumeroMovil() != 0) {
 					filtro.put("numeroMovil", movilQuery.getNumeroMovil());
 				}
+				filtro.put("numeroMotor", movilQuery.getNumeroMotor());
+				filtro.put("numeroChasis", movilQuery.getNumeroChasis());
+				filtro.put("comunicacion", movilQuery.getComunicacion());
 				return dao.getList(first, pageSize, "numeroMovil", true,
 						filtro, false);
 			}
@@ -596,6 +599,9 @@ public class MovilController extends PaginableController<Movil> {
 		};
 		Map<String, Object> filtro = new HashMap<String, Object>();
 		filtro.put("patente", movilQuery.getPatente());
+		filtro.put("numeroMotor", movilQuery.getNumeroMotor());
+		filtro.put("numeroChasis", movilQuery.getNumeroChasis());
+		filtro.put("comunicacion", movilQuery.getComunicacion());
 		if (movilQuery.getNumeroMovil() != null
 				&& movilQuery.getNumeroMovil() != 0) {
 			filtro.put("numeroMovil", movilQuery.getNumeroMovil());

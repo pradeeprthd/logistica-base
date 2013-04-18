@@ -13,7 +13,7 @@
 		<u:define name="body">
 			<h:form id="filtroForm">
 				<p:panel id="panelFiltro" rendered="#{!movilController.addEdit}">
-					<h:panelGrid columns="5">
+					<h:panelGrid columns="6">
 						<h:outputText value="Patente: " />
 						<p:inputText value="#{movilController.movilQuery.patente}">
 						</p:inputText>
@@ -23,6 +23,18 @@
 							value="#{movilController.movilQuery.numeroMovil}" min="0"
 							stepFactor="1" size="30">
 						</p:spinner>
+						
+						<h:outputText value="Número de motor: " />
+						<p:inputText value="#{movilController.movilQuery.numeroMotor}">
+						</p:inputText>
+						
+						<h:outputText value="Número de chasis: " />
+						<p:inputText value="#{movilController.movilQuery.numeroChasis}">
+						</p:inputText>
+						
+						<h:outputText value="Comunicación: " />
+						<p:inputText value="#{movilController.movilQuery.comunicacion}">
+						</p:inputText>
 
 						<p:commandButton value="Consultar"
 							actionListener="#{movilController.query}" update="form">
@@ -234,7 +246,7 @@
 									value="#{movilController.movilView.numeroMovil}" />
 							</h:panelGrid>
 
-							<p:focus for="choferAC" />
+							<!-- <p:focus for="choferAC" /> -->
 							<h:panelGrid columns="8">
 								<h:outputText value="Chofer 1" />
 								<p:autoComplete id="choferAC"
@@ -246,7 +258,7 @@
 									forceSelection="true">
 									<p:ajax event="itemSelect"
 										listener="#{movilController.handleChoferSelect}"
-										update="choferAC,nombreChofer,deseleccionarChoferLink,fotoChofer1GI" />
+										update="choferAC,nombreChofer,deseleccionarChoferLink,fotoChofer1GI,form" />
 								</p:autoComplete>
 								<h:panelGroup>
 									<h:outputText id="nombreChofer"
@@ -254,7 +266,7 @@
 									<h:commandLink id="deseleccionarChoferLink"
 										disabled="#{!movilController.chofer1Selected}"
 										actionListener="#{movilController.deseleccionarChofer1}"
-										update="choferAC,nombreChofer,deseleccionarChoferLink,fotoChofer1GI"
+										update="choferAC,nombreChofer,deseleccionarChoferLink,fotoChofer1GI,form"
 										immediate="true">
 										<h:graphicImage url="/resource/images/delete.gif"
 											title="Deseleccionar" style="border:0px" />
@@ -285,7 +297,7 @@
 									forceSelection="true">
 									<p:ajax event="itemSelect"
 										listener="#{movilController.handleChoferSelect}"
-										update="chofer2AC,nombreChofer2,deseleccionarChofer2Link,fotoChofer2GI" />
+										update="chofer2AC,nombreChofer2,deseleccionarChofer2Link,fotoChofer2GI,form" />
 								</p:autoComplete>
 								<h:panelGroup>
 									<h:outputText id="nombreChofer2"
@@ -293,7 +305,7 @@
 									<h:commandLink id="deseleccionarChofer2Link"
 										disabled="#{!movilController.chofer2Selected}"
 										actionListener="#{movilController.deseleccionarChofer2}"
-										update="chofer2AC,nombreChofer2,deseleccionarChofer2Link,fotoChofer2GI"
+										update="chofer2AC,nombreChofer2,deseleccionarChofer2Link,fotoChofer2GI,form"
 										immediate="true">
 										<h:graphicImage url="/resource/images/delete.gif"
 											title="Deseleccionar" style="border:0px" />
@@ -324,7 +336,7 @@
 									forceSelection="true">
 									<p:ajax event="itemSelect"
 										listener="#{movilController.handleChoferSelect}"
-										update="chofer3AC,nombreChofer3,deseleccionarChofer3Link,fotoChofer3GI" />
+										update="chofer3AC,nombreChofer3,deseleccionarChofer3Link,fotoChofer3GI,form" />
 								</p:autoComplete>
 								<h:panelGroup>
 									<h:outputText id="nombreChofer3"
@@ -332,7 +344,7 @@
 									<h:commandLink id="deseleccionarChofer3Link"
 										disabled="#{!movilController.chofer3Selected}"
 										actionListener="#{movilController.deseleccionarChofer3}"
-										update="chofer3AC,nombreChofer3,deseleccionarChofer3Link,fotoChofer3GI"
+										update="chofer3AC,nombreChofer3,deseleccionarChofer3Link,fotoChofer3GI,form"
 										immediate="true">
 										<h:graphicImage url="/resource/images/delete.gif"
 											title="Deseleccionar" style="border:0px" />
@@ -411,7 +423,6 @@
 									value="#{movilController.movilView.numeroMovil}" />
 							</h:panelGrid>
 
-							<p:focus for="numeroM" />
 							<h:panelGrid columns="6">
 
 								<h:outputText value="Marca" />
@@ -833,7 +844,6 @@
 									value="#{movilController.movilView.numeroMovil}" />
 							</h:panelGrid>
 
-							<p:focus for="numeroM" />
 							<h:panelGrid columns="3">
 
 								<h:outputText value="Tipo combustible" />
@@ -897,7 +907,6 @@
 						</p:tab>
 
 						<p:tab title="Seguro">
-							<p:focus for="numeroM" />
 							<h:panelGrid columns="2">
 								<h:outputText value="Número de móvil" />
 								<h:outputText id="numeroMovilSeguroID"
@@ -1132,13 +1141,105 @@
 							</p:dataTable>
 						</p:tab>
 
-						<p:tab title="Blanqueo">
+						<p:tab title="Blanqueo" id="blanqueoTab">
 
 							<h:panelGrid columns="2">
 								<h:outputText value="Número de móvil" />
 								<h:outputText id="numeroMovilBlanqueoID"
 									value="#{movilController.movilView.numeroMovil}" />
 							</h:panelGrid>
+
+
+							<p:panel header="Propietario"
+								rendered="#{movilController.movilView.propietario != null}">
+
+								<h:panelGrid columns="6">
+									<h:outputText value="Nombre" />
+									<p:inputText id="propietarioNombreBIT"
+										value="#{movilController.movilView.propietario.nombre}"
+										disabled="true">
+									</p:inputText>
+
+									<h:outputText value="DNI" />
+									<p:inputText id="propietarioDNIBIT"
+										value="#{movilController.movilView.propietario.dni}"
+										disabled="true">
+									</p:inputText>
+
+									<h:outputText value="Foto" />
+									<h:graphicImage id="fotoPropietarioBGI"
+										value="/images/#{movilController.movilView.propietario.nombreArchivo}"
+										width="70" height="100" />
+
+								</h:panelGrid>
+							</p:panel>
+
+							<p:panel header="Choferes" id="choferesBlanqueo"
+								rendered="#{movilController.movilView.chofer1 != null or movilController.movilView.chofer2 != null 
+								or movilController.movilView.chofer3 != null}">
+								<h:panelGrid columns="6" id="chofer1PG"
+									rendered="#{movilController.movilView.chofer1 != null}">
+									<h:outputText value="Nombre chofer 1" />
+									<p:inputText id="choferNombreBIT"
+										value="#{movilController.movilView.chofer1.nombre}"
+										disabled="true">
+									</p:inputText>
+
+									<h:outputText value="DNI chofer 1" />
+									<p:inputText id="choferDNIBIT"
+										value="#{movilController.movilView.chofer1.dni}"
+										disabled="true">
+									</p:inputText>
+
+									<h:outputText value="Foto chofer 1" />
+									<h:graphicImage id="fotochoferB1GI"
+										value="/images/#{movilController.movilView.chofer1.nombreArchivo}"
+										width="70" height="100" />
+								</h:panelGrid>
+
+								<h:panelGrid columns="6" id="chofer2PG"
+									rendered="#{movilController.movilView.chofer2 != null}">
+
+									<h:outputText value="Nombre chofer 2" />
+									<p:inputText id="choferNombreB2IT"
+										value="#{movilController.movilView.chofer2.nombre}"
+										disabled="true">
+									</p:inputText>
+
+									<h:outputText value="DNI chofer 2" />
+									<p:inputText id="choferDNIB2IT"
+										value="#{movilController.movilView.chofer2.dni}"
+										disabled="true">
+									</p:inputText>
+
+									<h:outputText value="Foto chofer 2" />
+									<h:graphicImage id="fotochoferB2GI"
+										value="/images/#{movilController.movilView.chofer2.nombreArchivo}"
+										width="70" height="100" />
+								</h:panelGrid>
+
+								<h:panelGrid columns="6" id="chofer3PG"
+									rendered="#{movilController.movilView.chofer3 != null}">
+
+									<h:outputText value="Nombre chofer 3" />
+									<p:inputText id="choferNombreB3IT"
+										value="#{movilController.movilView.chofer3.nombre}"
+										disabled="true">
+									</p:inputText>
+
+									<h:outputText value="DNI chofer 3" />
+									<p:inputText id="choferDNIB3IT"
+										value="#{movilController.movilView.chofer3.dni}"
+										disabled="true">
+									</p:inputText>
+
+									<h:outputText value="Foto chofer 3" />
+									<h:graphicImage id="fotochoferB3GI"
+										value="/images/#{movilController.movilView.chofer3.nombreArchivo}"
+										width="70" height="100" />
+								</h:panelGrid>
+							</p:panel>
+
 
 							<p:panel>
 								<h:panelGrid columns="6">
@@ -1374,7 +1475,7 @@
 										<f:ajax execute="@this" />
 									</p:inputMask>
 
-									<h:message for="reciboIMm" />
+									<h:message for="reciboIM" />
 									<h:outputText value="" />
 
 									<h:outputText value="Fecha" />
@@ -1468,7 +1569,7 @@
 										<f:ajax execute="@this" />
 									</p:inputMask>
 
-									<h:message for="nominaIMm" />
+									<h:message for="nominaIM" />
 									<h:outputText value="" />
 
 									<h:outputText value="Fecha" />

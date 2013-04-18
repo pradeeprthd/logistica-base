@@ -16,6 +16,11 @@
 						<h:outputText value="Nombre: " />
 						<p:inputText value="#{choferController.choferQuery.nombre}">
 						</p:inputText>
+
+						<h:outputText value="DNI: " />
+						<p:inputText value="#{choferController.choferQuery.dni}">
+						</p:inputText>
+
 						<p:commandButton value="Consultar"
 							actionListener="#{choferController.query}" update="form">
 						</p:commandButton>
@@ -126,8 +131,7 @@
 									value="#{choferController.choferView.fechaNacimiento}"
 									mode="popup" showOn="button" locale="es"
 									pattern="#{msgs.common_inputDateFormat}"
-									readOnlyInputText="false"
-									navigator="true"
+									readOnlyInputText="false" navigator="true"
 									yearRange="c-100:c+50"
 									converterMessage="El formato de la fecha es incorrecto">
 								</p:calendar>
@@ -159,12 +163,11 @@
 									value="#{choferController.choferView.fechaLibretaSanitaria}"
 									mode="popup" showOn="button" locale="es"
 									pattern="#{msgs.common_inputDateFormat}"
-									readOnlyInputText="false"
-									navigator="true"
+									readOnlyInputText="false" navigator="true"
 									yearRange="c-100:c+50"
 									converterMessage="El formato de la fecha es incorrecto">
 								</p:calendar>
-								
+
 								<h:outputText value="" />
 
 								<h:outputText value="Teléfono" />
@@ -217,8 +220,7 @@
 									value="#{choferController.choferView.fechaVencimientoRegistro}"
 									mode="popup" showOn="button" locale="es"
 									pattern="#{msgs.common_inputDateFormat}"
-									readOnlyInputText="false"
-									navigator="true"
+									readOnlyInputText="false" navigator="true"
 									yearRange="c-100:c+50"
 									converterMessage="El formato de la fecha es incorrecto">
 								</p:calendar>
@@ -258,11 +260,10 @@
 
 								<h:outputText value="Fecha Curso" />
 								<p:calendar id="fechaCursoC"
-									value="#{choferController.choferView.fechaCurso}"
-									mode="popup" showOn="button" locale="es"
+									value="#{choferController.choferView.fechaCurso}" mode="popup"
+									showOn="button" locale="es"
 									pattern="#{msgs.common_inputDateFormat}"
-									readOnlyInputText="false"
-									navigator="true"
+									readOnlyInputText="false" navigator="true"
 									yearRange="c-100:c+50"
 									converterMessage="El formato de la fecha es incorrecto">
 								</p:calendar>
@@ -273,8 +274,7 @@
 									value="#{choferController.choferView.fechaRegistro}"
 									mode="popup" showOn="button" locale="es"
 									pattern="#{msgs.common_inputDateFormat}"
-									readOnlyInputText="false"
-									navigator="true"
+									readOnlyInputText="false" navigator="true"
 									yearRange="c-100:c+50"
 									converterMessage="El formato de la fecha es incorrecto">
 								</p:calendar>
