@@ -9,7 +9,7 @@ import javax.faces.bean.ViewScoped;
 @ManagedBean
 @ViewScoped
 @SuppressWarnings("serial")
-public class Form817View implements Serializable {
+public class Form817View implements Serializable, Comparable<Form817View> {
 
 	private Long id;
 
@@ -72,5 +72,14 @@ public class Form817View implements Serializable {
 	public Object clone() throws CloneNotSupportedException {
 		Form817View detalle = new Form817View(id, numero, fecha);
 		return detalle;
+	}
+
+	public int compareTo(Form817View o) {
+		int ret = 0;
+		if (numero != null && o.getNumero() != null) {
+			ret = numero.compareTo(o.getNumero());
+		}
+
+		return ret;
 	}
 }

@@ -104,9 +104,11 @@ public class MovilController extends PaginableController<Movil> {
 	private Nomina nomina;
 	private DataModel<NominaView> nominaDM;
 	private String nota;
+	private String nota2;
 	private List<String> notas;
 	private DataModel<String> notasDM;
 	private String notaControl;
+	private String notaControl2;
 	private List<String> notasControl;
 	private DataModel<String> notasControlDM;
 
@@ -310,6 +312,14 @@ public class MovilController extends PaginableController<Movil> {
 		return coberturaAdicionalEnumList;
 	}
 
+	public String getNota2() {
+		return nota2;
+	}
+
+	public void setNota2(String nota2) {
+		this.nota2 = nota2;
+	}
+
 	public String getNota() {
 		return nota;
 	}
@@ -344,6 +354,14 @@ public class MovilController extends PaginableController<Movil> {
 
 	public List<String> getNotasControl() {
 		return notasControl;
+	}
+
+	public String getNotaControl2() {
+		return notaControl2;
+	}
+
+	public void setNotaControl2(String notaControl2) {
+		this.notaControl2 = notaControl2;
 	}
 
 	public void setNotasControl(List<String> notasControl) {
@@ -383,6 +401,117 @@ public class MovilController extends PaginableController<Movil> {
 			}
 			patcomDM = new ListDataModel<AutonomoView>(
 					autonomoBuilder.toView(movil.getPatcomList()));
+
+			List<Form817View> list817 = form817Builder.toView(movil
+					.getForm817List());
+			Collections.sort(list817, Collections.reverseOrder());
+			form817DM = new ListDataModel<Form817View>(list817);
+			form170DM = new ListDataModel<Form170View>(
+					form170Builder.toView(movil.getForm170List()));
+			reciboDM = new ListDataModel<ReciboView>(reciboBuilder.toView(movil
+					.getReciboList()));
+			nominaDM = new ListDataModel<NominaView>(nominaBuilder.toView(movil
+					.getNominaList()));
+			movilView = movilBuilder.toView(movil);
+			notas = movil.getNotas();
+			notasDM = new ListDataModel<String>(notas);
+			notasControl = movil.getNotasControl();
+			notasControlDM = new ListDataModel<String>(notasControl);
+			addEdit = true;
+		} catch (Throwable e) {
+			log.error("Error al editar", e);
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR,
+							"Error al realizar la operacion", ""));
+		}
+	}
+
+	public void editNota(ActionEvent event) {
+		try {
+			nota = (String) notasDM.getRowData();
+			nota2 = (String) notasDM.getRowData();
+
+		} catch (Throwable e) {
+			log.error("Error al editar notas", e);
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR,
+							"Error al realizar la operacion", ""));
+		}
+	}
+
+	public void saveNotaControl(ActionEvent event) {
+		try {
+
+			if (notaControl != null && notaControl2 != null) {
+				if (!notaControl2.equals(notaControl)) {
+					notasControl.remove(notaControl);
+					notasControl.add(notaControl2);
+					notasControlDM = new ListDataModel<String>(notasControl);
+				}
+			}
+
+		} catch (Throwable e) {
+			log.error("Error al editar notas de control", e);
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR,
+							"Error al realizar la operacion", ""));
+		}
+	}
+
+	public void handleNotaEdit(SelectEvent event) {
+		System.out.println("se edita una nota");
+	}
+
+	public void editNotaControl(ActionEvent event) {
+		try {
+			notaControl = (String) notasControlDM.getRowData();
+			notaControl2 = (String) notasControlDM.getRowData();
+
+		} catch (Throwable e) {
+			log.error("Error al editar notas control", e);
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR,
+							"Error al realizar la operacion", ""));
+		}
+	}
+
+	public void saveNota(ActionEvent event) {
+		try {
+
+			if (nota != null && nota2 != null) {
+				if (!nota2.equals(nota)) {
+					notas.remove(nota);
+					notas.add(nota2);
+					notasDM = new ListDataModel<String>(notas);
+				}
+			}
+
+		} catch (Throwable e) {
+			log.error("Error al editar notas", e);
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR,
+							"Error al realizar la operacion", ""));
+		}
+	}
+
+	public void copy(ActionEvent event) {
+		try {
+			movil = (Movil) lazyDM.getRowData();
+			movilOriginal = (Movil) lazyDM.getRowData();
+			movil = dao.findFULL(movil.getID());
+			// cargo el propietario
+			List<Propietario> propietarioList = daoPropietario.getList(
+					movil.getID(), 0l);
+			if (propietarioList != null && propietarioList.size() > 0) {
+				movil.setPropietario(propietarioList.get(0));
+			}
+			patcomDM = new ListDataModel<AutonomoView>(
+					autonomoBuilder.toView(movil.getPatcomList()));
 			form817DM = new ListDataModel<Form817View>(
 					form817Builder.toView(movil.getForm817List()));
 			form170DM = new ListDataModel<Form170View>(
@@ -391,6 +520,8 @@ public class MovilController extends PaginableController<Movil> {
 					.getReciboList()));
 			nominaDM = new ListDataModel<NominaView>(nominaBuilder.toView(movil
 					.getNominaList()));
+			// le borro el ID para que sea un objeto nuevo
+			movil.setID(null);
 			movilView = movilBuilder.toView(movil);
 			notas = movil.getNotas();
 			notasDM = new ListDataModel<String>(notas);
@@ -437,9 +568,51 @@ public class MovilController extends PaginableController<Movil> {
 				if (movil.getEstado() == EstadoEnum.INACTIVO) {
 					movil.setFechaEgreso(new Date());
 				} else {
-					movil.setFechaEgreso(null);
+
+					// verifico el numero de movil
+					Long cantidad = dao.count(movil.getNumeroMovil(),
+							movil.getID());
+					if (cantidad == 0) {
+						movil.setFechaEgreso(null);
+					} else {
+						JSFUtil.saveMessage(
+								"Error al guardar: El número de movil debe ser único. Ya existe un movil activo con el número "
+										+ movil.getNumeroMovil(),
+								FacesMessage.SEVERITY_ERROR);
+						throw new Exception(
+								"Error al guardar: El número de movil debe ser único. Ya existe un movil activo con el número "
+										+ movil.getNumeroMovil());
+					}
+
+					// verifico la patente
+					if (dao.count(movil.getPatente(), movil.getID()) == 0) {
+						movil.setFechaEgreso(null);
+					} else {
+						JSFUtil.saveMessage(
+								"Error al guardar: La patente debe ser única. Ya existe una patente activa con el número "
+										+ movil.getPatente(),
+								FacesMessage.SEVERITY_ERROR);
+						throw new Exception(
+								"Error al guardar: La patente debe ser única. Ya existe una patente activa con el número "
+										+ movil.getPatente());
+					}
 				}
-				dao.edit(movil);
+				try {
+					dao.edit(movil);
+				} catch (Throwable e) {
+					JSFUtil.saveMessage(
+							"Ya existe un movil activo con el número "
+									+ movil.getNumeroMovil()
+									+ " o Ya existe un movil con el número de patente "
+									+ movil.getPatente(),
+							FacesMessage.SEVERITY_ERROR);
+					throw new Exception(
+							"Ya existe un movil activo con el número "
+									+ movil.getNumeroMovil()
+									+ " o Ya existe un movil con el número de patente "
+									+ movil.getPatente());
+				}
+
 				addEdit = false;
 
 				// historialMovilChoferList =
@@ -527,7 +700,26 @@ public class MovilController extends PaginableController<Movil> {
 				}
 
 			} else {
-				movil.setFechaIngreso(new Date());
+
+				Long cantidad = dao.count(movil.getNumeroMovil());
+				if (cantidad != 0) {
+					JSFUtil.saveMessage(
+							"Error al guardar: El número de movil debe ser único. Ya existe un movil activo con el número "
+									+ movil.getNumeroMovil(),
+							FacesMessage.SEVERITY_ERROR);
+					throw new Exception();
+				}
+
+				// verifico la patente
+				if (dao.count(movil.getPatente()) != 0) {
+					JSFUtil.saveMessage(
+							"Error al guardar: La patente debe ser única. Ya existe una patente activa con el número "
+									+ movil.getPatente(),
+							FacesMessage.SEVERITY_ERROR);
+					throw new Exception();
+				}
+
+				// movil.setFechaIngreso(new Date());
 				dao.save(movil);
 
 				if (movil.getChofer1() != null) {
@@ -554,7 +746,7 @@ public class MovilController extends PaginableController<Movil> {
 			}
 		} catch (DataIntegrityViolationException e) {
 			JSFUtil.saveMessage(
-					"Error al guardar: La patente y el numero de movil deben ser unicos en el sistema.",
+					"Error al guardar: La patente debe ser unica en el sistema.",
 					FacesMessage.SEVERITY_ERROR);
 		} catch (Throwable e) {
 			log.error("Error al guardar", e);
@@ -669,6 +861,8 @@ public class MovilController extends PaginableController<Movil> {
 	public void addForm817(ActionEvent event) {
 		movilView.getForm817List().add(
 				(Form817View) form817Builder.toView(form817));
+		Collections
+				.sort(movilView.getForm817List(), Collections.reverseOrder());
 		form817DM = new ListDataModel<Form817View>(movilView.getForm817List());
 	}
 
@@ -724,6 +918,8 @@ public class MovilController extends PaginableController<Movil> {
 			Collections.reverse(notas);
 			notasDM = new ListDataModel<String>(notas);
 		}
+
+		nota = new String();
 	}
 
 	public void deleteNota(ActionEvent event) {

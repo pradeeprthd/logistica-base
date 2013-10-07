@@ -45,10 +45,10 @@ public class Movil extends BaseModel {
 	@Column(unique = true)
 	private Long id;
 
-	@Column(unique = true, nullable = false)
+	@Column(nullable = false)
 	private Long numeroMovil;
 
-	@Column(length = 30, unique = true, nullable = false)
+	@Column(length = 30, nullable = false)
 	private String patente;
 
 	@Column(length = 200)
