@@ -47,4 +47,12 @@ public interface BaseModelDAO<T extends BaseModel> {
 
 	List<Object[]> getList2Query(Object query) throws DataAccessException;
 
+	public Long count(Object query) throws DataAccessException;
+
+	public Long count(Object query, Object param) throws DataAccessException;
+
+	public Long count(String query) throws DataAccessException;
+
+	public Long count(String query, Object param) throws DataAccessException;
+
 }

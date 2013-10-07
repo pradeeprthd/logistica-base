@@ -23,15 +23,15 @@
 							value="#{movilController.movilQuery.numeroMovil}" min="0"
 							stepFactor="1" size="30">
 						</p:spinner>
-						
+
 						<h:outputText value="Número de motor: " />
 						<p:inputText value="#{movilController.movilQuery.numeroMotor}">
 						</p:inputText>
-						
+
 						<h:outputText value="Número de chasis: " />
 						<p:inputText value="#{movilController.movilQuery.numeroChasis}">
 						</p:inputText>
-						
+
 						<h:outputText value="Comunicación: " />
 						<p:inputText value="#{movilController.movilQuery.comunicacion}">
 						</p:inputText>
@@ -131,7 +131,7 @@
 						<f:facet name="header">
 							<h:outputText value="Opciones" />
 						</f:facet>
-						<h:panelGrid columns="4">
+						<h:panelGrid columns="5">
 
 							<p:commandLink actionListener="#{movilController.caratulaToPDF}"
 								ajax="false">
@@ -148,6 +148,11 @@
 								update="form,filtroForm" oncomplete="tabView.select(0)">
 								<h:graphicImage url="/resource/images/edit.gif"
 									title="Modificar" style="border:0px" />
+							</p:commandLink>
+							<p:commandLink actionListener="#{movilController.copy}"
+								update="form,filtroForm" oncomplete="tabView.select(0)">
+								<h:graphicImage url="/resource/images/copy.gif" title="Copiar"
+									style="border:0px" />
 							</p:commandLink>
 							<h:commandLink actionListener="#{movilController.delete}"
 								onclick="return confirm('¿Está seguro de eliminar el registro?');">
@@ -186,54 +191,85 @@
 						<p:tab title="Datos Principales">
 							<p:focus for="numeroM" />
 							<h:panelGrid columns="3">
-								<h:outputText value="Nro Móvil" />
-								<p:spinner id="numeroM"
-									value="#{movilController.movilView.numeroMovil}" min="1"
-									stepFactor="1" size="30">
-									<p:ajax
-										update="numeroMovilChoferesID,numeroMovilCaracteristicasID,numeroMovilEstadoID,numeroMovilEquipamientoID,numeroMovilSeguroID,numeroMovilNotasID,numeroMovilBlanqueoID,numeroMovilControlID"
-										process="@this" />
-									<f:validateBean for="numeroM" />
-								</p:spinner>
-								<h:message id="mns" for="numeroM" />
+								<h:panelGrid columns="3">
+									<h:outputText value="Nro Móvil" />
+									<p:spinner id="numeroM"
+										value="#{movilController.movilView.numeroMovil}" min="1"
+										stepFactor="1" size="30">
+										<p:ajax
+											update="numeroMovilChoferesID,numeroMovilCaracteristicasID,numeroMovilEstadoID,numeroMovilEquipamientoID,numeroMovilSeguroID,numeroMovilNotasID,numeroMovilBlanqueoID,numeroMovilControlID"
+											process="@this" />
+										<f:validateBean for="numeroM" />
+									</p:spinner>
+									<h:message id="mns" for="numeroM" />
 
-								<h:outputText value="Patente" />
-								<p:inputText id="patenteIT"
-									value="#{movilController.movilView.patente}">
-									<f:validateBean for="patenteIT" />
-								</p:inputText>
-								<h:message id="pIT" for="patenteIT" />
+									<h:outputText value="Patente" />
+									<p:inputText id="patenteIT"
+										value="#{movilController.movilView.patente}">
+										<f:validateBean for="patenteIT" />
+									</p:inputText>
+									<h:message id="pIT" for="patenteIT" />
 
-								<h:outputText value="Descripción" />
-								<p:inputTextarea id="descripcionIT"
-									value="#{movilController.movilView.descripcion}">
-									<f:validateBean for="descripcionIT" />
-								</p:inputTextarea>
-								<h:message id="dIT" for="descripcionIT" />
+									<h:outputText value="Descripción" />
+									<p:inputTextarea id="descripcionIT" autoResize="false"
+										style="width:250px;height:100px;"
+										value="#{movilController.movilView.descripcion}">
+										<f:validateBean for="descripcionIT" />
+									</p:inputTextarea>
+									<h:message id="dIT" for="descripcionIT" />
 
-								<h:outputText value="Asignado a" />
-								<p:inputText id="asignadoIT"
-									value="#{movilController.movilView.asignacionMovil}">
-									<f:validateBean for="asignadoIT" />
-								</p:inputText>
-								<h:message id="MasignadoIT" for="asignadoIT" />
+									<h:outputText value="Asignado a" />
+									<p:inputText id="asignadoIT"
+										value="#{movilController.movilView.asignacionMovil}">
+										<f:validateBean for="asignadoIT" />
+									</p:inputText>
+									<h:message id="MasignadoIT" for="asignadoIT" />
 
-								<h:outputText value="Estado" />
-								<p:selectOneMenu value="#{movilController.movilView.estado}"
-									converter="com.converter.EstadoConverter">
-									<f:selectItems value="#{movilController.estadoEnumList}" />
-								</p:selectOneMenu>
-								<h:outputText value="" />
+									<h:outputText value="Estado" />
+									<p:selectOneMenu value="#{movilController.movilView.estado}"
+										converter="com.converter.EstadoConverter">
+										<f:selectItems value="#{movilController.estadoEnumList}" />
+									</p:selectOneMenu>
+									<h:outputText value="" />
 
-								<h:outputText value="Controlado" />
-								<p:selectBooleanCheckbox
-									value="#{movilController.movilView.controlado}" />
-								<h:outputText value="" />
+									<h:outputText value="Controlado" />
+									<p:selectBooleanCheckbox
+										value="#{movilController.movilView.controlado}" />
+									<h:outputText value="" />
 
-								<h:outputText value="Comodato" />
-								<p:selectBooleanCheckbox
-									value="#{movilController.movilView.comodato}" />
-								<h:outputText value="" />
+									<h:outputText value="Comodato" />
+									<p:selectBooleanCheckbox
+										value="#{movilController.movilView.comodato}" />
+									<h:outputText value="" />
+
+									<h:outputText value="Fecha ingreso" />
+									<!-- <p:calendar id="fechaPrendaC"
+										value="#{movilController.movilView.fechaPrenda}" mode="popup"
+										showOn="button" locale="es"
+										pattern="#{msgs.common_inputDateFormat}" immediate="true"
+										readOnlyInputText="true">
+									</p:calendar> -->
+									<p:calendar id="fechaIngresoC"
+										value="#{movilController.movilView.fechaIngreso}" mode="popup"
+										showOn="button" locale="es"
+										pattern="#{msgs.common_inputDateFormat}"
+										readOnlyInputText="false" navigator="true"
+										yearRange="c-100:c+50"
+										converterMessage="El formato de la fecha es incorrecto">
+									</p:calendar>
+									<h:message id="MfechaIngresoC" for="fechaIngresoC" />
+								</h:panelGrid>
+
+								<h:panelGrid columns="1"
+									rendered="#{movilController.movilView.propietario != null}">
+
+									<h:outputText value="Propietario" />
+									<h:graphicImage id="fotoPropietarioGI1"
+										value="/images/#{movilController.movilView.propietario.nombreArchivo}"
+										width="70" height="100" />
+
+								</h:panelGrid>
+
 							</h:panelGrid>
 						</p:tab>
 
@@ -864,7 +900,8 @@
 
 								<h:outputText value="Observaciones comunicación" />
 								<p:inputTextarea id="observacionesComunicacionIT"
-									maxLength="300"
+									maxLength="300" autoResize="false"
+									style="width:250px;height:100px;"
 									value="#{movilController.movilView.observacionesComunicacion}">
 									<f:validateBean for="observacionesComunicacionIT" />
 								</p:inputTextarea>
@@ -1033,7 +1070,8 @@
 									<h:message id="mnumeroLoJackIT" for="numeroLoJackIT" />
 
 									<h:outputText value="Observaciones" />
-									<p:inputTextarea id="observacionesSeguroIT"
+									<p:inputTextarea id="observacionesSeguroIT" autoResize="false"
+										style="width:250px;height:100px;"
 										value="#{movilController.movilView.observacionesSeguro}">
 										<f:validateBean for="observacionesSeguroIT" />
 									</p:inputTextarea>
@@ -1097,12 +1135,12 @@
 									value="#{movilController.movilView.numeroMovil}" />
 							</h:panelGrid>
 
-							<p:panel header="Agregar nota">
+							<p:panel id="panelNota" header="Agregar nota">
 								<h:panelGrid columns="2">
 									<h:outputText value="Nota" />
-									<p:inputTextarea id="notaITA" style="width:200px;height:100px;"
+									<p:inputTextarea id="notaITA" style="width:250px;height:100px;"
 										value="#{movilController.nota}" immediate="true"
-										maxLength="250">
+										maxLength="250" autoResize="false">
 										<f:ajax execute="@this" />
 									</p:inputTextarea>
 
@@ -1119,18 +1157,54 @@
 									<h:outputText value="Notas" />
 								</f:facet>
 
-								<p:column align="center">
+								<p:column align="center" style="width:450px">
 									<f:facet name="header">
 										<h:outputText value="Nota" />
 									</f:facet>
 									<h:outputText value="#{nota}" />
 								</p:column>
 
-								<p:column>
+								<p:column style="width:50px">
 									<f:facet name="header">
 										<h:outputText value="Opciones" />
 									</f:facet>
 									<h:panelGrid columns="3">
+										<!-- <p:commandButton actionListener="#{movilController.addNota}"
+											update="notaDialogID, formDialog, notaModalITA"
+											inmediate="true"> -->
+										<!-- <h:graphicImage url="/resource/images/edit.gif"
+												title="Modificar" style="border:0px" /> -->
+										<!-- <f:setPropertyActionListener value="#{movilController.notasDM.rowData}" -->
+										<!-- <f:setPropertyActionListener value="notas editame"
+												target="#{movilController.nota}" />
+												<f:ajax execute="@form" render=":formDialog" /> -->
+										<!-- <p:ajax event="onclick"
+												listener="#{movilController.handleNotaEdit}"
+												update="notaEditID" /> -->
+										<!--  <p:resetInput target="panelNota" />-->
+										<!-- oncomplete="notaDialog.show(); notaDialog.initPosition()" -->
+										<!-- </p:commandButton> -->
+
+										<p:commandButton value="Editar"
+											actionListener="#{movilController.editNota}"
+											update="notaDialogID, formDialog, notaModalITA"
+											immediate="true"
+											oncomplete="notaDialog.show(); notaDialog.initPosition()">
+											<f:ajax execute="@all" />
+										</p:commandButton>
+
+										<!-- <p:commandLink
+											oncomplete="notaDialog.show(); notaDialog.initPosition()"
+											actionListener="#{movilController.editNota}"
+											update="notaDialogID">
+											<h:graphicImage url="/resource/images/find.gif"
+												title="Elegir móvil" style="border:0px" />
+											<f:setPropertyActionListener value="#{detalleAsignacion}"
+												target="#{diagramacionDiariaController.detalleAsignacionView}" />
+											<f:setPropertyActionListener value="#{detalleSucursal}"
+												target="#{diagramacionDiariaController.detalleSucursalView}" />
+										</p:commandLink> -->
+
 										<h:commandLink actionListener="#{movilController.deleteNota}"
 											immediate="true">
 											<h:graphicImage url="/resource/images/delete.gif"
@@ -1669,9 +1743,9 @@
 								<h:panelGrid columns="2">
 									<h:outputText value="Observación" />
 									<p:inputTextarea id="notaControlITA"
-										style="width:200px;height:100px;"
+										style="width:250px;height:100px;"
 										value="#{movilController.notaControl}" immediate="true"
-										maxLength="250">
+										maxLength="250" autoResize="false">
 										<f:ajax execute="@this" />
 									</p:inputTextarea>
 
@@ -1695,11 +1769,19 @@
 									<h:outputText value="#{nota}" />
 								</p:column>
 
-								<p:column>
+								<p:column style="width:50px">
 									<f:facet name="header">
 										<h:outputText value="Opciones" />
 									</f:facet>
 									<h:panelGrid columns="3">
+										<p:commandButton value="Editar"
+											actionListener="#{movilController.editNotaControl}"
+											update="notaControlDialogID, formDialog, notaControlModalITA"
+											immediate="true"
+											oncomplete="notaControlDialog.show(); notaControlDialog.initPosition()">
+											<f:ajax execute="@all" />
+										</p:commandButton>
+										
 										<h:commandLink
 											actionListener="#{movilController.deleteNotaControl}"
 											immediate="true">
@@ -1727,6 +1809,51 @@
 						</p:commandButton>
 					</h:panelGrid>
 				</h:panelGrid>
+
+			</h:form>
+
+			<h:form id="formDialog">
+				<p:dialog id="notaDialogID" header="Modificar nota"
+					widgetVar="notaDialog" resizable="false" width="450" modal="true"
+					onCloseUpdate="form,filtroForm,notaITA,panelNota">
+					<h:panelGrid id="dialogPanelGrid" columns="2" cellpadding="4">
+						<h:outputText value="Nota" />
+						<p:inputTextarea id="notaModalITA"
+							style="width:250px;height:100px;"
+							value="#{movilController.nota2}" immediate="true" maxLength="250"
+							autoResize="false">
+							<!-- <f:ajax execute="@this" /> -->
+						</p:inputTextarea>
+
+						<p:commandButton value="Confirmar"
+							actionListener="#{movilController.saveNota}" update=":form"
+							onclick="notaDialog.hide()" >
+							<!-- <f:ajax execute="@form" /> -->
+						</p:commandButton>
+						<p:commandButton value="Cancelar" onclick="notaDialog.hide()" />
+					</h:panelGrid>
+				</p:dialog>
+				
+				<p:dialog id="notaControlDialogID" header="Modificar observación"
+					widgetVar="notaControlDialog" resizable="false" width="450" modal="true"
+					onCloseUpdate="form,filtroForm,notaITA,panelNota">
+					<h:panelGrid id="dialogControlPanelGrid" columns="2" cellpadding="4">
+						<h:outputText value="Observación" />
+						<p:inputTextarea id="notaControlModalITA"
+							style="width:250px;height:100px;"
+							value="#{movilController.notaControl2}" immediate="true" maxLength="250"
+							autoResize="false">
+							<!-- <f:ajax execute="@this" /> -->
+						</p:inputTextarea>
+
+						<p:commandButton value="Confirmar"
+							actionListener="#{movilController.saveNotaControl}" update=":form"
+							onclick="notaControlDialog.hide()" >
+							<!-- <f:ajax execute="@form" /> -->
+						</p:commandButton>
+						<p:commandButton value="Cancelar" onclick="notaControlDialog.hide()" />
+					</h:panelGrid>
+				</p:dialog>
 			</h:form>
 		</u:define>
 	</u:composition>

@@ -119,7 +119,7 @@ public abstract class BaseHibernateDAO<T extends BaseModel, Q extends BaseQuery>
 						criteria.add(Restrictions.eq(entry.getKey(), numero));
 					} catch (NumberFormatException e) {
 					}
-				} else if (object instanceof String) {
+				} else if (object instanceof String && !"".equals(object)) {
 					if (startMode) {
 						criteria.add(Restrictions.ilike(entry.getKey(),
 								object.toString(), MatchMode.START));
@@ -172,7 +172,7 @@ public abstract class BaseHibernateDAO<T extends BaseModel, Q extends BaseQuery>
 						criteria.add(Restrictions.eq(entry.getKey(), numero));
 					} catch (NumberFormatException e) {
 					}
-				} else if (object instanceof String) {
+				} else if (object instanceof String && !"".equals(object)) {
 					if (startMode) {
 						criteria.add(Restrictions.ilike(entry.getKey(),
 								object.toString(), MatchMode.START));
@@ -237,6 +237,26 @@ public abstract class BaseHibernateDAO<T extends BaseModel, Q extends BaseQuery>
 
 	public List<Object[]> getList2Query(Object query)
 			throws DataAccessException {
+		// TODO implementar donde sea necesario
+		return null;
+	}
+
+	public Long count(Object query) throws DataAccessException {
+		// TODO implementar donde sea necesario
+		return null;
+	}
+
+	public Long count(Object query, Object param) throws DataAccessException {
+		// TODO implementar donde sea necesario
+		return null;
+	}
+
+	public Long count(String query) throws DataAccessException {
+		// TODO implementar donde sea necesario
+		return null;
+	}
+
+	public Long count(String query, Object param) throws DataAccessException {
 		// TODO implementar donde sea necesario
 		return null;
 	}

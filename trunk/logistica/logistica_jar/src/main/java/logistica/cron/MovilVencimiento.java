@@ -82,7 +82,7 @@ public class MovilVencimiento {
 		StringBuilder sb = new StringBuilder();
 
 		Date fechaTresMeses = DateUtil.getSumarRestarDias(new Date(), -90);
-		Date fechaTresDias = DateUtil.getSumarRestarDias(new Date(), 3);
+		Date fechaTresDias = DateUtil.getSumarRestarDias(new Date(), 7);
 
 		sb.append("Vencimientos al "
 				+ DateUtil.dateToString(new Date(), "dd/MM/yyyy") + "\n\n\n");

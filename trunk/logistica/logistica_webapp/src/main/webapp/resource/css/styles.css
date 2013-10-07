@@ -56,3 +56,7 @@ styleVertical {
 .ui-widget, .ui-widget .ui-widget {
 font-size: 10px !important;
 }
+
+.myTable.ui-datatable table {
+   width: auto;
+}
