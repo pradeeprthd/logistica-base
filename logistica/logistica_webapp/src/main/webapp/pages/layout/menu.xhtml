@@ -9,41 +9,12 @@
 	<u:composition>
 
 		<p:menubar autoSubmenuDisplay="true">
-			<p:submenu label="Clientes"
+			<p:submenu label="Menú nuevo"
 				rendered="#{p:ifAnyGranted('ROLE_ADMIN,ROLE_USER')}">
-				<p:menuitem value="Clientes" url="/pages/admCliente.xhtml" />
+				<p:menuitem value="MEnuNuevo" url="/pages/admXXXXXXXXX.xhtml" />
 			</p:submenu>
-			<p:submenu label="Sucursales"
-				rendered="#{p:ifAnyGranted('ROLE_ADMIN,ROLE_USER')}">
-				<p:menuitem value="Sucursales propias"
-					url="/pages/admSucursal.xhtml" />
-				<p:menuitem value="Sucursales Coto"
-					url="/pages/admSucursalCoto.xhtml" />
-			</p:submenu>
-			<p:submenu label="Choferes">
-				<p:menuitem value="Choferes" url="/pages/admChofer.xhtml" />
-			</p:submenu>
-			<p:submenu label="Móviles">
-				<p:menuitem value="Móviles" url="/pages/admMovil.xhtml" />
-				<p:menuitem value="Móviles no operativos"
-					url="/pages/admMovilNoOperativo.xhtml" />
-				<p:menuitem value="Móviles disponibles"
-					url="/pages/repMovilesDisponibles.xhtml" />
-				<p:menuitem value="Propietarios" url="/pages/admPropietario.xhtml" />
-			</p:submenu>
-			<p:submenu label="Otros servicios" rendered="#{p:ifAnyGranted('ROLE_ADMIN,ROLE_USER')}">
-				<p:menuitem value="Otros servicios"
-					url="/pages/admOtrosServicios.xhtml" />
-			</p:submenu>
-			<p:submenu label="Hojas de ruta"
-				rendered="#{p:ifAnyGranted('ROLE_ADMIN,ROLE_USER')}">
-				<p:menuitem value="Hojas de ruta" url="/pages/admHojaRuta.xhtml" />
-			</p:submenu>
-			<p:submenu label="Diagramación diaria"
-				rendered="#{p:ifAnyGranted('ROLE_ADMIN,ROLE_USER')}">
-				<p:menuitem value="Diagramación diaria"
-					url="/pages/admDiagramacionDiaria.xhtml" />
-			</p:submenu>
+			
+		
 			<p:submenu label="Usuarios" rendered="#{p:ifGranted('ROLE_ADMIN')}">
 				<p:menuitem value="Usuarios" url="/pages/admUsuario.xhtml" />
 			</p:submenu>
