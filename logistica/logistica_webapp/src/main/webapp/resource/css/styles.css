@@ -54,9 +54,17 @@ styleVertical {
 }
 
 .ui-widget, .ui-widget .ui-widget {
-font-size: 10px !important;
+	font-size: 10px !important;
 }
 
 .myTable.ui-datatable table {
-   width: auto;
+	width: auto;
+}
+
+.ui-selectonemenu {
+	width: 100% !important;
+}
+
+.ui-selectonemenu-label {
+	width: 100% !important;
 }
